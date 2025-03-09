@@ -4,6 +4,7 @@ export type ActionsTableColumnModel<TData> = {
   redirection?: (cell: any) => string;
 } & ColumnBaseModel<TData>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type ColumnBaseModel<TData> = {
   id: string;
   accessorKey: string;

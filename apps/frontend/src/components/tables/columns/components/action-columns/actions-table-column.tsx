@@ -27,7 +27,7 @@ export default function ActionsTableColumn<T>({
           <Checkbox
             checked={table.getIsAllRowsSelected()}
             onCheckedChange={(value) => {
-              table.toggleAllRowsSelected(!!value);
+              table.toggleAllRowsSelected(Boolean(value));
             }}
           />
         )
@@ -49,7 +49,7 @@ export default function ActionsTableColumn<T>({
                   checked={row.getIsSelected()}
                   className={cn('flex my-auto')}
                   onCheckedChange={(value) => {
-                    row.toggleSelected(!!value);
+                    row.toggleSelected(Boolean(value));
                   }}
                   aria-label='Select row'
                 />
