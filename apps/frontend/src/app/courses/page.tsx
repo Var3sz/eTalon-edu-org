@@ -8,7 +8,7 @@ async function getData(): Promise<Course[]> {
   return courses;
 }
 
-export default async function GroupClient() {
+export default async function Page() {
   const data = await getData();
 
   return (

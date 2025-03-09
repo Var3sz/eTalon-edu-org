@@ -1,5 +1,4 @@
-export type NavigationItemType = {
+export type NavigationType = {
   name: string;
   link: string;
-  subs?: NavigationItemType[] | [];
 };

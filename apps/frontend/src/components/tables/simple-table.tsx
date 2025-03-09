@@ -1,61 +1,27 @@
-'use client';
-
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  RowSelectionState,
-  SortingState,
-  useReactTable,
-  VisibilityState,
-} from '@tanstack/react-table';
+import { ColumnDef, flexRender, getCoreRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
 import { useState } from 'react';
 
 import { DataTablePagination } from '@/components/tables/columns/components/data-table-pagination';
-import { DataTableViewOptions } from '@/components/tables/columns/components/data-table-view-options';
-import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-interface DataTableProps<TData, TValue> {
+interface SimpleTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+export function SimpleTable<TData, TValue>({ columns, data }: SimpleTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    state: { sorting, columnFilters, columnVisibility, rowSelection },
+    state: { rowSelection },
   });
 
   return (
     <div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter courses by course type...'
-          value={(table.getColumn('type')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('type')?.setFilterValue(event.target.value)}
-          className='max-w-sm'
-        />
-        <DataTableViewOptions table={table} />
-      </div>
       <div className='rounded-md border'>
         <Table className='table-auto border-collapse'>
           <TableHeader className='bg-gray-300'>
