@@ -13,7 +13,7 @@ export default function Navbar() {
         <Image src={logoSrc} alt='Application logo' width={150} height={150} />
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem className='flex gap-5'>
+            <NavigationMenuItem className='flex gap-10'>
               {Links.map((link) => (
                 <Link className='align-middle' key={link.name} href={link.link}>
                   {link.name}
@@ -29,7 +29,7 @@ export default function Navbar() {
             <NavigationMenuItem>
               <Avatar>
                 <AvatarImage className='bg-black' src='https://example.com/profile-picture.jpg' alt='Profile Picture' />
-                <AvatarFallback className='bg-etalonGreen'>ET</AvatarFallback>
+                <AvatarFallback className='bg-etalonGreen bg-etalon-grey'>ET</AvatarFallback>
               </Avatar>
             </NavigationMenuItem>
           </NavigationMenuList>

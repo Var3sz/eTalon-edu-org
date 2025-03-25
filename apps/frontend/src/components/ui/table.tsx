@@ -1,15 +1,16 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-
-type TableProps = React.HTMLAttributes<HTMLTableElement> & { className?: string };
-type TableHeaderProps = React.HTMLAttributes<HTMLTableSectionElement> & { className?: string };
-type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement> & { className?: string };
-type TableFooterProps = React.HTMLAttributes<HTMLTableSectionElement> & { className?: string };
-type TableRowProps = React.HTMLAttributes<HTMLTableRowElement> & { className?: string };
-type TableHeaderCellProps = React.ThHTMLAttributes<HTMLTableCellElement> & { className?: string };
-type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement> & { className?: string };
-type TableCaptionProps = React.HTMLAttributes<HTMLTableCaptionElement> & { className?: string };
+import {
+  TableBodyProps,
+  TableCaptionProps,
+  TableCellProps,
+  TableFooterProps,
+  TableHeaderCellProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+} from '@/models/ui/ui-props';
 
 const Table = React.forwardRef<HTMLTableElement, TableProps>(({ className, ...props }, ref) => (
   <div className='relative w-full overflow-auto'>

@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/courses": {
+      "get": {
+        "operationId": "CourseController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Courses"]
+      }
+    },
+    "/students/{courseId}": {
+      "get": {
+        "operationId": "StudentController_findStudentsByCourseId",
+        "parameters": [
+          {
+            "name": "courseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Students"]
+      }
+    }
+  },
+  "info": {
+    "title": "Etalon-organization",
+    "description": "API documentation for Etalon organization",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CourseEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "group": {
+            "type": "object"
+          },
+          "status": {
+            "type": "object"
+          },
+          "courseId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "location": {
+            "type": "object"
+          },
+          "price": {
+            "type": "number"
+          },
+          "headCount": {
+            "type": "number"
+          },
+          "maxHeadCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "group",
+          "status",
+          "courseId",
+          "description",
+          "location",
+          "price",
+          "headCount",
+          "maxHeadCount"
+        ]
+      },
+      "StudentEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "sapId": {
+            "type": "number"
+          },
+          "parentMail": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parentName": {
+            "type": "string"
+          },
+          "parentMobile": {
+            "type": "string"
+          },
+          "courseId": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "sapId", "parentMail", "name", "parentName", "parentMobile", "courseId"]
+      }
+    }
+  }
+}

@@ -28,8 +28,10 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       colors: {
-        etalonGreen: '#96BE2D',
-        etalonGrey: '#787878',
+        'etalon-green': '#96BE2D',
+        'etalon-grey': '#787878',
+        primary: '#96BE2D',
+        secondary: '#787878',
         destructive: '#DC2626',
         'destructive-foreground': '#FFFFFF',
         success: '#16A34A',

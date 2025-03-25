@@ -1,11 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -13,7 +8,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  authSchId String @id
-  email     String @unique
+model Group {
+  id          Int      @id @default(autoincrement())
+  description String
+  courses     Course[]
+}
+
+model Location {
+  id          Int      @id @default(autoincrement())
+  description String
+  courses     Course[]
+}
+
+model Course {
+  id           Int      @id @default(autoincrement())
+  courseId     String
+  description  String
+  price        Int?
+  active       Boolean  @default(true)
+  endTime      String
+  groupId      Int
+  headcount    Int?
+  locationId   Int
+  maxHeadcount Int
+  startDate    DateTime
+  startTime    String
+  locked       Boolean
+  group        Group    @relation(fields: [groupId], references: [id])
+  location     Location @relation(fields: [locationId], references: [id])
+}
+
+view coursesummaryview {
+  id               Int       @unique
+  courseId         String?
+  groupDescription String?
+  occupancy        Int?
+  description      String?
+  headcount        Int?
+  maxHeadcount     Int?
+  price            Int?
+  startDate        DateTime?
+  startTime        String?
+  endTime          String?
+  active           Boolean?
+  locked           Boolean?
 }

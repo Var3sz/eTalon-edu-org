@@ -7,7 +7,7 @@ export default function TextWithFilterTableColumn<T>({
   id,
   accessorKey,
   headerTitle,
-  size,
+  size = 300,
 }: ColumnBaseModel<T>): ColumnDef<T> {
   return {
     id: id,

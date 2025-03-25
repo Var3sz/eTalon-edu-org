@@ -17,7 +17,6 @@ import { useState } from 'react';
 
 import { DataTablePagination } from '@/components/tables/columns/components/data-table-pagination';
 import { DataTableViewOptions } from '@/components/tables/columns/components/data-table-view-options';
-import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface DataTableProps<TData, TValue> {
@@ -48,15 +47,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div>
       <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter courses by course type...'
-          value={(table.getColumn('type')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('type')?.setFilterValue(event.target.value)}
-          className='max-w-sm'
-        />
         <DataTableViewOptions table={table} />
       </div>
-      <div className='rounded-md border'>
+      <div className='overflow-x-scroll rounded-md border'>
         <Table className='table-auto border-collapse'>
           <TableHeader className='bg-gray-300'>
             {table.getHeaderGroups().map((headerGroup) => (

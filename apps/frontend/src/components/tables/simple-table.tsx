@@ -1,15 +1,15 @@
 import { ColumnDef, flexRender, getCoreRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import { DataTablePagination } from '@/components/tables/columns/components/data-table-pagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface SimpleTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  defaultData: TData[];
 }
 
-export function SimpleTable<TData, TValue>({ columns, data }: SimpleTableProps<TData, TValue>) {
+export function SimpleTable<TData, TValue>({ columns, defaultData }: SimpleTableProps<TData, TValue>) {
+  const [data, setData] = useState(() => [...defaultData]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   const table = useReactTable({
@@ -18,6 +18,21 @@ export function SimpleTable<TData, TValue>({ columns, data }: SimpleTableProps<T
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: string) => {
+        setData((old) =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              return {
+                ...old[index],
+                [columnId]: value,
+              };
+            }
+            return row;
+          })
+        );
+      },
+    },
   });
 
   return (
@@ -62,7 +77,6 @@ export function SimpleTable<TData, TValue>({ columns, data }: SimpleTableProps<T
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
     </div>
   );
 }

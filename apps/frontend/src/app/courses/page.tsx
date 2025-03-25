@@ -1,19 +1,16 @@
-'use client';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
-import { courseColumns } from '@/components/columns/course/course-columns';
-import { DataTable } from '@/components/tables/data-table';
-import { Course, courses } from '@/models/course/types';
-
-async function getData(): Promise<Course[]> {
-  return courses;
-}
+import CoursesTableClient from '@/components/course/table/courses-table-client';
+import { prefetchCurrentCoursesQuery } from '@/hooks/courses/prefetch/prefetchCurrentCoursesQuery';
 
 export default async function Page() {
-  const data = await getData();
+  const queryClient = new QueryClient();
+
+  await prefetchCurrentCoursesQuery(queryClient);
 
   return (
-    <div className='container mx-auto py-10'>
-      <DataTable columns={courseColumns} data={data} />
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <CoursesTableClient />
+    </HydrationBoundary>
   );
 }
