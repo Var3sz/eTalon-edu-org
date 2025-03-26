@@ -11,13 +11,7 @@ export type Course = {
 };
 
 export type Student = {
-  id: number;
-  sapId: number;
-  parentMail: string;
   name: string;
-  parentName: string;
-  parentMobile: string;
-  courseId: string;
 };
 
 export type AddNewCourseModel = {

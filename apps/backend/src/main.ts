@@ -11,7 +11,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Etalon-organization')
     .setDescription('API documentation for Etalon organization')
-    .addServer('http://localhost:3001/api-json')
+    .addServer('/')
     .setVersion('1.0')
     .build();
 

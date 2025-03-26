@@ -20,6 +20,12 @@ model Location {
   courses     Course[]
 }
 
+model BillingType {
+  id           Int @id @default(autoincrement())
+  description  String
+  students     Student[]
+}
+
 model Course {
   id           Int      @id @default(autoincrement())
   courseId     String
@@ -36,6 +42,26 @@ model Course {
   locked       Boolean
   group        Group    @relation(fields: [groupId], references: [id])
   location     Location @relation(fields: [locationId], references: [id])
+  students     Student[]
+}
+
+model Student {
+  id           Int @id @default(autoincrement())
+  email        String
+  lastname     String
+  firstname    String
+  billCompany  String?
+  city         String
+  zip          Int
+  address      String
+  vatNumber    String?
+  children     String
+  childrenMail String?
+  mobile       String
+  billingTypeId Int
+  billingType  BillingType @relation(fields: [billingTypeId], references: [id])
+  courseId     Int
+  course       Course @relation(fields: [courseId], references: [id])
 }
 
 view coursesummaryview {

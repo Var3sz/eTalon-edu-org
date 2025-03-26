@@ -7,5 +7,5 @@ export async function GetCurrentCourses<ResponseType>() {
 }
 
 export async function GetCourseDetailsById<ResponseType>(courseId: string) {
-  return await getRequest<ResponseType>(`http://localhost:3001/students/${courseId}`);
+  return await getRequest<ResponseType>(`http://localhost:3001/students/GetStudentsByCourseId/${courseId}`);
 }
