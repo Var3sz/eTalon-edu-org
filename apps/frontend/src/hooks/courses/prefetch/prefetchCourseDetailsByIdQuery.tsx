@@ -1,10 +1,11 @@
 import { QueryClient } from '@tanstack/react-query';
 
-import { GetCourseDetailsById } from '@/api/endpoints/courses';
+import { GetStudentsByCourseId } from '@/api/models/serviceEndpoints/course';
+import { CourseStudentsDTO } from '@/models/Api';
 
-export const prefetchCourseDetailsByIdQuery = async (client: QueryClient, courseId: string) => {
+export const prefetchStudentsByCourseIdQuery = async (client: QueryClient, courseId: number) => {
   await client.prefetchQuery({
-    queryKey: ['courses', { id: courseId }],
-    queryFn: () => GetCourseDetailsById(courseId),
+    queryKey: ['students-by-course-id', courseId],
+    queryFn: () => GetStudentsByCourseId<CourseStudentsDTO[]>(courseId),
   });
 };

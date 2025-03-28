@@ -4,6 +4,8 @@ export type ActionsTableColumnModel<TData> = {
   redirection?: (cell: any) => string;
 } & ColumnBaseModel<TData>;
 
+export type HiddenTableColumnModel<TData> = Omit<ColumnBaseModel<TData>, 'headerTitle'>;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type ColumnBaseModel<TData> = {
   id: string;

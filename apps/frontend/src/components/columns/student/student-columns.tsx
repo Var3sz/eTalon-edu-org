@@ -3,21 +3,73 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import ActionsTableColumn from '@/components/tables/columns/components/action-columns/actions-table-column';
 import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
+import ClickableTableColumn from '@/components/tables/columns/components/special-columns/ClickableTableColumn';
+import HiddenTableColumn from '@/components/tables/columns/components/special-columns/HiddenTableColumn';
 import { StudentLocales } from '@/locales/student-locales';
-import { Student } from '@/models/course/types';
+import { CourseStudentsDTO } from '@/models/Api';
 
-export default function StudentColumns(): ColumnDef<Student>[] {
+export default function StudentColumns(): ColumnDef<CourseStudentsDTO>[] {
   return useMemo(
     () => [
-      ActionsTableColumn<Student>({
-        id: 'select',
-        accessorKey: 'select',
-        headerTitle: '',
-        select: true,
+      TextTableColumn<CourseStudentsDTO>({
+        id: 'courseCode',
+        accessorKey: 'courseCode',
+        headerTitle: StudentLocales.table.courseId,
       }),
-      TextTableColumn<Student>({ id: 'name', accessorKey: 'name', headerTitle: StudentLocales.table.name }),
+      ClickableTableColumn<CourseStudentsDTO>({
+        id: 'children',
+        accessorKey: 'children',
+        headerTitle: StudentLocales.table.name,
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'id',
+        accessorKey: 'id',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'email',
+        accessorKey: 'email',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'lastname',
+        accessorKey: 'lastname',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'firstname',
+        accessorKey: 'firstname',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'billCompany',
+        accessorKey: 'billCompany',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'city',
+        accessorKey: 'city',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'zip',
+        accessorKey: 'zip',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'address',
+        accessorKey: 'address',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'vatNumber',
+        accessorKey: 'vatNumber',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'childrenMail',
+        accessorKey: 'childrenMail',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'mobile',
+        accessorKey: 'mobile',
+      }),
+      HiddenTableColumn<CourseStudentsDTO>({
+        id: 'billingTypeId',
+        accessorKey: 'billingTypeId',
+      }),
     ],
     []
   );

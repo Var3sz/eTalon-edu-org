@@ -8,7 +8,7 @@ export default function LockedTableColumn<T>({
   id,
   accessorKey,
   headerTitle,
-  size = 50,
+  size = 30,
 }: ColumnBaseModel<T>): ColumnDef<T> {
   return {
     id: id,

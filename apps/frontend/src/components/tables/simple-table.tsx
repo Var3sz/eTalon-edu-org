@@ -1,23 +1,43 @@
-import { ColumnDef, flexRender, getCoreRowModel, RowSelectionState, useReactTable } from '@tanstack/react-table';
-import { useState } from 'react';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  RowSelectionState,
+  useReactTable,
+  VisibilityState,
+} from '@tanstack/react-table';
+import { useEffect, useState } from 'react';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface SimpleTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   defaultData: TData[];
+  hiddenColumnIds?: string[];
 }
 
-export function SimpleTable<TData, TValue>({ columns, defaultData }: SimpleTableProps<TData, TValue>) {
+export function SimpleTable<TData, TValue>({ columns, defaultData, hiddenColumnIds }: SimpleTableProps<TData, TValue>) {
   const [data, setData] = useState(() => [...defaultData]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() => {
+    const hidden: VisibilityState = {};
+    hiddenColumnIds?.forEach((id) => {
+      hidden[id] = false;
+    });
+    return hidden;
+  });
+
+  useEffect(() => {
+    setData(defaultData);
+  }, [defaultData]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setRowSelection,
-    state: { rowSelection },
+    onColumnVisibilityChange: setColumnVisibility,
+    state: { rowSelection, columnVisibility },
     meta: {
       updateData: (rowIndex: number, columnId: string, value: string) => {
         setData((old) =>

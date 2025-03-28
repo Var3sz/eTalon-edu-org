@@ -1,0 +1,67 @@
+'use client';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import { StudentDetailsDTO } from '@next-nest-template/backend/dist/student/entities/student.entity';
+import { useQueryClient } from '@tanstack/react-query';
+import { Dispatch, SetStateAction, TransitionStartFunction, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { toast } from '@/components/ui/use-toast';
+import { UpdateStudentDetailsDTO } from '@/models/Api';
+import { UpdateStudentDetailsAction } from '@/models/students/action/UpdateStudentDetailsAction';
+import { UpdateStudentDetailsFormDefault } from '@/validation/default-values/student/update-student-details-form-default';
+import { updateStudentDetailsSchema } from '@/validation/schemas/student/update-student-details-schema';
+
+type UseInitStudentDetailsDialogProps = {
+  studentData: StudentDetailsDTO;
+  startTransaction: TransitionStartFunction;
+  setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function useInitStudentDetailsDialog({
+  studentData,
+  startTransaction,
+  setOpenChangeDialog,
+}: UseInitStudentDetailsDialogProps) {
+  const queryClient = useQueryClient();
+
+  const form = useForm<UpdateStudentDetailsDTO>({
+    defaultValues: UpdateStudentDetailsFormDefault(studentData),
+    resolver: yupResolver<UpdateStudentDetailsDTO>(updateStudentDetailsSchema),
+  });
+
+  const onValidFormSubmit = (formModel: UpdateStudentDetailsDTO) => {
+    startTransaction(async () => {
+      const updateResponse = await UpdateStudentDetailsAction(studentData.id, formModel);
+      if (updateResponse.status === 200) {
+        await queryClient.invalidateQueries({ queryKey: ['students-by-course-id', studentData.courseId] });
+        toast({ variant: 'success', title: 'Sikeres frissítés!' });
+        setOpenChangeDialog && setOpenChangeDialog(false);
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Sikertelen frissítés!',
+        });
+      }
+    });
+  };
+
+  const onInvalidFormSubmit = (e: any) => {
+    console.error(e);
+    toast({
+      title: 'Hibás adatok!',
+      description: 'Hiba történt a validáció során!',
+      variant: 'destructive',
+    });
+  };
+
+  return useMemo(
+    () => ({
+      form,
+      studentData,
+      onValidFormSubmit,
+      onInvalidFormSubmit,
+    }),
+    [form, studentData, onValidFormSubmit, onInvalidFormSubmit]
+  );
+}

@@ -7,12 +7,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CourseModule } from './course/course.module';
-import { UsersModule } from './users/users.module';
-import { StudentService } from './student/student.service';
-import { StudentController } from './student/student.controller';
 import { StudentModule } from './student/student.module';
-import { CourseController } from './course/course.controller';
-import { CourseService } from './course/course.service';
+import { UsersModule } from './users/users.module';
+import { BillingTypeModule } from './billing-type/billing-type.module';
 
 @Module({
   imports: [
@@ -25,8 +22,9 @@ import { CourseService } from './course/course.service';
     AuthModule,
     UsersModule,
     StudentModule,
+    BillingTypeModule,
   ],
-  controllers: [AppController, CourseController, StudentController],
-  providers: [AppService, CourseService, StudentService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

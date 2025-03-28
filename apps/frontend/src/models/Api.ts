@@ -1,21 +1,66 @@
-export interface CourseEntity {
+export interface CoursesDTO {
   id: number;
-  group: object;
-  status: object;
   courseId: string;
+  occupancy: number;
   description: string;
-  location: object;
+  headcount: number;
+  maxHeadcount: number;
   price: number;
-  headCount: number;
-  maxHeadCount: number;
+  groupDescription: string;
+  locked: boolean;
 }
 
-export interface StudentEntity {
+export interface CourseStudentsDTO {
   id: number;
-  sapId: number;
-  parentMail: string;
-  name: string;
-  parentName: string;
-  parentMobile: string;
-  courseId: string;
+  email: string;
+  lastname: string;
+  firstname: string;
+  billCompany: string;
+  city: string;
+  zip: number;
+  address: string;
+  vatNumber: string;
+  children: string;
+  childrenMail: string;
+  mobile: string;
+  billingTypeId: number;
+  courseId: number;
+  courseCode: string;
+}
+
+export interface StudentDetailsDTO {
+  id: number;
+  email: string;
+  lastname: string;
+  firstname: string;
+  billCompany: string;
+  city: string;
+  zip: number;
+  address: string;
+  vatNumber: string;
+  children: string;
+  childrenMail: string;
+  mobile: string;
+  billingTypeId: number;
+  courseId: number;
+}
+
+export interface UpdateStudentDetailsDTO {
+  email: string;
+  lastname: string;
+  firstname: string;
+  billCompany: string;
+  city: string;
+  zip: number;
+  address: string;
+  vatNumber: string;
+  children: string;
+  childrenMail: string;
+  mobile: string;
+  billingTypeId: number;
+}
+
+export interface BillingTypeDTO {
+  id: number;
+  description: string;
 }

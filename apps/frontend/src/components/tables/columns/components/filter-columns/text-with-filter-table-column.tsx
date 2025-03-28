@@ -16,7 +16,11 @@ export default function TextWithFilterTableColumn<T>({
     header: ({ column }) => <DataTableColumnHeader column={column} title={headerTitle} />,
     cell: ({ cell }) => {
       const value = cell.getValue() as string;
-      return <span>{value}</span>;
+      return (
+        <div style={{ minWidth: `${size}px` }}>
+          <span>{value}</span>
+        </div>
+      );
     },
   };
 }

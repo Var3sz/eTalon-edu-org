@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 
-import AddButton from '@/components/custom/add-button';
 import AddNewCourseDialog from '@/components/dialogs/course/add-new-course-dialog';
 import CustomDialog from '@/components/dialogs/custom-dialog';
+import AddButton from '@/components/ui/add-button';
 
 export default function CoursePlannerClient() {
   const [open, setOpen] = useState<boolean>(false);

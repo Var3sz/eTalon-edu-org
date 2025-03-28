@@ -19,9 +19,45 @@
         }
       }
     },
-    "/courses": {
+    "/courses/GetCourses": {
       "get": {
         "operationId": "CourseController_findAll",
+        "summary": "Get active courses",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of active courses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CoursesDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_signIn",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "operationId": "AuthController_getProfile",
         "parameters": [],
         "responses": {
           "200": {
@@ -29,47 +65,161 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CourseEntity"
-                  }
+                  "type": "object"
                 }
               }
             }
           }
-        },
-        "tags": ["Courses"]
+        }
       }
     },
-    "/students/{courseId}": {
+    "/students/GetStudentsByCourseId/{id}": {
       "get": {
-        "operationId": "StudentController_findStudentsByCourseId",
+        "operationId": "StudentController_findChildrenByCourseId",
+        "summary": "Get student names by course ID",
         "parameters": [
           {
-            "name": "courseId",
+            "name": "id",
             "required": true,
             "in": "path",
+            "description": "Course ID",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "List of student names",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/StudentEntity"
+                    "$ref": "#/components/schemas/CourseStudentsDTO"
                   }
                 }
               }
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/students/GetStudentDetailsById/{id}": {
+      "get": {
+        "operationId": "StudentController_getChildrenDetailsById",
+        "summary": "Get student details by student ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Student ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Student details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentDetailsDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Student not found"
+          }
+        },
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/students/UpdateChildrenDetails/{id}": {
+      "patch": {
+        "operationId": "StudentController_updateChildrenDetails",
+        "summary": "Update student details by student ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Student ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudentDetailsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Student details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentDetailsDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Student not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/billingType/GetBillingType": {
+      "get": {
+        "operationId": "BillingTypeController_getAllBillingTypes",
+        "summary": "Get billing types",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of billing types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BillingTypeDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "BillingTypes"
+        ]
       }
     }
   },
@@ -77,81 +227,246 @@
     "title": "Etalon-organization",
     "description": "API documentation for Etalon organization",
     "version": "1.0",
-    "contact": {}
+    "contact": {
+
+    }
   },
   "tags": [],
-  "servers": [],
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
   "components": {
     "schemas": {
-      "CourseEntity": {
+      "CoursesDTO": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
           },
-          "group": {
-            "type": "object"
-          },
-          "status": {
-            "type": "object"
-          },
           "courseId": {
             "type": "string"
+          },
+          "occupancy": {
+            "type": "number"
           },
           "description": {
             "type": "string"
           },
-          "location": {
-            "type": "object"
+          "headcount": {
+            "type": "number"
+          },
+          "maxHeadcount": {
+            "type": "number"
           },
           "price": {
             "type": "number"
           },
-          "headCount": {
+          "groupDescription": {
+            "type": "string"
+          },
+          "locked": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "courseId",
+          "occupancy",
+          "description",
+          "headcount",
+          "maxHeadcount",
+          "price",
+          "groupDescription",
+          "locked"
+        ]
+      },
+      "CourseStudentsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
             "type": "number"
           },
-          "maxHeadCount": {
+          "email": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "vatNumber": {
+            "type": "string"
+          },
+          "children": {
+            "type": "string"
+          },
+          "childrenMail": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "billingTypeId": {
+            "type": "number"
+          },
+          "courseId": {
+            "type": "number"
+          },
+          "courseCode": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "lastname",
+          "firstname",
+          "billCompany",
+          "city",
+          "zip",
+          "address",
+          "vatNumber",
+          "children",
+          "childrenMail",
+          "mobile",
+          "billingTypeId",
+          "courseId",
+          "courseCode"
+        ]
+      },
+      "StudentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "email": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "vatNumber": {
+            "type": "string"
+          },
+          "children": {
+            "type": "string"
+          },
+          "childrenMail": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "billingTypeId": {
+            "type": "number"
+          },
+          "courseId": {
             "type": "number"
           }
         },
         "required": [
           "id",
-          "group",
-          "status",
-          "courseId",
-          "description",
-          "location",
-          "price",
-          "headCount",
-          "maxHeadCount"
+          "email",
+          "lastname",
+          "firstname",
+          "billCompany",
+          "city",
+          "zip",
+          "address",
+          "vatNumber",
+          "children",
+          "childrenMail",
+          "mobile",
+          "billingTypeId",
+          "courseId"
         ]
       },
-      "StudentEntity": {
+      "UpdateStudentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "vatNumber": {
+            "type": "string"
+          },
+          "children": {
+            "type": "string"
+          },
+          "childrenMail": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "billingTypeId": {
+            "type": "number"
+          }
+        }
+      },
+      "BillingTypeDTO": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
           },
-          "sapId": {
-            "type": "number"
-          },
-          "parentMail": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "parentName": {
-            "type": "string"
-          },
-          "parentMobile": {
-            "type": "string"
-          },
-          "courseId": {
+          "description": {
             "type": "string"
           }
         },
-        "required": ["id", "sapId", "parentMail", "name", "parentName", "parentMobile", "courseId"]
+        "required": [
+          "id",
+          "description"
+        ]
       }
     }
   }

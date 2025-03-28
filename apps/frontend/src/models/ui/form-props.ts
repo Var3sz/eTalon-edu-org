@@ -17,4 +17,5 @@ export type FormBaseProps<T extends FieldValues> = {
         }>
       | undefined
   ) => void;
+  inputStyle?: string;
 };

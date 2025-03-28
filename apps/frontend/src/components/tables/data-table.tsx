@@ -16,15 +16,26 @@ import {
 import { useState } from 'react';
 
 import { DataTablePagination } from '@/components/tables/columns/components/data-table-pagination';
-import { DataTableViewOptions } from '@/components/tables/columns/components/data-table-view-options';
+import { DataTableToolBar } from '@/components/tables/columns/components/data-table-toolbar';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  hasToolbar?: boolean;
+  toolbarProps?: {
+    title: string;
+    hasAddButton?: boolean;
+    addButtonTitle?: string;
+  };
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  hasToolbar = false,
+  toolbarProps,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -47,9 +58,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div>
       <div className='flex items-center py-4'>
-        <DataTableViewOptions table={table} />
+        {hasToolbar && <DataTableToolBar table={table} toolbarProps={toolbarProps!} />}
       </div>
-      <div className='overflow-x-scroll rounded-md border'>
+      <div className='rounded-md border'>
         <Table className='table-auto border-collapse'>
           <TableHeader className='bg-gray-300'>
             {table.getHeaderGroups().map((headerGroup) => (

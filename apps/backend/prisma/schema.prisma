@@ -21,17 +21,24 @@ model Location {
 }
 
 model BillingType {
-  id           Int @id @default(autoincrement())
-  description  String
-  students     Student[]
+  id          Int       @id @default(autoincrement())
+  description String
+  students    Student[]
+}
+
+model CourseDates {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  courseId Int
+  course   Course   @relation(fields: [courseId], references: [id])
 }
 
 model Course {
-  id           Int      @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   courseId     String
   description  String
   price        Int?
-  active       Boolean  @default(true)
+  active       Boolean       @default(true)
   endTime      String
   groupId      Int
   headcount    Int?
@@ -40,31 +47,32 @@ model Course {
   startDate    DateTime
   startTime    String
   locked       Boolean
-  group        Group    @relation(fields: [groupId], references: [id])
-  location     Location @relation(fields: [locationId], references: [id])
+  group        Group         @relation(fields: [groupId], references: [id])
+  location     Location      @relation(fields: [locationId], references: [id])
+  courseDate   CourseDates[]
   students     Student[]
 }
 
 model Student {
-  id           Int @id @default(autoincrement())
-  email        String
-  lastname     String
-  firstname    String
-  billCompany  String?
-  city         String
-  zip          Int
-  address      String
-  vatNumber    String?
-  children     String
-  childrenMail String?
-  mobile       String
+  id            Int         @id @default(autoincrement())
+  email         String
+  lastname      String
+  firstname     String
+  billCompany   String?
+  city          String
+  zip           Int
+  address       String
+  vatNumber     String?
+  children      String
+  childrenMail  String?
+  mobile        String
   billingTypeId Int
-  billingType  BillingType @relation(fields: [billingTypeId], references: [id])
-  courseId     Int
-  course       Course @relation(fields: [courseId], references: [id])
+  courseId      Int
+  billingType   BillingType @relation(fields: [billingTypeId], references: [id])
+  course        Course      @relation(fields: [courseId], references: [id])
 }
 
-view coursesummaryview {
+view CourseSummaryOverview {
   id               Int       @unique
   courseId         String?
   groupDescription String?
@@ -78,4 +86,22 @@ view coursesummaryview {
   endTime          String?
   active           Boolean?
   locked           Boolean?
+}
+
+view StudentDetailsView {
+  id            Int     @unique
+  email         String?
+  lastname      String?
+  firstname     String?
+  billCompany   String?
+  city          String?
+  zip           Int?
+  address       String?
+  vatNumber     String?
+  children      String?
+  childrenMail  String?
+  mobile        String?
+  billingTypeId Int?
+  courseId      Int?
+  courseCode    String?
 }

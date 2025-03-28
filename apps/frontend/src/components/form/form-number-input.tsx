@@ -18,7 +18,7 @@ export default function FormNumberInput<T extends FieldValues>({
         <FormItem className='flex flex-col'>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} type='number' className='w-[320px]' />
+            <Input placeholder={placeholder} {...field} type='number' className='w-[250px]' />
           </FormControl>
           <FormDescription />
           <FormMessage />

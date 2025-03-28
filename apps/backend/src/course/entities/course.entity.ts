@@ -1,22 +1,24 @@
-import { IsBoolean, IsDecimal, IsInt, IsString } from '@nestjs/class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class CourseEntity {
-  @IsInt()
+export class CourseDTO {}
+
+export class CoursesDTO {
+  @ApiProperty()
   id: number;
-  @IsString()
+  @ApiProperty()
   courseId: string;
-  @IsInt()
+  @ApiProperty()
   occupancy: number;
-  @IsString()
+  @ApiProperty()
   description: string;
-  @IsInt()
+  @ApiProperty()
   headcount: number;
-  @IsInt()
+  @ApiProperty()
   maxHeadcount: number;
-  @IsDecimal()
+  @ApiProperty()
   price: number;
-  @IsString()
+  @ApiProperty()
   groupDescription: string;
-  @IsBoolean()
+  @ApiProperty()
   locked: boolean;
 }

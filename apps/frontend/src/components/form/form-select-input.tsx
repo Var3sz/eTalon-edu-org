@@ -8,13 +8,23 @@ import { FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
-type ItemModel = { label: string; value: string };
+export type ItemModel = { label: string; value: string | number };
 
 interface FormSelectInputProps<T extends FieldValues> {
   id: Path<T>;
   label: string;
   formControl: Control<T>;
-  formSetValue?: (id: string, value: string) => void;
+  formSetValue: (
+    name: any,
+    value: any,
+    options?:
+      | Partial<{
+          shouldValidate: boolean;
+          shouldDirty: boolean;
+          shouldTouch: boolean;
+        }>
+      | undefined
+  ) => void;
   placeholder?: string;
   emptySelect?: string;
   items: ItemModel[];
@@ -40,12 +50,12 @@ export default function FormSelectInput<T extends FieldValues>({
           <FormLabel>{label}</FormLabel>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-              <Button variant='outline' className='w-[320px] justify-between'>
+              <Button variant='outline' className='w-[250px] justify-between'>
                 {field.value ? items.find((item) => item.value === field.value)?.label : placeholder}
                 <ChevronDown className='h-4 w-4 opacity-50' />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className='w-[320px] p-0'>
+            <PopoverContent className='w-[250px] p-0'>
               <Command>
                 <CommandInput placeholder={placeholder} />
                 <CommandList>
