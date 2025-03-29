@@ -1,9 +1,15 @@
-import { object, ObjectSchema } from 'yup';
+import * as yup from 'yup';
 
 import { UpdateStudentDetailsDTO } from '@/models/Api';
-import { RequiredNumberField, RequiredStringField } from '@/validation/validation-elements';
+import { BooleanField, RequiredNumberField, RequiredStringField } from '@/validation/validation-elements';
+import { object, ObjectSchema } from 'yup';
+import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
-export const updateStudentDetailsSchema: ObjectSchema<UpdateStudentDetailsDTO> = object({
+const updateStudentDetailsHelperSchema = yup.object({
+  inEdit: BooleanField,
+});
+
+export const updateStudentDetailsSchema: ObjectSchema<UpdateStudentDetailsFormModel> = object({
   email: RequiredStringField,
   lastname: RequiredStringField,
   firstname: RequiredStringField,
@@ -16,4 +22,5 @@ export const updateStudentDetailsSchema: ObjectSchema<UpdateStudentDetailsDTO> =
   childrenMail: RequiredStringField,
   mobile: RequiredStringField,
   billingTypeId: RequiredNumberField,
+  Helpers: updateStudentDetailsHelperSchema,
 });

@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import StudentDetailsDialog from '@/components/dialogs/student/student-details-dialog';
 import { SimpleTableColumnHeader } from '@/components/tables/columns/components/headers/simple-table-column.header';
-import { ColumnBaseModel } from '@/components/tables/columns/types/types';
+import { ClickableColumnModel } from '@/components/tables/columns/types/types';
 import { CourseStudentsDTO } from '@/models/Api';
 
 export default function ClickableTableColumn<T>({
@@ -11,7 +11,8 @@ export default function ClickableTableColumn<T>({
   accessorKey,
   size,
   headerTitle,
-}: ColumnBaseModel<T>): ColumnDef<T> {
+  dialogTitle = '',
+}: ClickableColumnModel<T>): ColumnDef<T> {
   return {
     id: id,
     accessorKey: accessorKey,
@@ -21,10 +22,7 @@ export default function ClickableTableColumn<T>({
       const value = cell.getValue() as string;
 
       return (
-        <CustomInnerStateDialog
-          title='Gyermek adatai'
-          triggerElement={<span className='cursor-pointer '>{value}</span>}
-        >
+        <CustomInnerStateDialog title={dialogTitle} triggerElement={<span className='cursor-pointer '>{value}</span>}>
           <StudentDetailsDialog studentData={row.original as CourseStudentsDTO} />
         </CustomInnerStateDialog>
       );

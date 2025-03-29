@@ -1,6 +1,7 @@
 import { StudentDetailsDTO, UpdateStudentDetailsDTO } from '@/models/Api';
+import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
-export const UpdateStudentDetailsFormDefault = (studentData: StudentDetailsDTO): UpdateStudentDetailsDTO => {
+export const UpdateStudentDetailsFormDefault = (studentData: StudentDetailsDTO): UpdateStudentDetailsFormModel => {
   return {
     email: studentData.email,
     lastname: studentData.lastname,
@@ -14,5 +15,8 @@ export const UpdateStudentDetailsFormDefault = (studentData: StudentDetailsDTO):
     childrenMail: studentData.childrenMail,
     mobile: studentData.mobile,
     billingTypeId: studentData.billingTypeId,
+    Helpers: {
+      inEdit: false,
+    },
   };
 };

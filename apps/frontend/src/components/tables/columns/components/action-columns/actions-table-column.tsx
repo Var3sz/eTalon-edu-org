@@ -1,10 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Edit } from 'lucide-react';
+import { Edit, Eye } from 'lucide-react';
 import Link from 'next/link';
 
 import { ActionsTableColumnModel } from '@/components/tables/columns/types/types';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 
 export default function ActionsTableColumn<T>({
   id,
@@ -12,7 +13,9 @@ export default function ActionsTableColumn<T>({
   accessorKey,
   select = false,
   redirect = false,
+  edit = false,
   redirection,
+  dialogTitle = '',
 }: ActionsTableColumnModel<T>): ColumnDef<T> {
   return {
     id: id,
@@ -36,7 +39,7 @@ export default function ActionsTableColumn<T>({
     cell: ({ row, cell }) => {
       return (
         <div
-          className='flex items-center justify-items-center'
+          className='flex items-center justify-items-center gap-1'
           style={{
             minWidth: `${size}px`,
             width: cell.column.getSize(),
@@ -57,8 +60,13 @@ export default function ActionsTableColumn<T>({
             })()}
           {redirect && redirection && (
             <Link href={redirection(row.original)}>
-              <Edit />
+              <Eye />
             </Link>
+          )}
+          {edit && (
+            <CustomInnerStateDialog title={dialogTitle} triggerElement={<Edit />}>
+              <div />
+            </CustomInnerStateDialog>
           )}
         </div>
       );

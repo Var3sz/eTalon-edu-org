@@ -3,14 +3,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StudentDetailsDTO } from '@next-nest-template/backend/dist/student/entities/student.entity';
 import { useQueryClient } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, TransitionStartFunction, useMemo } from 'react';
+import { Dispatch, SetStateAction, TransitionStartFunction, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { toast } from '@/components/ui/use-toast';
-import { UpdateStudentDetailsDTO } from '@/models/Api';
 import { UpdateStudentDetailsAction } from '@/models/students/action/UpdateStudentDetailsAction';
 import { UpdateStudentDetailsFormDefault } from '@/validation/default-values/student/update-student-details-form-default';
 import { updateStudentDetailsSchema } from '@/validation/schemas/student/update-student-details-schema';
+import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
 type UseInitStudentDetailsDialogProps = {
   studentData: StudentDetailsDTO;
@@ -25,12 +25,12 @@ export default function useInitStudentDetailsDialog({
 }: UseInitStudentDetailsDialogProps) {
   const queryClient = useQueryClient();
 
-  const form = useForm<UpdateStudentDetailsDTO>({
+  const form = useForm<UpdateStudentDetailsFormModel>({
     defaultValues: UpdateStudentDetailsFormDefault(studentData),
-    resolver: yupResolver<UpdateStudentDetailsDTO>(updateStudentDetailsSchema),
+    resolver: yupResolver<UpdateStudentDetailsFormModel>(updateStudentDetailsSchema),
   });
 
-  const onValidFormSubmit = (formModel: UpdateStudentDetailsDTO) => {
+  const onValidFormSubmit = (formModel: UpdateStudentDetailsFormModel) => {
     startTransaction(async () => {
       const updateResponse = await UpdateStudentDetailsAction(studentData.id, formModel);
       if (updateResponse.status === 200) {
@@ -54,6 +54,10 @@ export default function useInitStudentDetailsDialog({
       variant: 'destructive',
     });
   };
+
+  useEffect(() => {
+    if (!form.getValues().Helpers.inEdit) form.reset(UpdateStudentDetailsFormDefault(studentData));
+  }, [form.getValues().Helpers.inEdit]);
 
   return useMemo(
     () => ({

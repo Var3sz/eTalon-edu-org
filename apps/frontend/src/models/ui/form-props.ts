@@ -1,11 +1,21 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 
+export type ItemModel = { label: string; value: string | number };
+
+export type FormSelectInputProps<T extends FieldValues> = {
+  emptySelect?: string;
+  items: ItemModel[];
+} & FormBaseProps<T>;
+
 export type FormBaseProps<T extends FieldValues> = {
   id: Path<T>;
   label: string;
   formControl: Control<T>;
   placeholder?: string;
   type?: string;
+  inEdit?: boolean;
+  required?: boolean;
+  disabled?: boolean;
   formSetValue?: (
     name: any,
     value: any,

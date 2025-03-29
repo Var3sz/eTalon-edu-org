@@ -21,6 +21,7 @@ export default function StudentColumns(): ColumnDef<CourseStudentsDTO>[] {
         id: 'children',
         accessorKey: 'children',
         headerTitle: StudentLocales.table.name,
+        dialogTitle: 'Gyermek adatai',
       }),
       HiddenTableColumn<CourseStudentsDTO>({
         id: 'id',

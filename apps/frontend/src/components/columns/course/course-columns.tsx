@@ -15,11 +15,14 @@ export default function CourseColumns(): ColumnDef<CoursesDTO>[] {
   return useMemo(
     () => [
       ActionsTableColumn<CoursesDTO>({
-        id: 'select',
-        accessorKey: 'select',
+        id: 'actions',
+        accessorKey: 'actions',
         headerTitle: '',
+        edit: true,
         redirect: true,
         redirection: CourseRedirectionFunction,
+        dialogTitle: 'Kurzus dátumok módosítása',
+        size: 50,
       }),
       TextWithFilterTableColumn<CoursesDTO>({
         id: 'groupDescription',
