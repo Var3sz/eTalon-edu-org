@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { DatePatterns } from '@/api/consts/date-patterns';
 import useGetCourseDetailsById from '@/hooks/courses/use-get-course-details-by-id-query';
+import { formatDateCustom } from '@/lib/utils';
 import { CourseDetailsDto } from '@/models/Api';
 
 type UseInitCourseClientProps = {
@@ -9,6 +11,7 @@ type UseInitCourseClientProps = {
 
 export type StudentAttendance = {
   id: number;
+  studentId: number;
   courseId: string;
   children: string;
   email: string;
@@ -34,18 +37,21 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
 
   useEffect(() => {
     if (course !== null) {
+      const id = course.id;
       const courseId = course.courseId;
       const courseDates = course.courseDates.map((cd) => ({
         id: cd.courseDate.id,
-        date: cd.courseDate.date,
+        date: formatDateCustom(cd.courseDate.date, DatePatterns.DATEURI)!,
+        description: cd.courseDate.description,
       }));
 
       const data = course.students.map((studentEntry) => {
         const student = studentEntry.student;
 
         const row: StudentAttendance = {
+          id,
           courseId,
-          id: student.id,
+          studentId: student.id,
           children: student.children,
           email: student.email,
           lastname: student.lastname,
@@ -63,9 +69,9 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
         courseDates.forEach(({ id: courseDateId, date }) => {
           const attendance = student.attendance?.find((a) => a.courseDateId === courseDateId);
           if (attendance?.attended) {
-            row[date] = '✓';
+            row[date] = 'Y';
           } else {
-            row[date] = attendance?.attended === false ? '✗' : '';
+            row[date] = 'N';
           }
         });
 
@@ -74,10 +80,6 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
       setCourseData(data);
     }
   }, [course]);
-
-  useEffect(() => {
-    console.log(courseData);
-  }, [courseData]);
 
   return useMemo(() => ({ courseData }), [courseData]);
 }

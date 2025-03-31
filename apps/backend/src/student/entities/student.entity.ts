@@ -1,4 +1,4 @@
-import { IsInt, IsOptional, IsString } from '@nestjs/class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CourseStudentsDTO {
@@ -33,67 +33,73 @@ export class StudentDetailsDTO {
   childrenMail: string;
   mobile: string;
   billingTypeId: number;
-  courseId: number;
 }
 
 export class UpdateStudentDetailsDTO {
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  email?: string;
+  @IsNotEmpty()
+  email: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  lastname?: string;
+  @IsNotEmpty()
+  lastname: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  firstname?: string;
+  @IsNotEmpty()
+  firstname: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
   billCompany?: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  city?: string;
+  @IsNotEmpty()
+  city: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsInt()
-  zip?: number;
+  zip: number;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  address?: string;
+  @IsNotEmpty()
+  address: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
   vatNumber?: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  children?: string;
+  @IsNotEmpty()
+  children: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
   childrenMail?: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsString()
-  mobile?: string;
+  @IsNotEmpty()
+  mobile: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   @IsOptional()
   @IsInt()
-  billingTypeId?: number;
+  billingTypeId: number;
 }

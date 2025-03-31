@@ -1,6 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Param, Put } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { StudentDetailsDTO, UpdateStudentDetailsDTO } from './entities/student.entity';
 import { StudentService } from './student.service';
 
 @ApiTags('Students')
@@ -8,16 +9,12 @@ import { StudentService } from './student.service';
 export class StudentController {
   constructor(private studentService: StudentService) {}
 
-  /*@Patch('/UpdateChildrenDetails/:id')
-  @ApiOperation({ summary: 'Update student details by student ID' })
-  @ApiParam({ name: 'id', type: Number, description: 'Student ID' })
-  @ApiResponse({ status: 200, description: 'Student details', type: [StudentDetailsDTO] })
-  @ApiResponse({ status: 404, description: 'Student not found' })
-  @ApiResponse({ status: 500, description: 'Internal server error' })
-  async updateChildrenDetails(
+  @Put('/UpdateStudentDetails/:id')
+  @ApiResponse({ status: 200, description: 'Success', type: [StudentDetailsDTO] })
+  async updateStudentDetails(
     @Param('id') id: number,
     @Body() requestDTO: UpdateStudentDetailsDTO
   ): Promise<StudentDetailsDTO> {
-    return this.studentService.updateChildrenData(Number(id), requestDTO);
-  }*/
+    return this.studentService.updateStudentDetails(Number(id), requestDTO);
+  }
 }

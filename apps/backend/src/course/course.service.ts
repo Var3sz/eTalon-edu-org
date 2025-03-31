@@ -91,27 +91,4 @@ export class CourseService {
       throw new InternalServerErrorException(ExceptionLocales.INTERNAL_SERVER_ERROR);
     }
   }
-
-  /**
-   * Get all students with course dates
-   *
-  async getCourseInformationById(id: number): Promise<CourseStudentsDTO[]> {
-    const students = await this.prisma.studentDetailsView.findMany({
-      where: { courseId: id },
-    });
-
-    return students.map((student) => ({
-      ...student,
-      courseDates: Array.isArray(student.courseDates)
-        ? (student.courseDates as unknown[]).map((item) => {
-            const { id, date, description } = item as any;
-            return {
-              id: Number(id),
-              date: String(date),
-              description: String(description),
-            } satisfies CourseDatesDTO;
-          })
-        : [],
-    }));
-  }*/
 }

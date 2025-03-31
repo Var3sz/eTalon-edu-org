@@ -32,9 +32,9 @@ export default function useInitStudentDetailsDialog({
 
   const onValidFormSubmit = (formModel: UpdateStudentDetailsFormModel) => {
     startTransaction(async () => {
-      const updateResponse = await UpdateStudentDetailsAction(studentData.id, formModel);
+      const updateResponse = await UpdateStudentDetailsAction(studentData.studentId, formModel);
       if (updateResponse.status === 200) {
-        await queryClient.invalidateQueries({ queryKey: ['students-by-course-id', studentData.courseId] });
+        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', studentData.id] });
         toast({ variant: 'success', title: 'Sikeres frissítés!' });
         setOpenChangeDialog && setOpenChangeDialog(false);
       } else {

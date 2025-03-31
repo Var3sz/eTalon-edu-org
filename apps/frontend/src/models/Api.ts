@@ -1,3 +1,14 @@
+/* eslint-disable */
+/* tslint:disable */
+/*
+ * ---------------------------------------------------------------
+ * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
+ * ##                                                           ##
+ * ## AUTHOR: acacode                                           ##
+ * ## SOURCE: https://github.com/acacode/swagger-typescript-api ##
+ * ---------------------------------------------------------------
+ */
+
 export interface CoursesDTO {
   id: number;
   courseId: string;
@@ -65,6 +76,37 @@ export interface CourseDetailsDto {
   courseId: string;
   students: CourseStudentDto[];
   courseDates: CourseCourseDateDto[];
+}
+
+export interface UpdateStudentDetailsDTO {
+  email: string;
+  lastname: string;
+  firstname: string;
+  billCompany?: string;
+  city: string;
+  zip: number;
+  address: string;
+  vatNumber?: string;
+  children: string;
+  childrenMail?: string;
+  mobile: string;
+  billingTypeId: number;
+}
+
+export interface StudentDetailsDTO {
+  id: number;
+  email: string;
+  lastname: string;
+  firstname: string;
+  billCompany: string;
+  city: string;
+  zip: number;
+  address: string;
+  vatNumber: string;
+  children: string;
+  childrenMail: string;
+  mobile: string;
+  billingTypeId: number;
 }
 
 export interface BillingTypeDTO {

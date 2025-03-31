@@ -124,6 +124,49 @@
         }
       }
     },
+    "/students/UpdateStudentDetails/{id}": {
+      "put": {
+        "operationId": "StudentController_updateStudentDetails",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudentDetailsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentDetailsDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Students"
+        ]
+      }
+    },
     "/billingType/GetBillingTypes": {
       "get": {
         "operationId": "BillingTypeController_getBillingTypes",
@@ -408,6 +451,117 @@
           "courseId",
           "students",
           "courseDates"
+        ]
+      },
+      "UpdateStudentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "vatNumber": {
+            "type": "string"
+          },
+          "children": {
+            "type": "string"
+          },
+          "childrenMail": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "billingTypeId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "email",
+          "lastname",
+          "firstname",
+          "city",
+          "zip",
+          "address",
+          "children",
+          "mobile",
+          "billingTypeId"
+        ]
+      },
+      "StudentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "email": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "vatNumber": {
+            "type": "string"
+          },
+          "children": {
+            "type": "string"
+          },
+          "childrenMail": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "billingTypeId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "lastname",
+          "firstname",
+          "billCompany",
+          "city",
+          "zip",
+          "address",
+          "vatNumber",
+          "children",
+          "childrenMail",
+          "mobile",
+          "billingTypeId"
         ]
       },
       "BillingTypeDTO": {

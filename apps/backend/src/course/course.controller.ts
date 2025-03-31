@@ -23,12 +23,4 @@ export class CourseController {
   async getCourseDetailsById(@Param('id') id: number) {
     return this.courseService.getCourseDetailsById(Number(id));
   }
-
-  /*@Get('/GetStudentsByCourseId/:id')
-  @ApiOperation({ summary: 'Get student names by course ID' })
-  @ApiParam({ name: 'id', type: Number, description: 'Course ID' })
-  @ApiResponse({ status: 200, description: 'List of student names', type: [CourseStudentsDTO] })
-  async findChildrenByCourseId(@Param('id') id: number): Promise<CourseStudentsDTO[]> {
-    return this.courseService.getCourseInformationById(Number(id));
-  }*/
 }

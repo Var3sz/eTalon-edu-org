@@ -1,6 +1,6 @@
 'use server';
 
-import { httpRequestGET, httpRequestPATCH } from '@/api/models/api';
+import { httpRequestGET, httpRequestPUT } from '@/api/models/api';
 import { FetchResponse } from '@/api/types/fetch-response';
 
 const getActiveCoursesUrl = () => {
@@ -12,7 +12,7 @@ const getCourseDetailsByIdUrl = (courseId: number) => {
 };
 
 const updateStudentDetailsUrl = (studentId: number) => {
-  return `${process.env.SERVER_BASE_URL}students/UpdateChildrenDetails/${studentId}`;
+  return `${process.env.SERVER_BASE_URL}students/UpdateStudentDetails/${studentId}`;
 };
 
 export const GetActiveCourses = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
@@ -27,5 +27,5 @@ export const UpdateStudentDetails = async <RequestType, ResponseType>(
   studentId: number,
   studentBody: RequestType
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPATCH(updateStudentDetailsUrl(studentId), process.env.JWT_TOKEN!, studentBody);
+  return await httpRequestPUT(updateStudentDetailsUrl(studentId), process.env.JWT_TOKEN!, studentBody);
 };

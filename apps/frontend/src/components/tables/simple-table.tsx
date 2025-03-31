@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableColumnRow, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface SimpleTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -81,15 +81,13 @@ export function SimpleTable<TData, TValue>({
         <Table className='table-auto border-collapse'>
           <TableHeader className='bg-gray-300'>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead className='border-2' key={header.id}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
+              <TableColumnRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead colSpan={header.colSpan} className='border-2' key={header.id}>
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
+              </TableColumnRow>
             ))}
           </TableHeader>
           <TableBody>

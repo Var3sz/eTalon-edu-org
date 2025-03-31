@@ -1,3 +1,4 @@
+import { ColumnDef } from '@tanstack/react-table';
 import { Control, FieldValues } from 'react-hook-form';
 
 export type ActionsTableColumnModel<TData> = {
@@ -20,6 +21,10 @@ type InputModel<FormType extends FieldValues> = {
 };
 
 export type ColumnInputModel<FormType extends FieldValues, TData> = ColumnBaseModel<TData> & InputModel<FormType>;
+
+export type ColumnGroupModel<T> = {
+  columns?: ColumnDef<T>[];
+} & ColumnBaseModel<T>;
 
 export type ClickableColumnModel<TData> = {
   dialogTitle?: string;
