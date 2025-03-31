@@ -1,7 +1,7 @@
-import { StudentDetailsDTO, UpdateStudentDetailsDTO } from '@/models/Api';
+import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
-export const UpdateStudentDetailsFormDefault = (studentData: StudentDetailsDTO): UpdateStudentDetailsFormModel => {
+export const UpdateStudentDetailsFormDefault = (studentData: StudentAttendance): UpdateStudentDetailsFormModel => {
   return {
     email: studentData.email,
     lastname: studentData.lastname,

@@ -1,19 +1,19 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { StudentDetailsDTO } from '@next-nest-template/backend/dist/student/entities/student.entity';
 import { useQueryClient } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, TransitionStartFunction, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { toast } from '@/components/ui/use-toast';
-import { UpdateStudentDetailsAction } from '@/models/students/action/UpdateStudentDetailsAction';
+import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
+import { UpdateStudentDetailsAction } from '@/models/students/action/update-student-details-action';
+import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 import { UpdateStudentDetailsFormDefault } from '@/validation/default-values/student/update-student-details-form-default';
 import { updateStudentDetailsSchema } from '@/validation/schemas/student/update-student-details-schema';
-import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
 type UseInitStudentDetailsDialogProps = {
-  studentData: StudentDetailsDTO;
+  studentData: StudentAttendance;
   startTransaction: TransitionStartFunction;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
 };

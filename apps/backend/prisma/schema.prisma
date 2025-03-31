@@ -8,6 +8,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Course {
+  id           Int                 @id @default(autoincrement())
+  courseId     String
+  description  String
+  price        Int?
+  active       Boolean             @default(false)
+  endTime      String
+  groupId      Int
+  headcount    Int?                @default(0)
+  locationId   Int
+  maxHeadcount Int
+  startDate    DateTime
+  startTime    String
+  locked       Boolean             @default(false)
+  group        Group               @relation(fields: [groupId], references: [id])
+  location     Location            @relation(fields: [locationId], references: [id])
+  courseDates  Course_CourseDate[]
+  students     Course_Students[]
+}
+
+model CourseDates {
+  id          Int                 @id @default(autoincrement())
+  date        DateTime
+  description String
+  attendance  Attendance[]
+  courses     Course_CourseDate[]
+}
+
+model Student {
+  id            Int               @id @default(autoincrement())
+  email         String
+  lastname      String
+  firstname     String
+  billCompany   String?
+  city          String
+  zip           Int
+  address       String
+  vatNumber     String?
+  children      String
+  childrenMail  String?
+  mobile        String
+  billingTypeId Int
+  attendance    Attendance[]
+  courses       Course_Students[]
+  billingType   BillingType       @relation(fields: [billingTypeId], references: [id])
+}
+
+model Course_CourseDate {
+  id           Int         @id @default(autoincrement())
+  courseId     Int
+  courseDateId Int
+  courseDate   CourseDates @relation(fields: [courseDateId], references: [id])
+  course       Course      @relation(fields: [courseId], references: [id])
+}
+
+model Course_Students {
+  id        Int     @id @default(autoincrement())
+  courseId  Int
+  studentId Int
+  course    Course  @relation(fields: [courseId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id])
+}
+
+model Attendance {
+  id           Int         @id @default(autoincrement())
+  courseDateId Int
+  studentId    Int
+  attended     Boolean
+  courseDate   CourseDates @relation(fields: [courseDateId], references: [id])
+  student      Student     @relation(fields: [studentId], references: [id])
+}
+
 model Group {
   id          Int      @id @default(autoincrement())
   description String
@@ -26,53 +98,7 @@ model BillingType {
   students    Student[]
 }
 
-model CourseDates {
-  id       Int      @id @default(autoincrement())
-  date     DateTime
-  courseId Int
-  course   Course   @relation(fields: [courseId], references: [id])
-}
-
-model Course {
-  id           Int           @id @default(autoincrement())
-  courseId     String
-  description  String
-  price        Int?
-  active       Boolean       @default(true)
-  endTime      String
-  groupId      Int
-  headcount    Int?
-  locationId   Int
-  maxHeadcount Int
-  startDate    DateTime
-  startTime    String
-  locked       Boolean
-  group        Group         @relation(fields: [groupId], references: [id])
-  location     Location      @relation(fields: [locationId], references: [id])
-  courseDate   CourseDates[]
-  students     Student[]
-}
-
-model Student {
-  id            Int         @id @default(autoincrement())
-  email         String
-  lastname      String
-  firstname     String
-  billCompany   String?
-  city          String
-  zip           Int
-  address       String
-  vatNumber     String?
-  children      String
-  childrenMail  String?
-  mobile        String
-  billingTypeId Int
-  courseId      Int
-  billingType   BillingType @relation(fields: [billingTypeId], references: [id])
-  course        Course      @relation(fields: [courseId], references: [id])
-}
-
-view CourseSummaryOverview {
+view CourseSummaryView {
   id               Int       @unique
   courseId         String?
   groupDescription String?
@@ -86,22 +112,4 @@ view CourseSummaryOverview {
   endTime          String?
   active           Boolean?
   locked           Boolean?
-}
-
-view StudentDetailsView {
-  id            Int     @unique
-  email         String?
-  lastname      String?
-  firstname     String?
-  billCompany   String?
-  city          String?
-  zip           Int?
-  address       String?
-  vatNumber     String?
-  children      String?
-  childrenMail  String?
-  mobile        String?
-  billingTypeId Int?
-  courseId      Int?
-  courseCode    String?
 }

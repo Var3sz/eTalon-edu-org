@@ -1,5 +1,5 @@
-import { ContentTypeConstantType } from './ContentTypes';
-import { HTTPMethodConstantType } from './HTTPMethods';
+import { ContentTypeConstantType } from './content-types';
+import { HTTPMethodConstantType } from './http-methods';
 
 // Fetch Request Builder Type
 

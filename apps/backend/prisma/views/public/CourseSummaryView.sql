@@ -24,7 +24,7 @@ SELECT
                 (c.description || ', ' :: text) || to_char(c."startDate", 'YYYY-MM-DD' :: text)
               ) || ', ' :: text
             ) || c."startTime"
-          ) || ':' :: text
+          ) || '-' :: text
         ) || c."endTime"
       ) || ', ' :: text
     ) || l.description

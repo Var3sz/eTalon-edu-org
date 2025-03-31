@@ -1,5 +1,5 @@
 'use server';
-import { FetchOptionBuilder, FetchOptions } from '../types/FetchOptions';
+import { FetchOptionBuilder, FetchOptions } from '../types/fetch-options';
 
 export const fetchOptions = async <T>({
   method,

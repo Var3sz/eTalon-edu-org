@@ -1,3 +1,5 @@
+import { Control, FieldValues } from 'react-hook-form';
+
 export type ActionsTableColumnModel<TData> = {
   select?: boolean;
   redirect?: boolean;
@@ -7,6 +9,17 @@ export type ActionsTableColumnModel<TData> = {
 } & ColumnBaseModel<TData>;
 
 export type HiddenTableColumnModel<TData> = Omit<ColumnBaseModel<TData>, 'headerTitle'>;
+
+type InputModel<FormType extends FieldValues> = {
+  required?: boolean;
+  unitOfMeasureLabel?: string;
+  formControl: Control<FormType>;
+  disabled?: boolean;
+  maxDecimal?: number;
+  inEdit: boolean;
+};
+
+export type ColumnInputModel<FormType extends FieldValues, TData> = ColumnBaseModel<TData> & InputModel<FormType>;
 
 export type ClickableColumnModel<TData> = {
   dialogTitle?: string;

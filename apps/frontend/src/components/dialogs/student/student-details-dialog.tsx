@@ -1,21 +1,20 @@
 import { Dispatch, SetStateAction, useTransition } from 'react';
 import { useWatch } from 'react-hook-form';
 
-import LoadingFullScreen from '@/app/Loading';
+import LoadingFullScreen from '@/app/loading';
 import FormNumberInput from '@/components/form/form-number-input';
 import FormSelectInput from '@/components/form/form-select-input';
 import FormTextInput from '@/components/form/form-text-input';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import useGetBillingTypes from '@/hooks/billing-type/useGetBillingTypes';
-import useInitStudentDetailsDialog from '@/hooks/students/useInitStudentDetailsDialog';
-import { CourseStudentsDTO } from '@/models/Api';
+import useGetBillingTypesQuery from '@/hooks/billing-type/use-get-billing-types-query';
+import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
+import useInitStudentDetailsDialog from '@/hooks/students/use-init-student-details-dialog';
 import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 import { ItemModel } from '@/models/ui/form-props';
-import FormSwitchInput from '@/components/form/form-switch-input';
 
 type StudentDetailsDialogProps = {
-  studentData: CourseStudentsDTO;
+  studentData: StudentAttendance;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -29,7 +28,7 @@ export default function StudentDetailsDialog({ studentData, setOpenChangeDialog 
   });
   const formValues = useWatch({ control: form.control }) as UpdateStudentDetailsFormModel;
 
-  const { billingTypes } = useGetBillingTypes({ startTransaction: startTransaction });
+  const billingTypes = useGetBillingTypesQuery();
 
   return (
     <div>
@@ -109,10 +108,12 @@ export default function StudentDetailsDialog({ studentData, setOpenChangeDialog 
               formControl={form.control}
               formSetValue={form.setValue}
               items={
-                billingTypes.map((bt) => ({
-                  label: bt.description,
-                  value: bt.id,
-                })) as ItemModel[]
+                billingTypes
+                  ? (billingTypes.map((bt) => ({
+                      label: bt.description,
+                      value: bt.id,
+                    })) as ItemModel[])
+                  : []
               }
               placeholder='Válasszon számla típust!'
               emptySelect='Nem található ilyen számla típus!'

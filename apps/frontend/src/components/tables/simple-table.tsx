@@ -13,10 +13,31 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 interface SimpleTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   defaultData: TData[];
+  newRowElement?: TData;
+  form?: {
+    formId: string;
+    formSetValue: (
+      name: any,
+      value: any,
+      options?:
+        | Partial<{
+            shouldValidate: boolean;
+            shouldDirty: boolean;
+            shouldTouch: boolean;
+          }>
+        | undefined
+    ) => void;
+  };
   hiddenColumnIds?: string[];
 }
 
-export function SimpleTable<TData, TValue>({ columns, defaultData, hiddenColumnIds }: SimpleTableProps<TData, TValue>) {
+export function SimpleTable<TData, TValue>({
+  columns,
+  defaultData,
+  newRowElement,
+  form,
+  hiddenColumnIds,
+}: SimpleTableProps<TData, TValue>) {
   const [data, setData] = useState(() => [...defaultData]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() => {
@@ -39,18 +60,17 @@ export function SimpleTable<TData, TValue>({ columns, defaultData, hiddenColumnI
     onColumnVisibilityChange: setColumnVisibility,
     state: { rowSelection, columnVisibility },
     meta: {
-      updateData: (rowIndex: number, columnId: string, value: string) => {
-        setData((old) =>
-          old.map((row, index) => {
-            if (index === rowIndex) {
-              return {
-                ...old[index],
-                [columnId]: value,
-              };
-            }
-            return row;
-          })
-        );
+      addRow: () => {
+        if (newRowElement) {
+          const addedData = [...data, newRowElement];
+          setData(addedData);
+          form && form.formSetValue(form.formId as any, addedData);
+        }
+      },
+      removeRow: (id: number) => {
+        const filtered = data.filter((_, idx) => idx !== id);
+        setData(() => filtered);
+        form && form.formSetValue(form.formId as any, filtered);
       },
     },
   });

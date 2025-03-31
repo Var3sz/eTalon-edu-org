@@ -1,36 +1,26 @@
 'use server';
 
-import { httpRequestGET, httpRequestPATCH } from '@/api/models/Api';
-import { FetchResponse } from '@/api/types/FetchResponse';
+import { httpRequestGET, httpRequestPATCH } from '@/api/models/api';
+import { FetchResponse } from '@/api/types/fetch-response';
 
-const getAllCoursesUrl = () => {
-  return `${process.env.SERVER_BASE_URL}courses/GetCourses`;
+const getActiveCoursesUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/GetActiveCourses`;
 };
 
-const getStudentsByCourseIdUrl = (courseId: number) => {
-  return `${process.env.SERVER_BASE_URL}students/GetStudentsByCourseId/${courseId}`;
-};
-
-const getStudentDetailsByStudentIdUrl = (studentId: number) => {
-  return `${process.env.SERVER_BASE_URL}students/GetStudentDetailsById/${studentId}`;
+const getCourseDetailsByIdUrl = (courseId: number) => {
+  return `${process.env.SERVER_BASE_URL}courses/GetCourseDetailsById/${courseId}`;
 };
 
 const updateStudentDetailsUrl = (studentId: number) => {
   return `${process.env.SERVER_BASE_URL}students/UpdateChildrenDetails/${studentId}`;
 };
 
-export const GetAllCourses = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET<ResponseType>(getAllCoursesUrl(), process.env.JWT_TOKEN!);
+export const GetActiveCourses = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET<ResponseType>(getActiveCoursesUrl(), process.env.JWT_TOKEN!);
 };
 
-export const GetStudentsByCourseId = async <ResponseType>(courseId: number): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET(getStudentsByCourseIdUrl(courseId), process.env.JWT_TOKEN!);
-};
-
-export const GetStudentDetailsByStudentId = async <ResponseType>(
-  studentId: number
-): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET(getStudentDetailsByStudentIdUrl(studentId), process.env.JWT_TOKEN!);
+export const GetCourseDetailsById = async <ResponseType>(courseId: number): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET(getCourseDetailsByIdUrl(courseId), process.env.JWT_TOKEN!);
 };
 
 export const UpdateStudentDetails = async <RequestType, ResponseType>(

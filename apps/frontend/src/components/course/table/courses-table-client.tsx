@@ -2,14 +2,10 @@
 
 import CourseColumns from '@/components/columns/course/course-columns';
 import { DataTable } from '@/components/tables/data-table';
-import useGetCurrentCoursesQuery from '@/hooks/courses/action/useGetCurrentCoursesQuery';
-import { CoursesDTO } from '@/models/Api';
+import useInitCourseTableClient from '@/hooks/courses/use-init-course-table-client';
 
 export default function CoursesTableClient() {
-  const { data: coursesDataResponse } = useGetCurrentCoursesQuery();
-
-  const courses: CoursesDTO[] | [] =
-    coursesDataResponse.status === 200 && coursesDataResponse.data.length > 0 ? coursesDataResponse.data : [];
+  const { courses } = useInitCourseTableClient();
 
   const courseToolbarProps = {
     title: 'Aktív kurzusok',

@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import ActionsTableColumn from '@/components/tables/columns/components/action-columns/actions-table-column';
 import TextWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/text-with-filter-table-column';
-import LockedTableColumn from '@/components/tables/columns/components/special-columns/LockTableColumn';
+import LockedTableColumn from '@/components/tables/columns/components/special-columns/lock-table-column';
 import ProgressBarColumn from '@/components/tables/columns/components/special-columns/progress-bar-column';
 import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { GroupLocales } from '@/locales/group-locales';

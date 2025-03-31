@@ -1,9 +1,13 @@
 import * as yup from 'yup';
-
-import { UpdateStudentDetailsDTO } from '@/models/Api';
-import { BooleanField, RequiredNumberField, RequiredStringField } from '@/validation/validation-elements';
 import { object, ObjectSchema } from 'yup';
+
 import { UpdateStudentDetailsFormModel } from '@/models/students/types';
+import {
+  BooleanField,
+  NullableStringField,
+  RequiredNumberField,
+  RequiredStringField,
+} from '@/validation/validation-elements';
 
 const updateStudentDetailsHelperSchema = yup.object({
   inEdit: BooleanField,
@@ -13,13 +17,13 @@ export const updateStudentDetailsSchema: ObjectSchema<UpdateStudentDetailsFormMo
   email: RequiredStringField,
   lastname: RequiredStringField,
   firstname: RequiredStringField,
-  billCompany: RequiredStringField,
+  billCompany: NullableStringField,
   city: RequiredStringField,
   zip: RequiredNumberField,
   address: RequiredStringField,
-  vatNumber: RequiredStringField,
+  vatNumber: NullableStringField,
   children: RequiredStringField,
-  childrenMail: RequiredStringField,
+  childrenMail: NullableStringField,
   mobile: RequiredStringField,
   billingTypeId: RequiredNumberField,
   Helpers: updateStudentDetailsHelperSchema,

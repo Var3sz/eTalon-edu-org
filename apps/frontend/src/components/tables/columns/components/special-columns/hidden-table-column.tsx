@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 
-import { HiddenTableColumnModel } from '@/components/tables/columns/types/types';
+import { HiddenTableColumnModel } from '@/components/tables/columns/types/column-types';
 
 export default function HiddenTableColumn<T>({ id, accessorKey, size = 0 }: HiddenTableColumnModel<T>): ColumnDef<T> {
   return {

@@ -1,8 +1,8 @@
 import { ApiLocales } from '@/locales/api-locales';
 
-import { FetchOptions } from '../types/FetchOptions';
-import { FetchErrorBody, FetchResponse, FetchResponseOK } from '../types/FetchResponse';
-import { fetchOptions } from './FetchOptions';
+import { FetchOptions } from '../types/fetch-options';
+import { FetchErrorBody, FetchResponse, FetchResponseOK } from '../types/fetch-response';
+import { fetchOptions } from './fetch-options';
 
 const httpRequest = async <ObjectType>(
   url: string,

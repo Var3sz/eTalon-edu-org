@@ -4,10 +4,10 @@ import type { Metadata } from 'next';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import React, { Suspense } from 'react';
 
-import LoadingFullScreen from '@/app/Loading';
+import LoadingFullScreen from '@/app/loading';
 import GlobalErrorComponent from '@/components/error/GlobalErrorComponent';
 import NavigationBar from '@/components/navigation/navigation-bar';
-import { Providers } from '@/components/Providers';
+import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {

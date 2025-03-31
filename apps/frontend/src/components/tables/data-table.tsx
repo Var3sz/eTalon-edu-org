@@ -19,6 +19,13 @@ import { DataTablePagination } from '@/components/tables/columns/components/data
 import { DataTableToolBar } from '@/components/tables/columns/components/data-table-toolbar';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+declare module '@tanstack/table-core' {
+  interface TableMeta<TData extends unknown> {
+    addRow: () => void;
+    removeRow: (id: number) => void;
+  }
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];

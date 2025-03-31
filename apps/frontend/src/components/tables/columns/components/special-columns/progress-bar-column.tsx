@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableColumnHeader } from '@/components/tables/columns/components/headers/data-table-column-header';
-import { ColumnBaseModel } from '@/components/tables/columns/types/types';
+import { ColumnBaseModel } from '@/components/tables/columns/types/column-types';
 import OccupancyProgressBar from '@/components/ui/progress-bar';
 
 export default function ProgressBarColumn<T>({

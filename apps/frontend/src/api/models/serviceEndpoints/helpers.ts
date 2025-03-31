@@ -1,10 +1,10 @@
 'use server';
 
-import { httpRequestGET } from '@/api/models/Api';
-import { FetchResponse } from '@/api/types/FetchResponse';
+import { httpRequestGET } from '@/api/models/api';
+import { FetchResponse } from '@/api/types/fetch-response';
 
 const getBillingTypesUrl = () => {
-  return `${process.env.SERVER_BASE_URL}billingType/GetBillingType`;
+  return `${process.env.SERVER_BASE_URL}billingType/GetBillingTypes`;
 };
 
 export const GetBillingTypes = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {

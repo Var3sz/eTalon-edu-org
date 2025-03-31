@@ -19,20 +19,71 @@
         }
       }
     },
-    "/courses/GetCourses": {
+    "/courses/GetActiveCourses": {
       "get": {
-        "operationId": "CourseController_findAll",
-        "summary": "Get active courses",
+        "operationId": "CourseController_getActiveCourses",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "List of active courses",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/CoursesDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/courses/GetCourseDetailsById/{id}": {
+      "get": {
+        "operationId": "CourseController_getCourseDetailsById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseDetailsDto"
                   }
                 }
               }
@@ -73,138 +124,13 @@
         }
       }
     },
-    "/students/GetStudentsByCourseId/{id}": {
+    "/billingType/GetBillingTypes": {
       "get": {
-        "operationId": "StudentController_findChildrenByCourseId",
-        "summary": "Get student names by course ID",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "description": "Course ID",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of student names",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CourseStudentsDTO"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Students"
-        ]
-      }
-    },
-    "/students/GetStudentDetailsById/{id}": {
-      "get": {
-        "operationId": "StudentController_getChildrenDetailsById",
-        "summary": "Get student details by student ID",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "description": "Student ID",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Student details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StudentDetailsDTO"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Student not found"
-          }
-        },
-        "tags": [
-          "Students"
-        ]
-      }
-    },
-    "/students/UpdateChildrenDetails/{id}": {
-      "patch": {
-        "operationId": "StudentController_updateChildrenDetails",
-        "summary": "Update student details by student ID",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "description": "Student ID",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateStudentDetailsDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Student details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StudentDetailsDTO"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Student not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "tags": [
-          "Students"
-        ]
-      }
-    },
-    "/billingType/GetBillingType": {
-      "get": {
-        "operationId": "BillingTypeController_getAllBillingTypes",
-        "summary": "Get billing types",
+        "operationId": "BillingTypeController_getBillingTypes",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "List of billing types",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -248,6 +174,9 @@
           "courseId": {
             "type": "string"
           },
+          "groupDescription": {
+            "type": "string"
+          },
           "occupancy": {
             "type": "number"
           },
@@ -263,8 +192,18 @@
           "price": {
             "type": "number"
           },
-          "groupDescription": {
+          "startDate": {
+            "format": "date-time",
             "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
           },
           "locked": {
             "type": "boolean"
@@ -273,20 +212,44 @@
         "required": [
           "id",
           "courseId",
+          "groupDescription",
           "occupancy",
           "description",
           "headcount",
           "maxHeadcount",
           "price",
-          "groupDescription",
+          "startDate",
+          "startTime",
+          "endTime",
+          "active",
           "locked"
         ]
       },
-      "CourseStudentsDTO": {
+      "AttendanceRecordDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "number"
+          },
+          "courseDateId": {
+            "type": "number"
+          },
+          "attended": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "attended"
+        ]
+      },
+      "StudentDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
+          },
+          "children": {
+            "type": "string"
           },
           "email": {
             "type": "string"
@@ -312,9 +275,6 @@
           "vatNumber": {
             "type": "string"
           },
-          "children": {
-            "type": "string"
-          },
           "childrenMail": {
             "type": "string"
           },
@@ -324,15 +284,16 @@
           "billingTypeId": {
             "type": "number"
           },
-          "courseId": {
-            "type": "number"
-          },
-          "courseCode": {
-            "type": "string"
+          "attendance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttendanceRecordDto"
+            }
           }
         },
         "required": [
           "id",
+          "children",
           "email",
           "lastname",
           "firstname",
@@ -341,117 +302,113 @@
           "zip",
           "address",
           "vatNumber",
-          "children",
           "childrenMail",
           "mobile",
           "billingTypeId",
+          "attendance"
+        ]
+      },
+      "CourseStudentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "courseId": {
+            "type": "number"
+          },
+          "studentId": {
+            "type": "number"
+          },
+          "student": {
+            "$ref": "#/components/schemas/StudentDto"
+          }
+        },
+        "required": [
+          "id",
           "courseId",
-          "courseCode"
+          "studentId",
+          "student"
         ]
       },
-      "StudentDetailsDTO": {
+      "CourseDateDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
           },
-          "email": {
+          "date": {
+            "format": "date-time",
             "type": "string"
           },
-          "lastname": {
+          "description": {
             "type": "string"
           },
-          "firstname": {
-            "type": "string"
-          },
-          "billCompany": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "zip": {
-            "type": "number"
-          },
-          "address": {
-            "type": "string"
-          },
-          "vatNumber": {
-            "type": "string"
-          },
-          "children": {
-            "type": "string"
-          },
-          "childrenMail": {
-            "type": "string"
-          },
-          "mobile": {
-            "type": "string"
-          },
-          "billingTypeId": {
-            "type": "number"
-          },
-          "courseId": {
-            "type": "number"
+          "attendance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttendanceRecordDto"
+            }
           }
         },
         "required": [
           "id",
-          "email",
-          "lastname",
-          "firstname",
-          "billCompany",
-          "city",
-          "zip",
-          "address",
-          "vatNumber",
-          "children",
-          "childrenMail",
-          "mobile",
-          "billingTypeId",
-          "courseId"
+          "date",
+          "description",
+          "attendance"
         ]
       },
-      "UpdateStudentDetailsDTO": {
+      "CourseCourseDateDto": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string"
-          },
-          "lastname": {
-            "type": "string"
-          },
-          "firstname": {
-            "type": "string"
-          },
-          "billCompany": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "zip": {
+          "id": {
             "type": "number"
           },
-          "address": {
-            "type": "string"
-          },
-          "vatNumber": {
-            "type": "string"
-          },
-          "children": {
-            "type": "string"
-          },
-          "childrenMail": {
-            "type": "string"
-          },
-          "mobile": {
-            "type": "string"
-          },
-          "billingTypeId": {
+          "courseId": {
             "type": "number"
+          },
+          "courseDateId": {
+            "type": "number"
+          },
+          "courseDate": {
+            "$ref": "#/components/schemas/CourseDateDto"
           }
-        }
+        },
+        "required": [
+          "id",
+          "courseId",
+          "courseDateId",
+          "courseDate"
+        ]
+      },
+      "CourseDetailsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "courseId": {
+            "type": "string"
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CourseStudentDto"
+            }
+          },
+          "courseDates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CourseCourseDateDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "courseId",
+          "students",
+          "courseDates"
+        ]
       },
       "BillingTypeDTO": {
         "type": "object",

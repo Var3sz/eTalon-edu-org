@@ -2,8 +2,8 @@ import { FieldValues } from 'react-hook-form';
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { FormBaseProps } from '@/models/ui/form-props';
 import { Label } from '@/components/ui/label';
+import { FormBaseProps } from '@/models/ui/form-props';
 
 export default function FormNumberInput<T extends FieldValues>({
   id,
@@ -12,18 +12,21 @@ export default function FormNumberInput<T extends FieldValues>({
   inEdit = false,
   disabled = false,
   required = false,
+  removeLabel = false,
   placeholder = '',
 }: FormBaseProps<T>) {
   return (
     <FormField
       control={formControl}
-      name={id}
+      name={id as any}
       render={({ field }) => (
         <FormItem className='flex flex-col'>
-          <FormLabel className='font-normal'>
-            {label}
-            {required && inEdit && '*'}
-          </FormLabel>
+          {removeLabel === false && (
+            <FormLabel className='font-normal'>
+              {label}
+              {required && inEdit && '*'}
+            </FormLabel>
+          )}
           <FormControl>
             {inEdit ? (
               <Input placeholder={placeholder} {...field} type='number' className='w-[250px]' disabled={disabled} />

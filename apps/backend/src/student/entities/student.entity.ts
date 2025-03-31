@@ -20,33 +20,19 @@ export class CourseStudentsDTO {
 }
 
 export class StudentDetailsDTO {
-  @ApiProperty()
   id: number;
-  @ApiProperty()
   email: string;
-  @ApiProperty()
   lastname: string;
-  @ApiProperty()
   firstname: string;
-  @ApiProperty()
   billCompany: string;
-  @ApiProperty()
   city: string;
-  @ApiProperty()
   zip: number;
-  @ApiProperty()
   address: string;
-  @ApiProperty()
   vatNumber: string;
-  @ApiProperty()
   children: string;
-  @ApiProperty()
   childrenMail: string;
-  @ApiProperty()
   mobile: string;
-  @ApiProperty()
   billingTypeId: number;
-  @ApiProperty()
   courseId: number;
 }
 
