@@ -30,6 +30,13 @@ export type ClickableColumnModel<TData> = {
   dialogTitle?: string;
 } & ColumnBaseModel<TData>;
 
+export type CheckboxColumnModel<TData> = {
+  hideHeader?: boolean;
+  disabled?: boolean;
+  inEdit?: boolean;
+  isSingleSelection?: boolean;
+} & ColumnBaseModel<TData>;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type ColumnBaseModel<TData> = {
   id: string;

@@ -4,13 +4,16 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
 import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
+import TextTableGroupColumn from '@/components/tables/columns/components/other-columns/text-table-group-column';
 import ClickableTableColumn from '@/components/tables/columns/components/special-columns/clickable-table-column';
 import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
 import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
-import { dateFormatRegex } from '@/lib/utils';
 import { StudentLocales } from '@/locales/student-locales';
 
-export default function StudentColumns(courseData?: StudentAttendance[]): ColumnDef<StudentAttendance>[] {
+export default function StudentColumns(
+  courseData: StudentAttendance[],
+  dateColumns: { id: number; date: string; description: string }[]
+): ColumnDef<StudentAttendance>[] {
   return useMemo(() => {
     const staticColumns: ColumnDef<StudentAttendance>[] = [
       TextTableColumn<StudentAttendance>({
@@ -38,24 +41,28 @@ export default function StudentColumns(courseData?: StudentAttendance[]): Column
       HiddenTableColumn<StudentAttendance>({ id: 'billingTypeId', accessorKey: 'billingTypeId' }),
     ];
 
-    const dateColumns: ColumnDef<StudentAttendance>[] = [];
-
-    if (courseData && courseData.length > 0) {
-      const plainRow = JSON.parse(JSON.stringify(courseData[0]));
-      const allKeys = Object.keys(plainRow);
-      const dateKeys = allKeys.filter((key) => dateFormatRegex(key));
-
-      dateKeys.forEach((dateKey) => {
-        dateColumns.push(
+    const dynamicDateGroupColumns: ColumnDef<StudentAttendance>[] = dateColumns.map(({ date, description }) => {
+      return TextTableGroupColumn<StudentAttendance>({
+        id: `group-${date}`,
+        accessorKey: '',
+        headerTitle: date,
+        columns: [
           TextTableColumn<StudentAttendance>({
-            id: dateKey,
-            accessorKey: dateKey,
-            headerTitle: dateKey,
-          })
-        );
+            id: `${date}-attendance`,
+            accessorKey: date,
+            headerTitle: 'Jelenlét',
+            size: 100,
+          }),
+          TextTableColumn<StudentAttendance>({
+            id: 'description',
+            accessorKey: '',
+            headerTitle: description,
+            size: 100,
+          }),
+        ],
       });
-    }
+    });
 
-    return [...staticColumns, ...dateColumns];
+    return [...staticColumns, ...dynamicDateGroupColumns];
   }, [courseData]);
 }

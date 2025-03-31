@@ -35,15 +35,19 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
 
   const [courseData, setCourseData] = useState<StudentAttendance[]>([]);
 
+  const [dateCols, setDateCols] = useState<{ id: number; date: string; description: string }[]>([]);
+
   useEffect(() => {
     if (course !== null) {
       const id = course.id;
       const courseId = course.courseId;
-      const courseDates = course.courseDates.map((cd) => ({
+      const dateColumns = course.courseDates.map((cd) => ({
         id: cd.courseDate.id,
         date: formatDateCustom(cd.courseDate.date, DatePatterns.DATEURI)!,
         description: cd.courseDate.description,
       }));
+
+      setDateCols(dateColumns);
 
       const data = course.students.map((studentEntry) => {
         const student = studentEntry.student;
@@ -66,7 +70,7 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
           billingTypeId: student.billingTypeId,
         };
 
-        courseDates.forEach(({ id: courseDateId, date }) => {
+        dateColumns.forEach(({ id: courseDateId, date }) => {
           const attendance = student.attendance?.find((a) => a.courseDateId === courseDateId);
           if (attendance?.attended) {
             row[date] = 'Y';
@@ -81,5 +85,5 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
     }
   }, [course]);
 
-  return useMemo(() => ({ courseData }), [courseData]);
+  return useMemo(() => ({ courseData, dateCols }), [courseData, dateCols]);
 }

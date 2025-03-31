@@ -12,7 +12,11 @@ export default function TextTableGroupColumn<T>({
   return {
     id: id,
     accessorKey: accessorKey,
-    header: () => <span>{headerTitle}</span>,
+    header: () => (
+      <div className='flex items-center justify-center h-full'>
+        <span>{headerTitle}</span>
+      </div>
+    ),
     size: size,
     columns: columns,
   };

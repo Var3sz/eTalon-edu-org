@@ -9,15 +9,13 @@ type CourseClientModel = {
 };
 
 export default function CourseClient({ courseId }: CourseClientModel) {
-  const { courseData } = useInitCourseClient({ courseId: courseId });
-
-  console.log(courseData);
+  const { courseData, dateCols } = useInitCourseClient({ courseId: courseId });
 
   return (
     <div className='container mx-auto py-10 flex flex-col gap-3'>
       <span className='font-bold text-3xl'>Jelenléti adatok</span>
       <SimpleTable
-        columns={StudentColumns(courseData)}
+        columns={StudentColumns(courseData, dateCols)}
         defaultData={courseData}
         hiddenColumnIds={[
           'studentId',
