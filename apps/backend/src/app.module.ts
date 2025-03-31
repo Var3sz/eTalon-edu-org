@@ -6,10 +6,10 @@ import { PrismaModule } from 'nestjs-prisma';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { BillingTypeModule } from './billing-type/billing-type.module';
 import { CourseModule } from './course/course.module';
 import { StudentModule } from './student/student.module';
 import { UsersModule } from './users/users.module';
-import { BillingTypeModule } from './billing-type/billing-type.module';
 
 @Module({
   imports: [

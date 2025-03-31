@@ -39,7 +39,7 @@ export default function CheckboxTableColumn<T>({
           )}
         </div>
       ),
-    cell: ({ row, cell, table }) => {
+    cell: ({ row, table }) => {
       return (
         inEdit && (
           <Checkbox

@@ -20,7 +20,8 @@ import { DataTableToolBar } from '@/components/tables/columns/components/data-ta
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 declare module '@tanstack/table-core' {
-  interface TableMeta<TData extends unknown> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface TableMeta<TData> {
     addRow: () => void;
     removeRow: (id: number) => void;
   }

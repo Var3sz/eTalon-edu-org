@@ -51,9 +51,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/GetCourseDetailsById/{id}": {
@@ -90,9 +88,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/auth/login": {
@@ -162,9 +158,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ]
+        "tags": ["Students"]
       }
     },
     "/billingType/GetBillingTypes": {
@@ -186,9 +180,7 @@
             }
           }
         },
-        "tags": [
-          "BillingTypes"
-        ]
+        "tags": ["BillingTypes"]
       }
     }
   },
@@ -196,9 +188,7 @@
     "title": "Etalon-organization",
     "description": "API documentation for Etalon organization",
     "version": "1.0",
-    "contact": {
-
-    }
+    "contact": {}
   },
   "tags": [],
   "servers": [
@@ -281,9 +271,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "attended"
-        ]
+        "required": ["attended"]
       },
       "StudentDto": {
         "type": "object",
@@ -367,12 +355,7 @@
             "$ref": "#/components/schemas/StudentDto"
           }
         },
-        "required": [
-          "id",
-          "courseId",
-          "studentId",
-          "student"
-        ]
+        "required": ["id", "courseId", "studentId", "student"]
       },
       "CourseDateDto": {
         "type": "object",
@@ -394,12 +377,7 @@
             }
           }
         },
-        "required": [
-          "id",
-          "date",
-          "description",
-          "attendance"
-        ]
+        "required": ["id", "date", "description", "attendance"]
       },
       "CourseCourseDateDto": {
         "type": "object",
@@ -417,12 +395,7 @@
             "$ref": "#/components/schemas/CourseDateDto"
           }
         },
-        "required": [
-          "id",
-          "courseId",
-          "courseDateId",
-          "courseDate"
-        ]
+        "required": ["id", "courseId", "courseDateId", "courseDate"]
       },
       "CourseDetailsDto": {
         "type": "object",
@@ -446,12 +419,7 @@
             }
           }
         },
-        "required": [
-          "id",
-          "courseId",
-          "students",
-          "courseDates"
-        ]
+        "required": ["id", "courseId", "students", "courseDates"]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",
@@ -493,17 +461,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "email",
-          "lastname",
-          "firstname",
-          "city",
-          "zip",
-          "address",
-          "children",
-          "mobile",
-          "billingTypeId"
-        ]
+        "required": ["email", "lastname", "firstname", "city", "zip", "address", "children", "mobile", "billingTypeId"]
       },
       "StudentDetailsDTO": {
         "type": "object",
@@ -574,10 +532,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description"
-        ]
+        "required": ["id", "description"]
       }
     }
   }

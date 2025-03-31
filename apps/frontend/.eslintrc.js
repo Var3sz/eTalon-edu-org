@@ -12,6 +12,14 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     'no-html-link-for-pages': 'off',
