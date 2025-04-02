@@ -1,4 +1,4 @@
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, Path } from 'react-hook-form';
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -13,17 +13,19 @@ export default function FormNumberInput<T extends FieldValues>({
   disabled = false,
   required = false,
   removeLabel = false,
+  unitOfMeasureLabel = '',
   placeholder = '',
 }: FormBaseProps<T>) {
   return (
     <FormField
       control={formControl}
-      name={id as any}
+      name={id as Path<T>}
       render={({ field }) => (
         <FormItem className='flex flex-col'>
           {removeLabel === false && (
             <FormLabel className='font-normal'>
               {label}
+              {`(${unitOfMeasureLabel})`}
               {required && inEdit && '*'}
             </FormLabel>
           )}

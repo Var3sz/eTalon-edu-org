@@ -17,6 +17,7 @@ export type FormBaseProps<T extends FieldValues> = {
   required?: boolean;
   disabled?: boolean;
   removeLabel?: boolean;
+  unitOfMeasureLabel?: string;
   formSetValue?: (
     name: any,
     value: any,

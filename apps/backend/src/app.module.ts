@@ -8,6 +8,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { BillingTypeModule } from './billing-type/billing-type.module';
 import { CourseModule } from './course/course.module';
+import { GroupModule } from './group/GroupModule';
+import { LocationModule } from './location/location.module';
 import { StudentModule } from './student/student.module';
 import { UsersModule } from './users/users.module';
 
@@ -23,6 +25,8 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     StudentModule,
     BillingTypeModule,
+    LocationModule,
+    GroupModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -51,7 +51,46 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/courses/GetCoursesForModification": {
+      "get": {
+        "operationId": "CourseController_getCoursesForModification",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RawCourseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/GetCourseDetailsById/{id}": {
@@ -88,7 +127,79 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/courses/CreateOrUpdateCourses": {
+      "post": {
+        "operationId": "CourseController_upsertCourses",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpsertCourseDTO"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Courses upserted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaveResultDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/courses/CreateCourseDatesForCourse/{id}": {
+      "post": {
+        "operationId": "CourseController_addMultipleCourseDates",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateCourseDateDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/auth/login": {
@@ -158,7 +269,9 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ]
       }
     },
     "/billingType/GetBillingTypes": {
@@ -180,7 +293,57 @@
             }
           }
         },
-        "tags": ["BillingTypes"]
+        "tags": [
+          "BillingTypes"
+        ]
+      }
+    },
+    "/locations/GetLocations": {
+      "get": {
+        "operationId": "LocationsController_getLocations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Locations"
+        ]
+      }
+    },
+    "/groups/GetGroups": {
+      "get": {
+        "operationId": "GroupController_getGroups",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Groups"
+        ]
       }
     }
   },
@@ -188,7 +351,9 @@
     "title": "Etalon-organization",
     "description": "API documentation for Etalon organization",
     "version": "1.0",
-    "contact": {}
+    "contact": {
+
+    }
   },
   "tags": [],
   "servers": [
@@ -258,6 +423,68 @@
           "locked"
         ]
       },
+      "RawCourseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "courseId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "number"
+          },
+          "headcount": {
+            "type": "number",
+            "nullable": true
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "maxHeadcount": {
+            "type": "number"
+          },
+          "startDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "locked": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "courseId",
+          "description",
+          "price",
+          "active",
+          "endTime",
+          "groupId",
+          "headcount",
+          "locationId",
+          "maxHeadcount",
+          "startDate",
+          "startTime",
+          "locked"
+        ]
+      },
       "AttendanceRecordDto": {
         "type": "object",
         "properties": {
@@ -271,7 +498,9 @@
             "type": "boolean"
           }
         },
-        "required": ["attended"]
+        "required": [
+          "attended"
+        ]
       },
       "StudentDto": {
         "type": "object",
@@ -355,7 +584,12 @@
             "$ref": "#/components/schemas/StudentDto"
           }
         },
-        "required": ["id", "courseId", "studentId", "student"]
+        "required": [
+          "id",
+          "courseId",
+          "studentId",
+          "student"
+        ]
       },
       "CourseDateDto": {
         "type": "object",
@@ -377,7 +611,12 @@
             }
           }
         },
-        "required": ["id", "date", "description", "attendance"]
+        "required": [
+          "id",
+          "date",
+          "description",
+          "attendance"
+        ]
       },
       "CourseCourseDateDto": {
         "type": "object",
@@ -395,7 +634,12 @@
             "$ref": "#/components/schemas/CourseDateDto"
           }
         },
-        "required": ["id", "courseId", "courseDateId", "courseDate"]
+        "required": [
+          "id",
+          "courseId",
+          "courseDateId",
+          "courseDate"
+        ]
       },
       "CourseDetailsDto": {
         "type": "object",
@@ -419,7 +663,109 @@
             }
           }
         },
-        "required": ["id", "courseId", "students", "courseDates"]
+        "required": [
+          "id",
+          "courseId",
+          "students",
+          "courseDates"
+        ]
+      },
+      "UpsertCourseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "nullable": true
+          },
+          "courseId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "number"
+          },
+          "headCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "maxHeadcount": {
+            "type": "number",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "locked": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "courseId",
+          "description",
+          "price",
+          "active",
+          "endTime",
+          "groupId",
+          "headCount",
+          "locationId",
+          "maxHeadcount",
+          "startDate",
+          "startTime",
+          "locked"
+        ]
+      },
+      "SaveResultDto": {
+        "type": "object",
+        "properties": {
+          "saved": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "saved",
+          "title",
+          "description"
+        ]
+      },
+      "CreateCourseDateDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "description"
+        ]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",
@@ -461,7 +807,17 @@
             "type": "number"
           }
         },
-        "required": ["email", "lastname", "firstname", "city", "zip", "address", "children", "mobile", "billingTypeId"]
+        "required": [
+          "email",
+          "lastname",
+          "firstname",
+          "city",
+          "zip",
+          "address",
+          "children",
+          "mobile",
+          "billingTypeId"
+        ]
       },
       "StudentDetailsDTO": {
         "type": "object",
@@ -532,7 +888,40 @@
             "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description"
+        ]
+      },
+      "LocationDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description"
+        ]
+      },
+      "GroupDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description"
+        ]
       }
     }
   }

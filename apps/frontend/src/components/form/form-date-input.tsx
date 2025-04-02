@@ -1,10 +1,10 @@
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { FieldValues, useController } from 'react-hook-form';
+import { FieldValues, Path, useController } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -18,19 +18,22 @@ export default function FormDateInput<T extends FieldValues>({
   inEdit = false,
   required = false,
   disabled = false,
+  removeLabel = false,
 }: FormBaseProps<T>) {
-  const { field } = useController({ name: id, control: formControl });
+  const { field } = useController({ name: id as Path<T>, control: formControl });
 
   return (
     <FormField
       control={formControl}
-      name={id}
+      name={id as Path<T>}
       render={() => (
         <FormItem className='flex flex-col'>
-          <FormLabel className='font-normal'>
-            {label}
-            {required && inEdit && '*'}
-          </FormLabel>
+          {removeLabel === false && (
+            <FormLabel className='font-normal'>
+              {label}
+              {required && inEdit && '*'}
+            </FormLabel>
+          )}
           {inEdit ? (
             <Popover>
               <PopoverTrigger asChild>
@@ -57,6 +60,7 @@ export default function FormDateInput<T extends FieldValues>({
               {field.value ? format(new Date(field.value), 'yyyy.MM.dd') : <span>{placeholder}</span>}
             </Label>
           )}
+          <FormMessage />
         </FormItem>
       )}
     />

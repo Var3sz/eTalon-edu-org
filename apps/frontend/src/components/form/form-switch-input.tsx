@@ -1,4 +1,4 @@
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, Path } from 'react-hook-form';
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
@@ -12,19 +12,22 @@ export default function FormSwitchInput<T extends FieldValues>({
   inEdit = false,
   required = false,
   disabled = false,
+  removeLabel = false,
 }: FormBaseProps<T>) {
   return (
     <FormField
       control={formControl}
-      name={id}
+      name={id as Path<T>}
       render={({ field }) => {
         const isDisabled = !inEdit || disabled;
         return (
           <FormItem className='flex flex-col'>
-            <FormLabel className='text-normal'>
-              {label}
-              {required && inEdit && '*'}
-            </FormLabel>
+            {removeLabel === false && (
+              <FormLabel className='text-normal'>
+                {label}
+                {required && inEdit && '*'}
+              </FormLabel>
+            )}
             <FormControl>
               <Switch
                 checked={field.value}

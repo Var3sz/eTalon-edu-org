@@ -1,3 +1,4 @@
+import { IsDateString, IsNotEmpty, IsString } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CoursesDTO {
@@ -114,4 +115,15 @@ export class CourseDetailsDto {
 
   @ApiProperty({ type: [CourseCourseDateDto] })
   courseDates: CourseCourseDateDto[];
+}
+
+export class CreateCourseDateDto {
+  @ApiProperty()
+  @IsDateString()
+  date: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 }

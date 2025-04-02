@@ -1,6 +1,6 @@
 import { Check, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, Path } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
@@ -32,7 +32,7 @@ export default function FormSelectInput<T extends FieldValues>({
   return (
     <FormField
       control={formControl}
-      name={id}
+      name={id as Path<T>}
       render={({ field }) => (
         <FormItem className='flex flex-col'>
           <FormLabel className='font-normal'>

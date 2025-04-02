@@ -26,6 +26,23 @@ export interface CoursesDTO {
   locked: boolean;
 }
 
+export interface RawCourseDTO {
+  id: number;
+  courseId: string;
+  description: string;
+  price: number | null;
+  active: boolean;
+  endTime: string;
+  groupId: number;
+  headcount: number | null;
+  locationId: number;
+  maxHeadcount: number;
+  /** @format date-time */
+  startDate: string;
+  startTime: string;
+  locked: boolean;
+}
+
 export interface AttendanceRecordDto {
   studentId?: number;
   courseDateId?: number;
@@ -78,6 +95,33 @@ export interface CourseDetailsDto {
   courseDates: CourseCourseDateDto[];
 }
 
+export interface UpsertCourseDTO {
+  id: number | null;
+  courseId: string;
+  description: string;
+  price: number | null;
+  active: boolean;
+  endTime: string;
+  groupId: number;
+  headCount: number | null;
+  locationId: number;
+  maxHeadcount: number | null;
+  startDate: string;
+  startTime: string;
+  locked: boolean;
+}
+
+export interface SaveResultDto {
+  saved: boolean;
+  title: string;
+  description: string;
+}
+
+export interface CreateCourseDateDto {
+  date: string;
+  description: string;
+}
+
 export interface UpdateStudentDetailsDTO {
   email: string;
   lastname: string;
@@ -110,6 +154,16 @@ export interface StudentDetailsDTO {
 }
 
 export interface BillingTypeDTO {
+  id: number;
+  description: string;
+}
+
+export interface LocationDTO {
+  id: number;
+  description: string;
+}
+
+export interface GroupDTO {
   id: number;
   description: string;
 }

@@ -39,8 +39,9 @@ export default function useInitStudentDetailsDialog({
         setOpenChangeDialog && setOpenChangeDialog(false);
       } else {
         toast({
-          variant: 'destructive',
           title: 'Sikertelen frissítés!',
+          description: updateResponse.status === 500 && updateResponse.error.Message,
+          variant: 'destructive',
         });
       }
     });

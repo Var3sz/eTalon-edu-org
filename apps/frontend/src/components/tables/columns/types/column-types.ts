@@ -1,6 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Control, FieldValues } from 'react-hook-form';
 
+import { ItemModel } from '@/models/ui/form-props';
+
 export type ActionsTableColumnModel<TData> = {
   select?: boolean;
   redirect?: boolean;
@@ -20,6 +22,26 @@ type InputModel<FormType extends FieldValues> = {
   inEdit: boolean;
 };
 
+export type ColumnSelectModel<FormType extends FieldValues, TData> = {
+  items: ItemModel[];
+  placeholder: string;
+  emptySelect: string;
+  formSetValue?: (
+    name: any,
+    value: any,
+    options?:
+      | Partial<{
+          shouldValidate: boolean;
+          shouldDirty: boolean;
+          shouldTouch: boolean;
+        }>
+      | undefined
+  ) => void;
+  valueType?: 'string' | 'number' | undefined;
+  token?: string;
+} & ColumnBaseModel<TData> &
+  InputModel<FormType>;
+
 export type ColumnInputModel<FormType extends FieldValues, TData> = ColumnBaseModel<TData> & InputModel<FormType>;
 
 export type ColumnGroupModel<T> = {
@@ -36,6 +58,10 @@ export type CheckboxColumnModel<TData> = {
   inEdit?: boolean;
   isSingleSelection?: boolean;
 } & ColumnBaseModel<TData>;
+
+export type ColumnBinModel<TData> = Omit<ColumnBaseModel<TData>, 'headerTitle'> & {
+  hideHeader?: boolean;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type ColumnBaseModel<TData> = {

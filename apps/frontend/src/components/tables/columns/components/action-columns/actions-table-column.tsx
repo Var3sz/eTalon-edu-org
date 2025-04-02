@@ -2,10 +2,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Edit, Eye } from 'lucide-react';
 import Link from 'next/link';
 
+import EditCourseDatesDialog from '@/components/dialogs/course/edit-course-dates-dialog';
 import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import { ActionsTableColumnModel } from '@/components/tables/columns/types/column-types';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import { CoursesDTO } from '@/models/Api';
 
 export default function ActionsTableColumn<T>({
   id,
@@ -65,7 +67,7 @@ export default function ActionsTableColumn<T>({
           )}
           {edit && (
             <CustomInnerStateDialog title={dialogTitle} triggerElement={<Edit />}>
-              <div />
+              <EditCourseDatesDialog rowData={row.original as CoursesDTO} />
             </CustomInnerStateDialog>
           )}
         </div>
