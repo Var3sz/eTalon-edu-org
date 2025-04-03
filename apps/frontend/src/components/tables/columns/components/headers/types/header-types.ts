@@ -7,6 +7,7 @@ import {
 export type HeaderBaseModel = {
   headerTitle: string;
   headerTextStyle?: string;
+  headerDivStyle?: string;
 };
 
 export type InputHeaderModel<TData, TValue> = {

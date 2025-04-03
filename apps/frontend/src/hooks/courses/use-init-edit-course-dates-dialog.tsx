@@ -35,7 +35,7 @@ export default function useInitEditCourseDatesDialog({
       } else {
         toast({
           title: 'Sikertelen létrehozás!',
-          description: updateResponse.status === 500 && updateResponse.error.Message,
+          description: response.status === 500 && response.error.Message,
           variant: 'destructive',
         });
       }

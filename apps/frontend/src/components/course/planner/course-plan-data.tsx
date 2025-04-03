@@ -9,13 +9,16 @@ import useInitCoursePlanData from '@/hooks/courses/course-plan/use-init-course-p
 import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
 import { UpdateCourseListModel, UpdateCoursesFormModel } from '@/models/course/types';
+import LoadingFullScreen from '@/app/loading';
 
 export default function CoursePlanData() {
   const coursesData = useGetCoursesForModificationQuery();
   const locations = useGetLocationsQuery();
   const groups = useGetGroupsQuery();
 
-  const { form, onValidFormSubmit, onInvalidFormSubmit } = useInitCoursePlanData({ coursesData: coursesData! });
+  const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitCoursePlanData({
+    coursesData: coursesData!,
+  });
 
   const formValues = useWatch(form) as UpdateCourseListModel;
 
@@ -30,6 +33,7 @@ export default function CoursePlanData() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)} className='flex flex-col gap-5'>
+        {isPending && <LoadingFullScreen />}
         <SimpleTable
           columns={updateCoursesColumns}
           defaultData={formValues.CourseList as UpdateCoursesFormModel[]}

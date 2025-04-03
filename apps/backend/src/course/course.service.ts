@@ -126,9 +126,32 @@ export class CourseService {
     try {
       await this.prisma.$transaction(async (tx) => {
         for (const course of courses) {
-          await tx.course.upsert({
-            where: { id: course.id ?? -1 },
-            update: {
+          if (course.id) {
+            const existing = await tx.course.findUnique({ where: { id: course.id } });
+            if (existing) {
+              await tx.course.update({
+                where: { id: course.id },
+                data: {
+                  courseId: course.courseId,
+                  description: course.description,
+                  price: course.price,
+                  active: course.active,
+                  endTime: course.endTime,
+                  groupId: course.groupId,
+                  headcount: course.headCount,
+                  locationId: course.locationId,
+                  maxHeadcount: course.maxHeadcount,
+                  startDate: new Date(course.startDate),
+                  startTime: course.startTime,
+                  locked: course.locked,
+                },
+              });
+              continue;
+            }
+          }
+
+          await tx.course.create({
+            data: {
               courseId: course.courseId,
               description: course.description,
               price: course.price,
@@ -138,21 +161,7 @@ export class CourseService {
               headcount: course.headCount,
               locationId: course.locationId,
               maxHeadcount: course.maxHeadcount,
-              startDate: course.startDate,
-              startTime: course.startTime,
-              locked: course.locked,
-            },
-            create: {
-              courseId: course.courseId,
-              description: course.description,
-              price: course.price,
-              active: course.active,
-              endTime: course.endTime,
-              groupId: course.groupId,
-              headcount: course.headCount,
-              locationId: course.locationId,
-              maxHeadcount: course.maxHeadcount,
-              startDate: course.startDate,
+              startDate: new Date(course.startDate),
               startTime: course.startTime,
               locked: course.locked,
             },

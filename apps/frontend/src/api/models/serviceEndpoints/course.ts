@@ -15,6 +15,10 @@ const getCourseDetailsByIdUrl = (courseId: number) => {
   return `${process.env.SERVER_BASE_URL}courses/GetCourseDetailsById/${courseId}`;
 };
 
+const upsertCoursesDataUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/CreateOrUpdateCourses`;
+};
+
 const updateStudentDetailsUrl = (studentId: number) => {
   return `${process.env.SERVER_BASE_URL}students/UpdateStudentDetails/${studentId}`;
 };
@@ -33,6 +37,12 @@ export const GetCoursesForModification = async <ResponseType>(): Promise<FetchRe
 
 export const GetCourseDetailsById = async <ResponseType>(courseId: number): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestGET(getCourseDetailsByIdUrl(courseId), process.env.JWT_TOKEN!);
+};
+
+export const UpsertCoursesData = async <RequestType, ResponseType>(
+  requestBody: RequestType
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPOST(upsertCoursesDataUrl(), process.env.JWT_TOKEN!, requestBody);
 };
 
 export const UpdateStudentDetails = async <RequestType, ResponseType>(

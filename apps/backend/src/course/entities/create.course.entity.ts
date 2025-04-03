@@ -1,3 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsDateString } from '@nestjs/class-validator';
+
 export class UpsertCourseDTO {
   id: number | null;
   courseId: string;
@@ -9,6 +12,8 @@ export class UpsertCourseDTO {
   headCount: number | null;
   locationId: number;
   maxHeadcount: number | null;
+  @ApiProperty()
+  @IsDateString()
   startDate: string;
   startTime: string;
   locked: boolean;

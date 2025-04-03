@@ -1,8 +1,15 @@
+import { logger } from '@/lib/logger';
 import { ApiLocales } from '@/locales/api-locales';
 
 import { FetchOptions } from '../types/fetch-options';
 import { FetchErrorBody, FetchResponse, FetchResponseOK } from '../types/fetch-response';
 import { fetchOptions } from './fetch-options';
+
+type LogDebug = {
+  status: number;
+  data: any;
+  headers: Headers;
+};
 
 const httpRequest = async <ObjectType>(
   url: string,
@@ -44,6 +51,7 @@ const httpRequest = async <ObjectType>(
         },
     cache: 'no-store',
   });
+  logger.level = 'debug';
   switch (fetchResponse.status) {
     case 200:
     case 201: {
@@ -58,6 +66,11 @@ const httpRequest = async <ObjectType>(
       }
 
       const responseHeaders = fetchResponse.headers;
+      logger.debug(url, options, {
+        status: 200,
+        data: responseBody,
+        headers: responseHeaders,
+      } as LogDebug);
       return {
         status: 200,
         data: responseBody,
@@ -73,18 +86,30 @@ const httpRequest = async <ObjectType>(
     case 403:
     case 405: {
       const responseError = ((await fetchResponse.json()) as FetchErrorBody).Error;
+      logger.debug(url, options, {
+        status: 500,
+        data: responseError,
+      } as LogDebug);
       return {
         status: 500,
         error: responseError,
       };
     }
     case 401:
+      logger.debug(url, options, {
+        status: 500,
+        data: ApiLocales.UNAUTHORIZED,
+      } as LogDebug);
       return {
         status: 401,
         error: ApiLocales.UNAUTHORIZED,
       };
     default: {
       const responseDefault = await fetchResponse.json();
+      logger.debug(url, options, {
+        status: 0,
+        data: responseDefault,
+      } as LogDebug);
       return {
         status: 0,
         response: responseDefault,

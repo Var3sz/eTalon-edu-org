@@ -11,6 +11,7 @@ import SwitchTableColumn from '@/components/tables/columns/components/input-colu
 import TextInputColumn from '@/components/tables/columns/components/input-columns/text-input-column';
 import { GroupDTO, LocationDTO } from '@/models/Api';
 import { UpdateCoursesFormModel } from '@/models/course/types';
+import TimePickerInputColumn from '@/components/tables/columns/components/input-columns/time-picker-input-column';
 
 export default function UpdateCourseDataColumns<FormType extends FieldValues>(
   formControl: Control<FormType>,
@@ -94,7 +95,7 @@ export default function UpdateCourseDataColumns<FormType extends FieldValues>(
         accessorKey: 'CourseList[index].startDate',
         inEdit: inEdit,
       }),
-      TextInputColumn<FormType, UpdateCoursesFormModel>({
+      TimePickerInputColumn<FormType, UpdateCoursesFormModel>({
         id: 'Óra kezdete',
         headerTitle: 'Óra kezdete',
         formControl: formControl,
@@ -102,7 +103,7 @@ export default function UpdateCourseDataColumns<FormType extends FieldValues>(
         accessorKey: 'CourseList[index].startTime',
         inEdit: inEdit,
       }),
-      TextInputColumn<FormType, UpdateCoursesFormModel>({
+      TimePickerInputColumn<FormType, UpdateCoursesFormModel>({
         id: 'Óra vége',
         headerTitle: 'Óra vége',
         formControl: formControl,
