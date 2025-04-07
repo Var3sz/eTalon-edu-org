@@ -11,7 +11,7 @@ import { CourseModule } from './course/course.module';
 import { GroupModule } from './group/GroupModule';
 import { LocationModule } from './location/location.module';
 import { StudentModule } from './student/student.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -21,12 +21,12 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule.forRoot({ isGlobal: true }),
     CourseModule,
-    AuthModule,
-    UsersModule,
     StudentModule,
     BillingTypeModule,
     LocationModule,
     GroupModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
