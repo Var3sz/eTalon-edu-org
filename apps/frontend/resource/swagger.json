@@ -202,35 +202,6 @@
         ]
       }
     },
-    "/auth/login": {
-      "post": {
-        "operationId": "AuthController_signIn",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/profile": {
-      "get": {
-        "operationId": "AuthController_getProfile",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/students/UpdateStudentDetails/{id}": {
       "put": {
         "operationId": "StudentController_updateStudentDetails",
@@ -344,6 +315,89 @@
         "tags": [
           "Groups"
         ]
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "UserController_getUserProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_registerUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
       }
     }
   },
@@ -673,6 +727,9 @@
       "UpsertCourseDTO": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string"
+          },
           "id": {
             "type": "number",
             "nullable": true
@@ -707,9 +764,6 @@
             "type": "number",
             "nullable": true
           },
-          "startDate": {
-            "type": "string"
-          },
           "startTime": {
             "type": "string"
           },
@@ -718,6 +772,7 @@
           }
         },
         "required": [
+          "startDate",
           "id",
           "courseId",
           "description",
@@ -728,7 +783,6 @@
           "headCount",
           "locationId",
           "maxHeadcount",
-          "startDate",
           "startTime",
           "locked"
         ]
@@ -921,6 +975,63 @@
         "required": [
           "id",
           "description"
+        ]
+      },
+      "ProfileDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "name",
+          "roleId"
+        ]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
         ]
       }
     }

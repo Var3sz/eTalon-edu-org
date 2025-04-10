@@ -10,3 +10,10 @@ export class CreateUserDto {
   @IsString()
   password: string;
 }
+
+export class ProfileDto {
+  id: number;
+  email: string;
+  name: string;
+  roleId: number;
+}

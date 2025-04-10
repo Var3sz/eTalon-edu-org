@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { Links } from '@/models/navigation/links';
+import SignInButton from '@/components/auth/sign-in-button';
 
 export default function Navbar() {
   const logoSrc = process.env.REACT_APP_LOGO!;
@@ -23,14 +23,12 @@ export default function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className='flex'>
+
+      <div className='flex items-center gap-4'>
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Avatar>
-                <AvatarImage className='bg-black' src='https://example.com/profile-picture.jpg' alt='Profile Picture' />
-                <AvatarFallback className='bg-etalonGreen bg-etalon-grey'>ET</AvatarFallback>
-              </Avatar>
+              <SignInButton />
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

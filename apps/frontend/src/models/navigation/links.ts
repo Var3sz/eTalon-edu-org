@@ -5,3 +5,9 @@ export const Links: NavigationType[] = [
   { name: 'Kurzustervező', link: '/course/planner' },
   { name: 'Csomagok', link: '/packages' },
 ];
+
+export const ProfileLinks: NavigationType[] = [
+  { name: 'Bejelentkezés', link: '/api/auth/signin' },
+  { name: 'Regisztráció', link: '/signup' },
+  { name: 'Kijelentkezés', link: '/api/auth/signout' },
+];

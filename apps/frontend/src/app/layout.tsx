@@ -7,7 +7,8 @@ import React, { Suspense } from 'react';
 import LoadingFullScreen from '@/app/loading';
 import GlobalErrorComponent from '@/components/error/GlobalErrorComponent';
 import NavigationBar from '@/components/navigation/navigation-bar';
-import { Providers } from '@/components/providers';
+import { ClientProvider } from '@/components/providers';
+import Providers from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
@@ -18,15 +19,17 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang='hu'>
       <body>
-        <NavigationBar />
-        <Toaster />
-        <main className='p-2'>
-          <Providers>
-            <Suspense fallback={<LoadingFullScreen />}>
-              <ErrorBoundary errorComponent={GlobalErrorComponent}>{props.children}</ErrorBoundary>
-            </Suspense>
-          </Providers>
-        </main>
+        <Providers>
+          <NavigationBar />
+          <Toaster />
+          <main className='p-2'>
+            <ClientProvider>
+              <Suspense fallback={<LoadingFullScreen />}>
+                <ErrorBoundary errorComponent={GlobalErrorComponent}>{props.children}</ErrorBoundary>
+              </Suspense>
+            </ClientProvider>
+          </main>
+        </Providers>
       </body>
     </html>
   );

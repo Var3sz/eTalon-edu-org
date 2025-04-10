@@ -16,15 +16,18 @@ export default function FormTextInput<T extends FieldValues>({
   removeLabel = false,
   placeholder = '',
   inputStyle = '',
+  divStyle = '',
+  labelStyle = '',
+  type = 'text',
 }: FormBaseProps<T>) {
   return (
     <FormField
       control={formControl}
       name={id as Path<T>}
       render={({ field }) => (
-        <FormItem className='flex flex-col gap-0.5'>
+        <FormItem className={cn('flex flex-col gap-0.5', divStyle)}>
           {removeLabel === false && (
-            <FormLabel className='font-normal'>
+            <FormLabel className={cn('font-normal', labelStyle)}>
               {label}
               {required && inEdit && '*'}
             </FormLabel>
@@ -34,7 +37,7 @@ export default function FormTextInput<T extends FieldValues>({
               <Input
                 className={cn('w-[250px]', inputStyle)}
                 {...field}
-                type='text'
+                type={type}
                 placeholder={placeholder}
                 disabled={disabled}
               />

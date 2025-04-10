@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { JwtGuard } from '../auth/guards/jwt.guard';
 import { SaveResultDto } from '../common/results.entity';
 import { CourseService } from './course.service';
 import { CourseDetailsDto, CoursesDTO, CreateCourseDateDto } from './entities/course.entity';

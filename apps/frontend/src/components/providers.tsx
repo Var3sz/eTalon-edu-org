@@ -1,7 +1,9 @@
 'use client';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import React from 'react';
+import { SessionProvider } from 'next-auth/react';
+import React, { ReactNode } from 'react';
 
 function makeQueryClient() {
   return new QueryClient({
@@ -26,7 +28,7 @@ function getQueryClient() {
   }
 }
 
-export function Providers(props: { children: React.ReactNode }) {
+export function ClientProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
@@ -36,3 +38,9 @@ export function Providers(props: { children: React.ReactNode }) {
     </QueryClientProvider>
   );
 }
+
+const Providers = ({ children }: { children: ReactNode }) => {
+  return <SessionProvider>{children}</SessionProvider>;
+};
+
+export default Providers;

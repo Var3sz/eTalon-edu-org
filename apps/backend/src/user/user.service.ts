@@ -1,8 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import { PrismaService } from 'nestjs-prisma';
 
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, ProfileDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -38,11 +38,18 @@ export class UserService {
     });
   }
 
-  async findById(id: number) {
-    return this.prisma.user.findUnique({
+  async findById(id: number): Promise<ProfileDto> {
+    const user = await this.prisma.user.findUnique({
       where: {
         id: id,
       },
     });
+
+    if (!user) throw new UnauthorizedException();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...result } = user;
+
+    return result;
   }
 }

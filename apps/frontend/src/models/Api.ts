@@ -96,6 +96,7 @@ export interface CourseDetailsDto {
 }
 
 export interface UpsertCourseDTO {
+  startDate: string;
   id: number | null;
   courseId: string;
   description: string;
@@ -106,7 +107,6 @@ export interface UpsertCourseDTO {
   headCount: number | null;
   locationId: number;
   maxHeadcount: number | null;
-  startDate: string;
   startTime: string;
   locked: boolean;
 }
@@ -166,4 +166,22 @@ export interface LocationDTO {
 export interface GroupDTO {
   id: number;
   description: string;
+}
+
+export interface ProfileDto {
+  id: number;
+  email: string;
+  name: string;
+  roleId: number;
+}
+
+export interface CreateUserDto {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginDto {
+  username: string;
+  password: string;
 }
