@@ -21,12 +21,11 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         username: {
-          label: 'Username',
-          type: 'text',
-          placeholder: 'johndoe',
+          label: 'E-mail cím',
+          type: 'email',
         },
         password: {
-          label: 'Password',
+          label: 'Jelszó',
           type: 'Password',
         },
       },
@@ -46,6 +45,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: '/auth/login',
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) return { ...token, ...user };

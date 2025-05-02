@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString } from '@nestjs/class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpsertCourseDTO {
   id: number | null;

@@ -2,40 +2,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { useMemo, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
 import { toast } from '@/components/ui/use-toast';
-import { RequiredStringField } from '@/validation/validation-elements';
-
-type RegisterFormModel = {
-  email: string | null;
-  name: string | null;
-  password: string | null;
-  confirmPassword: string | null;
-};
-
-const registerSchema = yup.object({
-  name: RequiredStringField,
-  email: RequiredStringField,
-  password: RequiredStringField,
-  confirmPassword: RequiredStringField.test('Confirm password teszt', 'A két jelszó nem egyezik!', function () {
-    const { from } = this;
-    const pass = (from as any)[0].value.password as string;
-    const confirmPass = (from as any)[0].value.confirmPassword as string;
-    return !(pass && pass !== confirmPass);
-  }),
-});
+import { signupSchema } from '@/validation/schemas/auth/signup/signupSchema';
+import { SignupFormModel } from '@/models/auth/types';
+import { SignupFormDefault } from '@/validation/default-values/auth/signup/signup-form-default';
 
 export default function UseInitSignUpClient() {
   const [isPending, startTransaction] = useTransition();
   const router = useRouter();
 
-  const form = useForm<RegisterFormModel>({
-    defaultValues: { email: null, name: null, password: null, confirmPassword: null },
-    resolver: yupResolver<RegisterFormModel>(registerSchema),
+  const form = useForm<SignupFormModel>({
+    defaultValues: SignupFormDefault(),
+    resolver: yupResolver<SignupFormModel>(signupSchema),
   });
 
-  const onValidSubmit = async (formModel: RegisterFormModel) => {
+  const onValidSubmit = async (formModel: SignupFormModel) => {
     startTransaction(async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}auth/register`, {
         method: 'POST',

@@ -5,7 +5,7 @@ import { PrismaService } from 'nestjs-prisma';
 export class CourseDatesService {
   constructor(private prisma: PrismaService) {}
 
-  async getCourseDatesOfCourse(courseId: number) {
+  /* async getCourseDatesOfCourse(courseId: number) {
     const courseDates = await this.prisma.course_CourseDate.findMany({
       where: {
         courseId,
@@ -18,5 +18,5 @@ export class CourseDatesService {
     return courseDates
       .map((entry) => entry.courseDate)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  }
+  } */
 }

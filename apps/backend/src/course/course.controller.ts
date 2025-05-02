@@ -1,10 +1,14 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, ValidationPipe } from '@nestjs/common';
-import { ApiBody, ApiCreatedResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, ValidationPipe } from '@nestjs/common';
+import { ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { JwtGuard } from '../auth/guards/jwt.guard';
-import { SaveResultDto } from '../common/results.entity';
 import { CourseService } from './course.service';
-import { CourseDetailsDto, CoursesDTO, CreateCourseDateDto } from './entities/course.entity';
+import {
+  ActiveCourseDto,
+  CourseDetailsDto,
+  CourseDto,
+  CreateCourseDateDto,
+  UpdateCourseDto,
+} from './entities/course.entity';
 import { RawCourseDTO, UpsertCourseDTO } from './entities/create.course.entity';
 
 @ApiTags('Courses')
@@ -12,20 +16,40 @@ import { RawCourseDTO, UpsertCourseDTO } from './entities/create.course.entity';
 export class CourseController {
   constructor(private courseService: CourseService) {}
 
+  /**
+   * @returns Active courses
+   */
   @Get('/GetActiveCourses')
-  @ApiResponse({ status: 200, description: 'Success', type: [CoursesDTO] })
-  @ApiResponse({ status: 500, description: 'Failure', type: [String] })
-  async getActiveCourses(): Promise<CoursesDTO[]> {
-    return this.courseService.getActiveCourses();
+  @ApiOkResponse({ type: ActiveCourseDto, isArray: true })
+  async getActiveCourses(): Promise<ActiveCourseDto[]> {
+    return await this.courseService.getActiveCourses();
   }
 
-  @Get('/GetCoursesForModification')
-  @ApiResponse({ status: 200, description: 'Success', type: [RawCourseDTO] })
-  @ApiResponse({ status: 500, description: 'Failure', type: [String] })
-  async getCoursesForModification(): Promise<RawCourseDTO[]> {
-    return this.courseService.getCoursesForModification();
+  /**
+   *
+   * @param id Id of the course
+   * @returns Corresponding course
+   */
+  @Get('/GetCourseById/:id')
+  @ApiOkResponse({ type: CourseDto })
+  async getCourseById(@Param('id', ParseIntPipe) id: number) {
+    return await this.courseService.getCourseById(id);
   }
 
+  @Put('/UpdateCourse/:id')
+  @ApiOkResponse({ type: CourseDto })
+  async updateCourse(@Param('id', ParseIntPipe) id: number, @Body() updateBody: UpdateCourseDto) {
+    return await this.courseService.updateCourse(updateBody, id);
+  }
+
+  @Post('/CreateCourses')
+  @ApiOkResponse({ type: CourseDto, isArray: true })
+  @ApiBody({ type: UpdateCourseDto, isArray: true })
+  async createCourses(@Body() createBody: UpdateCourseDto[]) {
+    return await this.courseService.createCourses(createBody);
+  }
+
+  /* 
   @Get('/GetCourseDetailsById/:id')
   @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 404, description: 'Not Found' })
@@ -58,5 +82,5 @@ export class CourseController {
     courseDates: CreateCourseDateDto[]
   ) {
     return this.courseService.addMultipleCourseDatesToCourse(courseId, courseDates);
-  }
+  } */
 }

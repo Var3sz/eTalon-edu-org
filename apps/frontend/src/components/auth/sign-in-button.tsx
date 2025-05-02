@@ -48,7 +48,7 @@ export default function SignInButton() {
       <Button variant='outline' onClick={() => signIn()}>
         Bejelentkezés
       </Button>
-      <Link href='/signup'>
+      <Link href='/auth/signup'>
         <Button variant='default'>Regisztráció</Button>
       </Link>
     </div>

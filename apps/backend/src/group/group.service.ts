@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 
-import { GroupDTO } from './entities/group.entity';
+import { GroupDto } from './entities/group.entity';
 import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class GroupService {
   constructor(private prisma: PrismaService) {}
 
-  async getGroups(): Promise<GroupDTO[]> {
+  /**
+   * Gives back all of the Groups
+   * @returns {GroupDto[]} Groups (maths, literature/grammar etc.)
+   */
+  async getGroups(): Promise<GroupDto[]> {
     return this.prisma.group.findMany();
   }
 }

@@ -8,6 +8,6 @@ export const Links: NavigationType[] = [
 
 export const ProfileLinks: NavigationType[] = [
   { name: 'Bejelentkezés', link: '/api/auth/signin' },
-  { name: 'Regisztráció', link: '/signup' },
+  { name: 'Regisztráció', link: '/auth/signup' },
   { name: 'Kijelentkezés', link: '/api/auth/signout' },
 ];

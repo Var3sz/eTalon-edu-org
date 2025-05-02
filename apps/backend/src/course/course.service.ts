@@ -1,100 +1,90 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
-import { SaveResultDto } from '../common/results.entity';
-import { ExceptionLocales } from '../locales/exception-locales';
-import { CourseDetailsDto, CoursesDTO, CreateCourseDateDto } from './entities/course.entity';
+import {
+  CourseDetailsDto,
+  ActiveCourseDto,
+  CreateCourseDateDto,
+  CourseDto,
+  UpdateCourseDto,
+} from './entities/course.entity';
 import { RawCourseDTO, UpsertCourseDTO } from './entities/create.course.entity';
 
 @Injectable()
 export class CourseService {
   constructor(private prisma: PrismaService) {}
 
-  async getActiveCourses(): Promise<CoursesDTO[]> {
+  /**
+   * Gives back all of the currently active courses
+   * @returns {ActiveCourseDto[]} Currently active courses
+   */
+  async getActiveCourses(): Promise<ActiveCourseDto[]> {
+    return this.prisma.activeCoursesView.findMany();
+  }
+
+  /**
+   * Gives back all of the currently active courses with the packages and their prices
+   * @returns {ActiveCourseDto[]} Currently active courses
+   * TODO
+   */
+  async getActiveCoursesWithPackageInformation(): Promise<ActiveCourseDto[]> {
     try {
-      return this.prisma.courseSummaryView.findMany({ where: { active: true } });
+      return this.prisma.activeCoursesView.findMany();
     } catch (error) {
-      throw new InternalServerErrorException(ExceptionLocales.INTERNAL_SERVER_ERROR);
+      throw error;
     }
   }
 
-  async getCourseDetailsById(id: number): Promise<CourseDetailsDto> {
+  /**
+   * Gives back a course specified by an id
+   * @param id Id of the course which needs to be returned
+   * @returns The corresponding course
+   */
+  async getCourseById(id: number): Promise<CourseDto> {
     try {
-      const course = await this.prisma.course.findUnique({
-        where: { id },
-        select: {
-          id: true,
-          courseId: true,
-          students: {
-            include: {
-              student: {
-                select: {
-                  id: true,
-                  children: true,
-                  email: true,
-                  lastname: true,
-                  firstname: true,
-                  billCompany: true,
-                  city: true,
-                  zip: true,
-                  address: true,
-                  vatNumber: true,
-                  childrenMail: true,
-                  mobile: true,
-                  billingTypeId: true,
-                  attendance: {
-                    where: {
-                      courseDate: {
-                        courses: {
-                          some: {
-                            courseId: id,
-                          },
-                        },
-                      },
-                    },
-                    select: {
-                      attended: true,
-                      courseDateId: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-          courseDates: {
-            include: {
-              courseDate: {
-                select: {
-                  id: true,
-                  date: true,
-                  description: true,
-                  attendance: {
-                    select: {
-                      studentId: true,
-                      attended: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
+      const course = await this.prisma.course.findUnique({ where: { id } });
 
       if (!course) {
-        throw new NotFoundException();
+        throw new NotFoundException(`Course with id ${id} not found`);
       }
 
       return course;
     } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException();
-      }
-      throw new InternalServerErrorException(ExceptionLocales.INTERNAL_SERVER_ERROR);
+      throw error;
     }
   }
 
-  async addMultipleCourseDatesToCourse(courseId: number, newDates: CreateCourseDateDto[]) {
+  /**
+   * Update one course with the given id
+   * @param updateBody Body of the request with the updated course
+   * @param id Id of the course that we want to update
+   * @returns Updated course
+   */
+  async updateCourse(updateBody: UpdateCourseDto, id: number): Promise<CourseDto> {
+    try {
+      return this.prisma.course.update({
+        where: { id },
+        data: updateBody,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Create one or more courses, if one fails, then we rollback the others as well, so we stay consistent
+   * @param createBody - Array of courses that we would like to create
+   * @returns The created courses
+   */
+  async createCourses(createBody: UpdateCourseDto[]): Promise<CourseDto[]> {
+    try {
+      return this.prisma.$transaction(createBody.map((course) => this.prisma.course.create({ data: course })));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /* async addMultipleCourseDatesToCourse(courseId: number, newDates: CreateCourseDateDto[]) {
     try {
       await this.prisma.$transaction(async (tx) => {
         for (const date of newDates) {
@@ -122,7 +112,7 @@ export class CourseService {
     }
   }
 
-  async upsertMultipleCourses(courses: UpsertCourseDTO[]): Promise<SaveResultDto> {
+  async upsertMultipleCourses(courses: UpsertCourseDTO[]): Promise<any> {
     try {
       await this.prisma.$transaction(async (tx) => {
         for (const course of courses) {
@@ -181,9 +171,5 @@ export class CourseService {
         description: error.message,
       };
     }
-  }
-
-  async getCoursesForModification(): Promise<RawCourseDTO[]> {
-    return this.prisma.course.findMany({ where: { active: true } });
-  }
+  } */
 }

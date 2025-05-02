@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { LocationDTO } from './entities/location.entity';
+import { LocationDto } from './entities/location.entity';
 import { LocationService } from './location.service';
 
 @ApiTags('Locations')
@@ -10,8 +10,8 @@ export class LocationsController {
   constructor(private locationService: LocationService) {}
 
   @Get('/GetLocations')
-  @ApiResponse({ status: 200, description: 'Success', type: [LocationDTO] })
-  async getLocations(): Promise<LocationDTO[]> {
+  @ApiOkResponse({ type: LocationDto, isArray: true })
+  async getLocations(): Promise<LocationDto[]> {
     return this.locationService.getLocations();
   }
 }

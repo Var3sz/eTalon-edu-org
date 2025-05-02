@@ -5,7 +5,7 @@ import FormTextInput from '@/components/form/form-text-input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
-import useInitSignUpClient from '@/hooks/signup/use-init-sign-up-client';
+import useInitSignUpClient from '@/hooks/auth/signup/use-init-sign-up-client';
 
 export default function SignUpClient() {
   const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitSignUpClient();

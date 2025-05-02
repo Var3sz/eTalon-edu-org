@@ -6,12 +6,14 @@ import { PrismaModule } from 'nestjs-prisma';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { BillingTypeModule } from './billing-type/billing-type.module';
+import { BillingAddressTypeModule } from './billing-type/billing-address-type.module';
 import { CourseModule } from './course/course.module';
-import { GroupModule } from './group/GroupModule';
+import { GroupModule } from './group/group.module';
 import { LocationModule } from './location/location.module';
 import { StudentModule } from './student/student.module';
 import { UserModule } from './user/user.module';
+import { PackageModule } from './package/package.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -20,13 +22,15 @@ import { UserModule } from './user/user.module';
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     CourseModule,
     StudentModule,
-    BillingTypeModule,
+    BillingAddressTypeModule,
     LocationModule,
     GroupModule,
     UserModule,
     AuthModule,
+    PackageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
