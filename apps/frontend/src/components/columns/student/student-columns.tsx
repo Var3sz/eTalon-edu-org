@@ -10,7 +10,7 @@ import HiddenTableColumn from '@/components/tables/columns/components/special-co
 import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import { StudentLocales } from '@/locales/student-locales';
 import { Control, FieldValues } from 'react-hook-form';
-import SwitchTableColumn from '@/components/tables/columns/components/input-columns/switch-input-column';
+import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
 
 type StudentAttendanceProps<T extends FieldValues> = {
   courseData: StudentAttendance[];
@@ -29,6 +29,7 @@ export default function StudentColumns<T extends FieldValues>(
         accessorKey: 'children',
         headerTitle: StudentLocales.table.name,
         dialogTitle: 'Gyermek adatai',
+        size: 120,
       }),
       HiddenTableColumn<StudentAttendance>({ id: 'studentId', accessorKey: 'studentId' }),
       HiddenTableColumn<StudentAttendance>({ id: 'email', accessorKey: 'email' }),
@@ -47,7 +48,7 @@ export default function StudentColumns<T extends FieldValues>(
     const dynamicColumns: ColumnDef<StudentAttendance>[] = dateColumns.map(({ date, description }) => {
       const accessorKey = `attendance[index].${date}`;
 
-      const attendanceColumn = SwitchTableColumn<T, StudentAttendance>({
+      const attendanceColumn = CheckboxTableColumn<T, StudentAttendance>({
         id: `${date}-attendance`,
         accessorKey,
         headerTitle: 'Jelenlét',
@@ -65,5 +66,5 @@ export default function StudentColumns<T extends FieldValues>(
     });
 
     return [...staticColumns, ...dynamicColumns];
-  }, [courseData, dateColumns, formControl]);
+  }, [courseData, dateColumns]); // Ezek végtelen triggert eredményeznek és F5-nél nem jelenik meg a tábla tartalma!
 }
