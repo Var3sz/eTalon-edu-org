@@ -29,6 +29,7 @@ export class StudentDto implements Student {
   diseaseDesc: string;
   discount: string;
   discount2: string;
+  attendance: AttendanceDto[];
 }
 
 export class CreateStudentDto {
@@ -89,6 +90,18 @@ export class StudentDetailsDTO {
   childrenMail: string;
   mobile: string;
   billingTypeId: number;
+}
+
+export class AttendanceDto {
+  id: number;
+  date: Date;
+  description?: string;
+  attended: boolean;
+}
+
+export class StudentAttendanceDto {
+  courseId: string;
+  students: StudentDto[];
 }
 
 export class UpdateStudentDetailsDTO {

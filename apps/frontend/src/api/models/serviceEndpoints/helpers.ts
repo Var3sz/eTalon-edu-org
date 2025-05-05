@@ -4,7 +4,7 @@ import { httpRequestGET } from '@/api/models/api';
 import { FetchResponse } from '@/api/types/fetch-response';
 
 const getBillingTypesUrl = () => {
-  return `${process.env.SERVER_BASE_URL}billingType/GetBillingTypes`;
+  return `${process.env.SERVER_BASE_URL}billingAddressType/GetBillingAddressTypes`;
 };
 
 const getLocationsUrl = () => {

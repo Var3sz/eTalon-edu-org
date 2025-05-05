@@ -9,12 +9,12 @@ import LockedTableColumn from '@/components/tables/columns/components/special-co
 import ProgressBarColumn from '@/components/tables/columns/components/special-columns/progress-bar-column';
 import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { GroupLocales } from '@/locales/group-locales';
-import { CoursesDTO } from '@/models/Api';
+import { ActiveCourseDto } from '@/models/Api';
 
-export default function CourseColumns(): ColumnDef<CoursesDTO>[] {
+export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
   return useMemo(
     () => [
-      ActionsTableColumn<CoursesDTO>({
+      ActionsTableColumn<ActiveCourseDto>({
         id: 'actions',
         accessorKey: 'actions',
         headerTitle: '',
@@ -24,49 +24,49 @@ export default function CourseColumns(): ColumnDef<CoursesDTO>[] {
         dialogTitle: 'Kurzus dátumok módosítása',
         size: 50,
       }),
-      TextWithFilterTableColumn<CoursesDTO>({
+      TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'groupDescription',
         accessorKey: 'groupDescription',
         headerTitle: GroupLocales.table.courseType,
         size: 100,
       }),
-      TextWithFilterTableColumn<CoursesDTO>({
+      TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'courseId',
         accessorKey: 'courseId',
         headerTitle: GroupLocales.table.courseId,
         size: 200,
       }),
-      TextWithFilterTableColumn<CoursesDTO>({
+      TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'description',
         accessorKey: 'description',
         headerTitle: GroupLocales.table.description,
         size: 450,
       }),
-      TextWithFilterTableColumn<CoursesDTO>({
+      TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'price',
         accessorKey: 'price',
         headerTitle: GroupLocales.table.price,
         size: 100,
       }),
-      TextWithFilterTableColumn<CoursesDTO>({
+      TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'headcount',
         accessorKey: 'headcount',
         headerTitle: GroupLocales.table.headcount,
         size: 50,
       }),
-      TextWithFilterTableColumn<CoursesDTO>({
-        id: 'maxHeadcount',
-        accessorKey: 'maxHeadcount',
+      TextWithFilterTableColumn<ActiveCourseDto>({
+        id: 'maxHeadCount',
+        accessorKey: 'maxHeadCount',
         headerTitle: GroupLocales.table.maxHeadcount,
         size: 50,
       }),
-      ProgressBarColumn<CoursesDTO>({
+      ProgressBarColumn<ActiveCourseDto>({
         id: 'occupancy',
         accessorKey: 'occupancy',
         headerTitle: GroupLocales.table.occupancy,
         size: 500,
       }),
-      LockedTableColumn<CoursesDTO>({
+      LockedTableColumn<ActiveCourseDto>({
         id: 'locked',
         accessorKey: 'locked',
         headerTitle: GroupLocales.table.lock,

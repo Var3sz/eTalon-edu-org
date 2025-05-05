@@ -1,7 +1,7 @@
 import { Get, Controller, Param, ParseIntPipe, Put } from '@nestjs/common';
 import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { StudentDetailsDTO, UpdateStudentDetailsDTO } from './entities/student.entity';
+import { StudentAttendanceDto, StudentDetailsDTO, UpdateStudentDetailsDTO } from './entities/student.entity';
 import { StudentService } from './student.service';
 import { SAPIService } from 'src/SAPI/SAPI.service';
 import { Cron } from '@nestjs/schedule';
@@ -33,8 +33,8 @@ export class StudentController {
   }
 
   @Get('GetStudentsByCourseWithAttendances/:id')
-  @ApiOkResponse({ status: 200 })
-  async getStudentsByCourseWithAttendances(@Param('id', ParseIntPipe) id: number) {
+  @ApiOkResponse({ status: 200, type: StudentAttendanceDto })
+  async getStudentsByCourseWithAttendances(@Param('id', ParseIntPipe) id: number): Promise<StudentAttendanceDto> {
     return await this.studentService.getStudentsByCourseWithAttendances(id);
   }
 

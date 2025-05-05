@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { NewStudentsDto } from 'src/api/consts/SAPI';
-import { CreateStudentDto, StudentDto } from './entities/student.entity';
+import { CreateStudentDto, StudentAttendanceDto, StudentDto } from './entities/student.entity';
 import { addTwoHoursToDate } from 'src/lib/helper';
 import { cp } from 'node:fs';
 
@@ -61,25 +61,25 @@ export class StudentService {
             },
           });
 
-          const lessonDates = cp.Course.CourseLessonDates.map((cld) => cld.LessonDates).filter(Boolean);
+          const lessonDates = cp.Course.CourseLessonDates.map((cld) => cld.LessonDates);
 
           await Promise.all(
-            lessonDates.map((ld) => {
+            lessonDates.map((ld) =>
               tx.attendance.create({
                 data: {
                   studentId: createdStudent.id,
                   lessondateId: ld.id,
                   attended: false,
                 },
-              });
-            })
+              })
+            )
           );
         }
       }
     });
   }
 
-  async getStudentsByCourseWithAttendances(courseId: number) {
+  async getStudentsByCourseWithAttendances(courseId: number): Promise<StudentAttendanceDto> {
     const lessonDates = await this.prisma.courseLessonDates.findMany({
       where: {
         courseId: courseId,
@@ -91,7 +91,7 @@ export class StudentService {
 
     const lessonDateIds = lessonDates.map((ld) => ld.lessondateId);
 
-    return this.prisma.student.findMany({
+    const students = await this.prisma.student.findMany({
       where: {
         Participant: {
           some: {
@@ -100,6 +100,18 @@ export class StudentService {
         },
       },
       include: {
+        Participant: {
+          where: {
+            courseId: courseId,
+          },
+          select: {
+            Course: {
+              select: {
+                courseId: true,
+              },
+            },
+          },
+        },
         attendance: {
           where: {
             lessondateId: {
@@ -112,6 +124,50 @@ export class StudentService {
         },
       },
     });
+
+    const courseCode = students[0]?.Participant[0]?.Course.courseId ?? '';
+
+    const studentDtos = students.map(
+      (s): StudentDto => ({
+        id: s.id,
+        sapId: s.sapId,
+        subdate: s.subdate,
+        email: s.email,
+        firstname: s.firstname,
+        lastname: s.lastname,
+        billCompany: s.billCompany,
+        city: s.city,
+        zip: s.zip,
+        address: s.address,
+        coupon: s.coupon,
+        vatNum: s.vatNum,
+        billingAddressTypeId: s.billingAddressTypeId,
+        childName: s.childName,
+        childMail: s.childMail,
+        childGrade: s.childGrade,
+        childTAJ: s.childTAJ,
+        specialDiet: s.specialDiet,
+        specialDietDesc: s.specialDietDesc,
+        mobile: s.mobile,
+        packageType: s.packageType,
+        packageCode: s.packageCode,
+        disease: s.disease,
+        diseaseDesc: s.diseaseDesc,
+        discount: s.discount,
+        discount2: s.discount2,
+        attendance: s.attendance.map((a) => ({
+          id: a.id,
+          date: a.LessonDates?.date!,
+          description: a.LessonDates?.description ?? '',
+          attended: a.attended ?? false,
+        })),
+      })
+    );
+
+    return {
+      courseId: courseCode,
+      students: studentDtos,
+    };
   }
 
   /* async updateStudentDetails(id: number, requestBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {

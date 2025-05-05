@@ -1,13 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Edit, Eye } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import Link from 'next/link';
-
-import EditCourseDatesDialog from '@/components/dialogs/course/edit-course-dates-dialog';
-import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import { ActionsTableColumnModel } from '@/components/tables/columns/types/column-types';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { CoursesDTO } from '@/models/Api';
 
 export default function ActionsTableColumn<T>({
   id,
@@ -41,7 +37,7 @@ export default function ActionsTableColumn<T>({
     cell: ({ row, cell }) => {
       return (
         <div
-          className='flex items-center justify-items-center gap-1'
+          className='flex items-center justify-center gap-1'
           style={{
             minWidth: `${size}px`,
             width: cell.column.getSize(),
@@ -64,11 +60,6 @@ export default function ActionsTableColumn<T>({
             <Link href={redirection(row.original)}>
               <Eye />
             </Link>
-          )}
-          {edit && (
-            <CustomInnerStateDialog title={dialogTitle} triggerElement={<Edit />}>
-              <EditCourseDatesDialog rowData={row.original as CoursesDTO} />
-            </CustomInnerStateDialog>
           )}
         </div>
       );

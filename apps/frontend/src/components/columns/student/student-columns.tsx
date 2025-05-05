@@ -9,18 +9,21 @@ import ClickableTableColumn from '@/components/tables/columns/components/special
 import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
 import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import { StudentLocales } from '@/locales/student-locales';
+import { Control, FieldValues } from 'react-hook-form';
+import SwitchTableColumn from '@/components/tables/columns/components/input-columns/switch-input-column';
 
-export default function StudentColumns(
+type StudentAttendanceProps<T extends FieldValues> = {
+  courseData: StudentAttendance[];
+  dateColumns: { id: number; date: string; description: string }[];
+  formControl: Control<T>;
+};
+export default function StudentColumns<T extends FieldValues>(
   courseData: StudentAttendance[],
-  dateColumns: { id: number; date: string; description: string }[]
+  dateColumns: { id: number; date: string; description: string }[],
+  formControl: Control<T>
 ): ColumnDef<StudentAttendance>[] {
   return useMemo(() => {
     const staticColumns: ColumnDef<StudentAttendance>[] = [
-      TextTableColumn<StudentAttendance>({
-        id: 'courseId',
-        accessorKey: 'courseId',
-        headerTitle: StudentLocales.table.courseId,
-      }),
       ClickableTableColumn<StudentAttendance>({
         id: 'children',
         accessorKey: 'children',
@@ -41,28 +44,26 @@ export default function StudentColumns(
       HiddenTableColumn<StudentAttendance>({ id: 'billingTypeId', accessorKey: 'billingTypeId' }),
     ];
 
-    const dynamicDateGroupColumns: ColumnDef<StudentAttendance>[] = dateColumns.map(({ date, description }) => {
+    const dynamicColumns: ColumnDef<StudentAttendance>[] = dateColumns.map(({ date, description }) => {
+      const accessorKey = `attendance[index].${date}`;
+
+      const attendanceColumn = SwitchTableColumn<T, StudentAttendance>({
+        id: `${date}-attendance`,
+        accessorKey,
+        headerTitle: 'Jelenlét',
+        disabled: false,
+        formControl,
+        inEdit: true,
+      });
+
       return TextTableGroupColumn<StudentAttendance>({
         id: `group-${date}`,
         accessorKey: '',
-        headerTitle: date,
-        columns: [
-          TextTableColumn<StudentAttendance>({
-            id: `${date}-attendance`,
-            accessorKey: date,
-            headerTitle: 'Jelenlét',
-            size: 100,
-          }),
-          TextTableColumn<StudentAttendance>({
-            id: 'description',
-            accessorKey: '',
-            headerTitle: description,
-            size: 100,
-          }),
-        ],
+        headerTitle: `${description} - ${date}`,
+        columns: [attendanceColumn],
       });
     });
 
-    return [...staticColumns, ...dynamicDateGroupColumns];
-  }, [courseData]);
+    return [...staticColumns, ...dynamicColumns];
+  }, [courseData, dateColumns, formControl]);
 }
