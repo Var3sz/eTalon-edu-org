@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 
 import { DatePatterns } from '@/api/consts/date-patterns';
 import useGetCourseDetailsById from '@/hooks/courses/use-get-course-details-by-id-query';
@@ -6,6 +6,9 @@ import { formatDateCustom } from '@/lib/utils';
 import { StudentAttendanceDto, StudentDto } from '@/models/Api';
 import { useForm } from 'react-hook-form';
 import { toast } from '@/components/ui/use-toast';
+import { AttendanceDateColumnType } from '@/models/students/types';
+import { UpdateAttendancesRequest } from '@/models/students/action/update-attendances-action';
+import { useQueryClient } from '@tanstack/react-query';
 
 type UseInitCourseClientProps = {
   courseId: string;
@@ -34,13 +37,15 @@ type AttendanceForm = {
 };
 
 export default function useInitCourseClient({ courseId }: UseInitCourseClientProps) {
+  const [isPending, startTransaction] = useTransition();
+  const queryClient = useQueryClient();
+
   const { data: studentsDataResponse } = useGetCourseDetailsById(Number(courseId));
   const course: StudentAttendanceDto | null =
     studentsDataResponse.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
 
   const [CourseId, setCourseId] = useState<string | null>(null);
   const [courseData, setCourseData] = useState<StudentAttendance[]>([]);
-  const [dateCols, setDateCols] = useState<{ id: number; date: string; description: string }[]>([]);
   const [attendanceOnly, setAttendanceOnly] = useState<AttendanceForm[]>();
 
   const form = useForm<{ attendance: AttendanceForm[] }>({
@@ -50,7 +55,22 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
   });
 
   const onValidSubmit = (data: { attendance: AttendanceForm[] }) => {
-    console.log(JSON.stringify(data));
+    startTransaction(async () => {
+      const payload = data.attendance.flatMap(({ studentId, ...rest }) => {
+        return Object.entries(rest).map(([lessondateId, attended]) => ({
+          studentId,
+          lessondateId: Number(lessondateId),
+          attended: Boolean(attended),
+        }));
+      });
+
+      const updateResponse = await UpdateAttendancesRequest(payload);
+
+      if (updateResponse.status === 200) {
+        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });
+        toast({ variant: 'success', title: 'Sikeres frissítés!', description: 'A jelenlétek frissítése sikeres!' });
+      }
+    });
   };
 
   const onInvalidSubmit = (e: any) => {
@@ -62,6 +82,27 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
     });
   };
 
+  const dateCols: AttendanceDateColumnType[] = useMemo(() => {
+    if (!course) return [];
+
+    const allDates = course.students.flatMap((student) =>
+      student.attendance.map((a) => ({
+        lessonDateId: a.lessonDateId,
+        date: formatDateCustom(a.date, DatePatterns.DATEURI)!,
+        description: a.description ?? '',
+      }))
+    );
+
+    const uniqueDateMap = new Map<string, AttendanceDateColumnType>();
+    for (const entry of allDates) {
+      if (!uniqueDateMap.has(entry.date)) {
+        uniqueDateMap.set(entry.date, entry);
+      }
+    }
+
+    return Array.from(uniqueDateMap.values());
+  }, [course]);
+
   useEffect(() => {
     if (course !== null) {
       setCourseId(course.courseId);
@@ -69,13 +110,14 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
       // Extract and normalize attendance dates
       const allDates = course.students.flatMap((student) =>
         student.attendance.map((a) => ({
+          lessonDateId: a.lessonDateId,
           date: formatDateCustom(a.date, DatePatterns.DATEURI)!,
           description: a.description ?? '',
         }))
       );
 
       // Remove duplicates by date
-      const uniqueDateMap = new Map<string, { date: string; description: string }>();
+      const uniqueDateMap = new Map<string, { lessonDateId: number; date: string; description: string }>();
       for (const entry of allDates) {
         if (!uniqueDateMap.has(entry.date)) {
           uniqueDateMap.set(entry.date, entry);
@@ -84,12 +126,10 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
 
       // Add synthetic id
       const dateColumns = Array.from(uniqueDateMap.values()).map((entry, index) => ({
-        id: index + 1, // synthetic ID
+        lessondateId: entry.lessonDateId,
         date: entry.date,
         description: entry.description,
       }));
-
-      setDateCols(dateColumns);
 
       const data = course.students.map((student) => {
         const row: StudentAttendance = {
@@ -108,9 +148,9 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
           billingTypeId: student.billingAddressTypeId,
         };
 
-        dateColumns.forEach(({ date }) => {
-          const match = student.attendance.find((a) => formatDateCustom(a.date, DatePatterns.DATEURI) === date);
-          row[date] = match?.attended ? 'Y' : 'N';
+        dateColumns.forEach(({ lessondateId }) => {
+          const match = student.attendance.find((a) => a.lessonDateId === lessondateId);
+          row[lessondateId] = match?.attended ?? false;
         });
 
         return row;
@@ -128,8 +168,9 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
         const attendance: Record<string, boolean> = {};
 
         for (const key in rest) {
-          if (/\d{4}-\d{2}-\d{2}/.test(key)) {
-            attendance[key] = student[key] === 'Y';
+          const maybeId = Number(key);
+          if (Number.isInteger(maybeId)) {
+            attendance[maybeId] = rest[maybeId] === true;
           }
         }
 
@@ -147,8 +188,12 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
     }
   }, [attendanceOnly]);
 
+  const resetForm = () => {
+    form.reset({ attendance: attendanceOnly });
+  };
+
   return useMemo(
-    () => ({ form, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols }),
-    [form, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols]
+    () => ({ form, isPending, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols }),
+    [form, isPending, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols]
   );
 }

@@ -22,9 +22,16 @@ export default function ClickableTableColumn<T>({
       const value = cell.getValue() as string;
 
       return (
-        <CustomInnerStateDialog title={dialogTitle} triggerElement={<span className='cursor-pointer '>{value}</span>}>
-          <StudentDetailsDialog studentData={row.original as StudentAttendance} />
-        </CustomInnerStateDialog>
+        <div
+          style={{
+            minWidth: `${size}px`,
+            width: cell.column.getSize(),
+          }}
+        >
+          <CustomInnerStateDialog title={dialogTitle} triggerElement={<span className='cursor-pointer '>{value}</span>}>
+            <StudentDetailsDialog studentData={row.original as StudentAttendance} />
+          </CustomInnerStateDialog>
+        </div>
       );
     },
   };

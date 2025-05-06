@@ -4,7 +4,6 @@ import { useEffect, useMemo, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { toast } from '@/components/ui/use-toast';
-import { RawCourseDTO } from '@/models/Api';
 import { upsertCoursesDataAction } from '@/models/course/action/upsert-courses-data-action';
 import { UpdateCourseListModel } from '@/models/course/types';
 import {

@@ -42,12 +42,12 @@ export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
         headerTitle: GroupLocales.table.description,
         size: 450,
       }),
-      TextWithFilterTableColumn<ActiveCourseDto>({
+      /* TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'price',
         accessorKey: 'price',
         headerTitle: GroupLocales.table.price,
         size: 100,
-      }),
+      }), */
       TextWithFilterTableColumn<ActiveCourseDto>({
         id: 'headcount',
         accessorKey: 'headcount',

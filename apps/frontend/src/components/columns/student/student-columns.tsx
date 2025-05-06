@@ -11,17 +11,16 @@ import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import { StudentLocales } from '@/locales/student-locales';
 import { Control, FieldValues } from 'react-hook-form';
 import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
+import { AttendanceDateColumnType } from '@/models/students/types';
 
 type StudentAttendanceProps<T extends FieldValues> = {
-  courseData: StudentAttendance[];
-  dateColumns: { id: number; date: string; description: string }[];
+  dateColumns: AttendanceDateColumnType[];
   formControl: Control<T>;
 };
-export default function StudentColumns<T extends FieldValues>(
-  courseData: StudentAttendance[],
-  dateColumns: { id: number; date: string; description: string }[],
-  formControl: Control<T>
-): ColumnDef<StudentAttendance>[] {
+export default function StudentColumns<T extends FieldValues>({
+  dateColumns,
+  formControl,
+}: StudentAttendanceProps<T>): ColumnDef<StudentAttendance>[] {
   return useMemo(() => {
     const staticColumns: ColumnDef<StudentAttendance>[] = [
       ClickableTableColumn<StudentAttendance>({
@@ -29,7 +28,7 @@ export default function StudentColumns<T extends FieldValues>(
         accessorKey: 'children',
         headerTitle: StudentLocales.table.name,
         dialogTitle: 'Gyermek adatai',
-        size: 120,
+        size: 200,
       }),
       HiddenTableColumn<StudentAttendance>({ id: 'studentId', accessorKey: 'studentId' }),
       HiddenTableColumn<StudentAttendance>({ id: 'email', accessorKey: 'email' }),
@@ -45,26 +44,20 @@ export default function StudentColumns<T extends FieldValues>(
       HiddenTableColumn<StudentAttendance>({ id: 'billingTypeId', accessorKey: 'billingTypeId' }),
     ];
 
-    const dynamicColumns: ColumnDef<StudentAttendance>[] = dateColumns.map(({ date, description }) => {
-      const accessorKey = `attendance[index].${date}`;
+    const dynamicColumns: ColumnDef<StudentAttendance>[] = dateColumns.map(({ lessonDateId, date, description }) => {
+      const accessorKey = `attendance[index].${lessonDateId}`;
 
-      const attendanceColumn = CheckboxTableColumn<T, StudentAttendance>({
-        id: `${date}-attendance`,
+      return CheckboxTableColumn<T, StudentAttendance>({
+        id: `${lessonDateId}-attendance`,
         accessorKey,
-        headerTitle: 'Jelenlét',
+        size: 80,
+        headerTitle: `${description} - ${date}`,
         disabled: false,
         formControl,
         inEdit: true,
       });
-
-      return TextTableGroupColumn<StudentAttendance>({
-        id: `group-${date}`,
-        accessorKey: '',
-        headerTitle: `${description} - ${date}`,
-        columns: [attendanceColumn],
-      });
     });
 
     return [...staticColumns, ...dynamicColumns];
-  }, [courseData, dateColumns]); // Ezek végtelen triggert eredményeznek és F5-nél nem jelenik meg a tábla tartalma!
+  }, [dateColumns]); // Ezek végtelen triggert eredményeznek és F5-nél nem jelenik meg a tábla tartalma!
 }

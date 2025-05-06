@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { NewStudentsDto } from 'src/api/consts/SAPI';
-import { CreateStudentDto, StudentAttendanceDto, StudentDto } from './entities/student.entity';
+import { CreateStudentDto, StudentAttendanceDto, StudentDto, UpdateAttendanceDto } from './entities/student.entity';
 import { addTwoHoursToDate } from 'src/lib/helper';
 import { cp } from 'node:fs';
 
@@ -156,7 +156,7 @@ export class StudentService {
         discount: s.discount,
         discount2: s.discount2,
         attendance: s.attendance.map((a) => ({
-          id: a.id,
+          lessonDateId: a.lessondateId,
           date: a.LessonDates?.date!,
           description: a.LessonDates?.description ?? '',
           attended: a.attended ?? false,
@@ -168,6 +168,31 @@ export class StudentService {
       courseId: courseCode,
       students: studentDtos,
     };
+  }
+
+  async updateAttendanceBulk(updates: UpdateAttendanceDto[]) {
+    return this.prisma.$transaction(async (tx) => {
+      const results = [];
+
+      for (const { studentId, lessondateId, attended } of updates) {
+        const existing = await tx.attendance.findFirst({
+          where: { studentId, lessondateId },
+        });
+
+        if (!existing) {
+          throw new Error(`Attendance not found for studentId ${studentId}, lessondateId ${lessondateId}`);
+        }
+
+        const updated = await tx.attendance.update({
+          where: { id: existing.id },
+          data: { attended },
+        });
+
+        results.push(updated);
+      }
+
+      return results;
+    });
   }
 
   /* async updateStudentDetails(id: number, requestBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {

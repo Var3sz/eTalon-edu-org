@@ -1,6 +1,15 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from '@nestjs/class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsBoolean,
+  ArrayNotEmpty,
+  ValidateNested,
+} from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Student } from '@prisma/client';
+import { Type } from 'class-transformer';
 
 export class StudentDto implements Student {
   id: number;
@@ -93,7 +102,7 @@ export class StudentDetailsDTO {
 }
 
 export class AttendanceDto {
-  id: number;
+  lessonDateId: number;
   date: Date;
   description?: string;
   attended: boolean;
@@ -102,6 +111,17 @@ export class AttendanceDto {
 export class StudentAttendanceDto {
   courseId: string;
   students: StudentDto[];
+}
+
+export class UpdateAttendanceDto {
+  @IsInt()
+  studentId: number;
+
+  @IsInt()
+  lessondateId: number;
+
+  @IsBoolean()
+  attended: boolean;
 }
 
 export class UpdateStudentDetailsDTO {

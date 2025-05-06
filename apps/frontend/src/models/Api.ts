@@ -47,7 +47,7 @@ export interface UpdateCourseDto {
 }
 
 export interface AttendanceDto {
-  id: number;
+  lessonDateId: number;
   /** @format date-time */
   date: string;
   description?: string;

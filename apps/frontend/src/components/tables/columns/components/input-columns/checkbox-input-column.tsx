@@ -9,6 +9,7 @@ import FormCheckboxInput from '@/components/form/form-checkbox-input';
 export default function CheckboxTableColumn<FormType extends FieldValues, TableType>({
   id,
   accessorKey,
+  size,
   disabled,
   headerTitle,
   formControl,
@@ -16,13 +17,20 @@ export default function CheckboxTableColumn<FormType extends FieldValues, TableT
 }: ColumnInputModel<FormType, TableType>): ColumnDef<TableType> {
   return {
     id: id,
+    size: size,
     accessorKey: accessorKey,
     header: ({ header, column, table }) => (
       <InputHeader headerTitle={headerTitle} header={header} column={column} table={table} />
     ),
-    cell: ({ row }) => {
+    cell: ({ cell, row }) => {
       return (
-        <div className='flex w-full min-w-[220px] justify-center'>
+        <div
+          className='flex w-full justify-center'
+          style={{
+            minWidth: `${size}px`,
+            width: cell.column.getSize(),
+          }}
+        >
           <FormCheckboxInput
             inEdit={inEdit}
             disabled={disabled}
