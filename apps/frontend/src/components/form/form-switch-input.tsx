@@ -23,7 +23,7 @@ export default function FormSwitchInput<T extends FieldValues>({
         return (
           <FormItem className='flex flex-col'>
             {removeLabel === false && (
-              <FormLabel className='text-normal'>
+              <FormLabel className='font-normal'>
                 {label}
                 {required && inEdit && '*'}
               </FormLabel>

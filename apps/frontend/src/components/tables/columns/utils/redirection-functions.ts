@@ -1,6 +1,12 @@
-import { CoursesDTO } from '@/models/Api';
+import { ActiveCourseDto, CourseDto } from '@/models/Api';
 
-export const CourseRedirectionFunction = (row: CoursesDTO) => {
+export const CourseEditRedirectionFunction = (row: CourseDto) => {
+  let baseUrl = '/course/edit/';
+  baseUrl += row.id;
+  return baseUrl;
+};
+
+export const CourseRedirectionFunction = (row: ActiveCourseDto) => {
   let baseUrl = '/course/';
   baseUrl += row.id;
   return baseUrl;

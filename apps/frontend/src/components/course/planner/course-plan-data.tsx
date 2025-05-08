@@ -4,34 +4,24 @@ import UpdateCourseDataColumns from '@/components/columns/course/update-courses-
 import { SimpleTable } from '@/components/tables/simple-table';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import useGetCoursesForModificationQuery from '@/hooks/courses/course-plan/use-get-courses-for-modification-query';
 import useInitCoursePlanData from '@/hooks/courses/course-plan/use-init-course-plan-data';
 import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
 import { UpdateCourseListModel, UpdateCoursesFormModel } from '@/models/course/types';
 import LoadingFullScreen from '@/app/loading';
+import useGetCoursesDataQuery from '@/hooks/courses/course-plan/use-get-courses-data-query';
+import { DataTable } from '@/components/tables/data-table';
+import CoursePlanColumns from '@/components/columns/course/course-plan-columns';
 
 export default function CoursePlanData() {
-  const coursesData = useGetCoursesForModificationQuery();
-  const locations = useGetLocationsQuery();
-  const groups = useGetGroupsQuery();
+  const coursesData = useGetCoursesDataQuery();
 
-  const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitCoursePlanData({
-    coursesData: coursesData!,
-  });
-
-  const formValues = useWatch(form) as UpdateCourseListModel;
-
-  const updateCoursesColumns = UpdateCourseDataColumns<Pick<any, keyof UpdateCoursesFormModel>>(
-    form.control as unknown as Control<Pick<any, keyof UpdateCoursesFormModel>>,
-    form.setValue,
-    locations!,
-    groups!,
-    formValues.Helpers.inEdit
-  );
+  console.log(coursesData);
 
   return (
-    <Form {...form}>
+    <>
+      <DataTable columns={CoursePlanColumns()} data={coursesData ?? []} />
+      {/* <Form {...form}>
       <form onSubmit={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)} className='flex flex-col gap-5'>
         {isPending && <LoadingFullScreen />}
         <SimpleTable
@@ -84,6 +74,7 @@ export default function CoursePlanData() {
           )}
         </div>
       </form>
-    </Form>
+    </Form> */}
+    </>
   );
 }

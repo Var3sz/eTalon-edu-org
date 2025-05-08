@@ -21,7 +21,7 @@ export const formatDateCustom = (date: Date | string | null, pattern: string = D
 
 export const parseDateToISO = (date: Date | null): string | null => {
   if (date === null) return null;
-  return addMinutes(date, -date.getTimezoneOffset()).toISOString().slice(0, -1);
+  return addMinutes(date, -date.getTimezoneOffset()).toISOString();
 };
 
 export const convertStringToDate = (stringDate: string | null): Date | null =>

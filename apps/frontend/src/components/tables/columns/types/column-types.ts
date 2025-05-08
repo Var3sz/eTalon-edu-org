@@ -69,4 +69,5 @@ export type ColumnBaseModel<TData> = {
   accessorKey: string;
   headerTitle: string;
   size?: number;
+  cellStyle?: string;
 };

@@ -21,11 +21,11 @@ export default function FormNumberInput<T extends FieldValues>({
       control={formControl}
       name={id as Path<T>}
       render={({ field }) => (
-        <FormItem className='flex flex-col'>
+        <FormItem className='flex flex-col gap-0.5'>
           {removeLabel === false && (
             <FormLabel className='font-normal'>
               {label}
-              {`(${unitOfMeasureLabel})`}
+              {unitOfMeasureLabel && `(${unitOfMeasureLabel})`}
               {required && inEdit && '*'}
             </FormLabel>
           )}

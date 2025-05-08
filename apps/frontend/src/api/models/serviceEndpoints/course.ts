@@ -3,12 +3,20 @@
 import { httpRequestGET, httpRequestPOST, httpRequestPUT } from '@/api/models/api';
 import { FetchResponse } from '@/api/types/fetch-response';
 
+const getCoursesUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/GetCourses`;
+};
+
 const getActiveCoursesUrl = () => {
   return `${process.env.SERVER_BASE_URL}courses/GetActiveCourses`;
 };
 
-const getCoursesForModificationUrl = () => {
-  return `${process.env.SERVER_BASE_URL}courses/GetCoursesForModification`;
+const getCourseByIdUrl = (courseId: string) => {
+  return `${process.env.SERVER_BASE_URL}courses/GetCourseById/${courseId}`;
+};
+
+const updateCourseByIdUrl = (courseId: number) => {
+  return `${process.env.SERVER_BASE_URL}courses/UpdateCourse/${courseId}`;
 };
 
 const getCourseDetailsByIdUrl = (courseId: number) => {
@@ -27,12 +35,24 @@ const createCourseDatesUrl = (courseId: number) => {
   return `${process.env.SERVER_BASE_URL}courses/CreateCourseDatesForCourse/${courseId}`;
 };
 
+// HTTP functions
+export const GetCourses = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET<ResponseType>(getCoursesUrl(), process.env.JWT_TOKEN!);
+};
+
 export const GetActiveCourses = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestGET<ResponseType>(getActiveCoursesUrl(), process.env.JWT_TOKEN!);
 };
 
-export const GetCoursesForModification = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET<ResponseType>(getCoursesForModificationUrl(), process.env.JWT_TOKEN!);
+export const GetCourseById = async <ResponseType>(courseId: string): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET<ResponseType>(getCourseByIdUrl(courseId), process.env.JWT_TOKEN!);
+};
+
+export const UpdateCourseData = async <RequestType, ResponseType>(
+  courseId: number,
+  body: RequestType
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPUT<RequestType, ResponseType>(updateCourseByIdUrl(courseId), process.env.JWT_TOKEN!, body);
 };
 
 export const GetCourseDetailsById = async <ResponseType>(courseId: number): Promise<FetchResponse<ResponseType>> => {

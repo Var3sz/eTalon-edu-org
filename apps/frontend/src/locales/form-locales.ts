@@ -1,0 +1,19 @@
+export const FormLocales = {
+  course: {
+    courseId: 'Kurzus azonosító',
+    status: 'Státusz',
+    courseType: 'Kurzus típus',
+    description: 'Megnevezés',
+    grade: 'Évfolyam',
+    date: 'Kurzus dátuma',
+    from: 'Kezdés időpontja',
+    to: 'Befejezés időpontja',
+    location: 'Helyszín',
+    group: 'Tantárgy',
+    price: 'Egységár',
+    headcount: 'Létszám',
+    maxHeadcount: 'Max. létszám',
+    occupancy: 'Telítettség',
+    lock: 'Lezárt',
+  },
+};

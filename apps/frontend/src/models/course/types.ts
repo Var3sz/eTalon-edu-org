@@ -8,25 +8,28 @@ export type EditCourseDatesFormModel = {
   CourseDates: CourseDateFormModel[];
 };
 
-export type UpdateCoursesFormModel = {
+export type UpdateCourseFormModel = {
   id: number | null;
   courseId: string | null;
   description: string | null;
-  price: number | null;
   active: boolean;
   endTime: string | null;
   groupId: number | null;
-  headCount: number | null;
+  headcount: number | null;
   locationId: number | null;
-  maxHeadcount: number | null;
+  maxHeadCount: number | null;
   startDate: Date | null;
   startTime: string | null;
   locked: boolean;
+  Helpers: {
+    inEdit: boolean;
+  };
 };
 
+/* 
 export type UpdateCourseListModel = {
   CourseList: UpdateCoursesFormModel[];
   Helpers: {
     inEdit: boolean;
   };
-};
+}; */

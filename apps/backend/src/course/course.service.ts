@@ -9,10 +9,18 @@ import {
   UpdateCourseDto,
 } from './entities/course.entity';
 import { RawCourseDTO, UpsertCourseDTO } from './entities/create.course.entity';
+import { Course } from '@prisma/client';
 
 @Injectable()
 export class CourseService {
   constructor(private prisma: PrismaService) {}
+
+  /**
+   * Gives back all of the courses which are active (raw form)
+   */
+  async getAllActiveCourse(): Promise<CourseDto[]> {
+    return await this.prisma.course.findMany({ where: { active: true } });
+  }
 
   /**
    * Gives back all of the currently active courses

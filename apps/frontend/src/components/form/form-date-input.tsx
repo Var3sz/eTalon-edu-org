@@ -27,7 +27,7 @@ export default function FormDateInput<T extends FieldValues>({
       control={formControl}
       name={id as Path<T>}
       render={() => (
-        <FormItem className='flex flex-col'>
+        <FormItem className='flex flex-col gap-0.5'>
           {removeLabel === false && (
             <FormLabel className='font-normal'>
               {label}

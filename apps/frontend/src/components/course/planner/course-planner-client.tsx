@@ -15,10 +15,10 @@ export default function CoursePlannerClient() {
             Kurzustervezés
           </TabsTrigger>
           <TabsTrigger
-            value='packages'
+            value='course-dates'
             className='text-lg px-6 py-3 rounded-md border shadow transition-all font-semibold bg-white text-muted-foreground data-[state=active]:bg-gray-800 data-[state=active]:text-white data-[state=active]:shadow-xl data-[state=active]:border-gray-700'
           >
-            Csomagok
+            Kurzus dátumok
           </TabsTrigger>
           <TabsTrigger
             value='billing-dates'
@@ -26,20 +26,11 @@ export default function CoursePlannerClient() {
           >
             Számlázási dátumok
           </TabsTrigger>
-          <TabsTrigger
-            value='course-dates'
-            className='text-lg px-6 py-3 rounded-md border shadow transition-all font-semibold bg-white text-muted-foreground data-[state=active]:bg-gray-800 data-[state=active]:text-white data-[state=active]:shadow-xl data-[state=active]:border-gray-700'
-          >
-            Kurzus dátumok
-          </TabsTrigger>
         </TabsList>
 
         <div className='flex-1 overflow-y-auto rounded-xl border p-4 shadow-sm'>
           <TabsContent value='course-planning'>
             <CoursePlanData />
-          </TabsContent>
-          <TabsContent value='packages'>
-            <div className='text-xl font-semibold'>Csomagok tartalom ide jön</div>
           </TabsContent>
           <TabsContent value='billing-dates'>
             <div className='text-xl font-semibold'>Számlázási dátumok tartalom ide jön</div>

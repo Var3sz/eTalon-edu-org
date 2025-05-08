@@ -17,6 +17,15 @@ export class CourseController {
   constructor(private courseService: CourseService) {}
 
   /**
+   * @returns Active courses in raw form
+   */
+  @Get('/GetCourses')
+  @ApiOkResponse({ type: CourseDto, isArray: true })
+  async getCourses(): Promise<CourseDto[]> {
+    return await this.courseService.getAllActiveCourse();
+  }
+
+  /**
    * @returns Active courses
    */
   @Get('/GetActiveCourses')

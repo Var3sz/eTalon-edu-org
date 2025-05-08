@@ -69,6 +69,12 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
       if (updateResponse.status === 200) {
         await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });
         toast({ variant: 'success', title: 'Sikeres frissítés!', description: 'A jelenlétek frissítése sikeres!' });
+      } else {
+        toast({
+          title: 'Sikertelen frissítés!',
+          description: updateResponse.status === 500 && updateResponse.error.Message,
+          variant: 'destructive',
+        });
       }
     });
   };

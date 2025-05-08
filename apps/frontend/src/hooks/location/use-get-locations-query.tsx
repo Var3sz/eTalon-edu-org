@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { GetLocations } from '@/api/models/serviceEndpoints/helpers';
-import { LocationDTO } from '@/models/Api';
+import { LocationDto } from '@/models/Api';
 
 export default function useGetLocationsQuery() {
   const { data: locationsResponse } = useSuspenseQuery({
     queryKey: ['locations'],
-    queryFn: () => GetLocations<LocationDTO[]>(),
+    queryFn: () => GetLocations<LocationDto[]>(),
   });
 
   if (locationsResponse.status === 200) {

@@ -1,5 +1,5 @@
-export const GroupLocales = {
-  table: {
+export const TableLocales = {
+  course: {
     courseId: 'Kurzus azonosító',
     status: 'Státusz',
     courseType: 'Kurzus típus',
