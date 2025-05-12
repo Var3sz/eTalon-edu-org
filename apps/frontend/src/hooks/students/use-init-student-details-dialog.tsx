@@ -13,12 +13,14 @@ import { UpdateStudentDetailsFormDefault } from '@/validation/default-values/stu
 import { updateStudentDetailsSchema } from '@/validation/schemas/student/update-student-details-schema';
 
 type UseInitStudentDetailsDialogProps = {
+  courseId: string;
   studentData: StudentAttendance;
   startTransaction: TransitionStartFunction;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function useInitStudentDetailsDialog({
+  courseId,
   studentData,
   startTransaction,
   setOpenChangeDialog,
@@ -30,11 +32,13 @@ export default function useInitStudentDetailsDialog({
     resolver: yupResolver<UpdateStudentDetailsFormModel>(updateStudentDetailsSchema),
   });
 
+  console.log(courseId);
+
   const onValidFormSubmit = (formModel: UpdateStudentDetailsFormModel) => {
     startTransaction(async () => {
-      const updateResponse = await UpdateStudentDetailsAction(studentData.studentId, formModel);
+      const updateResponse = await UpdateStudentDetailsAction(formModel);
       if (updateResponse.status === 200) {
-        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', studentData.id] });
+        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });
         toast({ variant: 'success', title: 'Sikeres frissítés!' });
         setOpenChangeDialog && setOpenChangeDialog(false);
       } else {

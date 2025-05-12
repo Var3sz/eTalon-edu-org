@@ -11,6 +11,10 @@ const getUpdateAttendancesUrl = () => {
   return `${process.env.SERVER_BASE_URL}students/UpdateAttendances`;
 };
 
+const getUpdateStudentDetailsUrl = () => {
+  return `${process.env.SERVER_BASE_URL}students/UpdateStudentDetails`;
+};
+
 export const GetStudentsByCourseWithAttendances = async <ResponseType>(
   courseId: number
 ): Promise<FetchResponse<ResponseType>> => {
@@ -21,4 +25,10 @@ export const UpdateAttendances = async <RequestType, ResponseType>(
   body: RequestType
 ): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestPUT(getUpdateAttendancesUrl(), process.env.JWT_TOKEN!, body);
+};
+
+export const UpdateStudentDetails = async <RequestType, ResponseType>(
+  body: RequestType
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPUT(getUpdateStudentDetailsUrl(), process.env.JWT_TOKEN!, body);
 };

@@ -1,10 +1,10 @@
 'use server';
 
-import { UpdateStudentDetails } from '@/api/models/serviceEndpoints/course';
+import { UpdateStudentDetails } from '@/api/models/serviceEndpoints/students';
 import { StudentDetailsDTO, UpdateStudentDetailsDTO } from '@/models/Api';
 import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
-export const UpdateStudentDetailsAction = async (studentId: number, formModel: UpdateStudentDetailsFormModel) => {
+export const UpdateStudentDetailsAction = async (formModel: UpdateStudentDetailsFormModel) => {
   const parsedBody: UpdateStudentDetailsDTO = {
     email: formModel.email,
     lastname: formModel.lastname,
@@ -13,11 +13,24 @@ export const UpdateStudentDetailsAction = async (studentId: number, formModel: U
     city: formModel.city,
     zip: formModel.zip,
     address: formModel.address,
-    vatNumber: formModel.vatNumber,
-    children: formModel.children,
-    childrenMail: formModel.childrenMail,
+    vatNum: formModel.vatNum,
+    childName: formModel.childName,
+    childMail: formModel.childMail,
     mobile: formModel.mobile,
-    billingTypeId: formModel.billingTypeId,
+    billingAddressTypeId: formModel.billingAddressTypeId,
+    id: formModel.id,
+    sapId: formModel.sapId,
+    coupon: formModel.coupon,
+    childGrade: formModel.childGrade,
+    childTAJ: formModel.childTAJ,
+    specialDiet: formModel.specialDiet,
+    specialDietDesc: formModel.specialDietDesc,
+    packageType: formModel.packageType,
+    packageCode: formModel.packageCode,
+    disease: formModel.disease,
+    diseaseDesc: formModel.diseaseDesc,
+    discount: formModel.discount,
+    discount2: formModel.discount2,
   };
-  return await UpdateStudentDetails<UpdateStudentDetailsDTO, StudentDetailsDTO>(studentId, parsedBody);
+  return await UpdateStudentDetails<UpdateStudentDetailsDTO, StudentDetailsDTO>(parsedBody);
 };

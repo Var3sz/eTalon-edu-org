@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 import { DatePatterns } from '@/api/consts/date-patterns';
 import useGetCourseDetailsById from '@/hooks/courses/use-get-course-details-by-id-query';
 import { formatDateCustom } from '@/lib/utils';
-import { StudentAttendanceDto, StudentDto } from '@/models/Api';
+import { StudentAttendanceDto, StudentDetailsDTO } from '@/models/Api';
 import { useForm } from 'react-hook-form';
 import { toast } from '@/components/ui/use-toast';
 import { AttendanceDateColumnType } from '@/models/students/types';
@@ -16,20 +16,8 @@ type UseInitCourseClientProps = {
 
 export type StudentAttendance = {
   studentId: number;
-  children: string;
-  email: string;
-  lastname: string;
-  firstname: string;
-  billCompany: string;
-  city: string;
-  zip: number;
-  address: string;
-  vatNumber: string;
-  childrenMail: string;
-  mobile: string;
-  billingTypeId: number;
   [date: string]: boolean | string | number;
-};
+} & StudentDetailsDTO;
 
 type AttendanceForm = {
   studentId: number;
@@ -138,25 +126,16 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
       }));
 
       const data = course.students.map((student) => {
+        const { attendance, ...details } = student;
+
         const row: StudentAttendance = {
-          studentId: student.id,
-          children: student.childName,
-          email: student.email,
-          lastname: student.lastname,
-          firstname: student.firstname,
-          billCompany: student.billCompany,
-          city: student.city,
-          zip: student.zip,
-          address: student.address,
-          vatNumber: student.vatNum,
-          childrenMail: student.childMail,
-          mobile: student.mobile,
-          billingTypeId: student.billingAddressTypeId,
+          studentId: details.id,
+          ...details,
         };
 
         dateColumns.forEach(({ lessondateId }) => {
-          const match = student.attendance.find((a) => a.lessonDateId === lessondateId);
-          row[lessondateId] = match?.attended ?? false;
+          const att = student.attendance.find((a) => a.lessonDateId === lessondateId);
+          row[lessondateId] = !!att?.attended;
         });
 
         return row;

@@ -25,22 +25,13 @@ export default function CourseClient({ courseId }: CourseClientModel) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)} className='flex flex-col'>
           <SimpleTable
-            columns={StudentColumns({ dateColumns: dateCols, formControl: form.control })}
+            columns={StudentColumns({
+              courseId: courseId,
+              courseData: courseData,
+              dateColumns: dateCols,
+              formControl: form.control,
+            })}
             defaultData={courseData}
-            hiddenColumnIds={[
-              'studentId',
-              'email',
-              'lastname',
-              'firstname',
-              'billCompany',
-              'city',
-              'zip',
-              'address',
-              'vatNumber',
-              'childrenMail',
-              'mobile',
-              'billingTypeId',
-            ]}
           />
           <div className='flex gap-5 mt-5 self-end'>
             <Button

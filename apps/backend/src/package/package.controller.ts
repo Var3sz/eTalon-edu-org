@@ -7,10 +7,4 @@ import { PackageDto } from './dto/package.entity';
 @Controller('package')
 export class PackageController {
   constructor(private packageService: PackageService) {}
-
-  @Get('/GetPackagesByCourseId/:id')
-  @ApiOkResponse({ type: PackageDto, isArray: true })
-  async getPackagesByCourseId(@Param('id', ParseIntPipe) id: number): Promise<PackageDto[]> {
-    return await this.packageService.getPackagesByCourseId(id);
-  }
 }

@@ -6,10 +6,13 @@ import {
   IsBoolean,
   ArrayNotEmpty,
   ValidateNested,
+  IsDate,
+  IsEmail,
 } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Student } from '@prisma/client';
 import { Type } from 'class-transformer';
+import { IsNumber } from 'class-validator';
 
 export class StudentDto implements Student {
   id: number;
@@ -67,38 +70,33 @@ export class CreateStudentDto {
   diseaseDesc: string;
 }
 
-export class CourseStudentsDTO {
+export class StudentDetailsDTO implements Student {
   id: number;
+  sapId: number;
+  subdate: Date;
   email: string;
-  lastname: string;
   firstname: string;
+  lastname: string;
   billCompany: string;
   city: string;
   zip: number;
   address: string;
-  vatNumber: string;
-  children: string;
-  childrenMail: string;
+  coupon: string;
+  vatNum: string;
+  billingAddressTypeId: number;
+  childName: string;
+  childMail: string;
+  childGrade: number;
+  childTAJ: string;
+  specialDiet: boolean;
+  specialDietDesc: string;
   mobile: string;
-  billingTypeId: number;
-  courseId: number;
-  courseCode: string;
-}
-
-export class StudentDetailsDTO {
-  id: number;
-  email: string;
-  lastname: string;
-  firstname: string;
-  billCompany: string;
-  city: string;
-  zip: number;
-  address: string;
-  vatNumber: string;
-  children: string;
-  childrenMail: string;
-  mobile: string;
-  billingTypeId: number;
+  packageType: string;
+  packageCode: string;
+  disease: boolean;
+  diseaseDesc: string;
+  discount: string;
+  discount2: string;
 }
 
 export class AttendanceDto {
@@ -125,70 +123,94 @@ export class UpdateAttendanceDto {
 }
 
 export class UpdateStudentDetailsDTO {
-  @ApiProperty({ required: true })
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
+  @IsNumber()
+  id: number;
+
+  @IsNumber()
+  sapId: number;
+
+  @IsEmail()
   email: string;
 
-  @ApiProperty({ required: true })
-  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  lastname: string;
-
-  @ApiProperty({ required: true })
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
   firstname: string;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
   @IsString()
+  lastname: string;
+
+  @IsString()
+  @IsOptional()
   billCompany?: string;
 
-  @ApiProperty({ required: true })
-  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  city: string;
-
-  @ApiProperty({ required: true })
   @IsOptional()
-  @IsInt()
-  zip: number;
+  city?: string;
 
-  @ApiProperty({ required: true })
+  @IsNumber()
   @IsOptional()
+  zip?: number;
+
   @IsString()
-  @IsNotEmpty()
-  address: string;
-
-  @ApiProperty({ required: false })
   @IsOptional()
+  address?: string;
+
   @IsString()
-  vatNumber?: string;
-
-  @ApiProperty({ required: true })
   @IsOptional()
+  coupon?: string;
+
   @IsString()
-  @IsNotEmpty()
-  children: string;
-
-  @ApiProperty({ required: false })
   @IsOptional()
+  vatNum?: string;
+
+  @IsNumber()
+  billingAddressTypeId: number;
+
   @IsString()
-  childrenMail?: string;
+  childName: string;
 
-  @ApiProperty({ required: true })
+  @IsEmail()
   @IsOptional()
+  childMail?: string;
+
+  @IsNumber()
+  @IsOptional()
+  childGrade?: number;
+
   @IsString()
-  @IsNotEmpty()
-  mobile: string;
-
-  @ApiProperty({ required: true })
   @IsOptional()
-  @IsInt()
-  billingTypeId: number;
+  childTAJ?: string;
+
+  @IsBoolean()
+  specialDiet: boolean;
+
+  @IsString()
+  @IsOptional()
+  specialDietDesc?: string;
+
+  @IsString()
+  @IsOptional()
+  mobile?: string;
+
+  @IsString()
+  @IsOptional()
+  packageType?: string;
+
+  @IsString()
+  @IsOptional()
+  packageCode?: string;
+
+  @IsBoolean()
+  disease: boolean;
+
+  @IsString()
+  @IsOptional()
+  diseaseDesc?: string;
+
+  @IsString()
+  @IsOptional()
+  discount?: string;
+
+  @IsString()
+  @IsOptional()
+  discount2?: string;
 }

@@ -20,3 +20,18 @@ export class CreatePackageDto {
   @IsInt()
   price: number;
 }
+
+class CourseAssignDto {
+  id: number;
+  courseId: string;
+}
+
+class PackageAssignDto {
+  id: number;
+  packageCode: string;
+}
+
+export class PackageCourseAssignDto {
+  courses: CourseAssignDto[];
+  packages: PackageAssignDto[];
+}

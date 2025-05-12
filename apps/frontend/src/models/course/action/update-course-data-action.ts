@@ -1,3 +1,5 @@
+'use server';
+
 import { UpdateCourseDto } from '@/models/Api';
 import { UpdateCourseFormModel } from '../types';
 import { parseDateToISO } from '@/lib/utils';

@@ -19,6 +19,30 @@
         }
       }
     },
+    "/courses/GetCourses": {
+      "get": {
+        "operationId": "CourseController_getCourses",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
     "/courses/GetActiveCourses": {
       "get": {
         "operationId": "CourseController_getActiveCourses",
@@ -163,6 +187,117 @@
         ]
       }
     },
+    "/courses/CourseDatesByCourseId/{id}": {
+      "get": {
+        "operationId": "CourseController_getCourseDates",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonDateDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/courses/CreateLessonDates": {
+      "post": {
+        "operationId": "CourseController_createLessonDates",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLessonDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonDateDto"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LessonDateDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
+    "/courses/UpdateLessonDate": {
+      "put": {
+        "operationId": "CourseController_updateLessonDate",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLessonDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonDateDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ]
+      }
+    },
     "/students/students": {
       "get": {
         "operationId": "StudentController_getAllStudents",
@@ -197,6 +332,74 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/StudentAttendanceDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/students/UpdateAttendances": {
+      "put": {
+        "operationId": "StudentController_updateAttendance",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/students/UpdateStudentDetails": {
+      "put": {
+        "operationId": "StudentController_updateStudentDetails",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStudentDetailsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentDetailsDTO"
                 }
               }
             }
@@ -370,39 +573,6 @@
           "Auth"
         ]
       }
-    },
-    "/package/GetPackagesByCourseId/{id}": {
-      "get": {
-        "operationId": "PackageController_getPackagesByCourseId",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PackageDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Package"
-        ]
-      }
     }
   },
   "info": {
@@ -419,6 +589,62 @@
   ],
   "components": {
     "schemas": {
+      "CourseDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "courseId": {
+            "type": "string"
+          },
+          "headcount": {
+            "type": "number",
+            "nullable": true
+          },
+          "maxHeadCount": {
+            "type": "number"
+          },
+          "startDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "locked": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          },
+          "locationId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "description",
+          "id",
+          "courseId",
+          "maxHeadCount",
+          "startDate",
+          "startTime",
+          "endTime",
+          "active",
+          "locked",
+          "groupId",
+          "locationId"
+        ]
+      },
       "ActiveCourseDto": {
         "type": "object",
         "properties": {
@@ -479,62 +705,6 @@
           "locked"
         ]
       },
-      "CourseDto": {
-        "type": "object",
-        "properties": {
-          "description": {
-            "type": "string"
-          },
-          "id": {
-            "type": "number"
-          },
-          "courseId": {
-            "type": "string"
-          },
-          "headcount": {
-            "type": "number",
-            "nullable": true
-          },
-          "maxHeadCount": {
-            "type": "number"
-          },
-          "startDate": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "startTime": {
-            "type": "string"
-          },
-          "endTime": {
-            "type": "string"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "locked": {
-            "type": "boolean"
-          },
-          "groupId": {
-            "type": "number"
-          },
-          "locationId": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "description",
-          "id",
-          "courseId",
-          "maxHeadCount",
-          "startDate",
-          "startTime",
-          "endTime",
-          "active",
-          "locked",
-          "groupId",
-          "locationId"
-        ]
-      },
       "UpdateCourseDto": {
         "type": "object",
         "properties": {
@@ -587,10 +757,87 @@
           "locationId"
         ]
       },
-      "AttendanceDto": {
+      "LessonDateDto": {
         "type": "object",
         "properties": {
           "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "date"
+        ]
+      },
+      "LessonDateInfoDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "date",
+          "description"
+        ]
+      },
+      "CreateLessonDateDto": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "number"
+          },
+          "dateInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LessonDateInfoDto"
+            }
+          }
+        },
+        "required": [
+          "courseId",
+          "dateInfo"
+        ]
+      },
+      "UpdateLessonDateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "date",
+          "description"
+        ]
+      },
+      "AttendanceDto": {
+        "type": "object",
+        "properties": {
+          "lessonDateId": {
             "type": "number"
           },
           "date": {
@@ -605,7 +852,7 @@
           }
         },
         "required": [
-          "id",
+          "lessonDateId",
           "date",
           "attended"
         ]
@@ -747,6 +994,230 @@
           "students"
         ]
       },
+      "UpdateStudentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "sapId": {
+            "type": "number"
+          },
+          "subdate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "coupon": {
+            "type": "string"
+          },
+          "vatNum": {
+            "type": "string"
+          },
+          "billingAddressTypeId": {
+            "type": "number"
+          },
+          "childName": {
+            "type": "string"
+          },
+          "childMail": {
+            "type": "string"
+          },
+          "childGrade": {
+            "type": "number"
+          },
+          "childTAJ": {
+            "type": "string"
+          },
+          "specialDiet": {
+            "type": "boolean"
+          },
+          "specialDietDesc": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "packageType": {
+            "type": "string"
+          },
+          "packageCode": {
+            "type": "string"
+          },
+          "disease": {
+            "type": "boolean"
+          },
+          "diseaseDesc": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "string"
+          },
+          "discount2": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sapId",
+          "subdate",
+          "email",
+          "firstname",
+          "lastname",
+          "billCompany",
+          "city",
+          "zip",
+          "address",
+          "coupon",
+          "vatNum",
+          "billingAddressTypeId",
+          "childName",
+          "childMail",
+          "childGrade",
+          "childTAJ",
+          "specialDiet",
+          "specialDietDesc",
+          "mobile",
+          "packageType",
+          "packageCode",
+          "disease",
+          "diseaseDesc",
+          "discount",
+          "discount2"
+        ]
+      },
+      "StudentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "sapId": {
+            "type": "number"
+          },
+          "subdate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "billCompany": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "coupon": {
+            "type": "string"
+          },
+          "vatNum": {
+            "type": "string"
+          },
+          "billingAddressTypeId": {
+            "type": "number"
+          },
+          "childName": {
+            "type": "string"
+          },
+          "childMail": {
+            "type": "string"
+          },
+          "childGrade": {
+            "type": "number"
+          },
+          "childTAJ": {
+            "type": "string"
+          },
+          "specialDiet": {
+            "type": "boolean"
+          },
+          "specialDietDesc": {
+            "type": "string"
+          },
+          "mobile": {
+            "type": "string"
+          },
+          "packageType": {
+            "type": "string"
+          },
+          "packageCode": {
+            "type": "string"
+          },
+          "disease": {
+            "type": "boolean"
+          },
+          "diseaseDesc": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "string"
+          },
+          "discount2": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sapId",
+          "subdate",
+          "email",
+          "firstname",
+          "lastname",
+          "billCompany",
+          "city",
+          "zip",
+          "address",
+          "coupon",
+          "vatNum",
+          "billingAddressTypeId",
+          "childName",
+          "childMail",
+          "childGrade",
+          "childTAJ",
+          "specialDiet",
+          "specialDietDesc",
+          "mobile",
+          "packageType",
+          "packageCode",
+          "disease",
+          "diseaseDesc",
+          "discount",
+          "discount2"
+        ]
+      },
       "BillingAddressTypeDto": {
         "type": "object",
         "properties": {
@@ -847,25 +1318,6 @@
         "required": [
           "username",
           "password"
-        ]
-      },
-      "PackageDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "packageId": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "id",
-          "packageId",
-          "price"
         ]
       }
     }

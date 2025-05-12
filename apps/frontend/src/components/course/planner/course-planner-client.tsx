@@ -1,11 +1,24 @@
 'use client';
 
-import CoursePlanData from '@/components/course/planner/course-plan-data';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import CoursePlanColumns from '@/components/columns/course/course-plan-columns';
+import { DataTable } from '@/components/tables/data-table';
+import useGetCoursesDataQuery from '@/hooks/courses/course-plan/use-get-courses-data-query';
 
 export default function CoursePlannerClient() {
+  const coursesData = useGetCoursesDataQuery();
+
+  const toolbarProps = {
+    title: 'Kurzustervező',
+  };
+
   return (
-    <div className='w-full h-screen p-6 bg-background text-foreground'>
+    <div className='container mx-auto py-10'>
+      <DataTable columns={CoursePlanColumns()} data={coursesData ?? []} hasToolbar toolbarProps={toolbarProps} />
+    </div>
+  );
+}
+/*return {
+     <div className='w-full h-screen p-6 bg-background text-foreground'>
       <Tabs defaultValue='course-planning' className='w-full h-full flex flex-col'>
         <TabsList className='mb-4 flex self-start gap-2'>
           <TabsTrigger
@@ -40,6 +53,5 @@ export default function CoursePlannerClient() {
           </TabsContent>
         </div>
       </Tabs>
-    </div>
-  );
-}
+    </div> 
+  }; */

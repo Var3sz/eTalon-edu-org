@@ -1,6 +1,7 @@
-import { IsDateString, IsNotEmpty, IsString } from '@nestjs/class-validator';
+import { IsDateString, IsNotEmpty, IsString, ValidateNested } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ActiveCoursesView, Course } from '@prisma/client';
+import { ActiveCoursesView, Course, LessonDates } from '@prisma/client';
+import { Type } from 'class-transformer';
 import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 /**
@@ -68,7 +69,6 @@ export class CourseDto implements Course {
 /**
  * Dto for updating a course
  */
-
 export class UpdateCourseDto {
   @IsString()
   @IsNotEmpty()
@@ -115,113 +115,44 @@ export class UpdateCourseDto {
   locationId: number;
 }
 
-export class AttendanceRecordDto {
-  @ApiProperty({ required: false })
-  studentId?: number;
-
-  @ApiProperty({ required: false })
-  courseDateId?: number;
-
-  @ApiProperty()
-  attended: boolean;
+export class LessonDateDto implements LessonDates {
+  id: number;
+  description: string | null;
+  date: Date;
 }
 
-export class CourseDateDto {
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
+/**
+ * Dto for creating LessonDates
+ */
+export class LessonDateInfoDto {
+  @IsDateString()
+  @IsNotEmpty()
   date: Date;
 
-  @ApiProperty()
-  description: string;
-
-  @ApiProperty({ type: [AttendanceRecordDto] })
-  attendance: AttendanceRecordDto[];
-}
-
-export class StudentDto {
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  children: string;
-  @ApiProperty()
-  email: string;
-  @ApiProperty()
-  lastname: string;
-  @ApiProperty()
-  firstname: string;
-  @ApiProperty()
-  billCompany: string;
-  @ApiProperty()
-  city: string;
-  @ApiProperty()
-  zip: number;
-  @ApiProperty()
-  address: string;
-  @ApiProperty()
-  vatNumber: string;
-  @ApiProperty()
-  childrenMail: string;
-  @ApiProperty()
-  mobile: string;
-  @ApiProperty()
-  billingTypeId: number;
-
-  @ApiProperty({ type: [AttendanceRecordDto] })
-  attendance: AttendanceRecordDto[];
-}
-
-export class CourseCourseDateDto {
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  courseId: number;
-
-  @ApiProperty()
-  courseDateId: number;
-
-  @ApiProperty({ type: CourseDateDto })
-  courseDate: CourseDateDto;
-}
-
-export class CourseStudentDto {
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  courseId: number;
-
-  @ApiProperty()
-  studentId: number;
-
-  @ApiProperty({ type: StudentDto })
-  student: StudentDto;
-}
-
-export class CourseDetailsDto {
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  courseId: string;
-
-  @ApiProperty({ type: [CourseStudentDto] })
-  students: CourseStudentDto[];
-
-  @ApiProperty({ type: [CourseCourseDateDto] })
-  courseDates: CourseCourseDateDto[];
-}
-
-export class CreateCourseDateDto {
-  @ApiProperty()
-  @IsDateString()
-  date: string;
-
-  @ApiProperty()
   @IsString()
+  description: string | null;
+}
+
+export class CreateLessonDateDto {
+  @IsNumber()
+  courseId: number;
+
+  @ValidateNested({ each: true })
+  @Type(() => LessonDateInfoDto)
+  dateInfo: LessonDateInfoDto[];
+}
+
+/**
+ * Dto for updating a single LessonDate
+ */
+export class UpdateLessonDateDto {
+  @IsNumber()
+  id: number;
+
+  @IsDateString()
   @IsNotEmpty()
-  description: string;
+  date: Date;
+
+  @IsString()
+  description: string | null;
 }

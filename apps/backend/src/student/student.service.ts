@@ -1,9 +1,15 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { NewStudentsDto } from 'src/api/consts/SAPI';
-import { CreateStudentDto, StudentAttendanceDto, StudentDto, UpdateAttendanceDto } from './entities/student.entity';
+import {
+  CreateStudentDto,
+  StudentAttendanceDto,
+  StudentDetailsDTO,
+  StudentDto,
+  UpdateAttendanceDto,
+  UpdateStudentDetailsDTO,
+} from './entities/student.entity';
 import { addTwoHoursToDate } from 'src/lib/helper';
-import { cp } from 'node:fs';
 
 @Injectable()
 export class StudentService {
@@ -195,20 +201,20 @@ export class StudentService {
     });
   }
 
-  /* async updateStudentDetails(id: number, requestBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {
+  async updateStudentDetails(updateBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {
     try {
       return await this.prisma.student.update({
-        where: { id },
-        data: requestBody,
+        where: { id: updateBody.id },
+        data: updateBody,
       });
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
-        throw new NotFoundException(`A(z) ${id} azonosítójú diák nem található.`);
-      }
-      throw new InternalServerErrorException('Nem várt hiba történt');
+      throw error;
     }
-  } */
+  }
 
+  /**
+   * Helper function for parsing students from SAPI to DB
+   */
   parseStudents = (students: NewStudentsDto[]): CreateStudentDto[] => {
     const parsedStudents: CreateStudentDto[] = students.map((s) => ({
       sapId: s.id,

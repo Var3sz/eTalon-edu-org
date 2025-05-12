@@ -2,14 +2,13 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { PrismaService } from 'nestjs-prisma';
 
 import {
-  CourseDetailsDto,
   ActiveCourseDto,
-  CreateCourseDateDto,
   CourseDto,
+  CreateLessonDateDto,
+  LessonDateDto,
   UpdateCourseDto,
+  UpdateLessonDateDto,
 } from './entities/course.entity';
-import { RawCourseDTO, UpsertCourseDTO } from './entities/create.course.entity';
-import { Course } from '@prisma/client';
 
 @Injectable()
 export class CourseService {
@@ -92,92 +91,73 @@ export class CourseService {
     }
   }
 
-  /* async addMultipleCourseDatesToCourse(courseId: number, newDates: CreateCourseDateDto[]) {
-    try {
-      await this.prisma.$transaction(async (tx) => {
-        for (const date of newDates) {
-          // Create CourseDates
-          const newCourseDate = await tx.courseDates.create({
-            data: {
-              date: new Date(date.date),
-              description: date.description,
-            },
-          });
-
-          // Link to course
-          await tx.course_CourseDate.create({
-            data: {
-              courseId,
-              courseDateId: newCourseDate.id,
-            },
-          });
-        }
-      });
-
-      return { message: 'All course dates created and linked successfully.' };
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to create and link all course dates.');
-    }
+  async getCourseLessonDates(courseId: number): Promise<LessonDateDto[]> {
+    return this.prisma.lessonDates.findMany({
+      where: {
+        CourseLessonDates: {
+          some: {
+            courseId,
+          },
+        },
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
   }
 
-  async upsertMultipleCourses(courses: UpsertCourseDTO[]): Promise<any> {
-    try {
-      await this.prisma.$transaction(async (tx) => {
-        for (const course of courses) {
-          if (course.id) {
-            const existing = await tx.course.findUnique({ where: { id: course.id } });
-            if (existing) {
-              await tx.course.update({
-                where: { id: course.id },
-                data: {
-                  courseId: course.courseId,
-                  description: course.description,
-                  price: course.price,
-                  active: course.active,
-                  endTime: course.endTime,
-                  groupId: course.groupId,
-                  headcount: course.headCount,
-                  locationId: course.locationId,
-                  maxHeadcount: course.maxHeadcount,
-                  startDate: new Date(course.startDate),
-                  startTime: course.startTime,
-                  locked: course.locked,
-                },
-              });
-              continue;
-            }
-          }
+  async createLessonDates(createBody: CreateLessonDateDto): Promise<LessonDateDto[]> {
+    return this.prisma.$transaction(async (tx) => {
+      // 1. Create new lesson dates
+      const lessonDates = await Promise.all(
+        createBody.dateInfo.map((body) =>
+          tx.lessonDates.create({
+            data: body,
+          })
+        )
+      );
 
-          await tx.course.create({
+      // 2. Create course-lesson date relations
+      await Promise.all(
+        lessonDates.map((lessonDate) =>
+          tx.courseLessonDates.create({
             data: {
-              courseId: course.courseId,
-              description: course.description,
-              price: course.price,
-              active: course.active,
-              endTime: course.endTime,
-              groupId: course.groupId,
-              headcount: course.headCount,
-              locationId: course.locationId,
-              maxHeadcount: course.maxHeadcount,
-              startDate: new Date(course.startDate),
-              startTime: course.startTime,
-              locked: course.locked,
+              courseId: createBody.courseId,
+              lessondateId: lessonDate.id,
             },
-          });
-        }
+          })
+        )
+      );
+
+      // 3. Get all students participating in the course
+      const participants = await tx.participant.findMany({
+        where: { courseId: createBody.courseId },
+        select: { studentId: true },
       });
 
-      return {
-        saved: true,
-        title: 'Sikeres mentés!',
-        description: 'Kurzusok frissítése sikeres',
-      };
-    } catch (error) {
-      return {
-        saved: false,
-        title: 'Sikertelen mentés!',
-        description: error.message,
-      };
-    }
-  } */
+      // 4. Create attendance records for each student and each lesson date
+      await Promise.all(
+        participants.flatMap((participant) =>
+          lessonDates.map((lessonDate) =>
+            tx.attendance.create({
+              data: {
+                lessondateId: lessonDate.id,
+                studentId: participant.studentId,
+                attended: false,
+              },
+            })
+          )
+        )
+      );
+
+      return lessonDates;
+    });
+  }
+
+  async updateLessonDate(updateBody: UpdateLessonDateDto): Promise<LessonDateDto> {
+    return await this.prisma.lessonDates.update({
+      where: { id: updateBody.id },
+      data: updateBody,
+    });
+  }
 }

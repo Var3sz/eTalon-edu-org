@@ -11,115 +11,41 @@ import useGetBillingTypesQuery from '@/hooks/billing-type/use-get-billing-types-
 import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import useInitStudentDetailsDialog from '@/hooks/students/use-init-student-details-dialog';
 import { UpdateStudentDetailsFormModel } from '@/models/students/types';
-import { ItemModel } from '@/models/ui/form-props';
+import StudentParentData from './student-parent-data';
+import StudentDefaultData from './student-default-data';
+import StudentInvoiceData from './student-invoice-data';
 
 type StudentDetailsDialogProps = {
+  courseId: string;
   studentData: StudentAttendance;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function StudentDetailsDialog({ studentData, setOpenChangeDialog }: StudentDetailsDialogProps) {
+export default function StudentDetailsDialog({
+  courseId,
+  studentData,
+  setOpenChangeDialog,
+}: StudentDetailsDialogProps) {
   const [isPending, startTransaction] = useTransition();
 
   const { form, onValidFormSubmit, onInvalidFormSubmit } = useInitStudentDetailsDialog({
+    courseId: courseId,
     studentData: studentData,
     startTransaction: startTransaction,
     setOpenChangeDialog: setOpenChangeDialog,
   });
   const formValues = useWatch({ control: form.control }) as UpdateStudentDetailsFormModel;
 
-  const billingTypes = useGetBillingTypesQuery();
+  const formParams = { formControl: form.control, formSetValue: form.setValue, inEdit: formValues.Helpers.inEdit };
 
   return (
-    <div>
+    <div className='max-h-[800px] overflow-y-auto'>
       {isPending && <LoadingFullScreen />}
       <Form {...form}>
-        <form
-          className='flex flex-col gap-10 mt-5'
-          onSubmit={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)}
-        >
-          <div className='flex gap-5'>
-            <FormTextInput
-              id='children'
-              label='Gyermek neve'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-              required
-            />
-            <FormTextInput
-              id='childrenMail'
-              label='Gyermek e-mail címe'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-            <FormTextInput
-              id='mobile'
-              label='Telefonszám'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-          </div>
-          <div className='flex gap-5'>
-            <FormTextInput
-              id='email'
-              label='Szülő e-mail címe'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-            <FormTextInput
-              id='lastname'
-              label='Szülő vezetékneve'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-            <FormTextInput
-              id='firstname'
-              label='Szülő keresztneve'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-          </div>
-          <div className='flex gap-5'>
-            <FormNumberInput
-              id='zip'
-              label='Irányítószám'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-            <FormTextInput id='city' label='Város' formControl={form.control} inEdit={formValues.Helpers.inEdit} />
-            <FormTextInput id='address' label='Cím' formControl={form.control} inEdit={formValues.Helpers.inEdit} />
-          </div>
-          <div className='flex gap-5'>
-            <FormTextInput
-              id='billCompany'
-              label='Cég neve'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-            <FormTextInput
-              id='vatNumber'
-              label='Adószám'
-              formControl={form.control}
-              inEdit={formValues.Helpers.inEdit}
-            />
-            <FormSelectInput
-              id='billingTypeId'
-              label='Számlázási típus'
-              formControl={form.control}
-              formSetValue={form.setValue}
-              items={
-                billingTypes
-                  ? (billingTypes.map((bt) => ({
-                      label: bt.description,
-                      value: bt.id,
-                    })) as ItemModel[])
-                  : []
-              }
-              placeholder='Válasszon számla típust!'
-              emptySelect='Nem található ilyen számla típus!'
-              inEdit={formValues.Helpers.inEdit}
-            />
-          </div>
+        <form className='flex flex-col gap-3 mt-5'>
+          <StudentParentData {...formParams} />
+          <StudentDefaultData {...formParams} />
+          <StudentInvoiceData {...formParams} />
           {formValues.Helpers.inEdit ? (
             <div className='flex gap-5 self-end'>
               <Button
@@ -127,13 +53,18 @@ export default function StudentDetailsDialog({ studentData, setOpenChangeDialog 
                 type='button'
                 onClick={(e) => {
                   e.preventDefault();
-                  // setOpenChangeDialog && setOpenChangeDialog(false);
                   form.setValue('Helpers.inEdit', false);
                 }}
               >
                 Mégse
               </Button>
-              <Button variant='default' type='submit'>
+              <Button
+                variant='default'
+                type='button'
+                onClick={(e) => {
+                  form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)();
+                }}
+              >
                 Mentés
               </Button>
             </div>

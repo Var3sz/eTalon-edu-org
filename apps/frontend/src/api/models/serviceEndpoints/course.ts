@@ -27,12 +27,21 @@ const upsertCoursesDataUrl = () => {
   return `${process.env.SERVER_BASE_URL}courses/CreateOrUpdateCourses`;
 };
 
-const updateStudentDetailsUrl = (studentId: number) => {
-  return `${process.env.SERVER_BASE_URL}students/UpdateStudentDetails/${studentId}`;
-};
-
 const createCourseDatesUrl = (courseId: number) => {
   return `${process.env.SERVER_BASE_URL}courses/CreateCourseDatesForCourse/${courseId}`;
+};
+
+// LessonDates
+const getCourseDatesByCourseIdUrl = (courseId: number) => {
+  return `${process.env.SERVER_BASE_URL}courses/CourseDatesByCourseId/${courseId}`;
+};
+
+const createLessonDatesUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/CreateLessonDates`;
+};
+
+const updateLessonDateUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/UpdateLessonDate`;
 };
 
 // HTTP functions
@@ -65,16 +74,28 @@ export const UpsertCoursesData = async <RequestType, ResponseType>(
   return await httpRequestPOST(upsertCoursesDataUrl(), process.env.JWT_TOKEN!, requestBody);
 };
 
-export const UpdateStudentDetails = async <RequestType, ResponseType>(
-  studentId: number,
-  studentBody: RequestType
-): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPUT(updateStudentDetailsUrl(studentId), process.env.JWT_TOKEN!, studentBody);
-};
-
 export const CreateCourseDates = async <RequestType, ResponseType>(
   courseId: number,
   courseDateBody: RequestType
 ): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestPOST(createCourseDatesUrl(courseId), process.env.JWT_TOKEN!, courseDateBody);
+};
+
+// LessonDates
+export const GetCourseDatesByCourseId = async <ResponseType>(
+  courseId: number
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET(getCourseDatesByCourseIdUrl(courseId), process.env.JWT_TOKEN!);
+};
+
+export const CreateLessonDates = async <RequestType, ResponseType>(
+  body: Request
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPOST(createLessonDatesUrl(), process.env.JWT_TOKEN!, body);
+};
+
+export const UpdateLessonDate = async <RequestType, ResponseType>(
+  body: RequestType
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPUT(updateLessonDateUrl(), process.env.JWT_TOKEN!, body);
 };
