@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ReactElement, ReactNode } from 'react';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -19,6 +20,8 @@ interface DataTableToolbarProps<TData> {
     title: string;
     hasAddButton?: boolean;
     addButtonTitle?: string;
+    dialogTitle?: string;
+    dialogComponent?: ReactElement;
   };
 }
 
@@ -29,10 +32,10 @@ export function DataTableToolBar<TData>({ table, toolbarProps }: DataTableToolba
         <span className='font-bold text-3xl'>{toolbarProps.title}</span>
         {toolbarProps.hasAddButton && (
           <CustomInnerStateDialog
-            title='Új kurzus létrehozása'
+            title={toolbarProps.dialogTitle!}
             triggerElement={<AddButton asChild title={toolbarProps.addButtonTitle!} />}
           >
-            <div />
+            {toolbarProps.dialogComponent!}
           </CustomInnerStateDialog>
         )}
       </div>

@@ -12,16 +12,24 @@ export default function SwitchTableColumn<FormType extends FieldValues, TableTyp
   headerTitle,
   formControl,
   inEdit,
+  size,
 }: ColumnInputModel<FormType, TableType>): ColumnDef<TableType> {
   return {
     id: id,
     accessorKey: accessorKey,
+    size: size,
     header: ({ header, column, table }) => (
       <InputHeader headerTitle={headerTitle} header={header} column={column} table={table} />
     ),
-    cell: ({ row }) => {
+    cell: ({ row, cell }) => {
       return (
-        <div className='flex w-full min-w-[220px] justify-center'>
+        <div
+          className='flex items-center justify-center gap-1'
+          style={{
+            minWidth: `${size}px`,
+            width: cell.column.getSize(),
+          }}
+        >
           <FormSwitchInput
             inEdit={inEdit}
             disabled={disabled}

@@ -23,12 +23,8 @@ const getCourseDetailsByIdUrl = (courseId: number) => {
   return `${process.env.SERVER_BASE_URL}courses/GetCourseDetailsById/${courseId}`;
 };
 
-const upsertCoursesDataUrl = () => {
-  return `${process.env.SERVER_BASE_URL}courses/CreateOrUpdateCourses`;
-};
-
-const createCourseDatesUrl = (courseId: number) => {
-  return `${process.env.SERVER_BASE_URL}courses/CreateCourseDatesForCourse/${courseId}`;
+const createCoursesUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/CreateCourses`;
 };
 
 // LessonDates
@@ -68,10 +64,10 @@ export const GetCourseDetailsById = async <ResponseType>(courseId: number): Prom
   return await httpRequestGET(getCourseDetailsByIdUrl(courseId), process.env.JWT_TOKEN!);
 };
 
-export const UpsertCoursesData = async <RequestType, ResponseType>(
-  requestBody: RequestType
+export const CreateCourses = async <RequestType, ResponseType>(
+  body: RequestType
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPOST(upsertCoursesDataUrl(), process.env.JWT_TOKEN!, requestBody);
+  return await httpRequestPOST<RequestType, ResponseType>(createCoursesUrl(), process.env.JWT_TOKEN!, body);
 };
 
 // LessonDates

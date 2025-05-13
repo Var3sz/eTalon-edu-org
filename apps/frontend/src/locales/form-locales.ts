@@ -15,6 +15,16 @@ export const FormLocales = {
     maxHeadcount: 'Max. létszám',
     occupancy: 'Telítettség',
     lock: 'Lezárt',
+    selectValues: {
+      location: {
+        placeholder: 'Válasszon helyszínt!',
+        emptySelect: 'Nem található ilyen helyszín!',
+      },
+      group: {
+        placeholder: 'Válasszon csoportot!',
+        emptySelect: 'Nem található ilyen csoport!',
+      },
+    },
   },
   courseDate: {
     new: 'Új kurzus létrehozása',

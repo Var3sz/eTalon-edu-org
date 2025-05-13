@@ -13,7 +13,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 
 import { DataTablePagination } from '@/components/tables/columns/components/data-table-pagination';
 import { DataTableToolBar } from '@/components/tables/columns/components/data-table-toolbar';
@@ -35,6 +35,8 @@ interface DataTableProps<TData, TValue> {
     title: string;
     hasAddButton?: boolean;
     addButtonTitle?: string;
+    dialogTitle?: string;
+    dialogComponent?: ReactElement;
   };
 }
 

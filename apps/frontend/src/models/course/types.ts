@@ -38,10 +38,23 @@ export type UpdateCourseFormModel = {
   };
 };
 
-/* 
-export type UpdateCourseListModel = {
-  CourseList: UpdateCoursesFormModel[];
+export type CreateCourseFormModel = {
+  description: string | null;
+  courseId: string | null;
+  headcount?: number | null;
+  maxHeadCount: number | null;
+  startDate: Date | null;
+  startTime: string | null;
+  endTime: string | null;
+  active: boolean;
+  locked: boolean;
+  groupId: number | null;
+  locationId: number | null;
+};
+
+export type CreateCoursesFormModel = {
+  CourseList: CreateCourseFormModel[];
   Helpers: {
     inEdit: boolean;
   };
-}; */
+};

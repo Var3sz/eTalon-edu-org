@@ -21,8 +21,6 @@ export default function CreateCourseDatesDialog({ courseId, setOpenChangeDialog 
 
   const formValues = useWatch({ control: form.control }) as CreateCourseDatesFormModel;
 
-  console.log(formValues);
-
   const [tableLength, setTableLength] = useState<number>(formValues.CourseDateList.length);
 
   useEffect(() => {

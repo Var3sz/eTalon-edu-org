@@ -8,8 +8,10 @@ import { prefetchCoursesDataQuery } from '@/hooks/courses/course-plan/prefetch/p
 export default async function Page() {
   const queryClient = new QueryClient();
 
-  // Prefetc function
+  // Prefetch function
   await prefetchCoursesDataQuery(queryClient);
+  await prefetchGroupsQuery(queryClient);
+  await prefetchLocationsQuery(queryClient);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

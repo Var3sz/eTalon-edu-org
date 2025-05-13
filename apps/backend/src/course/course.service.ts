@@ -85,8 +85,23 @@ export class CourseService {
    */
   async createCourses(createBody: UpdateCourseDto[]): Promise<CourseDto[]> {
     try {
-      return this.prisma.$transaction(createBody.map((course) => this.prisma.course.create({ data: course })));
+      return await this.prisma.$transaction(async (tx) => {
+        const createdCourses: CourseDto[] = [];
+
+        for (const course of createBody) {
+          const { id, ...courseData } = course as any;
+
+          const created = await tx.course.create({
+            data: courseData,
+          });
+
+          createdCourses.push(created);
+        }
+
+        return createdCourses;
+      });
     } catch (error) {
+      console.error('Failed to create courses:', error);
       throw error;
     }
   }
