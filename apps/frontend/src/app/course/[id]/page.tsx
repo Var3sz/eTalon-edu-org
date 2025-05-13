@@ -8,7 +8,7 @@ import { BaseServerPropsWithId } from '@/models/page/types';
 export default async function Page({ params }: BaseServerPropsWithId) {
   const queryClient = new QueryClient();
 
-  await prefetchCourseDetailsById(queryClient, Number(params.id));
+  // await prefetchCourseDetailsById(queryClient, Number(params.id));
   await prefetchBillingTypesQuery(queryClient);
 
   return (

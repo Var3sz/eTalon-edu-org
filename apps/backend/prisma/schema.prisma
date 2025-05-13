@@ -130,6 +130,7 @@ model Package {
   id             Int              @id @default(autoincrement())
   packageId      String           @unique @db.VarChar
   price          Int
+  type           String           @db.VarChar
   Course_Package Course_Package[]
 }
 

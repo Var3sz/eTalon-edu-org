@@ -28,9 +28,9 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
-  const { data: studentsDataResponse } = useGetCourseDetailsById(Number(courseId));
+  const { data: studentsDataResponse, isLoading } = useGetCourseDetailsById(Number(courseId));
   const course: StudentAttendanceDto | null =
-    studentsDataResponse.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
+    studentsDataResponse?.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
 
   const [CourseId, setCourseId] = useState<string | null>(null);
   const [courseData, setCourseData] = useState<StudentAttendance[]>([]);
@@ -178,7 +178,7 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
   };
 
   return useMemo(
-    () => ({ form, isPending, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols }),
-    [form, isPending, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols]
+    () => ({ form, isPending, isLoading, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols }),
+    [form, isPending, isLoading, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols]
   );
 }

@@ -13,7 +13,7 @@ type CourseClientModel = {
 };
 
 export default function CourseClient({ courseId }: CourseClientModel) {
-  const { form, isPending, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols } =
+  const { form, isPending, isLoading, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols } =
     useInitCourseClient({
       courseId: courseId,
     });
@@ -21,6 +21,7 @@ export default function CourseClient({ courseId }: CourseClientModel) {
   return (
     <div className='container mx-auto py-10 flex flex-col gap-3'>
       {isPending && <LoadingFullScreen />}
+      {isLoading && <LoadingFullScreen />}
       <span className='font-bold text-3xl'>Jelenléti adatok - {CourseId}</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)} className='flex flex-col'>
