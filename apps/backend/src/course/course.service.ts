@@ -18,7 +18,7 @@ export class CourseService {
    * Gives back all of the courses which are active (raw form)
    */
   async getAllActiveCourse(): Promise<CourseDto[]> {
-    return await this.prisma.course.findMany({ where: { active: true } });
+    return await this.prisma.course.findMany({ where: { active: true }, orderBy: { startDate: 'asc' } });
   }
 
   /**
@@ -26,7 +26,7 @@ export class CourseService {
    * @returns {ActiveCourseDto[]} Currently active courses
    */
   async getActiveCourses(): Promise<ActiveCourseDto[]> {
-    return this.prisma.activeCoursesView.findMany();
+    return this.prisma.activeCoursesView.findMany({ orderBy: { startDate: 'asc' } });
   }
 
   /**
@@ -108,26 +108,23 @@ export class CourseService {
 
   async createLessonDates(createBody: CreateLessonDateDto): Promise<LessonDateDto[]> {
     return this.prisma.$transaction(async (tx) => {
-      // 1. Create new lesson dates
-      const lessonDates = await Promise.all(
-        createBody.dateInfo.map((body) =>
-          tx.lessonDates.create({
-            data: body,
-          })
-        )
-      );
+      const lessonDates: LessonDateDto[] = [];
 
-      // 2. Create course-lesson date relations
-      await Promise.all(
-        lessonDates.map((lessonDate) =>
-          tx.courseLessonDates.create({
-            data: {
-              courseId: createBody.courseId,
-              lessondateId: lessonDate.id,
-            },
-          })
-        )
-      );
+      // 1. Create new lesson dates (sequentially to avoid sequence collision)
+      for (const body of createBody.dateInfo) {
+        const created = await tx.lessonDates.create({ data: body });
+        lessonDates.push(created);
+      }
+
+      // 2. Create course-lesson date relations (sequentially)
+      for (const lessonDate of lessonDates) {
+        await tx.courseLessonDates.create({
+          data: {
+            courseId: createBody.courseId,
+            lessondateId: lessonDate.id,
+          },
+        });
+      }
 
       // 3. Get all students participating in the course
       const participants = await tx.participant.findMany({
@@ -136,19 +133,17 @@ export class CourseService {
       });
 
       // 4. Create attendance records for each student and each lesson date
-      await Promise.all(
-        participants.flatMap((participant) =>
-          lessonDates.map((lessonDate) =>
-            tx.attendance.create({
-              data: {
-                lessondateId: lessonDate.id,
-                studentId: participant.studentId,
-                attended: false,
-              },
-            })
-          )
-        )
-      );
+      for (const participant of participants) {
+        for (const lessonDate of lessonDates) {
+          await tx.attendance.create({
+            data: {
+              lessondateId: lessonDate.id,
+              studentId: participant.studentId,
+              attended: false,
+            },
+          });
+        }
+      }
 
       return lessonDates;
     });

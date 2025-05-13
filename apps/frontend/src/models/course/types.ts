@@ -1,11 +1,23 @@
-export type CourseDateFormModel = {
+export type UpdateCourseDateFormModel = {
+  id: number | null;
+  date: Date | null;
+  description: string | null;
+  Helpers: {
+    inEdit: boolean;
+  };
+};
+
+export type CreateCourseDateFormModel = {
   id: number | null;
   date: Date | null;
   description: string | null;
 };
 
-export type EditCourseDatesFormModel = {
-  CourseDates: CourseDateFormModel[];
+export type CreateCourseDatesFormModel = {
+  CourseDateList: CreateCourseDateFormModel[];
+  Helpers: {
+    inEdit: boolean;
+  };
 };
 
 export type UpdateCourseFormModel = {

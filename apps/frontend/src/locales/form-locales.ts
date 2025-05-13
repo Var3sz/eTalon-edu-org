@@ -16,4 +16,10 @@ export const FormLocales = {
     occupancy: 'Telítettség',
     lock: 'Lezárt',
   },
+  courseDate: {
+    new: 'Új kurzus létrehozása',
+    edit: 'Kurzus dátum módosítása',
+    date: 'Óra dátuma',
+    description: 'Óra leírása',
+  },
 };

@@ -51,6 +51,12 @@ export default function useInitEditCourseClientFormBase(courseId: string, course
   };
 
   useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', 'details');
+    window.history.replaceState(null, '', url.toString());
+  }, []);
+
+  useEffect(() => {
     if (!form.getValues().Helpers.inEdit) form.reset(UpdateCourseFormData(courseData));
   }, [form.getValues().Helpers.inEdit]);
 

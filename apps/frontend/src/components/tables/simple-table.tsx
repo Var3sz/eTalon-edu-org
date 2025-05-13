@@ -38,7 +38,7 @@ export function SimpleTable<TData, TValue>({
   form,
   hiddenColumnIds,
 }: SimpleTableProps<TData, TValue>) {
-  const [data, setData] = useState(() => [...defaultData]);
+  const [data, setData] = useState(defaultData);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() => {
     const hidden: VisibilityState = {};

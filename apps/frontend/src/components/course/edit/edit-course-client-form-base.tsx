@@ -7,7 +7,7 @@ import FormTextInput from '@/components/form/form-text-input';
 import FormTimePickerInput from '@/components/form/form-time-picker-input';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import useInitEditCourseClientFormBase from '@/hooks/courses/edit-course/use-init-edit-couse-client-form-base';
+import useInitEditCourseClientFormBase from '@/hooks/courses/edit-course/use-init-edit-course-client-form-base';
 import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
 import { FormLocales } from '@/locales/form-locales';
@@ -33,7 +33,7 @@ export default function EditCourseClientFormBase({ courseId, courseData }: EditC
   const locations = useGetLocationsQuery();
 
   return (
-    <div className='w-1/2 m-auto bg-white border border-gray-300 rounded p-4 shadow-sm flex flex-col'>
+    <div>
       {isPending && <LoadingFullScreen />}
       <span className='text-3xl'>{courseData?.courseId}</span>
       <Form {...form}>
@@ -51,7 +51,7 @@ export default function EditCourseClientFormBase({ courseId, courseData }: EditC
             <FormTextInput
               id='description'
               formControl={form.control}
-              label={FormLocales.course.courseId}
+              label={FormLocales.course.description}
               inEdit={formValues.Helpers.inEdit}
             />
             <FormNumberInput
@@ -61,8 +61,6 @@ export default function EditCourseClientFormBase({ courseId, courseData }: EditC
               unitOfMeasureLabel='fő'
               inEdit={formValues.Helpers.inEdit}
             />
-          </div>
-          <div className='flex flex-wrap gap-5'>
             <FormDateInput
               id='startDate'
               formControl={form.control}
@@ -81,8 +79,6 @@ export default function EditCourseClientFormBase({ courseId, courseData }: EditC
               label={FormLocales.course.to}
               inEdit={formValues.Helpers.inEdit}
             />
-          </div>
-          <div className='flex flex-wrap gap-5'>
             <FormSelectInput
               id='groupId'
               formControl={form.control}
@@ -150,14 +146,3 @@ export default function EditCourseClientFormBase({ courseId, courseData }: EditC
     </div>
   );
 }
-
-/* 
-headcount	[...]
-maxHeadCount*	[...]
-startDate*	[...]
-startTime*	[...]
-endTime*	[...]
-active*	[...]
-locked*	[...]
-groupId*	[...]
-locationId* */

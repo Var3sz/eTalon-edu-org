@@ -31,7 +31,7 @@ model Course {
 model Student {
   id                   Int                 @id @default(autoincrement())
   sapId                Int                 @unique
-  subdate              DateTime            @db.Timestamptz(6)
+  subdate              DateTime            @db.Timestamp(6)
   email                String              @db.VarChar
   firstname            String              @db.VarChar
   lastname             String              @db.VarChar

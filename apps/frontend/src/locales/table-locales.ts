@@ -1,4 +1,5 @@
 export const TableLocales = {
+  actions: 'Műveletek',
   course: {
     courseId: 'Kurzus azonosító',
     status: 'Státusz',
@@ -14,5 +15,9 @@ export const TableLocales = {
     maxHeadcount: 'Max. létszám',
     occupancy: 'Telítettség',
     lock: 'Lezárt',
+  },
+  courseDate: {
+    date: 'Óra dátuma',
+    description: 'Óra leírása',
   },
 };

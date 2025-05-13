@@ -5,5 +5,5 @@ interface SimpleTableColumnHeaderProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function SimpleTableColumnHeader({ title }: SimpleTableColumnHeaderProps) {
-  return <div>{title}</div>;
+  return <div className='flex justify-center items-center'>{title}</div>;
 }
