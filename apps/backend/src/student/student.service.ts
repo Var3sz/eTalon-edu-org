@@ -1,6 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { NewStudentsDto } from 'src/api/consts/SAPI';
+import { addTwoHoursToDate } from 'src/lib/helper';
+
 import {
   CreateStudentDto,
   StudentAttendanceDto,
@@ -9,7 +11,6 @@ import {
   UpdateAttendanceDto,
   UpdateStudentDetailsDTO,
 } from './entities/student.entity';
-import { addTwoHoursToDate } from 'src/lib/helper';
 
 @Injectable()
 export class StudentService {
@@ -202,14 +203,10 @@ export class StudentService {
   }
 
   async updateStudentDetails(updateBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {
-    try {
-      return await this.prisma.student.update({
-        where: { id: updateBody.id },
-        data: updateBody,
-      });
-    } catch (error) {
-      throw error;
-    }
+    return await this.prisma.student.update({
+      where: { id: updateBody.id },
+      data: updateBody,
+    });
   }
 
   /**

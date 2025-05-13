@@ -1,10 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { FieldValues } from 'react-hook-form';
 
-import FormSwitchInput from '@/components/form/form-switch-input';
+import FormCheckboxInput from '@/components/form/form-checkbox-input';
 import InputHeader from '@/components/tables/columns/components/headers/input-column-header';
 import { ColumnInputModel } from '@/components/tables/columns/types/column-types';
-import FormCheckboxInput from '@/components/form/form-checkbox-input';
 
 export default function CheckboxTableColumn<FormType extends FieldValues, TableType>({
   id,

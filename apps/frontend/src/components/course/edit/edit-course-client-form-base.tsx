@@ -1,3 +1,5 @@
+import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import FormDateInput from '@/components/form/form-date-input';
 import FormNumberInput from '@/components/form/form-number-input';
@@ -14,7 +16,6 @@ import { FormLocales } from '@/locales/form-locales';
 import { CourseDto } from '@/models/Api';
 import { UpdateCourseFormModel } from '@/models/course/types';
 import { ItemModel } from '@/models/ui/form-props';
-import { useWatch } from 'react-hook-form';
 
 type EditCourseClientFormBaseProps = {
   courseId: string;

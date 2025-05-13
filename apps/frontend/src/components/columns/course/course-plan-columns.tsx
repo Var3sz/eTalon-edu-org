@@ -1,14 +1,12 @@
+import { ColumnDef } from '@tanstack/react-table';
+import { useMemo } from 'react';
+
 import ActionsTableColumn from '@/components/tables/columns/components/action-columns/actions-table-column';
 import DateWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/date-with-filter-table-column';
 import TextWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/text-with-filter-table-column';
-import {
-  CourseEditRedirectionFunction,
-  CourseRedirectionFunction,
-} from '@/components/tables/columns/utils/redirection-functions';
+import { CourseEditRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { TableLocales } from '@/locales/table-locales';
 import { CourseDto } from '@/models/Api';
-import { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
 
 export default function CoursePlanColumns(): ColumnDef<CourseDto>[] {
   return useMemo(

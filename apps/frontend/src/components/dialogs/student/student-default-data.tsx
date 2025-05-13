@@ -1,10 +1,11 @@
+import { Control, FieldValues } from 'react-hook-form';
+
 import FormNumberInput from '@/components/form/form-number-input';
 import FormSwitchInput from '@/components/form/form-switch-input';
 import FormTextInput from '@/components/form/form-text-input';
 import FormTextAreaInput from '@/components/form/form-textarea-input';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StudentLocales } from '@/locales/student-locales';
-import { FieldValues, Control } from 'react-hook-form';
 
 export type StudentDataProps<T extends FieldValues> = {
   formControl: Control<T>;
@@ -24,7 +25,7 @@ export type StudentDataProps<T extends FieldValues> = {
 
 export default function StudentDefaultData<T extends FieldValues>({ formControl, inEdit }: StudentDataProps<T>) {
   return (
-    <Accordion type='single' collapsible defaultValue={'studentInfo'} className='space-y-4'>
+    <Accordion type='single' collapsible defaultValue='studentInfo' className='space-y-4'>
       <AccordionItem
         value='studentInfo'
         className='border border-gray-200 rounded-lg bg-gray-50 flex flex-col gap-5 p-3'

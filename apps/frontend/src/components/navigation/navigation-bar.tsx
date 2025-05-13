@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import SignInButton from '@/components/auth/sign-in-button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { Links } from '@/models/navigation/links';
-import SignInButton from '@/components/auth/sign-in-button';
 
 export default function Navbar() {
   const logoSrc = process.env.REACT_APP_LOGO!;

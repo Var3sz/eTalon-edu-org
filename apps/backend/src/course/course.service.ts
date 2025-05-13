@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
 import {
@@ -35,11 +35,7 @@ export class CourseService {
    * TODO
    */
   async getActiveCoursesWithPackageInformation(): Promise<ActiveCourseDto[]> {
-    try {
-      return this.prisma.activeCoursesView.findMany();
-    } catch (error) {
-      throw error;
-    }
+    return this.prisma.activeCoursesView.findMany();
   }
 
   /**
@@ -48,17 +44,13 @@ export class CourseService {
    * @returns The corresponding course
    */
   async getCourseById(id: number): Promise<CourseDto> {
-    try {
-      const course = await this.prisma.course.findUnique({ where: { id } });
+    const course = await this.prisma.course.findUnique({ where: { id } });
 
-      if (!course) {
-        throw new NotFoundException(`Course with id ${id} not found`);
-      }
-
-      return course;
-    } catch (error) {
-      throw error;
+    if (!course) {
+      throw new NotFoundException(`Course with id ${id} not found`);
     }
+
+    return course;
   }
 
   /**
@@ -68,14 +60,10 @@ export class CourseService {
    * @returns Updated course
    */
   async updateCourse(updateBody: UpdateCourseDto, id: number): Promise<CourseDto> {
-    try {
-      return this.prisma.course.update({
-        where: { id },
-        data: updateBody,
-      });
-    } catch (error) {
-      throw error;
-    }
+    return this.prisma.course.update({
+      where: { id },
+      data: updateBody,
+    });
   }
 
   /**
@@ -89,10 +77,8 @@ export class CourseService {
         const createdCourses: CourseDto[] = [];
 
         for (const course of createBody) {
-          const { id, ...courseData } = course as any;
-
           const created = await tx.course.create({
-            data: courseData,
+            data: course,
           });
 
           createdCourses.push(created);

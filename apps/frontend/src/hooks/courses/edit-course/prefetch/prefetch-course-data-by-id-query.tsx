@@ -1,5 +1,6 @@
-import { GetCourseById } from '@/api/models/serviceEndpoints/course';
 import { QueryClient } from '@tanstack/react-query';
+
+import { GetCourseById } from '@/api/models/serviceEndpoints/course';
 
 export const prefetchCourseDataByIdQuery = async (client: QueryClient, courseId: string) => {
   await client.prefetchQuery({

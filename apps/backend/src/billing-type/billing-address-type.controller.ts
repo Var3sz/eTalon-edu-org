@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { BillingAddressTypeService } from './billing-address-type.service';
 import { BillingAddressTypeDto } from './entities/billing-address-type.entity';

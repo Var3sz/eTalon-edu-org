@@ -1,11 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { Edit2, Trash2 } from 'lucide-react';
+
+import EditCouseDateDialog from '@/components/dialogs/course/edit-course-date-dialog';
+import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
+import { FormLocales } from '@/locales/form-locales';
+import { LessonDateDto } from '@/models/Api';
+
 import { ColumnBaseModel } from '../../../types/column-types';
 import { SimpleTableColumnHeader } from '../../headers/simple-table-column.header';
-import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
-import { DeleteIcon, Edit2, Trash2 } from 'lucide-react';
-import EditCouseDateDialog from '@/components/dialogs/course/edit-course-date-dialog';
-import { LessonDateDto } from '@/models/Api';
-import { FormLocales } from '@/locales/form-locales';
 
 type EditCourseDateActionsColumnProps<T> = {
   courseId: string;
@@ -27,7 +29,7 @@ export default function EditCourseDateActionsColumn<T>({
     accessorKey: accessorKey,
     size: size,
     header: () => <SimpleTableColumnHeader title={headerTitle} />,
-    cell: ({ row, cell }) => {
+    cell: ({ row }) => {
       return (
         <div className='w-fit mx-auto flex space-between gap-5'>
           {editable && (
@@ -36,11 +38,9 @@ export default function EditCourseDateActionsColumn<T>({
             </CustomInnerStateDialog>
           )}
           {deletable && (
-            <CustomInnerStateDialog
-              title={'Törlés'}
-              triggerElement={<Trash2 />}
-              children={<></>}
-            ></CustomInnerStateDialog>
+            <CustomInnerStateDialog title='Törlés' triggerElement={<Trash2 />}>
+              <div />
+            </CustomInnerStateDialog>
           )}
         </div>
       );

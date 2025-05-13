@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+
 import { CreatePackageDto, PackageDto } from './dto/package.entity';
 
 @Injectable()
@@ -7,11 +8,7 @@ export class PackageService {
   constructor(private prisma: PrismaService) {}
 
   async createPackages(createBody: CreatePackageDto[]): Promise<PackageDto[]> {
-    try {
-      return await this.prisma.$transaction(createBody.map((pkg) => this.prisma.package.create({ data: pkg })));
-    } catch (error) {
-      throw error;
-    }
+    return await this.prisma.$transaction(createBody.map((pkg) => this.prisma.package.create({ data: pkg })));
   }
 
   /* async getPackagesForCourseAssignment(groupId: number) {

@@ -1,12 +1,14 @@
 import { FieldValues } from 'react-hook-form';
-import { StudentDataProps } from './student-default-data';
-import { Accordion, AccordionItem, AccordionContent, AccordionTrigger } from '@/components/ui/accordion';
+
 import FormNumberInput from '@/components/form/form-number-input';
 import FormSelectInput from '@/components/form/form-select-input';
 import FormTextInput from '@/components/form/form-text-input';
-import { ItemModel } from '@/models/ui/form-props';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import useGetBillingTypesQuery from '@/hooks/billing-type/use-get-billing-types-query';
 import { StudentLocales } from '@/locales/student-locales';
+import { ItemModel } from '@/models/ui/form-props';
+
+import { StudentDataProps } from './student-default-data';
 
 export default function StudentInvoiceData<T extends FieldValues>({
   formControl,
@@ -16,7 +18,7 @@ export default function StudentInvoiceData<T extends FieldValues>({
   const billingTypes = useGetBillingTypesQuery();
 
   return (
-    <Accordion type='single' collapsible defaultValue={'paymentInfo'} className='space-y-4'>
+    <Accordion type='single' collapsible defaultValue='paymentInfo' className='space-y-4'>
       <AccordionItem
         value='paymentInfo'
         className='border border-gray-200 rounded-lg bg-gray-50 flex flex-col gap-5 p-3'
@@ -52,7 +54,7 @@ export default function StudentInvoiceData<T extends FieldValues>({
               inEdit={inEdit}
             />
             <FormTextInput
-              id={'billCompany'}
+              id='billCompany'
               label={StudentLocales.update.billCompany}
               formControl={formControl}
               inEdit={inEdit}

@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
+
 import { ActionsTableColumnModel } from '@/components/tables/columns/types/column-types';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
@@ -11,9 +12,7 @@ export default function ActionsTableColumn<T>({
   accessorKey,
   select = false,
   redirect = false,
-  edit = false,
   redirection,
-  dialogTitle = '',
 }: ActionsTableColumnModel<T>): ColumnDef<T> {
   return {
     id: id,

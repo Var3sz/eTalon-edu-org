@@ -32,8 +32,6 @@ export default function useInitStudentDetailsDialog({
     resolver: yupResolver<UpdateStudentDetailsFormModel>(updateStudentDetailsSchema),
   });
 
-  console.log(courseId);
-
   const onValidFormSubmit = (formModel: UpdateStudentDetailsFormModel) => {
     startTransaction(async () => {
       const updateResponse = await UpdateStudentDetailsAction(formModel);

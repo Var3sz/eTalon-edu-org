@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Control, useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import CreateCoursesColumns from '@/components/columns/course/create-courses-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
@@ -7,8 +10,6 @@ import useInitCreateCoursesDialog from '@/hooks/courses/edit-course/use-init-cre
 import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
 import { CreateCoursesFormModel } from '@/models/course/types';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Control, useWatch } from 'react-hook-form';
 
 type CreateCoursesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
@@ -23,8 +24,6 @@ export default function CreateCoursesDialog({ setOpenChangeDialog }: CreateCours
   const locations = useGetLocationsQuery();
 
   const formValues = useWatch({ control: form.control }) as CreateCoursesFormModel;
-
-  console.log(formValues);
 
   const [tableLength, setTableLength] = useState<number>(formValues.CourseList.length);
 
@@ -65,7 +64,7 @@ export default function CreateCoursesDialog({ setOpenChangeDialog }: CreateCours
           />
           <div className='flex gap-5 mt-5 self-end'>
             <Button
-              variant={'destructive'}
+              variant='destructive'
               type='button'
               onClick={(e) => {
                 e.preventDefault();
@@ -74,7 +73,7 @@ export default function CreateCoursesDialog({ setOpenChangeDialog }: CreateCours
             >
               Mégse
             </Button>
-            <Button variant={'default'} type='submit'>
+            <Button variant='default' type='submit'>
               Mentés
             </Button>
           </div>

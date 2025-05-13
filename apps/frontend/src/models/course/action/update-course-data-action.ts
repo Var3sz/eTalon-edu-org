@@ -1,9 +1,10 @@
 'use server';
 
-import { UpdateCourseDto } from '@/models/Api';
-import { UpdateCourseFormModel } from '../types';
-import { parseDateToISO } from '@/lib/utils';
 import { UpdateCourseData } from '@/api/models/serviceEndpoints/course';
+import { parseDateToISO } from '@/lib/utils';
+import { UpdateCourseDto } from '@/models/Api';
+
+import { UpdateCourseFormModel } from '../types';
 
 const parseUpdateCourseData = (formModel: UpdateCourseFormModel): UpdateCourseDto => {
   return {

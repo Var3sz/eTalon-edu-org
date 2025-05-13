@@ -1,7 +1,8 @@
-import { UpdateCourseDto } from '@/models/Api';
-import { CreateCoursesFormModel } from '../types';
 import { CreateCourses } from '@/api/models/serviceEndpoints/course';
 import { parseDateToISO } from '@/lib/utils';
+import { UpdateCourseDto } from '@/models/Api';
+
+import { CreateCoursesFormModel } from '../types';
 
 const parseCreateBody = (formModel: CreateCoursesFormModel): UpdateCourseDto[] => {
   const courses = formModel.CourseList.map((c) => {

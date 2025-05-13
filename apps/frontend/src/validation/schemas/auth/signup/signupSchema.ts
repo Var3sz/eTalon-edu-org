@@ -1,5 +1,6 @@
-import { EmailField, RequiredStringField } from '@/validation/validation-elements';
 import * as yup from 'yup';
+
+import { EmailField, RequiredStringField } from '@/validation/validation-elements';
 
 export const signupSchema = yup.object({
   name: RequiredStringField,

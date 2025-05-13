@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 import {
   BooleanField,
   NullableNumberField,
@@ -5,7 +7,6 @@ import {
   RequiredNumberField,
   RequiredStringField,
 } from '@/validation/validation-elements';
-import * as yup from 'yup';
 
 export const updateCourseSchema = yup.object().shape({
   id: RequiredNumberField,

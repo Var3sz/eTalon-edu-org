@@ -1,12 +1,12 @@
 'use client';
 
+import LoadingFullScreen from '@/app/loading';
 import StudentColumns from '@/components/columns/student/student-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
 import useInitCourseClient from '@/hooks/courses/use-init-course-client';
-import { Form } from '../ui/form';
-import { useWatch } from 'react-hook-form';
+
 import { Button } from '../ui/button';
-import LoadingFullScreen from '@/app/loading';
+import { Form } from '../ui/form';
 
 type CourseClientModel = {
   courseId: string;
@@ -36,7 +36,7 @@ export default function CourseClient({ courseId }: CourseClientModel) {
           />
           <div className='flex gap-5 mt-5 self-end'>
             <Button
-              variant={'destructive'}
+              variant='destructive'
               type='button'
               onClick={(e) => {
                 e.preventDefault();
@@ -45,7 +45,7 @@ export default function CourseClient({ courseId }: CourseClientModel) {
             >
               Mégse
             </Button>
-            <Button variant={'default'} type='submit'>
+            <Button variant='default' type='submit'>
               Mentés
             </Button>
           </div>

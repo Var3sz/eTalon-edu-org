@@ -1,5 +1,6 @@
 import { Table } from '@tanstack/react-table';
 import { Settings2 } from 'lucide-react';
+import { ReactElement } from 'react';
 
 import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import AddButton from '@/components/ui/add-button';
@@ -12,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ReactElement, ReactNode } from 'react';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

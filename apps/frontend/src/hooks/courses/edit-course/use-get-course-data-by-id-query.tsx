@@ -1,8 +1,9 @@
 'use client';
 
+import { useSuspenseQuery } from '@tanstack/react-query';
+
 import { GetCourseById } from '@/api/models/serviceEndpoints/course';
 import { CourseDto } from '@/models/Api';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 export function useGetCourseDataByIdQuery(courseId: string) {
   return useSuspenseQuery({

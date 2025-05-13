@@ -1,7 +1,7 @@
 'use server';
 
-import { FetchResponse } from '@/api/types/fetch-response';
 import { httpRequestGET } from '@/api/models/api';
+import { FetchResponse } from '@/api/types/fetch-response';
 
 const getMyProfileUrl = (userId: number) => {
   return `${process.env.SERVER_BASE_URL}user/${userId}`;

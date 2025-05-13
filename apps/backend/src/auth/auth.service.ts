@@ -1,10 +1,11 @@
+import * as process from 'node:process';
+
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/auth.dto';
-import * as process from 'node:process';
 
 const EXPIRE_TIME = 20 * 1000;
 

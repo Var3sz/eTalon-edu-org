@@ -2,7 +2,7 @@ import { IsDateString, IsNotEmpty, IsString, ValidateNested } from '@nestjs/clas
 import { ApiProperty } from '@nestjs/swagger';
 import { ActiveCoursesView, Course, LessonDates } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { IsBoolean, IsNumber } from 'class-validator';
 
 /**
  * Dto for the active courses

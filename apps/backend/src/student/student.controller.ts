@@ -1,5 +1,7 @@
-import { Get, Controller, Param, ParseIntPipe, Put, Body } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Put } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { SAPIService } from 'src/SAPI/SAPI.service';
 
 import {
   StudentAttendanceDto,
@@ -8,8 +10,6 @@ import {
   UpdateStudentDetailsDTO,
 } from './entities/student.entity';
 import { StudentService } from './student.service';
-import { SAPIService } from 'src/SAPI/SAPI.service';
-import { Cron } from '@nestjs/schedule';
 
 @ApiTags('Students')
 @Controller('students')
@@ -28,9 +28,7 @@ export class StudentController {
   @Cron('0 */15 * * * *')
   async insertStudentsFromSAPIDatabase() {
     const latestSubDate = await this.studentService.getLatestSubDate();
-    console.log(latestSubDate);
     const newStudents = await this.sapiService.fetchStudents(latestSubDate);
-    console.log(newStudents);
     if (newStudents.length > 0) {
       return await this.studentService.insertStudents(newStudents);
     }

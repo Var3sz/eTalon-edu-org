@@ -1,8 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { ColumnBaseModel } from '../../types/column-types';
-import { SimpleTableColumnHeader } from '../headers/simple-table-column.header';
+
 import { DatePatterns } from '@/api/consts/date-patterns';
 import { cn, formatDateCustom } from '@/lib/utils';
+
+import { ColumnBaseModel } from '../../types/column-types';
+import { SimpleTableColumnHeader } from '../headers/simple-table-column.header';
 
 export default function DateTableColumn<T>({
   id,
@@ -15,7 +17,7 @@ export default function DateTableColumn<T>({
     id: id,
     accessorKey: accessorKey,
     size: size,
-    header: ({ column }) => <SimpleTableColumnHeader title={headerTitle} />,
+    header: () => <SimpleTableColumnHeader title={headerTitle} />,
     cell: ({ cell }) => {
       try {
         const date = cell.getValue() as Date;
@@ -23,7 +25,7 @@ export default function DateTableColumn<T>({
           <span className={cn('flex justify-center ', cellStyle)}>{formatDateCustom(date, DatePatterns.DATE)}</span>
         );
       } catch (e) {
-        return <></>;
+        return <div />;
       }
     },
   };

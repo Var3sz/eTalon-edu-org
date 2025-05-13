@@ -1,8 +1,10 @@
+import { AlertTriangle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { ReactElement } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+
 import { cn } from '@/lib/utils';
-import { AlertTriangle } from 'lucide-react';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 
 type TabModel = {
   isDefault?: boolean;

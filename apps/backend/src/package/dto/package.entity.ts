@@ -4,6 +4,8 @@ import { IsInt, IsString } from 'class-validator';
 
 export class PackageDto implements Package {
   @ApiProperty()
+  type: string;
+  @ApiProperty()
   id: number;
   @ApiProperty()
   packageId: string;
@@ -19,6 +21,10 @@ export class CreatePackageDto {
   @ApiProperty()
   @IsInt()
   price: number;
+
+  @ApiProperty()
+  @IsString()
+  type: string;
 }
 
 class CourseAssignDto {

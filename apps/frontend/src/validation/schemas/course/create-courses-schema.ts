@@ -1,12 +1,12 @@
+import * as yup from 'yup';
+
 import {
   BooleanField,
   NullableNumberField,
-  NullableStringField,
   RequiredDateField,
   RequiredNumberField,
   RequiredStringField,
 } from '@/validation/validation-elements';
-import * as yup from 'yup';
 
 const CreateCourseSchema = yup.object().shape({
   description: RequiredStringField,

@@ -1,8 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
+
+import { DatePatterns } from '@/api/consts/date-patterns';
+import { cn, formatDateCustom } from '@/lib/utils';
+
 import { ColumnBaseModel } from '../../types/column-types';
 import { DataTableColumnHeader } from '../headers/data-table-column-header';
-import { cn, formatDateCustom } from '@/lib/utils';
-import { DatePatterns } from '@/api/consts/date-patterns';
 
 export default function DateWithFilterTableColumn<T>({
   id,
@@ -23,7 +25,7 @@ export default function DateWithFilterTableColumn<T>({
           <span className={cn('flex justify-center ', cellStyle)}>{formatDateCustom(date, DatePatterns.DATE)}</span>
         );
       } catch (e) {
-        return <></>;
+        return <div />;
       }
     },
   };

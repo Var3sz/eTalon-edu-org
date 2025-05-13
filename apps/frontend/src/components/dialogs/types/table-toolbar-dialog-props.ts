@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, ReactElement } from 'react';
+import { Dispatch, ReactElement, SetStateAction } from 'react';
 
 export type SelectDialogModel = {
   title: string;

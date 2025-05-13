@@ -4,9 +4,9 @@ import { useMemo, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { toast } from '@/components/ui/use-toast';
-import { signupSchema } from '@/validation/schemas/auth/signup/signupSchema';
 import { SignupFormModel } from '@/models/auth/types';
 import { SignupFormDefault } from '@/validation/default-values/auth/signup/signup-form-default';
+import { signupSchema } from '@/validation/schemas/auth/signup/signupSchema';
 
 export default function UseInitSignUpClient() {
   const [isPending, startTransaction] = useTransition();

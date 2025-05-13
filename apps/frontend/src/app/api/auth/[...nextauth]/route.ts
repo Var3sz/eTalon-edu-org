@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
           type: 'Password',
         },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) return null;
         const { username, password } = credentials;
         const res = await fetch(`${process.env.SERVER_BASE_URL}auth/login`, {

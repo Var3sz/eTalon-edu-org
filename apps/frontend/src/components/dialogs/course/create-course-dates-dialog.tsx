@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Control, useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import CreateCourseDatesColumns from '@/components/columns/course/create-course-dates-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
@@ -5,8 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import useInitCreateCourseDatesDialog from '@/hooks/courses/edit-course/use-init-create-course-dates-dialog';
 import { CreateCourseDatesFormModel } from '@/models/course/types';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Control, useWatch } from 'react-hook-form';
 
 type CreateCourseDatesDialogProps = {
   courseId: string;
@@ -46,7 +47,7 @@ export default function CreateCourseDatesDialog({ courseId, setOpenChangeDialog 
           />
           <div className='flex gap-5 mt-5 self-end'>
             <Button
-              variant={'destructive'}
+              variant='destructive'
               type='button'
               onClick={(e) => {
                 e.preventDefault();
@@ -55,7 +56,7 @@ export default function CreateCourseDatesDialog({ courseId, setOpenChangeDialog 
             >
               Mégse
             </Button>
-            <Button variant={'default'} type='submit'>
+            <Button variant='default' type='submit'>
               Mentés
             </Button>
           </div>

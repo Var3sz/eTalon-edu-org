@@ -1,17 +1,5 @@
-import {
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsBoolean,
-  ArrayNotEmpty,
-  ValidateNested,
-  IsDate,
-  IsEmail,
-} from '@nestjs/class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsEmail, IsInt, IsOptional, IsString } from '@nestjs/class-validator';
 import { Student } from '@prisma/client';
-import { Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';
 
 export class StudentDto implements Student {

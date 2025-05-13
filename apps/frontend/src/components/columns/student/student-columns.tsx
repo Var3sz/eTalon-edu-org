@@ -2,12 +2,12 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import { Control, FieldValues } from 'react-hook-form';
 
+import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
 import ClickableTableColumn from '@/components/tables/columns/components/special-columns/clickable-table-column';
 import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import { StudentLocales } from '@/locales/student-locales';
-import { Control, FieldValues } from 'react-hook-form';
-import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
 import { AttendanceDateColumnType } from '@/models/students/types';
 
 type StudentAttendanceProps<T extends FieldValues> = {

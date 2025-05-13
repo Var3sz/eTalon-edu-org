@@ -1,7 +1,7 @@
 import { FieldValues, Path } from 'react-hook-form';
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Checkbox } from '@/components/ui/checkbox';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { FormBaseProps } from '@/models/ui/form-props';
 
 export default function FormCheckboxInput<T extends FieldValues>({

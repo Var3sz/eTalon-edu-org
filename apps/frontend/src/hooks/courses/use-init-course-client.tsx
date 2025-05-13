@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { DatePatterns } from '@/api/consts/date-patterns';
+import { toast } from '@/components/ui/use-toast';
 import useGetCourseDetailsById from '@/hooks/courses/use-get-course-details-by-id-query';
 import { formatDateCustom } from '@/lib/utils';
 import { StudentAttendanceDto, StudentDetailsDTO } from '@/models/Api';
-import { useForm } from 'react-hook-form';
-import { toast } from '@/components/ui/use-toast';
-import { AttendanceDateColumnType } from '@/models/students/types';
 import { UpdateAttendancesRequest } from '@/models/students/action/update-attendances-action';
-import { useQueryClient } from '@tanstack/react-query';
+import { AttendanceDateColumnType } from '@/models/students/types';
 
 type UseInitCourseClientProps = {
   courseId: string;
@@ -119,7 +119,7 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
       }
 
       // Add synthetic id
-      const dateColumns = Array.from(uniqueDateMap.values()).map((entry, index) => ({
+      const dateColumns = Array.from(uniqueDateMap.values()).map((entry) => ({
         lessondateId: entry.lessonDateId,
         date: entry.date,
         description: entry.description,
@@ -135,7 +135,7 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
 
         dateColumns.forEach(({ lessondateId }) => {
           const att = student.attendance.find((a) => a.lessonDateId === lessondateId);
-          row[lessondateId] = !!att?.attended;
+          row[lessondateId] = Boolean(att?.attended);
         });
 
         return row;

@@ -1,12 +1,13 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useSearchParams } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { useMemo, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+
 import { toast } from '@/components/ui/use-toast';
 import { LoginFormModel } from '@/models/auth/types';
 import { LoginFormDefault } from '@/validation/default-values/auth/login/login-form-default';
 import { loginSchema } from '@/validation/schemas/auth/login/loginSchema';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
-import { useMemo, useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
 
 export default function useInitLoginClient() {
   const searchParams = useSearchParams();

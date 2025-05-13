@@ -9,9 +9,9 @@ import NumberInputColumn from '@/components/tables/columns/components/input-colu
 import SelectTableColumn from '@/components/tables/columns/components/input-columns/select-input-column';
 import SwitchTableColumn from '@/components/tables/columns/components/input-columns/switch-input-column';
 import TextInputColumn from '@/components/tables/columns/components/input-columns/text-input-column';
+import TimePickerInputColumn from '@/components/tables/columns/components/input-columns/time-picker-input-column';
 import { GroupDTO, LocationDTO } from '@/models/Api';
 import { UpdateCoursesFormModel } from '@/models/course/types';
-import TimePickerInputColumn from '@/components/tables/columns/components/input-columns/time-picker-input-column';
 
 export default function UpdateCourseDataColumns<FormType extends FieldValues>(
   formControl: Control<FormType>,

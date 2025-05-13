@@ -1,9 +1,10 @@
 'use server';
 
 import { CreateLessonDates } from '@/api/models/serviceEndpoints/course';
-import { CreateCourseDatesFormModel } from '../types';
-import { CreateLessonDateDto } from '@/models/Api';
 import { parseDateToISO } from '@/lib/utils';
+import { CreateLessonDateDto } from '@/models/Api';
+
+import { CreateCourseDatesFormModel } from '../types';
 
 const parseCreateBody = (courseId: string, formModel: CreateCourseDatesFormModel): CreateLessonDateDto => {
   return {

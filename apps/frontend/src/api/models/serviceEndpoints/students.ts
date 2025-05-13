@@ -1,6 +1,7 @@
 'use server';
 
 import { FetchResponse } from '@/api/types/fetch-response';
+
 import { httpRequestGET, httpRequestPUT } from '../api';
 
 const getStudentsByCourseWithAttendancesUrl = (courseId: number) => {

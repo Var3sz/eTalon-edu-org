@@ -38,9 +38,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/GetActiveCourses": {
@@ -62,9 +60,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/GetCourseById/{id}": {
@@ -92,9 +88,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/UpdateCourse/{id}": {
@@ -132,9 +126,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/CreateCourses": {
@@ -182,9 +174,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/CourseDatesByCourseId/{id}": {
@@ -215,9 +205,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/CreateLessonDates": {
@@ -262,9 +250,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/courses/UpdateLessonDate": {
@@ -293,9 +279,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ]
+        "tags": ["Courses"]
       }
     },
     "/students/students": {
@@ -307,9 +291,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Students"
-        ]
+        "tags": ["Students"]
       }
     },
     "/students/GetStudentsByCourseWithAttendances/{id}": {
@@ -337,9 +319,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ]
+        "tags": ["Students"]
       }
     },
     "/students/UpdateAttendances": {
@@ -374,9 +354,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ]
+        "tags": ["Students"]
       }
     },
     "/students/UpdateStudentDetails": {
@@ -405,9 +383,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ]
+        "tags": ["Students"]
       }
     },
     "/billingAddressType/GetBillingAddressTypes": {
@@ -429,9 +405,7 @@
             }
           }
         },
-        "tags": [
-          "BillingAddressTypes"
-        ]
+        "tags": ["BillingAddressTypes"]
       }
     },
     "/locations/GetLocations": {
@@ -453,9 +427,7 @@
             }
           }
         },
-        "tags": [
-          "Locations"
-        ]
+        "tags": ["Locations"]
       }
     },
     "/groups/GetGroups": {
@@ -477,9 +449,7 @@
             }
           }
         },
-        "tags": [
-          "Groups"
-        ]
+        "tags": ["Groups"]
       }
     },
     "/user/{id}": {
@@ -507,9 +477,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ]
+        "tags": ["Users"]
       }
     },
     "/auth/register": {
@@ -531,9 +499,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/login": {
@@ -555,9 +521,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/refresh": {
@@ -569,9 +533,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     }
   },
@@ -772,11 +734,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description",
-          "date"
-        ]
+        "required": ["id", "description", "date"]
       },
       "LessonDateInfoDto": {
         "type": "object",
@@ -790,10 +748,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "date",
-          "description"
-        ]
+        "required": ["date", "description"]
       },
       "CreateLessonDateDto": {
         "type": "object",
@@ -808,10 +763,7 @@
             }
           }
         },
-        "required": [
-          "courseId",
-          "dateInfo"
-        ]
+        "required": ["courseId", "dateInfo"]
       },
       "UpdateLessonDateDto": {
         "type": "object",
@@ -828,11 +780,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "id",
-          "date",
-          "description"
-        ]
+        "required": ["id", "date", "description"]
       },
       "AttendanceDto": {
         "type": "object",
@@ -851,11 +799,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "lessonDateId",
-          "date",
-          "attended"
-        ]
+        "required": ["lessonDateId", "date", "attended"]
       },
       "StudentDto": {
         "type": "object",
@@ -989,10 +933,7 @@
             }
           }
         },
-        "required": [
-          "courseId",
-          "students"
-        ]
+        "required": ["courseId", "students"]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",
@@ -1228,10 +1169,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description"
-        ]
+        "required": ["id", "description"]
       },
       "LocationDto": {
         "type": "object",
@@ -1243,10 +1181,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description"
-        ]
+        "required": ["id", "description"]
       },
       "GroupDto": {
         "type": "object",
@@ -1258,10 +1193,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description"
-        ]
+        "required": ["id", "description"]
       },
       "ProfileDto": {
         "type": "object",
@@ -1279,12 +1211,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "id",
-          "email",
-          "name",
-          "roleId"
-        ]
+        "required": ["id", "email", "name", "roleId"]
       },
       "CreateUserDto": {
         "type": "object",
@@ -1299,11 +1226,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "email",
-          "password"
-        ]
+        "required": ["name", "email", "password"]
       },
       "LoginDto": {
         "type": "object",
@@ -1315,10 +1238,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "username",
-          "password"
-        ]
+        "required": ["username", "password"]
       }
     }
   }
