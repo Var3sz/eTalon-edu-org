@@ -205,3 +205,21 @@ export interface LoginDto {
   username: string;
   password: string;
 }
+
+export interface PackageDto {
+  type: string;
+  id: number;
+  packageId: string;
+  price: number;
+  locationId: number;
+  locationDesc: string;
+  active: boolean;
+}
+
+export interface CreatePackageDto {
+  packageId: string;
+  price: number;
+  type: string;
+  locationId: number;
+  active: boolean;
+}

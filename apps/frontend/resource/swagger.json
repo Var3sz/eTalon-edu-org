@@ -38,7 +38,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/GetActiveCourses": {
@@ -60,7 +62,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/GetCourseById/{id}": {
@@ -88,7 +92,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/UpdateCourse/{id}": {
@@ -126,7 +132,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/CreateCourses": {
@@ -174,7 +182,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/CourseDatesByCourseId/{id}": {
@@ -205,7 +215,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/CreateLessonDates": {
@@ -250,7 +262,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/courses/UpdateLessonDate": {
@@ -279,7 +293,9 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ]
       }
     },
     "/students/students": {
@@ -291,7 +307,9 @@
             "description": ""
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ]
       }
     },
     "/students/GetStudentsByCourseWithAttendances/{id}": {
@@ -319,7 +337,9 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ]
       }
     },
     "/students/UpdateAttendances": {
@@ -354,7 +374,9 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ]
       }
     },
     "/students/UpdateStudentDetails": {
@@ -383,7 +405,9 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ]
       }
     },
     "/billingAddressType/GetBillingAddressTypes": {
@@ -405,7 +429,9 @@
             }
           }
         },
-        "tags": ["BillingAddressTypes"]
+        "tags": [
+          "BillingAddressTypes"
+        ]
       }
     },
     "/locations/GetLocations": {
@@ -427,7 +453,9 @@
             }
           }
         },
-        "tags": ["Locations"]
+        "tags": [
+          "Locations"
+        ]
       }
     },
     "/groups/GetGroups": {
@@ -449,7 +477,9 @@
             }
           }
         },
-        "tags": ["Groups"]
+        "tags": [
+          "Groups"
+        ]
       }
     },
     "/user/{id}": {
@@ -477,7 +507,9 @@
             }
           }
         },
-        "tags": ["Users"]
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/auth/register": {
@@ -499,7 +531,9 @@
             "description": ""
           }
         },
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/auth/login": {
@@ -521,7 +555,9 @@
             "description": ""
           }
         },
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/auth/refresh": {
@@ -533,7 +569,83 @@
             "description": ""
           }
         },
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/package/GetPackages": {
+      "get": {
+        "operationId": "PackageController_GetPackages",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackageDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Package"
+        ]
+      }
+    },
+    "/package/CreatePackages": {
+      "post": {
+        "operationId": "PackageController_CreatePackages",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackageDto"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PackageDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Package"
+        ]
       }
     }
   },
@@ -734,7 +846,11 @@
             "type": "string"
           }
         },
-        "required": ["id", "description", "date"]
+        "required": [
+          "id",
+          "description",
+          "date"
+        ]
       },
       "LessonDateInfoDto": {
         "type": "object",
@@ -748,7 +864,10 @@
             "nullable": true
           }
         },
-        "required": ["date", "description"]
+        "required": [
+          "date",
+          "description"
+        ]
       },
       "CreateLessonDateDto": {
         "type": "object",
@@ -763,7 +882,10 @@
             }
           }
         },
-        "required": ["courseId", "dateInfo"]
+        "required": [
+          "courseId",
+          "dateInfo"
+        ]
       },
       "UpdateLessonDateDto": {
         "type": "object",
@@ -780,7 +902,11 @@
             "nullable": true
           }
         },
-        "required": ["id", "date", "description"]
+        "required": [
+          "id",
+          "date",
+          "description"
+        ]
       },
       "AttendanceDto": {
         "type": "object",
@@ -799,7 +925,11 @@
             "type": "boolean"
           }
         },
-        "required": ["lessonDateId", "date", "attended"]
+        "required": [
+          "lessonDateId",
+          "date",
+          "attended"
+        ]
       },
       "StudentDto": {
         "type": "object",
@@ -933,7 +1063,10 @@
             }
           }
         },
-        "required": ["courseId", "students"]
+        "required": [
+          "courseId",
+          "students"
+        ]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",
@@ -943,10 +1076,6 @@
           },
           "sapId": {
             "type": "number"
-          },
-          "subdate": {
-            "format": "date-time",
-            "type": "string"
           },
           "email": {
             "type": "string"
@@ -1021,30 +1150,13 @@
         "required": [
           "id",
           "sapId",
-          "subdate",
           "email",
           "firstname",
           "lastname",
-          "billCompany",
-          "city",
-          "zip",
-          "address",
-          "coupon",
-          "vatNum",
           "billingAddressTypeId",
           "childName",
-          "childMail",
-          "childGrade",
-          "childTAJ",
           "specialDiet",
-          "specialDietDesc",
-          "mobile",
-          "packageType",
-          "packageCode",
-          "disease",
-          "diseaseDesc",
-          "discount",
-          "discount2"
+          "disease"
         ]
       },
       "StudentDetailsDTO": {
@@ -1169,7 +1281,10 @@
             "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description"
+        ]
       },
       "LocationDto": {
         "type": "object",
@@ -1181,7 +1296,10 @@
             "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description"
+        ]
       },
       "GroupDto": {
         "type": "object",
@@ -1193,7 +1311,10 @@
             "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description"
+        ]
       },
       "ProfileDto": {
         "type": "object",
@@ -1211,7 +1332,12 @@
             "type": "number"
           }
         },
-        "required": ["id", "email", "name", "roleId"]
+        "required": [
+          "id",
+          "email",
+          "name",
+          "roleId"
+        ]
       },
       "CreateUserDto": {
         "type": "object",
@@ -1226,7 +1352,11 @@
             "type": "string"
           }
         },
-        "required": ["name", "email", "password"]
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
       },
       "LoginDto": {
         "type": "object",
@@ -1238,7 +1368,37 @@
             "type": "string"
           }
         },
-        "required": ["username", "password"]
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "PackageDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "locationId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "packageId",
+          "price",
+          "locationId"
+        ]
       }
     }
   }

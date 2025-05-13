@@ -7,8 +7,49 @@ import { CreatePackageDto, PackageDto } from './dto/package.entity';
 export class PackageService {
   constructor(private prisma: PrismaService) {}
 
-  async createPackages(createBody: CreatePackageDto[]): Promise<PackageDto[]> {
-    return await this.prisma.$transaction(createBody.map((pkg) => this.prisma.package.create({ data: pkg })));
+  async getPackages(): Promise<PackageDto[]> {
+    const packages = await this.prisma.package.findMany({
+      where: {
+        active: true,
+      },
+      include: {
+        Location: true,
+      },
+    });
+
+    return packages.map((pkg) => ({
+      id: pkg.id,
+      type: pkg.type,
+      packageId: pkg.packageId,
+      price: pkg.price,
+      locationId: pkg.locationId,
+      locationDesc: pkg.Location.description,
+      active: pkg.active,
+    }));
+  }
+
+  /**
+   * Function for creating packages
+   */
+  async createPackages(createBody: CreatePackageDto[]) {
+    try {
+      return await this.prisma.$transaction(async (tx) => {
+        const createdPackages = [];
+
+        for (const pkg of createBody) {
+          const created = await tx.package.create({
+            data: pkg,
+          });
+
+          createdPackages.push(created);
+        }
+
+        return createdPackages;
+      });
+    } catch (error) {
+      console.error('Failed to create courses:', error);
+      throw error;
+    }
   }
 
   /* async getPackagesForCourseAssignment(groupId: number) {

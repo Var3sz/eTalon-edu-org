@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Package } from '@prisma/client';
-import { IsInt, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 export class PackageDto implements Package {
   @ApiProperty()
@@ -11,9 +11,37 @@ export class PackageDto implements Package {
   packageId: string;
   @ApiProperty()
   price: number;
+  @ApiProperty()
+  locationId: number;
+  @ApiProperty()
+  locationDesc: string;
+  @ApiProperty()
+  active: boolean;
 }
 
 export class CreatePackageDto {
+  @ApiProperty()
+  @IsString()
+  packageId: string;
+
+  @ApiProperty()
+  @IsInt()
+  price: number;
+
+  @ApiProperty()
+  @IsString()
+  type: string;
+
+  @ApiProperty()
+  @IsInt()
+  locationId: number;
+
+  @ApiProperty()
+  @IsBoolean()
+  active: boolean;
+}
+
+export class UpdatePackageDto {
   @ApiProperty()
   @IsString()
   packageId: string;
