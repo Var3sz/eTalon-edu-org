@@ -4,21 +4,20 @@ import { Control, FieldValues } from 'react-hook-form';
 
 import BinActionTableColumn from '@/components/tables/columns/components/action-columns/bin-action-table-column';
 import CountingTableColumn from '@/components/tables/columns/components/action-columns/counting-table-column';
-import DateInputColumn from '@/components/tables/columns/components/input-columns/date-input-column';
 import NumberInputColumn from '@/components/tables/columns/components/input-columns/number-input-column';
 import SelectTableColumn from '@/components/tables/columns/components/input-columns/select-input-column';
 import SwitchTableColumn from '@/components/tables/columns/components/input-columns/switch-input-column';
 import TextInputColumn from '@/components/tables/columns/components/input-columns/text-input-column';
-import TimePickerInputColumn from '@/components/tables/columns/components/input-columns/time-picker-input-column';
 import { FormLocales } from '@/locales/form-locales';
 import { CreatePackageFormModel } from '@/models/package/types';
-import { LocationDto } from '@/models/Api';
+import { GroupDto, LocationDto } from '@/models/Api';
 
 export default function CreatePackagesColumns<FormType extends FieldValues>(
   formControl: Control<FormType>,
   inEdit: boolean,
   tableLength: number,
-  locations: LocationDto[]
+  locations: LocationDto[],
+  groups: GroupDto[]
 ): ColumnDef<CreatePackageFormModel>[] {
   const columns = useMemo(
     () => [
@@ -62,6 +61,21 @@ export default function CreatePackagesColumns<FormType extends FieldValues>(
         }),
         placeholder: FormLocales.course.selectValues.location.placeholder,
         emptySelect: FormLocales.course.selectValues.location.emptySelect,
+      }),
+      SelectTableColumn<FormType, CreatePackageFormModel>({
+        id: 'Csoport',
+        headerTitle: 'Csoport',
+        accessorKey: 'PackageList[index].groupId',
+        formControl: formControl,
+        inEdit: inEdit,
+        items: groups.map((g) => {
+          return {
+            value: g.id,
+            label: g.description,
+          };
+        }),
+        placeholder: FormLocales.course.selectValues.group.placeholder,
+        emptySelect: FormLocales.course.selectValues.group.emptySelect,
       }),
       SwitchTableColumn<FormType, CreatePackageFormModel>({
         id: 'Aktív',

@@ -13,6 +13,7 @@ const CreatePackageSchema = yup.object().shape({
   price: RequiredNumberField,
   type: RequiredStringField,
   locationId: RequiredNumberField,
+  groupId: RequiredNumberField,
   active: BooleanField,
 });
 

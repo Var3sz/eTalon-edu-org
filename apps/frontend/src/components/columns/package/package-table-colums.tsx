@@ -27,6 +27,11 @@ export default function PackageTableColumns(): ColumnDef<PackageDto>[] {
         accessorKey: 'locationDesc',
         headerTitle: 'Helyszín',
       }),
+      TextWithFilterTableColumn<PackageDto>({
+        id: 'groupDesc',
+        accessorKey: 'groupDesc',
+        headerTitle: 'Csoport',
+      }),
     ],
     []
   );

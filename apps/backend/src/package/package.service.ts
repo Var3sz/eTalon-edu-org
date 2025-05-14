@@ -14,6 +14,7 @@ export class PackageService {
       },
       include: {
         Location: true,
+        Group: true,
       },
     });
 
@@ -25,6 +26,8 @@ export class PackageService {
       locationId: pkg.locationId,
       locationDesc: pkg.Location.description,
       active: pkg.active,
+      groupId: pkg.groupId,
+      groupDesc: pkg.Group.description,
     }));
   }
 
@@ -51,6 +54,8 @@ export class PackageService {
       throw error;
     }
   }
+
+  async getActivePackagesAndCoursesByGroupAndLocation() {}
 
   /* async getPackagesForCourseAssignment(groupId: number) {
     try {

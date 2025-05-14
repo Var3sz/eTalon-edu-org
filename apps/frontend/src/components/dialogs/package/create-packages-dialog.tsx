@@ -3,6 +3,7 @@ import CreatePackagesColumns from '@/components/columns/package/create-packages-
 import { SimpleTable } from '@/components/tables/simple-table';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
 import useInitCreatePackagesDialog from '@/hooks/packages/use-init-create-packages-dialog';
 import { CreatePackagesFormModel } from '@/models/package/types';
@@ -17,6 +18,7 @@ export default function CreatePackagesDialog({ setOpenChangeDialog }: CreatePack
   const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitCreatePackagesDialog({ setOpenChangeDialog });
 
   const locations = useGetLocationsQuery();
+  const groups = useGetGroupsQuery();
 
   const formValues = useWatch({ control: form.control }) as CreatePackagesFormModel;
 
@@ -30,7 +32,8 @@ export default function CreatePackagesDialog({ setOpenChangeDialog }: CreatePack
     form.control as unknown as Control<Pick<any, keyof CreatePackagesFormModel[]>>,
     formValues.Helpers.inEdit,
     tableLength,
-    locations!
+    locations!,
+    groups!
   );
 
   return (
@@ -48,6 +51,7 @@ export default function CreatePackagesDialog({ setOpenChangeDialog }: CreatePack
               type: null,
               locationId: null,
               active: true,
+              groupId: null,
             }}
           />
           <div className='flex gap-5 mt-5 self-end'>

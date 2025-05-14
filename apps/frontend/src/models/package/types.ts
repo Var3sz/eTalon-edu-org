@@ -3,6 +3,7 @@ export type CreatePackageFormModel = {
   price: number | null;
   type: string | null;
   locationId: number | null;
+  groupId: number | null;
   active: boolean;
 };
 

@@ -10,6 +10,7 @@ const parseCreateBody = (formModel: CreatePackagesFormModel): CreatePackageDto[]
       type: c.type!,
       price: c.price!,
       active: c.active,
+      groupId: c.groupId!,
     };
   });
   return packages;

@@ -574,7 +574,7 @@
         ]
       }
     },
-    "/package/GetPackages": {
+    "/packages/GetPackages": {
       "get": {
         "operationId": "PackageController_GetPackages",
         "parameters": [],
@@ -598,7 +598,7 @@
         ]
       }
     },
-    "/package/CreatePackages": {
+    "/packages/CreatePackages": {
       "post": {
         "operationId": "PackageController_CreatePackages",
         "parameters": [],
@@ -609,7 +609,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/CreatePackageDto"
                 }
               }
             }
@@ -1390,6 +1390,18 @@
           },
           "locationId": {
             "type": "number"
+          },
+          "locationDesc": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          },
+          "groupDesc": {
+            "type": "string"
           }
         },
         "required": [
@@ -1397,7 +1409,42 @@
           "id",
           "packageId",
           "price",
-          "locationId"
+          "locationId",
+          "locationDesc",
+          "active",
+          "groupId",
+          "groupDesc"
+        ]
+      },
+      "CreatePackageDto": {
+        "type": "object",
+        "properties": {
+          "packageId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "packageId",
+          "price",
+          "type",
+          "locationId",
+          "active",
+          "groupId"
         ]
       }
     }

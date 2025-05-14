@@ -9,6 +9,7 @@ export const CreatePackagesFormDefault = (): CreatePackagesFormModel => {
         type: null,
         locationId: null,
         active: true,
+        groupId: null,
       },
     ],
     Helpers: {

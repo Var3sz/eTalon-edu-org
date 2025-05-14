@@ -214,6 +214,8 @@ export interface PackageDto {
   locationId: number;
   locationDesc: string;
   active: boolean;
+  groupId: number;
+  groupDesc: string;
 }
 
 export interface CreatePackageDto {
@@ -222,4 +224,5 @@ export interface CreatePackageDto {
   type: string;
   locationId: number;
   active: boolean;
+  groupId: number;
 }
