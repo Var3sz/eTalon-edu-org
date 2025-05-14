@@ -11,6 +11,7 @@ export default function PackageTableColumns(): ColumnDef<PackageDto>[] {
         id: 'type',
         accessorKey: 'type',
         headerTitle: 'Csomag típus',
+        size: 20,
       }),
       TextWithFilterTableColumn<PackageDto>({
         id: 'packageId',

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
-import { CreatePackageDto, PackageDto } from './dto/package.entity';
+import { AssignPackageToCourseDto, CreatePackageDto, PackageCourseAssignDto, PackageDto } from './dto/package.entity';
 
 @Injectable()
 export class PackageService {
@@ -55,38 +55,87 @@ export class PackageService {
     }
   }
 
-  async getActivePackagesAndCoursesByGroupAndLocation() {}
+  async getActivePackagesAndCoursesByGroupAndLocation(
+    type: string,
+    groupId: number,
+    locationId: number
+  ): Promise<PackageCourseAssignDto> {
+    // dinamikus groupId szűrő
+    let groupIdFilter: { groupId: number | { in: number[] } };
 
-  /* async getPackagesForCourseAssignment(groupId: number) {
-    try {
-      const activeCourses = await this.prisma.course.findMany({
-        where: {
-          groupId,
-          active: true,
-        },
-        select: {
-          id: true,
-          courseId: true,
-        },
-      });
-
-      const packages = await this.prisma.package.findMany({
-        where: {
-          groupId,
-        },
-        select: {
-          id: true,
-          packageId: true,
-        },
-      });
-
-      return {
-        activeCourses,
-        packages,
-      };
-    } catch (error) {
-      console.error('Hiba a csoport adatainak lekérdezésekor:', error);
-      throw error;
+    switch (type) {
+      case 'C':
+        groupIdFilter = { groupId: { in: [1, 2] } };
+        break;
+      case 'A':
+        groupIdFilter = { groupId: { in: [2, 3] } };
+        break;
+      case 'B':
+      default:
+        groupIdFilter = { groupId: { in: [1] } };
+        break;
     }
-  } */
+
+    const packages = await this.prisma.package.findMany({
+      where: {
+        type,
+        locationId,
+        active: true,
+        ...groupIdFilter,
+      },
+      select: {
+        packageId: true,
+      },
+    });
+
+    const courses = await this.prisma.course.findMany({
+      where: {
+        locationId,
+        active: true,
+        ...groupIdFilter,
+      },
+      select: {
+        id: true,
+        courseId: true,
+      },
+    });
+
+    const assignments = await this.prisma.course_Package.findMany({
+      where: {
+        courseId: { in: courses.map((c) => c.id) },
+        packageId: { in: packages.map((p) => p.packageId) },
+      },
+      select: {
+        courseId: true,
+        packageId: true,
+      },
+    });
+
+    return { packages, courses, assignments };
+  }
+
+  async assignCourseToPackage(assignments: AssignPackageToCourseDto[]): Promise<any> {
+    const results = [];
+
+    for (const { courseId, packageId, assign } of assignments) {
+      if (assign) {
+        const existing = await this.prisma.course_Package.findFirst({
+          where: { courseId, packageId },
+        });
+
+        if (!existing) {
+          const created = await this.prisma.course_Package.create({
+            data: { courseId, packageId },
+          });
+          results.push({ courseId, packageId, status: 'created', record: created });
+        } else {
+          results.push({ courseId, packageId, status: 'already exists' });
+        }
+      } else {
+        results.push({ courseId, packageId, status: 'skipped (assign is false)' });
+      }
+    }
+
+    return results;
+  }
 }

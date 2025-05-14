@@ -69,11 +69,22 @@ class CourseAssignDto {
 }
 
 class PackageAssignDto {
-  id: number;
-  packageCode: string;
+  packageId: string;
+}
+
+class AssingDto {
+  courseId: number;
+  packageId: string;
 }
 
 export class PackageCourseAssignDto {
   courses: CourseAssignDto[];
   packages: PackageAssignDto[];
+  assignments: AssingDto[];
+}
+
+export class AssignPackageToCourseDto {
+  courseId: number;
+  packageId: string;
+  assign: boolean;
 }

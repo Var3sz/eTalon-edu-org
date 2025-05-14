@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { PackageService } from './package.service';
-import { CreatePackageDto, PackageDto } from './dto/package.entity';
+import { AssignPackageToCourseDto, CreatePackageDto, PackageDto } from './dto/package.entity';
 
 @ApiTags('Package')
 @Controller('packages')
@@ -20,5 +20,21 @@ export class PackageController {
   @ApiBody({ type: CreatePackageDto, isArray: true })
   async CreatePackages(@Body() createBody: CreatePackageDto[]): Promise<PackageDto[]> {
     return await this.packageService.createPackages(createBody);
+  }
+
+  @Get('/GetPackagesAndCoursesByLocGroupType')
+  async getPackagesAndCourses(
+    @Query('type') type: string,
+    @Query('groupId') groupId: number,
+    @Query('locationId') locationId: number
+  ) {
+    return await this.packageService.getActivePackagesAndCoursesByGroupAndLocation(type, groupId, locationId);
+  }
+
+  @Post('AssignPackagesToCourses')
+  @ApiOkResponse({})
+  @ApiBody({ type: AssignPackageToCourseDto, isArray: true })
+  async assignCoursesToPackages(@Body() assignments: AssignPackageToCourseDto[]) {
+    return this.packageService.assignCourseToPackage(assignments);
   }
 }

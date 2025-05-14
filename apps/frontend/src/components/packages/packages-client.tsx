@@ -4,21 +4,37 @@ import useGetPackagesDataQuery from '@/hooks/packages/use-get-packages-data-quer
 import { DataTable } from '../tables/data-table';
 import PackageTableColumns from '../columns/package/package-table-colums';
 import CreatePackagesDialog from '../dialogs/package/create-packages-dialog';
+import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
+import { useMemo } from 'react';
+import PackageTableClient from './package-table-client';
+import PackageAssignClient from './package-assign-client';
 
 export default function PackagesClient() {
   const packages = useGetPackagesDataQuery();
 
-  const toolbarProps = {
-    title: 'Csomagtervező',
-    hasAddButton: true,
-    addButtonTitle: 'Új csomagok',
-    dialogTitle: 'Csomagok létrehozása',
-    dialogComponent: <CreatePackagesDialog />,
-  };
+  const packagePlannerTabs: TabProviderModel = useMemo(() => {
+    return packages
+      ? {
+          isHidden: packages === null,
+          tabs: [
+            {
+              isDefault: true,
+              children: <PackageTableClient packages={packages} />,
+              key: 'details',
+              label: 'Csomagok áttekintése',
+              tiggerStyle: 'flex gap-3',
+              visible: true,
+            },
+            {
+              children: <PackageAssignClient />,
+              key: 'assign',
+              label: 'Csomagok kurzushoz rendelése',
+              visible: true,
+            },
+          ],
+        }
+      : ({ isHidden: true, tabs: [] } as TabProviderModel);
+  }, [packages]);
 
-  return (
-    <div className='container mx-auto py-10'>
-      <DataTable columns={PackageTableColumns()} data={packages ?? []} hasToolbar toolbarProps={toolbarProps} />
-    </div>
-  );
+  return packages !== null && <TabProvider {...packagePlannerTabs} />;
 }

@@ -647,6 +647,89 @@
           "Package"
         ]
       }
+    },
+    "/packages/GetPackagesAndCoursesByLocGroupType": {
+      "get": {
+        "operationId": "PackageController_getPackagesAndCourses",
+        "parameters": [
+          {
+            "name": "type",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "locationId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackageCourseAssignDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Package"
+        ]
+      }
+    },
+    "/packages/assign": {
+      "post": {
+        "operationId": "PackageController_assignCoursesToPackages",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AssignPackageToCourseDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Package"
+        ]
+      }
     }
   },
   "info": {
@@ -1445,6 +1528,94 @@
           "locationId",
           "active",
           "groupId"
+        ]
+      },
+      "CourseAssignDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "courseId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "courseId"
+        ]
+      },
+      "PackageAssignDto": {
+        "type": "object",
+        "properties": {
+          "packageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "packageId"
+        ]
+      },
+      "AssingDto": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "courseId",
+          "packageId"
+        ]
+      },
+      "PackageCourseAssignDto": {
+        "type": "object",
+        "properties": {
+          "courses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CourseAssignDto"
+            }
+          },
+          "packages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PackageAssignDto"
+            }
+          },
+          "assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssingDto"
+            }
+          }
+        },
+        "required": [
+          "courses",
+          "packages",
+          "assignments"
+        ]
+      },
+      "AssignPackageToCourseDto": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "assign": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "courseId",
+          "packageId",
+          "assign"
         ]
       }
     }
