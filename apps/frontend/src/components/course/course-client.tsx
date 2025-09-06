@@ -19,10 +19,10 @@ export default function CourseClient({ courseId }: CourseClientModel) {
     });
 
   return (
-    <div className='container mx-auto py-10 flex flex-col gap-3'>
+    <div className='w-3/4 py-10 mx-auto'>
       {isPending && <LoadingFullScreen />}
       {isLoading && <LoadingFullScreen />}
-      <span className='font-bold text-3xl'>Jelenléti adatok - {CourseId}</span>
+      <span className='block font-bold text-3xl mb-3'>Jelenléti adatok{CourseId ? ` - ${CourseId}` : ''}</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)} className='flex flex-col'>
           <SimpleTable

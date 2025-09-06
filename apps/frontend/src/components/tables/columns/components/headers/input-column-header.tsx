@@ -8,7 +8,7 @@ export default function InputHeader<TData, TValue>({
   headerDivStyle = '',
 }: InputHeaderModel<TData, TValue>) {
   return (
-    <div className={cn('flex h-full flex-row items-center', headerDivStyle)}>
+    <div className={cn('flex h-full flex-row justify-center items-center', headerDivStyle)}>
       <span>
         {headerTitle}
         {unitOfMeasureLabel && `(${unitOfMeasureLabel})`}

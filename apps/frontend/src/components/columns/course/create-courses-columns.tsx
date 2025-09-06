@@ -100,14 +100,6 @@ export default function CreateCoursesColumns<FormType extends FieldValues>(
         placeholder: FormLocales.course.selectValues.location.placeholder,
         emptySelect: FormLocales.course.selectValues.location.emptySelect,
       }),
-      SwitchTableColumn<FormType, CreateCourseFormModel>({
-        id: 'Aktív',
-        headerTitle: 'Aktív',
-        accessorKey: 'CourseList[index].active',
-        formControl: formControl,
-        inEdit: inEdit,
-        size: 50,
-      }),
       BinActionTableColumn<CreateCourseFormModel>({
         id: 'Törlés',
         accessorKey: 'removeRow',

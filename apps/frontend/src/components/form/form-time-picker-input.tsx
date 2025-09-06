@@ -41,7 +41,7 @@ export default function FormTimePickerInput<T extends FieldValues>({
       render={({ field }) => (
         <FormItem className={cn('flex flex-col gap-0.5')}>
           {!removeLabel && (
-            <FormLabel className='font-normal'>
+            <FormLabel className='font-bold'>
               {label}
               {required && inEdit && '*'}
             </FormLabel>

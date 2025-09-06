@@ -29,7 +29,11 @@ export default function ClickableTableColumn<T>({
             width: cell.column.getSize(),
           }}
         >
-          <CustomInnerStateDialog title={dialogTitle} triggerElement={<span className='cursor-pointer '>{value}</span>}>
+          <CustomInnerStateDialog
+            title={dialogTitle}
+            headerStyle='font-bold'
+            triggerElement={<span className='cursor-pointer '>{value}</span>}
+          >
             <StudentDetailsDialog courseId={courseId} studentData={row.original as StudentAttendance} />
           </CustomInnerStateDialog>
         </div>

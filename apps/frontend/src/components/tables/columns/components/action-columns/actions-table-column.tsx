@@ -35,13 +35,7 @@ export default function ActionsTableColumn<T>({
     },
     cell: ({ row, cell }) => {
       return (
-        <div
-          className='flex items-center justify-center gap-1'
-          style={{
-            minWidth: `${size}px`,
-            width: cell.column.getSize(),
-          }}
-        >
+        <div className='flex items-center justify-center gap-1'>
           {select &&
             (() => {
               return (

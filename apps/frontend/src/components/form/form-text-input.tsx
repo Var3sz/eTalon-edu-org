@@ -27,7 +27,7 @@ export default function FormTextInput<T extends FieldValues>({
       render={({ field }) => (
         <FormItem className={cn('flex flex-col gap-0.5', divStyle)}>
           {removeLabel === false && (
-            <FormLabel className={cn('font-normal', labelStyle)}>
+            <FormLabel className={cn('font-bold', labelStyle)}>
               {label}
               {required && inEdit && '*'}
             </FormLabel>
@@ -35,14 +35,14 @@ export default function FormTextInput<T extends FieldValues>({
           <FormControl>
             {inEdit ? (
               <Input
-                className={cn('w-[250px]', inputStyle)}
+                className={cn('w-[250px] bg-white', inputStyle)}
                 {...field}
                 type={type}
                 placeholder={placeholder}
                 disabled={disabled}
               />
             ) : (
-              <Label className='w-[250px]'>{field.value}</Label>
+              <Label className='w-[250px] font-normal'>{field.value}</Label>
             )}
           </FormControl>
           <FormMessage />

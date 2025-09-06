@@ -1,4 +1,4 @@
-import { Control, FieldValues } from 'react-hook-form';
+import { Control, FieldValues, useWatch } from 'react-hook-form';
 
 import FormNumberInput from '@/components/form/form-number-input';
 import FormSwitchInput from '@/components/form/form-switch-input';
@@ -6,6 +6,7 @@ import FormTextInput from '@/components/form/form-text-input';
 import FormTextAreaInput from '@/components/form/form-textarea-input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { StudentLocales } from '@/locales/student-locales';
+import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
 export type StudentDataProps<T extends FieldValues> = {
   formControl: Control<T>;
@@ -24,6 +25,8 @@ export type StudentDataProps<T extends FieldValues> = {
 };
 
 export default function StudentDefaultData<T extends FieldValues>({ formControl, inEdit }: StudentDataProps<T>) {
+  const formValues = useWatch() as UpdateStudentDetailsFormModel;
+
   return (
     <Accordion type='single' collapsible defaultValue='studentInfo' className='space-y-4'>
       <AccordionItem
@@ -34,7 +37,7 @@ export default function StudentDefaultData<T extends FieldValues>({ formControl,
           <span className='text-2xl font-bold'>Gyermek adatok</span>
         </AccordionTrigger>
         <AccordionContent className='flex flex-col gap-3'>
-          <div className='flex flex-wrap gap-3'>
+          <div className='flex flex-wrap gap-5'>
             <FormTextInput
               id='childName'
               label={StudentLocales.update.childName}
@@ -60,17 +63,9 @@ export default function StudentDefaultData<T extends FieldValues>({ formControl,
               formControl={formControl}
               inEdit={inEdit}
             />
-          </div>
-          <div className='flex flex-wrap gap-3'>
             <FormSwitchInput
               id='specialDiet'
               label={StudentLocales.update.specialDiet}
-              formControl={formControl}
-              inEdit={inEdit}
-            />
-            <FormTextAreaInput
-              id='specialDietDesc'
-              label={StudentLocales.update.specialDietDesc}
               formControl={formControl}
               inEdit={inEdit}
             />
@@ -80,11 +75,21 @@ export default function StudentDefaultData<T extends FieldValues>({ formControl,
               formControl={formControl}
               inEdit={inEdit}
             />
+          </div>
+          <div className='flex gap-5'>
+            <FormTextAreaInput
+              id='specialDietDesc'
+              label={StudentLocales.update.specialDietDesc}
+              formControl={formControl}
+              inEdit={inEdit}
+              disabled={!formValues.specialDiet}
+            />
             <FormTextAreaInput
               id='diseaseDesc'
               label={StudentLocales.update.diseaseDesc}
               formControl={formControl}
               inEdit={inEdit}
+              disabled={!formValues.disease}
             />
           </div>
         </AccordionContent>

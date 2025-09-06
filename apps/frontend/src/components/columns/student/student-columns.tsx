@@ -40,7 +40,6 @@ export default function StudentColumns<T extends FieldValues>({
       return CheckboxTableColumn<T, StudentAttendance>({
         id: `${lessonDateId}-attendance`,
         accessorKey,
-        size: 80,
         headerTitle: `${description} - ${date}`,
         disabled: false,
         formControl,

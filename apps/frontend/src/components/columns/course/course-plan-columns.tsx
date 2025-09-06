@@ -7,6 +7,7 @@ import TextWithFilterTableColumn from '@/components/tables/columns/components/fi
 import { CourseEditRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { TableLocales } from '@/locales/table-locales';
 import { CourseDto } from '@/models/Api';
+import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 
 export default function CoursePlanColumns(): ColumnDef<CourseDto>[] {
   return useMemo(
@@ -17,7 +18,6 @@ export default function CoursePlanColumns(): ColumnDef<CourseDto>[] {
         headerTitle: '',
         redirect: true,
         redirection: CourseEditRedirectionFunction,
-        size: 20,
       }),
       TextWithFilterTableColumn<CourseDto>({
         id: 'courseId',
@@ -33,19 +33,19 @@ export default function CoursePlanColumns(): ColumnDef<CourseDto>[] {
         id: 'startTime',
         accessorKey: 'startTime',
         headerTitle: TableLocales.course.from,
-        size: 150,
+        cellStyle: ' flex justify-end',
       }),
       TextWithFilterTableColumn<CourseDto>({
         id: 'endTime',
         accessorKey: 'endTime',
         headerTitle: TableLocales.course.to,
-        size: 150,
+        cellStyle: ' flex justify-end',
       }),
-      TextWithFilterTableColumn<CourseDto>({
+      NumberWithFilterTableColumn<CourseDto>({
         id: 'maxHeadCount',
         accessorKey: 'maxHeadCount',
         headerTitle: TableLocales.course.maxHeadcount,
-        size: 150,
+        unitOfMeasure: 'Fő',
       }),
     ],
     []

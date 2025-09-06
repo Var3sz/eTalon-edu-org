@@ -34,15 +34,15 @@ export default function FormSelectInput<T extends FieldValues>({
       control={formControl}
       name={id as Path<T>}
       render={({ field }) => (
-        <FormItem className='flex flex-col'>
-          <FormLabel className='font-normal'>
+        <FormItem className='flex flex-col gap-0.5'>
+          <FormLabel className='font-bold'>
             {label}
             {required && inEdit && '*'}
           </FormLabel>
           {inEdit ? (
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
-                <Button variant='outline' className='w-[250px] justify-between' disabled={disabled}>
+                <Button variant='outline' className='w-[250px] bg-white justify-between' disabled={disabled}>
                   {field.value ? items.find((item) => item.value === field.value)?.label : placeholder}
                   <ChevronDown className='h-4 w-4 opacity-50' />
                 </Button>
@@ -74,7 +74,7 @@ export default function FormSelectInput<T extends FieldValues>({
               </PopoverContent>
             </Popover>
           ) : (
-            <Label className='w-[250px]'>{getLabelFromValue(items, field.value)}</Label>
+            <Label className='w-[250px] font-normal'>{getLabelFromValue(items, field.value)}</Label>
           )}
 
           <FormDescription />

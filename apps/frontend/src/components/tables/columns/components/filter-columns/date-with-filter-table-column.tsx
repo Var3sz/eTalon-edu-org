@@ -23,7 +23,9 @@ export default function DateWithFilterTableColumn<T>({
       try {
         const date = cell.getValue() as Date;
         return (
-          <span className={cn('flex justify-center ', cellStyle)}>{formatDateCustom(date, DatePatterns.DATE)}</span>
+          <span className={cn('flex justify-center text-lg', cellStyle)}>
+            {formatDateCustom(date, DatePatterns.DATE)}
+          </span>
         );
       } catch (e) {
         return <div />;

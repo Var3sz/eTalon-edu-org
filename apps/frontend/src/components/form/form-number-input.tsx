@@ -23,7 +23,7 @@ export default function FormNumberInput<T extends FieldValues>({
       render={({ field }) => (
         <FormItem className='flex flex-col gap-0.5'>
           {removeLabel === false && (
-            <FormLabel className='font-normal'>
+            <FormLabel className='font-bold'>
               {label}
               {unitOfMeasureLabel && `(${unitOfMeasureLabel})`}
               {required && inEdit && '*'}
@@ -31,12 +31,17 @@ export default function FormNumberInput<T extends FieldValues>({
           )}
           <FormControl>
             {inEdit ? (
-              <Input placeholder={placeholder} {...field} type='number' className='w-[250px]' disabled={disabled} />
+              <Input
+                placeholder={placeholder}
+                {...field}
+                type='number'
+                className='w-[250px] bg-white'
+                disabled={disabled}
+              />
             ) : (
-              <Label className='w-[250px]'>{field.value}</Label>
+              <Label className='w-[250px] font-normal'>{field.value}</Label>
             )}
           </FormControl>
-          <FormDescription />
           <FormMessage />
         </FormItem>
       )}

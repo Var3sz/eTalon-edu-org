@@ -21,9 +21,9 @@ export default function FormSwitchInput<T extends FieldValues>({
       render={({ field }) => {
         const isDisabled = !inEdit || disabled;
         return (
-          <FormItem className='flex flex-col'>
+          <FormItem className='flex flex-col w-[250px]'>
             {removeLabel === false && (
-              <FormLabel className='font-normal'>
+              <FormLabel className='font-bold'>
                 {label}
                 {required && inEdit && '*'}
               </FormLabel>

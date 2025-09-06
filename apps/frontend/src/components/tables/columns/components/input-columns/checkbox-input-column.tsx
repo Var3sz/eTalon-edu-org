@@ -23,13 +23,7 @@ export default function CheckboxTableColumn<FormType extends FieldValues, TableT
     ),
     cell: ({ cell, row }) => {
       return (
-        <div
-          className='flex w-full justify-center'
-          style={{
-            minWidth: `${size}px`,
-            width: cell.column.getSize(),
-          }}
-        >
+        <div className='flex w-full h-full items-center justify-center'>
           <FormCheckboxInput
             inEdit={inEdit}
             disabled={disabled}

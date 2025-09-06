@@ -22,7 +22,7 @@ export default function NumberWithFilterTableColumn<T>({
     cell: ({ cell }) => {
       const value = cell.getValue() as number;
       return (
-        <div className='flex justify-end' style={{ minWidth: `${size}px` }}>
+        <div className='flex justify-end text-lg' style={{ minWidth: `${size}px` }}>
           <span>{value}</span>
         </div>
       );

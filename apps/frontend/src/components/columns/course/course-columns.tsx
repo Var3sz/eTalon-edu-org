@@ -19,7 +19,6 @@ export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
         id: 'actions',
         accessorKey: 'actions',
         headerTitle: '',
-        edit: true,
         redirect: true,
         redirection: CourseRedirectionFunction,
         dialogTitle: 'Kurzus dátumok módosítása',

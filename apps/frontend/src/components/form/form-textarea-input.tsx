@@ -43,9 +43,11 @@ export default function FormTextAreaInput<T extends FieldValues>({
       control={formControl}
       name={id as Path<T>}
       render={({ field }) => (
-        <FormItem className={cn('flex-col flex text-center justify-center items-center my-auto grow h-max', divStyle)}>
+        <FormItem className={cn('flex-col flex my-auto h-max', divStyle)}>
           {removeLabel === false && (
-            <FormLabel className={cn('text-black text-opacity-90 text-[14px] font-breuer-regular ', textStyle)}>
+            <FormLabel
+              className={cn('text-black text-opacity-90 text-[14px] font-breuer-regular font-bold ', textStyle)}
+            >
               {label}
               {unitOfMeasureLabel && `(${unitOfMeasureLabel})`}
               {required && '*'}
@@ -58,7 +60,7 @@ export default function FormTextAreaInput<T extends FieldValues>({
                 maxLength={maxLength}
                 disabled={disabled}
                 className={cn(
-                  'w-[260px] min-h-fit text-[14px] text-black font-breuer-bold resize-none aria-[invalid=true]:border-[#dc2626]',
+                  'w-[250px] min-h-fit text-[14px] text-black font-breuer-bold resize-none aria-[invalid=true]:border-[#dc2626] bg-white',
                   inputStyle
                 )}
                 {...field}
@@ -67,7 +69,7 @@ export default function FormTextAreaInput<T extends FieldValues>({
           ) : (
             <Label
               className={cn(
-                'w-[260px] h-auto text-[14px] text-black font-breuer-bold resize-none aria-[invalid=true]:border-[#dc2626]',
+                'w-[250px] h-auto text-[14px] text-black font-breuer-bold resize-none aria-[invalid=true]:border-[#dc2626]',
                 inputStyle
               )}
             >
