@@ -43,11 +43,11 @@ export function DataTableToolBar<TData>({ table, toolbarProps }: DataTableToolba
         <DropdownMenuTrigger asChild>
           <Button variant='outline' size='sm' className='ml-auto hidden h-8 lg:flex'>
             <Settings2 />
-            View
+            Beállítások
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='end' className='w-[150px]'>
-          <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuContent align='end' className='w-[200px]'>
+          <DropdownMenuLabel>Oszlopok megjelenítése</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {table
             .getAllColumns()
@@ -60,7 +60,7 @@ export function DataTableToolBar<TData>({ table, toolbarProps }: DataTableToolba
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(Boolean(value))}
                 >
-                  {column.id}
+                  {column.columnDef.meta?.displayName}
                 </DropdownMenuCheckboxItem>
               );
             })}

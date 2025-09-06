@@ -10,6 +10,7 @@ import ProgressBarColumn from '@/components/tables/columns/components/special-co
 import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { TableLocales } from '@/locales/table-locales';
 import { ActiveCourseDto } from '@/models/Api';
+import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 
 export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
   return useMemo(
@@ -42,34 +43,30 @@ export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
         headerTitle: TableLocales.course.description,
         size: 450,
       }),
-      /* TextWithFilterTableColumn<ActiveCourseDto>({
-        id: 'price',
-        accessorKey: 'price',
-        headerTitle: TableLocales.course.price,
-        size: 100,
-      }), */
-      TextWithFilterTableColumn<ActiveCourseDto>({
+      NumberWithFilterTableColumn<ActiveCourseDto>({
         id: 'headcount',
         accessorKey: 'headcount',
         headerTitle: TableLocales.course.headcount,
         size: 50,
+        unitOfMeasure: 'Fő',
       }),
-      TextWithFilterTableColumn<ActiveCourseDto>({
+      NumberWithFilterTableColumn<ActiveCourseDto>({
         id: 'maxHeadCount',
         accessorKey: 'maxHeadCount',
         headerTitle: TableLocales.course.maxHeadcount,
         size: 50,
+        unitOfMeasure: 'Fő',
       }),
       ProgressBarColumn<ActiveCourseDto>({
         id: 'occupancy',
         accessorKey: 'occupancy',
         headerTitle: TableLocales.course.occupancy,
-        size: 500,
       }),
       LockedTableColumn<ActiveCourseDto>({
         id: 'locked',
         accessorKey: 'locked',
         headerTitle: TableLocales.course.lock,
+        size: 20,
       }),
     ],
     []

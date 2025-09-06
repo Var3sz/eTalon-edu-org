@@ -15,6 +15,7 @@ export default function DateWithFilterTableColumn<T>({
 }: ColumnBaseModel<T>): ColumnDef<T> {
   return {
     id: id,
+    meta: { displayName: headerTitle },
     accessorKey: accessorKey,
     size: size,
     header: ({ column }) => <DataTableColumnHeader column={column} title={headerTitle} />,

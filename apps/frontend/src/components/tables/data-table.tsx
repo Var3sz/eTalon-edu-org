@@ -25,6 +25,9 @@ declare module '@tanstack/table-core' {
     addRow: () => void;
     removeRow: (id: number) => void;
   }
+  interface ColumnMeta<TData extends unknown, TValue> {
+    displayName: string;
+  }
 }
 
 interface DataTableProps<TData, TValue> {
@@ -38,6 +41,9 @@ interface DataTableProps<TData, TValue> {
     dialogTitle?: string;
     dialogComponent?: ReactElement;
   };
+  actions?: {
+    selectable?: boolean;
+  };
 }
 
 export function DataTable<TData, TValue>({
@@ -45,6 +51,7 @@ export function DataTable<TData, TValue>({
   data,
   hasToolbar = false,
   toolbarProps,
+  actions,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -103,14 +110,14 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  No results.
+                  Nincs adat
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} selectable={actions?.selectable} />
     </div>
   );
 }

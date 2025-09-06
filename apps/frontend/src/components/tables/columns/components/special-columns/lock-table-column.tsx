@@ -13,13 +13,14 @@ export default function LockedTableColumn<T>({
   return {
     id: id,
     accessorKey: accessorKey,
+    meta: { displayName: headerTitle },
     size: size,
     header: ({ column }) => <DataTableColumnHeader column={column} title={headerTitle} />,
     cell: ({ cell }) => {
       const locked = cell.getValue() as boolean;
       return locked ? (
         <div className='flex justify-center'>
-          <LockIcon size={25} />
+          <LockIcon size={22} />
         </div>
       ) : (
         <div />

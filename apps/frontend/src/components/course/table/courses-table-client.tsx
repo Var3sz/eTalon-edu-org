@@ -12,7 +12,7 @@ export default function CoursesTableClient() {
   };
 
   return (
-    <div className='container mx-auto py-10'>
+    <div className='w-3/4 py-10 mx-auto'>
       <DataTable columns={CourseColumns()} data={courses} hasToolbar toolbarProps={courseToolbarProps} />
     </div>
   );

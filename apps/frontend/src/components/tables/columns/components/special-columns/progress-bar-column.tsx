@@ -13,6 +13,7 @@ export default function ProgressBarColumn<T>({
   return {
     id: id,
     accessorKey: accessorKey,
+    meta: { displayName: headerTitle },
     size: size,
     header: ({ column }) => <DataTableColumnHeader column={column} title={headerTitle} />,
     cell: ({ cell }) => {

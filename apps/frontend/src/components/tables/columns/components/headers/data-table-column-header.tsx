@@ -15,11 +15,13 @@ import { cn } from '@/lib/utils';
 interface DataTableColumnHeaderProps<TData, TValue> extends HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
   title: string;
+  unitOfMeasure?: string;
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
+  unitOfMeasure = '',
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   let sortIcon;
@@ -32,15 +34,27 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
+    return (
+      <div className={cn(className)}>
+        {title}
+        {unitOfMeasure ? ` (${unitOfMeasure})` : ''}
+      </div>
+    );
   }
 
   return (
     <div className={cn('flex justify-center items-center space-x-2', className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant='ghost' size='sm' className='-ml-3 h-8 data-[state=open]:bg-accent font-bold text-base'>
-            <span>{title}</span>
+          <Button
+            variant='ghost'
+            size='sm'
+            className='h-8 w-full justify-center font-bold text-base data-[state=open]:bg-accent'
+          >
+            <span>
+              {title}
+              {unitOfMeasure ? ` (${unitOfMeasure})` : ''}
+            </span>
             {sortIcon}
           </Button>
         </DropdownMenuTrigger>
