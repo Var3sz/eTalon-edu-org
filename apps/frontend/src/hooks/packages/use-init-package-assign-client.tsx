@@ -8,6 +8,7 @@ import { AssignPackageToCourseDto, PackageCourseAssignDto } from '@/models/Api';
 import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
 import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
 import { AssingPackagesToCoursesRequest } from '@/models/package/action/assing-packages-to-course-action';
+import { useQueryClient } from '@tanstack/react-query';
 
 export type CoursePackageRow = {
   courseId: number;
@@ -15,8 +16,11 @@ export type CoursePackageRow = {
   [pkgKey: `pkg_${string}`]: boolean;
 };
 
-type FormModel = {
+export type PackageAssignFormModel = {
   assignments: CoursePackageRow[];
+  Helpers: {
+    inEdit: boolean;
+  };
 };
 
 type CoursePackageData = {
@@ -37,9 +41,10 @@ type Props = {
 export default function useCoursePackageFormData({ type, locationId }: Props) {
   const [isPending, startTransition] = useTransition();
   const [rawData, setRawData] = useState<CoursePackageRow[]>([]);
+  const queryClient = useQueryClient();
 
-  const form = useForm<FormModel>({
-    defaultValues: { assignments: [] },
+  const form = useForm<PackageAssignFormModel>({
+    defaultValues: { assignments: [], Helpers: { inEdit: false } },
   });
 
   const fetchFn = useCallback(async () => {
@@ -70,7 +75,7 @@ export default function useCoursePackageFormData({ type, locationId }: Props) {
         });
 
         setRawData(transformed);
-        form.reset({ assignments: transformed });
+        form.reset({ assignments: transformed, Helpers: { inEdit: false } });
       } else {
         toast({
           title: 'Adatlekérési hiba',
@@ -102,18 +107,18 @@ export default function useCoursePackageFormData({ type, locationId }: Props) {
         headerTitle: 'Kurzus azonosító',
       }),
       ...pkgKeys.map((key) =>
-        CheckboxTableColumn<FormModel, CoursePackageRow>({
+        CheckboxTableColumn<PackageAssignFormModel, CoursePackageRow>({
           accessorKey: `assignments[index].${key}`,
           id: key,
           headerTitle: key.replace('pkg_', ''),
           formControl: form.control,
           size: 80,
-          inEdit: true,
+          inEdit: form.getValues().Helpers.inEdit,
           disabled: false,
         })
       ),
     ];
-  }, [rawData, form.control]);
+  }, [rawData, form.control, form.getValues().Helpers.inEdit]);
 
   const onValidSubmit = (values: any) => {
     startTransition(async () => {
@@ -159,6 +164,7 @@ export default function useCoursePackageFormData({ type, locationId }: Props) {
           title: 'Sikeres mentés!',
           variant: 'success',
         });
+        form.setValue('Helpers.inEdit', false);
       } else {
         toast({
           title: 'Sikertelen mentés!',
@@ -177,9 +183,9 @@ export default function useCoursePackageFormData({ type, locationId }: Props) {
     });
   };
 
-  const resetForm = () => {
-    form.reset({ assignments: rawData });
-  };
+  useEffect(() => {
+    if (!form.getValues().Helpers.inEdit) form.reset({ assignments: rawData, Helpers: { inEdit: false } });
+  }, [form.getValues().Helpers.inEdit]);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -192,7 +198,6 @@ export default function useCoursePackageFormData({ type, locationId }: Props) {
     isPending,
     columns,
     data: rawData,
-    resetForm,
     onValidSubmit,
     onInvalidSubmit,
   };
