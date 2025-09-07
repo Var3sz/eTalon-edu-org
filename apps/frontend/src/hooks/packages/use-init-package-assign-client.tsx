@@ -31,11 +31,10 @@ type CoursePackageData = {
 
 type Props = {
   type: string | null;
-  groupId: number | null;
   locationId: number | null;
 };
 
-export default function useCoursePackageFormData({ type, groupId, locationId }: Props) {
+export default function useCoursePackageFormData({ type, locationId }: Props) {
   const [isPending, startTransition] = useTransition();
   const [rawData, setRawData] = useState<CoursePackageRow[]>([]);
 
@@ -44,10 +43,10 @@ export default function useCoursePackageFormData({ type, groupId, locationId }: 
   });
 
   const fetchFn = useCallback(async () => {
-    if (!type || !groupId || !locationId) return;
+    if (!type || !locationId) return;
 
     startTransition(async () => {
-      const resp = await GetCoursePackageDataRequest(type, groupId, locationId);
+      const resp = await GetCoursePackageDataRequest(type, locationId);
       if (resp.status === 200 && resp.data) {
         const dto = Array.isArray(resp.data)
           ? (resp.data[0] as PackageCourseAssignDto)
@@ -80,7 +79,7 @@ export default function useCoursePackageFormData({ type, groupId, locationId }: 
         });
       }
     });
-  }, [type, groupId, locationId]);
+  }, [type, locationId]);
 
   useEffect(() => {
     fetchFn();

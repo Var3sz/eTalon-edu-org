@@ -29,7 +29,7 @@ export default function NoFormTextInput({
   return (
     <div className='flex flex-col'>
       {withLabel && (
-        <Label className={cn('text-black text-[14px] ', textStyle)}>
+        <Label className={cn('font-bold text-black text-[14px] ', textStyle)}>
           {text}
           {required && inEdit === true && '*'}
         </Label>

@@ -31,7 +31,7 @@ export default function CoursePlanDateManagementClient({ courseId }: CoursePlanD
     <div className='flex flex-col gap-5'>
       {isLoading && <LoadingFullScreen />}
       <div className='flex gap-5'>
-        <span className='text-3xl font-bold'>Kurzus dátumok</span>
+        <span className='text-3xl font-bold'>Kurzus dátumok kezelése</span>
         <CustomInnerStateDialog
           title='Kurzus dátumok hozzáadása'
           triggerElement={<AddButton title='Új dátumok' buttonStyle='self-center' asChild />}

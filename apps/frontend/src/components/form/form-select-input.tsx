@@ -42,7 +42,11 @@ export default function FormSelectInput<T extends FieldValues>({
           {inEdit ? (
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
-                <Button variant='outline' className='w-[250px] bg-white justify-between' disabled={disabled}>
+                <Button
+                  variant='outline'
+                  className='w-[250px] font-normal bg-white justify-between'
+                  disabled={disabled}
+                >
                   {field.value ? items.find((item) => item.value === field.value)?.label : placeholder}
                   <ChevronDown className='h-4 w-4 opacity-50' />
                 </Button>

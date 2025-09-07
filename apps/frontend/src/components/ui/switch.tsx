@@ -1,31 +1,38 @@
-import * as SwitchPrimitives from '@radix-ui/react-switch';
-import { SwitchProps } from '@radix-ui/react-switch';
-import * as React from 'react';
+'use client';
 
+import * as React from 'react';
+import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cn } from '@/lib/utils';
 
-const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchProps>(
-  ({ className, ...props }, ref) => (
-    <SwitchPrimitives.Root
+function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
+  return (
+    <SwitchPrimitive.Root
+      data-slot='switch'
       className={cn(
-        'peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 transition-colors',
-        'bg-gray-300 data-[state=checked]:bg-lime-600',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 focus-visible:ring-offset-2',
+        // nagyobb, szélesebb track
+        'peer inline-flex h-6 w-12 shrink-0 items-center rounded-full border border-transparent transition-all outline-none',
+        // színek
+        'data-[state=checked]:bg-primary data-[state=unchecked]:bg-etalon-grey/30',
+        'dark:data-[state=unchecked]:bg-etalon-grey/30',
+        // fókusz, disabled
+        'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary',
         'disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
-      ref={ref}
     >
-      <SwitchPrimitives.Thumb
+      <SwitchPrimitive.Thumb
+        data-slot='switch-thumb'
         className={cn(
-          'pointer-events-none block h-5 w-5 rounded-full bg-white shadow-md ring-0 transition-transform',
-          'data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0'
+          // nagyobb thumb
+          'pointer-events-none block size-5 rounded-full bg-white shadow transition-transform',
+          // eltolások: 2px margó mindkét oldalon
+          'data-[state=checked]:translate-x-[26px] data-[state=unchecked]:translate-x-0',
+          'dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground'
         )}
       />
-    </SwitchPrimitives.Root>
-  )
-);
-Switch.displayName = SwitchPrimitives.Root.displayName;
+    </SwitchPrimitive.Root>
+  );
+}
 
 export { Switch };

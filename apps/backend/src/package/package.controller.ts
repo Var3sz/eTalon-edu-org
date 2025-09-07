@@ -23,12 +23,8 @@ export class PackageController {
   }
 
   @Get('/GetPackagesAndCoursesByLocGroupType')
-  async getPackagesAndCourses(
-    @Query('type') type: string,
-    @Query('groupId') groupId: number,
-    @Query('locationId') locationId: number
-  ) {
-    return await this.packageService.getActivePackagesAndCoursesByGroupAndLocation(type, groupId, locationId);
+  async getPackagesAndCourses(@Query('type') type: string, @Query('locationId') locationId: number) {
+    return await this.packageService.getActivePackagesAndCoursesByGroupAndLocation(type, locationId);
   }
 
   @Post('AssignPackagesToCourses')

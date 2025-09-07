@@ -24,7 +24,7 @@ export default function PackageTableClient({ packages }: PackageTableClientProps
   };
 
   return (
-    <div className='container mx-auto py-10'>
+    <div className='w-full mx-auto '>
       <DataTable columns={PackageTableColumns()} data={packages ?? []} hasToolbar toolbarProps={toolbarProps} />
     </div>
   );

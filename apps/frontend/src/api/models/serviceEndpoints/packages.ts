@@ -11,8 +11,8 @@ const getCreatePackagesUrl = () => {
   return `${process.env.SERVER_BASE_URL}packages/CreatePackages`;
 };
 
-const getCoursePackageDataurl = (type: string, groupId: number, locationId: number) => {
-  return `${process.env.SERVER_BASE_URL}packages/GetPackagesAndCoursesByLocGroupType?type=${type}&groupId=${groupId}&locationId=${locationId}`;
+const getCoursePackageDataurl = (type: string, locationId: number) => {
+  return `${process.env.SERVER_BASE_URL}packages/GetPackagesAndCoursesByLocGroupType?type=${type}&locationId=${locationId}`;
 };
 
 const assignPackagesToCoursesUrl = () => {
@@ -31,10 +31,9 @@ export const CreatePackages = async <RequestType, ResponseType>(
 
 export const GetCoursePackageData = async <ResponseType>(
   type: string,
-  groupId: number,
   locationId: number
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET<ResponseType>(getCoursePackageDataurl(type, groupId, locationId), process.env.JWT_TOKEN!);
+  return await httpRequestGET<ResponseType>(getCoursePackageDataurl(type, locationId), process.env.JWT_TOKEN!);
 };
 
 export const AssingPackagesToCourses = async <RequestType, ResponseType>(

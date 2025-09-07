@@ -16,6 +16,7 @@ import { FormLocales } from '@/locales/form-locales';
 import { CourseDto } from '@/models/Api';
 import { UpdateCourseFormModel } from '@/models/course/types';
 import { ItemModel } from '@/models/ui/form-props';
+import { useEffect } from 'react';
 
 type EditCourseClientFormBaseProps = {
   courseId: string;
@@ -36,13 +37,13 @@ export default function EditCourseClientFormBase({ courseId, courseData }: EditC
   return (
     <div>
       {isPending && <LoadingFullScreen />}
-      <span className='text-3xl'>{courseData?.courseId}</span>
+      <span className='text-3xl font-bold'>Kurzus adatok kezelése</span>
       <Form {...form}>
         <form
           className='mt-[50px] flex flex-col gap-10'
           onSubmit={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)}
         >
-          <div className='flex flex-wrap gap-5'>
+          <div className='flex flex-wrap gap-10'>
             <FormTextInput
               id='courseId'
               formControl={form.control}

@@ -8,19 +8,17 @@ import { CourseDto } from '@/models/Api';
 
 import CoursePlanDateManagementClient from './course-plan-date-management-client';
 import EditCourseClientFormBase from './edit-course-client-form-base';
+import FormSwitchInput from '@/components/form/form-switch-input';
 
 type EditCourseClientProps = {
   courseId: string;
 };
 
 export default function EditCourseClient({ courseId }: EditCourseClientProps) {
-  const { data: courseDataResponse } = useGetCourseDataByIdQuery(courseId);
-
-  const courseData: CourseDto | null =
-    courseDataResponse.status === 200 && courseDataResponse.data !== undefined ? courseDataResponse.data : null;
+  const courseData = useGetCourseDataByIdQuery(courseId);
 
   const courseEditTabs: TabProviderModel = useMemo(() => {
-    return courseDataResponse.status === 200
+    return courseData !== undefined
       ? {
           isHidden: courseData === null,
           tabs: [
@@ -41,7 +39,12 @@ export default function EditCourseClient({ courseId }: EditCourseClientProps) {
           ],
         }
       : ({ isHidden: true, tabs: [] } as TabProviderModel);
-  }, [courseDataResponse.status === 200 && courseDataResponse.data]);
+  }, [courseData]);
 
-  return courseData !== null && <TabProvider {...courseEditTabs} />;
+  return (
+    <div className='w-3/4 mx-auto flex flex-col gap-3'>
+      <span className='text-3xl font-bold'>Kurzus módosítása - {courseData?.courseId}</span>
+      {courseData !== null && <TabProvider {...courseEditTabs} />}
+    </div>
+  );
 }

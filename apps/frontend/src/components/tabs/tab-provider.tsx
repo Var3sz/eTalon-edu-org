@@ -13,7 +13,6 @@ type TabModel = {
   tiggerStyle?: string;
   children: ReactElement;
   visible?: boolean;
-  warning?: boolean;
 };
 
 export type TabProviderModel = {
@@ -38,13 +37,17 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
   return isHidden ? null : (
     <Tabs
       defaultValue={handleTabDefaultValue()}
-      className={cn(
-        // ha inkább gap-et használnál:
-        'w-full px-64 font-breuer-medium text-black flex flex-col gap-2',
-        mainTabStyle
-      )}
+      className={cn('w-full font-breuer-medium text-black flex flex-col gap-2', mainTabStyle)}
     >
-      <TabsList className={cn('bg-white rounded-t-xl shadow-md', 'mb-2', 'max-h-10 overflow-hidden', tabListStyle)}>
+      <TabsList
+        className={cn(
+          'bg-white rounded-t-xl shadow-md w-1/4',
+          'mb-2',
+          'max-h-10 overflow-hidden',
+          'p-0 rounded-t-xl',
+          tabListStyle
+        )}
+      >
         {tabs.map(
           (tab) =>
             tab.visible && (
@@ -52,25 +55,20 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
                 className={cn(
                   'relative px-5 py-2 border-b-2 text-lg transition-colors duration-200',
                   'data-[state=active]:text-[#ffffff] data-[state=active]:bg-[#8cc63f]',
-                  'hover:text-[#8cc63f] hover:border-[#8cc63f] w-full',
+                  'hover:text-[#8cc63f] hover:border-[#8cc63f] w-1/2',
                   tab.tiggerStyle
                 )}
                 key={`contract-tab-trigger-${tab.key}`}
                 value={tab.key}
               >
                 {tab.label}
-                {tab.warning && <AlertTriangle size={20} className='text-yellow-500 ml-2' />}
               </TabsTrigger>
             )
         )}
       </TabsList>
 
       {tabs.map((tab) => (
-        <TabsContent
-          key={tab.key}
-          value={tab.key}
-          className='bg-white border-rounded  border-gray-300 rounded p-6 shadow-sm'
-        >
+        <TabsContent key={tab.key} value={tab.key} className='bg-white border-rounded rounded p-6 shadow-sm'>
           {tab.children}
         </TabsContent>
       ))}

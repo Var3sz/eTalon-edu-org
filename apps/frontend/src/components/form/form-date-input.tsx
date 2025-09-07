@@ -29,7 +29,7 @@ export default function FormDateInput<T extends FieldValues>({
       render={() => (
         <FormItem className='flex flex-col gap-0.5'>
           {removeLabel === false && (
-            <FormLabel className='font-normal'>
+            <FormLabel className='font-bold'>
               {label}
               {required && inEdit && '*'}
             </FormLabel>
@@ -40,10 +40,14 @@ export default function FormDateInput<T extends FieldValues>({
                 <Button
                   disabled={disabled}
                   variant='outline'
-                  className={cn('w-[250px] justify-start', !field.value && 'text-muted-foreground')}
+                  className={cn('w-[250px] justify-start bg-white', !field.value && 'text-muted-foreground')}
                 >
                   <CalendarIcon className='mr-2 h-4 w-4' />
-                  {field.value ? format(new Date(field.value), 'yyyy.MM.dd') : <span>{placeholder}</span>}
+                  {field.value ? (
+                    <span className='font-normal'>{format(new Date(field.value), 'yyyy.MM.dd')}</span>
+                  ) : (
+                    <span className='font-normal'>{placeholder}</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className='w-auto p-0' align='start'>
@@ -56,7 +60,7 @@ export default function FormDateInput<T extends FieldValues>({
               </PopoverContent>
             </Popover>
           ) : (
-            <Label className='w-[250px]'>
+            <Label className='w-[250px] font-normal'>
               {field.value ? format(new Date(field.value), 'yyyy.MM.dd') : <span>{placeholder}</span>}
             </Label>
           )}

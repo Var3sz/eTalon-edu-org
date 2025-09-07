@@ -83,11 +83,11 @@ export default function NoFormSelectInput({
             asChild
             variant='outline'
             role='combobox'
-            className={cn('w-[260px] text-left font-breuer-bold aria-[invalid=true]:border-[#dc2626]', inputTextStyle)}
+            className={cn('w-[260px] text-left  aria-[invalid=true]:border-[#dc2626]', inputTextStyle)}
             disabled={disabled}
           >
             <div className={'flex' + (disabled === true ? ' text-opacity-50' : '')}>
-              <span className='text-left font-breuer-bold overflow-hidden truncate'>{getSelectedValue()}</span>
+              <span className='text-left font-normal overflow-hidden truncate'>{getSelectedValue()}</span>
               {specialSearch ? (
                 <SearchIcon className='ml-auto' stroke={iconColor} />
               ) : (

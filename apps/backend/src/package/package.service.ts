@@ -57,7 +57,6 @@ export class PackageService {
 
   async getActivePackagesAndCoursesByGroupAndLocation(
     type: string,
-    groupId: number,
     locationId: number
   ): Promise<PackageCourseAssignDto> {
     // dinamikus groupId szűrő

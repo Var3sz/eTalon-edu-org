@@ -22,6 +22,7 @@ export default function PackageTableColumns(): ColumnDef<PackageDto>[] {
         id: 'price',
         accessorKey: 'price',
         headerTitle: 'Csomag ára',
+        unitOfMeasure: 'Ft',
       }),
       TextWithFilterTableColumn<PackageDto>({
         id: 'locationDesc',

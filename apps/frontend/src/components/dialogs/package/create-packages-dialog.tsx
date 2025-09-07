@@ -36,6 +36,8 @@ export default function CreatePackagesDialog({ setOpenChangeDialog }: CreatePack
     groups!
   );
 
+  console.log(formValues);
+
   return (
     <div>
       {isPending && <LoadingFullScreen />}

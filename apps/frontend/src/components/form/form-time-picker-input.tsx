@@ -61,7 +61,7 @@ export default function FormTimePickerInput<T extends FieldValues>({
                 disabled={disabled}
               />
             ) : (
-              <Label className='w-[250px]'>{field.value}</Label>
+              <Label className='w-[250px] font-normal'>{field.value}</Label>
             )}
           </FormControl>
           <FormMessage />

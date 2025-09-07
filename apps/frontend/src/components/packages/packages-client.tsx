@@ -28,7 +28,7 @@ export default function PackagesClient() {
             {
               children: <PackageAssignClient />,
               key: 'assign',
-              label: 'Csomagok kurzushoz rendelése',
+              label: 'Kurzushoz rendelés',
               visible: true,
             },
           ],
@@ -36,5 +36,10 @@ export default function PackagesClient() {
       : ({ isHidden: true, tabs: [] } as TabProviderModel);
   }, [packages]);
 
-  return packages !== null && <TabProvider {...packagePlannerTabs} />;
+  return (
+    <div className='w-3/4 mx-auto flex flex-col gap-3'>
+      <span className='text-3xl font-bold'>Csomagtervezés</span>
+      {packages !== null && <TabProvider {...packagePlannerTabs} tabListStyle='w-1/3' />}
+    </div>
+  );
 }

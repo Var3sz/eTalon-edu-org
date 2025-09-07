@@ -77,13 +77,6 @@ export default function CreatePackagesColumns<FormType extends FieldValues>(
         placeholder: FormLocales.course.selectValues.group.placeholder,
         emptySelect: FormLocales.course.selectValues.group.emptySelect,
       }),
-      SwitchTableColumn<FormType, CreatePackageFormModel>({
-        id: 'Aktív',
-        headerTitle: 'Aktív',
-        accessorKey: 'PackageList[index].active',
-        formControl: formControl,
-        inEdit: inEdit,
-      }),
       BinActionTableColumn<CreatePackageFormModel>({
         id: 'Törlés',
         accessorKey: 'removeRow',
