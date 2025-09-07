@@ -9,6 +9,10 @@ import { formatDateCustom } from '@/lib/utils';
 import { StudentAttendanceDto, StudentDetailsDTO } from '@/models/Api';
 import { UpdateAttendancesRequest } from '@/models/students/action/update-attendances-action';
 import { AttendanceDateColumnType } from '@/models/students/types';
+import {
+  StudentAttendanceFormData,
+  StudentAttendanceFormDefault,
+} from '@/validation/default-values/student/student-attendace-form-default';
 
 type UseInitCourseClientProps = {
   courseId: string;
@@ -19,9 +23,16 @@ export type StudentAttendance = {
   [date: string]: boolean | string | number;
 } & StudentDetailsDTO;
 
-type AttendanceForm = {
+export type AttendanceForm = {
   studentId: number;
   [date: string]: boolean | number;
+};
+
+export type StudentAttendanceForm = {
+  attendance: AttendanceForm[];
+  Helpers: {
+    inEdit: boolean;
+  };
 };
 
 export default function useInitCourseClient({ courseId }: UseInitCourseClientProps) {
@@ -36,13 +47,11 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
   const [courseData, setCourseData] = useState<StudentAttendance[]>([]);
   const [attendanceOnly, setAttendanceOnly] = useState<AttendanceForm[]>();
 
-  const form = useForm<{ attendance: AttendanceForm[] }>({
-    defaultValues: {
-      attendance: [],
-    },
+  const form = useForm<StudentAttendanceForm>({
+    defaultValues: StudentAttendanceFormDefault(),
   });
 
-  const onValidSubmit = (data: { attendance: AttendanceForm[] }) => {
+  const onValidSubmit = (data: StudentAttendanceForm) => {
     startTransaction(async () => {
       const payload = data.attendance.flatMap(({ studentId, ...rest }) => {
         return Object.entries(rest).map(([lessondateId, attended]) => ({
@@ -57,6 +66,7 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
       if (updateResponse.status === 200) {
         await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });
         toast({ variant: 'success', title: 'Sikeres frissítés!', description: 'A jelenlétek frissítése sikeres!' });
+        form.setValue('Helpers.inEdit', false);
       } else {
         toast({
           title: 'Sikertelen frissítés!',
@@ -169,16 +179,18 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
 
   useEffect(() => {
     if (attendanceOnly && attendanceOnly.length > 0) {
-      form.reset({ attendance: attendanceOnly });
+      form.reset(StudentAttendanceFormData(attendanceOnly));
     }
   }, [attendanceOnly]);
 
-  const resetForm = () => {
-    form.reset({ attendance: attendanceOnly });
-  };
+  useEffect(() => {
+    if (!form.getValues().Helpers.inEdit && attendanceOnly && attendanceOnly.length > 0) {
+      form.reset(StudentAttendanceFormData(attendanceOnly));
+    }
+  }, [form.getValues().Helpers.inEdit]);
 
   return useMemo(
-    () => ({ form, isPending, isLoading, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols }),
-    [form, isPending, isLoading, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols]
+    () => ({ form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols }),
+    [form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols]
   );
 }

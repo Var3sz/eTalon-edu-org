@@ -3,20 +3,23 @@
 import LoadingFullScreen from '@/app/loading';
 import StudentColumns from '@/components/columns/student/student-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
-import useInitCourseClient from '@/hooks/courses/use-init-course-client';
+import useInitCourseClient, { StudentAttendanceForm } from '@/hooks/courses/use-init-course-client';
 
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
+import { useWatch } from 'react-hook-form';
 
 type CourseClientModel = {
   courseId: string;
 };
 
 export default function CourseClient({ courseId }: CourseClientModel) {
-  const { form, isPending, isLoading, onInvalidSubmit, onValidSubmit, resetForm, CourseId, courseData, dateCols } =
+  const { form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols } =
     useInitCourseClient({
       courseId: courseId,
     });
+
+  const formValues = useWatch({ control: form.control }) as StudentAttendanceForm;
 
   return (
     <div className='w-3/4 py-10 mx-auto'>
@@ -31,23 +34,38 @@ export default function CourseClient({ courseId }: CourseClientModel) {
               courseData: courseData,
               dateColumns: dateCols,
               formControl: form.control,
+              inEdit: formValues.Helpers.inEdit,
             })}
             defaultData={courseData}
           />
-          <div className='flex gap-5 mt-5 self-end'>
-            <Button
-              variant='destructive'
-              type='button'
-              onClick={(e) => {
-                e.preventDefault();
-                resetForm();
-              }}
-            >
-              Mégse
-            </Button>
-            <Button variant='default' type='submit'>
-              Mentés
-            </Button>
+          <div className='flex self-end gap-5 mt-3'>
+            {formValues.Helpers.inEdit ? (
+              <div className='flex gap-3'>
+                <Button
+                  variant='destructive'
+                  type='button'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    form.setValue('Helpers.inEdit', false);
+                  }}
+                >
+                  Mégsem
+                </Button>
+                <Button variant='default' type='submit'>
+                  Mentés
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant='modify'
+                onClick={(e) => {
+                  e.preventDefault();
+                  form.setValue('Helpers.inEdit', true);
+                }}
+              >
+                Módosítás
+              </Button>
+            )}
           </div>
         </form>
       </Form>

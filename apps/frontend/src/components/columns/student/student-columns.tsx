@@ -15,12 +15,14 @@ type StudentAttendanceProps<T extends FieldValues> = {
   courseData: StudentAttendance[];
   dateColumns: AttendanceDateColumnType[];
   formControl: Control<T>;
+  inEdit: boolean;
 };
 export default function StudentColumns<T extends FieldValues>({
   courseId,
   courseData,
   dateColumns,
   formControl,
+  inEdit,
 }: StudentAttendanceProps<T>): ColumnDef<StudentAttendance>[] {
   return useMemo(() => {
     const staticColumns: ColumnDef<StudentAttendance>[] = [
@@ -43,10 +45,10 @@ export default function StudentColumns<T extends FieldValues>({
         headerTitle: `${description} - ${date}`,
         disabled: false,
         formControl,
-        inEdit: true,
+        inEdit: inEdit,
       });
     });
 
     return [...staticColumns, ...dynamicColumns];
-  }, [courseData, dateColumns]);
+  }, [courseData, dateColumns, inEdit]);
 }
