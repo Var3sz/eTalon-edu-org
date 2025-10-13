@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import NoFormTextInput from '../no-form/no-form-text-input';
-import NoFormSelectInput from '../no-form/no-form-select-input';
-import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
-import { FormLocales } from '@/locales/form-locales';
-import LoadingFullScreen from '@/app/loading';
-import { SimpleTable } from '../tables/simple-table';
-import useInitPackageAssignClient, { PackageAssignFormModel } from '@/hooks/packages/use-init-package-assign-client';
-import { Form } from '../ui/form';
-import { Button } from '../ui/button';
 import { useWatch } from 'react-hook-form';
+
+import LoadingFullScreen from '@/app/loading';
+import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
+import useInitPackageAssignClient, { PackageAssignFormModel } from '@/hooks/packages/use-init-package-assign-client';
+import { FormLocales } from '@/locales/form-locales';
+
+import NoFormSelectInput from '../no-form/no-form-select-input';
+import NoFormTextInput from '../no-form/no-form-text-input';
+import { SimpleTable } from '../tables/simple-table';
+import { Button } from '../ui/button';
+import { Form } from '../ui/form';
 
 export default function PackageAssignClient() {
   const locations = useGetLocationsQuery();

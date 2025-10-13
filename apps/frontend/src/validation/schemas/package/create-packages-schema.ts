@@ -1,12 +1,6 @@
 import * as yup from 'yup';
 
-import {
-  BooleanField,
-  NullableNumberField,
-  RequiredDateField,
-  RequiredNumberField,
-  RequiredStringField,
-} from '@/validation/validation-elements';
+import { BooleanField, RequiredNumberField, RequiredStringField } from '@/validation/validation-elements';
 
 const CreatePackageSchema = yup.object().shape({
   packageId: RequiredStringField,

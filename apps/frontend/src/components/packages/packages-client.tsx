@@ -1,13 +1,15 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import useGetPackagesDataQuery from '@/hooks/packages/use-get-packages-data-query';
-import { DataTable } from '../tables/data-table';
+
 import PackageTableColumns from '../columns/package/package-table-colums';
 import CreatePackagesDialog from '../dialogs/package/create-packages-dialog';
+import { DataTable } from '../tables/data-table';
 import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
-import { useMemo } from 'react';
-import PackageTableClient from './package-table-client';
 import PackageAssignClient from './package-assign-client';
+import PackageTableClient from './package-table-client';
 
 export default function PackagesClient() {
   const packages = useGetPackagesDataQuery();

@@ -1,5 +1,7 @@
 'use client';
 
+import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import StudentColumns from '@/components/columns/student/student-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
@@ -7,7 +9,6 @@ import useInitCourseClient, { StudentAttendanceForm } from '@/hooks/courses/use-
 
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
-import { useWatch } from 'react-hook-form';
 
 type CourseClientModel = {
   courseId: string;

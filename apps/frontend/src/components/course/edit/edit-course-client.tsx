@@ -2,13 +2,13 @@
 
 import { useMemo } from 'react';
 
+import FormSwitchInput from '@/components/form/form-switch-input';
 import TabProvider, { TabProviderModel } from '@/components/tabs/tab-provider';
 import { useGetCourseDataByIdQuery } from '@/hooks/courses/edit-course/use-get-course-data-by-id-query';
 import { CourseDto } from '@/models/Api';
 
 import CoursePlanDateManagementClient from './course-plan-date-management-client';
 import EditCourseClientFormBase from './edit-course-client-form-base';
-import FormSwitchInput from '@/components/form/form-switch-input';
 
 type EditCourseClientProps = {
   courseId: string;

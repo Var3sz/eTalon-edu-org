@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Package } from '@prisma/client';
-import { IsBoolean, IsIn, IsInt, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 export class PackageDto implements Package {
   @ApiProperty()

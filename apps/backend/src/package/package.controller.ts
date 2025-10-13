@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { PackageService } from './package.service';
 import { AssignPackageToCourseDto, CreatePackageDto, PackageDto } from './dto/package.entity';
+import { PackageService } from './package.service';
 
 @ApiTags('Package')
 @Controller('packages')

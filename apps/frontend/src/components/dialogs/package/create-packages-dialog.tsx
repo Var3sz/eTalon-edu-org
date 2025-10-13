@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Control, useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import CreatePackagesColumns from '@/components/columns/package/create-packages-table-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
@@ -7,8 +10,6 @@ import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
 import useInitCreatePackagesDialog from '@/hooks/packages/use-init-create-packages-dialog';
 import { CreatePackagesFormModel } from '@/models/package/types';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Control, useWatch } from 'react-hook-form';
 
 type CreatePackagesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
