@@ -33,6 +33,8 @@ async function bootstrap() {
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
-  await app.listen(3001);
+  await app.listen(3001, '0.0.0.0', () => {
+    console.log('Server running on http://0.0.0.0:3001');
+  });
 }
 bootstrap();

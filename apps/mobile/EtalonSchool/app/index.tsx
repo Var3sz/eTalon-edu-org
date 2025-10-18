@@ -12,16 +12,11 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { colors } from '../lib/colors';
+import useInitLoginScreen from '../hooks/auth/useInitLoginScreen';
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { email, password, setEmail, setPassword, onValidFormSubmit } = useInitLoginScreen();
   const disabled = !email || !password;
-
-  const onLogin = () => {
-    Alert.alert('Bejelentkezés', `Email: ${email}`);
-    router.replace('/home');
-  };
 
   return (
     <KeyboardAvoidingView
@@ -63,7 +58,7 @@ export default function LoginScreen() {
           </View>
 
           <Pressable
-            onPress={onLogin}
+            onPress={onValidFormSubmit}
             disabled={disabled}
             style={({ pressed }) => [styles.button, { opacity: disabled ? 0.5 : pressed ? 0.9 : 1 }]}
           >
