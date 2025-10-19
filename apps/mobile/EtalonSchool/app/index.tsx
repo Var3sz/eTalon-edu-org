@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
-import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import { router } from 'expo-router';
+import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../lib/colors';
 import useInitLoginScreen from '../hooks/auth/useInitLoginScreen';
+import FormTextInput from '../components//form/FormTextInput';
+import { useWatch } from 'react-hook-form';
+import { LoginDto } from '../models/auth';
 
 export default function LoginScreen() {
-  const { email, password, setEmail, setPassword, onValidFormSubmit } = useInitLoginScreen();
-  const disabled = !email || !password;
+  const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitLoginScreen();
+  const formValues = useWatch(form) as LoginDto;
+
+  const disabled = !formValues.username || !formValues.password;
 
   return (
     <KeyboardAvoidingView
@@ -31,34 +25,14 @@ export default function LoginScreen() {
 
         <View style={styles.card}>
           <Text style={styles.title}>Bejelentkezés</Text>
-
           <View style={styles.field}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              autoCapitalize='none'
-              keyboardType='email-address'
-              placeholder='you@example.com'
-              placeholderTextColor={colors.subtext}
-            />
+            <FormTextInput id='username' label='E-mail' formControl={form.control} />
           </View>
-
           <View style={styles.field}>
-            <Text style={styles.label}>Jelszó</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              placeholder='••••••••'
-              placeholderTextColor={colors.subtext}
-            />
+            <FormTextInput id='password' label='Jelszó' formControl={form.control} secureTextEntry />
           </View>
-
           <Pressable
-            onPress={onValidFormSubmit}
+            onPress={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)}
             disabled={disabled}
             style={({ pressed }) => [styles.button, { opacity: disabled ? 0.5 : pressed ? 0.9 : 1 }]}
           >
