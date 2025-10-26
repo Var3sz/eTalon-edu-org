@@ -14,6 +14,8 @@ import { LocationModule } from './location/location.module';
 import { PackageModule } from './package/package.module';
 import { StudentModule } from './student/student.module';
 import { UserModule } from './user/user.module';
+import { SzamlazzHUModule } from './szamlazzhu/szamlazzhu.module';
+import { HttpService } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     AuthModule,
     PackageModule,
+    SzamlazzHUModule,
   ],
   controllers: [AppController],
   providers: [AppService],
