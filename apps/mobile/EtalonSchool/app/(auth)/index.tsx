@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors } from '../lib/colors';
-import useInitLoginScreen from '../hooks/auth/useInitLoginScreen';
-import FormTextInput from '../components//form/FormTextInput';
+import { colors } from '../../lib/colors';
+import useInitLoginScreen from '../../hooks/auth/useInitLoginScreen';
+import FormTextInput from '../../components//form/FormTextInput';
 import { useWatch } from 'react-hook-form';
-import { LoginDto } from '../models/auth';
+import { LoginDto } from '../../models/auth';
 
 export default function LoginScreen() {
   const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitLoginScreen();
@@ -18,7 +18,6 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <View style={styles.container}>
-        {/* Logo (swap with your real logo if you have one) */}
         <View style={styles.logoWrap}>
           <Image source={require('../assets/splash.png')} style={styles.logo} resizeMode='contain' />
         </View>
