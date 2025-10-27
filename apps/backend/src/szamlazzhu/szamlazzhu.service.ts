@@ -4,6 +4,8 @@ import xmlbuilder = require('xmlbuilder');
 import FormData = require('form-data');
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
+import { PrismaService } from 'nestjs-prisma';
+import { buildCookieHeaderFromJ, extractJSessionId } from './utils/jsessionid.util';
 
 type BuildArgs = {
   agentKey: string;
@@ -11,6 +13,7 @@ type BuildArgs = {
   issuerTaxNumber?: string;
   additiv?: boolean;
   payments: Payment[];
+  scope?: string;
 };
 
 export type AgentResult =
@@ -32,7 +35,10 @@ export type AgentResult =
 
 @Injectable()
 export class SzamlazzHUService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly prismaService: PrismaService
+  ) {}
 
   // Befizetés rögzítése XML minta felépítése
   buildCreditXMLBuffer({ agentKey, invoiceNumber, issuerTaxNumber, additiv, payments }: BuildArgs): Buffer {
@@ -63,13 +69,12 @@ export class SzamlazzHUService {
     return Buffer.from(xml, 'utf-8');
   }
 
-  async registerCreditEntry(args: {
-    agentKey: string;
-    invoiceNumber: string;
-    issuerTaxNumber?: string;
-    additiv?: boolean;
-    payments: Payment[];
-  }) {
+  async registerCreditEntry(args: BuildArgs) {
+    const scope = args.scope ?? 'szamlazz-agent:default';
+
+    const currentJ = await this.getJSessionId(scope);
+    const cookieHeader = buildCookieHeaderFromJ(currentJ);
+
     const xmlBuf = this.buildCreditXMLBuffer(args);
 
     const form = new FormData();
@@ -79,10 +84,13 @@ export class SzamlazzHUService {
       contentType: 'text/xml; charset=UTF-8',
     });
 
+    // 3) Headers
+    const headers = { ...form.getHeaders(), ...(cookieHeader ? { Cookie: cookieHeader } : {}) };
+
     try {
       const resp = await firstValueFrom(
         this.httpService.post('https://www.szamlazz.hu/szamla/', form, {
-          headers: form.getHeaders(),
+          headers: headers,
           responseType: 'arraybuffer',
           validateStatus: () => true,
           maxBodyLength: Infinity,
@@ -90,37 +98,27 @@ export class SzamlazzHUService {
         })
       );
 
-      const h = resp.headers as Record<string, any>;
-      const ct = String(h['content-type'] ?? '').toLowerCase();
-      const asText = () => Buffer.from(resp.data ?? '').toString('utf8');
-
-      const szlaError = h['szlahu_error'];
-      const szlaErrCode = h['szlahu_error_code'] != null ? Number(h['szlahu_error_code']) : undefined;
-      const invoiceNumber = h['szlahu_szamlaszam'];
-
-      const looksPdf = ct.includes('application/pdf') || (resp.data && Buffer.isBuffer(resp.data));
-      const headerOk = !szlaError && (szlaErrCode == null || szlaErrCode === 0);
-      const httpOk = resp.status >= 200 && resp.status < 300;
-
-      if (headerOk && looksPdf && httpOk) {
-        return {
-          ok: true,
-          status: resp.status,
-          headers: h,
-          pdf: Buffer.from(resp.data),
-          invoiceNumber,
-        };
+      // 5) Új JSESSIONID kinyerése és feltételes upsert
+      const setCookie = resp.headers?.['set-cookie'] as string[] | string | undefined;
+      const newJ = extractJSessionId(setCookie);
+      let jsessionUpdated = false;
+      if (newJ && newJ !== currentJ) {
+        await this.upsertJSessionId(scope, newJ);
+        jsessionUpdated = true;
       }
 
-      const bodySnippet = looksPdf ? undefined : asText().slice(0, 4096);
+      // 6) Válasz összerakása (siker: PDF; hiba: diagnosztika)
+      const h = resp.headers as Record<string, any>;
+      const ct = String(h['content-type'] ?? '').toLowerCase();
+      const looksPdf = ct.includes('application/pdf') || Buffer.isBuffer(resp.data);
 
       return {
-        ok: false,
         status: resp.status,
         headers: h,
-        error: szlaError ?? (httpOk ? 'Ismeretlen hiba (nem PDF válasz).' : 'HTTP hiba az Agent-től.'),
-        errorCode: szlaErrCode,
-        bodySnippet,
+        pdf: looksPdf ? Buffer.from(resp.data) : undefined,
+        cookieSent: cookieHeader ?? null,
+        jsessionReceived: newJ ?? null,
+        jsessionUpdated,
       };
     } catch (e: any) {
       const msg =
@@ -137,5 +135,19 @@ export class SzamlazzHUService {
         bodySnippet: e?.message,
       };
     }
+  }
+
+  async getJSessionId(scope: string): Promise<string | null> {
+    //const row = await this.prismaService.agentSession.findUnique({ where: { scope } });
+    //return row.jessionId ?? null;
+    return '';
+  }
+
+  async upsertJSessionId(scope: string, jsessionId: string): Promise<void> {
+    // await this.prismaService.agentSession.upsert({
+    //   where: { scope },
+    //   create: { scope, jsessionId },
+    //   update: { jsessionId },
+    // });
   }
 }

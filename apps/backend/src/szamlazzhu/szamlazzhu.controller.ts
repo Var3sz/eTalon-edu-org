@@ -13,33 +13,29 @@ export class SzamlazzHUController {
   async generateAndSend(@Body() dto: RegisterCreditEntryDto, @Res() res: Response) {
     const r = await this.szamlaService.registerCreditEntry(dto);
 
-    if (r.ok) {
-      // Ha az Agent adott saját fájlnevet a content-disposition-ben, használhatod azt
-      const filename = 'szamlazz-kifizetes.pdf';
+    if (r.pdf) {
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
-      // opcionális: üzleti meta a response headerek alapján
-      if (r.invoiceNumber) res.setHeader('X-Invoice-Number', String(r.invoiceNumber));
+      res.setHeader('Content-Disposition', 'inline; filename="szamlazz-kifizetes.pdf"');
+      // opcionális diagnosztika:
+      if (r.jsessionReceived) res.setHeader('X-JSESSIONID', r.jsessionReceived);
+      if (r.jsessionUpdated) res.setHeader('X-JSESSION-Updated', 'true');
       return res.status(r.status).send(r.pdf);
     }
 
-    // Hibaválasz – az upstream kódját visszaadhatjuk,
-    // de ha 2xx volt, mégis hiba header, adjunk 422-t.
     const status = r.status >= 400 ? r.status : 422;
-
     return res.status(status).json({
       ok: false,
       status: r.status,
-      error: r.error,
-      errorCode: r.errorCode,
-      // hasznos meta: mutasd meg, ha az Agent adott invoice számot/egyebet
       agentHeaders: {
         szlahu_error: r.headers?.['szlahu_error'],
         szlahu_error_code: r.headers?.['szlahu_error_code'],
         szlahu_szamlaszam: r.headers?.['szlahu_szamlaszam'],
         'content-type': r.headers?.['content-type'],
       },
-      bodySnippet: r.bodySnippet,
+      cookieSent: r.cookieSent,
+      jsessionReceived: r.jsessionReceived,
+      jsessionUpdated: r.jsessionUpdated,
+      note: 'PDF nem érkezett vagy hiba történt.',
     });
   }
 }
