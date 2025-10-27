@@ -8,27 +8,28 @@ import { CreateUserDto, ProfileDto } from './dto/user.dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: CreateUserDto) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
+  // async create(dto: CreateUserDto) {
+  //   const user = await this.prisma.user.findUnique({
+  //     where: {
+  //       email: dto.email,
+  //     },
+  //   });
 
-    if (user) throw new ConflictException('Email is already in use');
+  //   if (user) throw new ConflictException('Email is already in use');
 
-    const newUser = await this.prisma.user.create({
-      data: {
-        ...dto,
-        roleId: 1,
-        password: await hash(dto.password, 10),
-      },
-    });
+  //   const newUser = await this.prisma.user.create({
+  //     data: {
+  //       ...dto,
+  //       roleId: 1,
+  //       role: { connect: { id: 1 } },
+  //       password: await hash(dto.password, 10),
+  //     },
+  //   });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...result } = newUser;
-    return result;
-  }
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   const { password, ...result } = newUser;
+  //   return result;
+  // }
 
   async findByEmail(email: string) {
     return this.prisma.user.findUnique({

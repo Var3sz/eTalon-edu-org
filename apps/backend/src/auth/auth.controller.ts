@@ -15,10 +15,11 @@ export class AuthController {
     private authService: AuthService
   ) {}
 
-  @Post('register')
-  async registerUser(@Body() dto: CreateUserDto) {
-    return await this.userService.create(dto);
-  }
+  // Regisztráció nem lesz lehetséges a portálon!
+  // @Post('register')
+  // async registerUser(@Body() dto: CreateUserDto) {
+  //   return await this.userService.create(dto);
+  // }
 
   @Post('login')
   async login(@Body() dto: LoginDto) {

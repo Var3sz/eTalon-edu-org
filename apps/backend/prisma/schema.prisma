@@ -9,23 +9,24 @@ datasource db {
 }
 
 model Course {
-  id                Int                 @id @default(autoincrement())
-  courseId          String              @unique @db.VarChar
-  description       String              @db.VarChar
-  startDate         DateTime            @db.Timestamp(6)
-  startTime         String              @db.VarChar
-  endTime           String              @db.VarChar
+  id                Int                  @id @default(autoincrement())
+  courseId          String               @unique @db.VarChar
+  description       String               @db.VarChar
+  startDate         DateTime             @db.Timestamp(6)
+  startTime         String               @db.VarChar
+  endTime           String               @db.VarChar
   headcount         Int?
   maxHeadCount      Int
-  active            Boolean             @default(true)
-  locked            Boolean             @default(false)
+  active            Boolean              @default(true)
+  locked            Boolean              @default(false)
   groupId           Int
   locationId        Int
-  group             Group               @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  location          Location            @relation(fields: [locationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  group             Group                @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  location          Location             @relation(fields: [locationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   CourseLessonDates CourseLessonDates[]
   Course_Package    Course_Package[]
   Participant       Participant[]
+  CouseInvoiceDates CourseInvoiceDates[]
 }
 
 model Student {
@@ -58,6 +59,7 @@ model Student {
   attendance           Attendance[]
   Participant          Participant[]
   BillingAddressType   BillingAddressType? @relation(fields: [billingAddressTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payment              Payment[]
 }
 
 model Attendance {
@@ -84,12 +86,15 @@ model Location {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar
-  email    String @unique @db.VarChar
-  password String @db.VarChar
-  roleId   Int
-  role     Role   @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar
+  email         String    @unique @db.VarChar
+  password      String    @db.VarChar
+  roleId        Int
+  role          Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  agentKey      String    @db.VarChar
+  sessionCookie String    @db.VarChar
+  Payments      Payment[]
 }
 
 model Role {
@@ -147,6 +152,35 @@ model Participant {
   studentId Int
   Course    Course  @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Student   Student @relation(fields: [studentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model InvoiceDates {
+  id                 Int                  @id @default(autoincrement())
+  date               DateTime             @db.Timestamp(6)
+  description        String?              @db.VarChar
+  Payment            Payment[]
+  CourseInvoiceDates CourseInvoiceDates[]
+}
+
+model CourseInvoiceDates {
+  id            Int           @id @default(autoincrement())
+  courseId      Int?
+  invoiceDateid Int?
+  Course        Course?       @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  InvoiceDates  InvoiceDates? @relation(fields: [invoiceDateid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Payment {
+  id            Int           @id @default(autoincrement())
+  invoiceDateId Int
+  studentId     Int
+  billerId      Int
+  payed         Boolean
+  amount        Int
+  invoiceNumber String        @db.VarChar
+  InvoiceDates  InvoiceDates? @relation(fields: [invoiceDateId], references: [id])
+  Students      Student?      @relation(fields: [studentId], references: [id])
+  User          User?         @relation(fields: [billerId], references: [id])
 }
 
 view ActiveCoursesView {
