@@ -4,22 +4,32 @@ import { NewStudentsDto } from 'src/api/consts/SAPI';
 import { addTwoHoursToDate } from 'src/lib/helper';
 
 import {
-  CreateStudentDto,
+  PaymentsDto,
   StudentAttendanceDto,
   StudentDetailsDTO,
-  StudentDto,
   UpdateAttendanceDto,
   UpdateStudentDetailsDTO,
 } from './entities/student.entity';
+import { StudentHelpers } from './helpers/student.helpers';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class StudentService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private studentHelpers: StudentHelpers
+  ) {}
 
+  /**
+   * @returns All of the students from the database
+   */
   async getAllStudents() {
     return this.prisma.student.findMany();
   }
 
+  /**
+   * @returns Date of enrollment of the last student added
+   */
   async getLatestSubDate(): Promise<string | null> {
     const latestStudent = await this.prisma.student.findFirst({
       orderBy: {
@@ -33,18 +43,23 @@ export class StudentService {
     return latestStudent ? latestStudent.subdate.toISOString() : null;
   }
 
+  /**
+   * Inserts the new students to the database and links them to he CourseDates and InvoiceDates
+   *
+   * @param students Students to be inserted to the database
+   */
   async insertStudents(students: NewStudentsDto[]) {
-    const parsedStudents = this.parseStudents(students);
+    const parsedStudents = this.studentHelpers.parseStudents(students);
 
     return this.prisma.$transaction(async (tx) => {
-      for (const s of parsedStudents) {
+      for (const student of parsedStudents) {
         // Diák létrehozása
-        const createdStudent = await tx.student.create({ data: s });
+        const createdStudent = await tx.student.create({ data: student });
 
-        // Az beszúrt hallgató csomagkódjához tartozó kurzus lekérdezése
-        const coursePackages = await tx.course_Package.findMany({
+        // A beszúrt hallgató csomagkódjához tartozó kurzus lekérdezése
+        const courses = await tx.course_Package.findMany({
           where: {
-            packageId: s.packageCode,
+            packageId: student.packageCode,
           },
           include: {
             Course: {
@@ -54,21 +69,26 @@ export class StudentService {
                     LessonDates: true,
                   },
                 },
+                CouseInvoiceDates: {
+                  include: {
+                    InvoiceDates: true,
+                  },
+                },
               },
             },
           },
         });
 
         // Hallgató hozzárendelése a megfelelő kurzushoz és az ahhoz tartozó kurzus dátumokhoz
-        for (const cp of coursePackages) {
+        for (const course of courses) {
           await tx.participant.create({
             data: {
-              courseId: cp.courseId,
+              courseId: course.courseId,
               studentId: createdStudent.id,
             },
           });
 
-          const lessonDates = cp.Course.CourseLessonDates.map((cld) => cld.LessonDates);
+          const lessonDates = course.Course.CourseLessonDates.map((cld) => cld.LessonDates);
 
           await Promise.all(
             lessonDates.map((ld) =>
@@ -81,95 +101,52 @@ export class StudentService {
               })
             )
           );
+
+          // Hallgató hozzárendelése a számlázási időszakokhoz
+          const invoiceDates = course.Course.CouseInvoiceDates.map((cid) => cid.InvoiceDates);
+          await Promise.all(
+            invoiceDates.map((id) =>
+              tx.payment.create({
+                data: {
+                  studentId: createdStudent.id,
+                  invoiceDateId: id.id,
+                  payed: false,
+                  billerId: null,
+                  amount: 0,
+                  invoiceNumber: null,
+                },
+              })
+            )
+          );
         }
       }
     });
   }
 
-  async getStudentsByCourseWithAttendances(courseId: number): Promise<StudentAttendanceDto> {
+  /**
+   * Return the student attendace data
+   * @param id - Id for the course which we are asking about attendance
+   * @returns - Student and attendace data
+   */
+  async getStudentsByCourseWithAttendances(id: number): Promise<StudentAttendanceDto> {
     const lessonDates = await this.prisma.courseLessonDates.findMany({
-      where: {
-        courseId: courseId,
-      },
-      select: {
-        lessondateId: true,
-      },
+      where: { courseId: id },
+      select: { lessondateId: true },
     });
 
     const lessonDateIds = lessonDates.map((ld) => ld.lessondateId);
 
     const students = await this.prisma.student.findMany({
-      where: {
-        Participant: {
-          some: {
-            courseId: courseId,
-          },
-        },
-      },
+      where: { Participant: { some: { courseId: id } } },
       include: {
-        Participant: {
-          where: {
-            courseId: courseId,
-          },
-          select: {
-            Course: {
-              select: {
-                courseId: true,
-              },
-            },
-          },
-        },
-        attendance: {
-          where: {
-            lessondateId: {
-              in: lessonDateIds,
-            },
-          },
-          include: {
-            LessonDates: true,
-          },
-        },
+        Participant: { where: { courseId: id }, select: { Course: { select: { courseId: true } } } },
+        attendance: { where: { lessondateId: { in: lessonDateIds } }, include: { LessonDates: true } },
       },
     });
 
+    // Szöveges CourseId!
     const courseCode = students[0]?.Participant[0]?.Course.courseId ?? '';
-
-    const studentDtos = students.map(
-      (s): StudentDto => ({
-        id: s.id,
-        sapId: s.sapId,
-        subdate: s.subdate,
-        email: s.email,
-        firstname: s.firstname,
-        lastname: s.lastname,
-        billCompany: s.billCompany,
-        city: s.city,
-        zip: s.zip,
-        address: s.address,
-        coupon: s.coupon,
-        vatNum: s.vatNum,
-        billingAddressTypeId: s.billingAddressTypeId,
-        childName: s.childName,
-        childMail: s.childMail,
-        childGrade: s.childGrade,
-        childTAJ: s.childTAJ,
-        specialDiet: s.specialDiet,
-        specialDietDesc: s.specialDietDesc,
-        mobile: s.mobile,
-        packageType: s.packageType,
-        packageCode: s.packageCode,
-        disease: s.disease,
-        diseaseDesc: s.diseaseDesc,
-        discount: s.discount,
-        discount2: s.discount2,
-        attendance: s.attendance.map((a) => ({
-          lessonDateId: a.lessondateId,
-          date: a.LessonDates?.date!,
-          description: a.LessonDates?.description ?? '',
-          attended: a.attended ?? false,
-        })),
-      })
-    );
+    const studentDtos = this.studentHelpers.parseStudentsWithAttendance(students);
 
     return {
       courseId: courseCode,
@@ -177,70 +154,76 @@ export class StudentService {
     };
   }
 
+  /**
+   * Returns the student payment data
+   * @param id - Id for the course which we are asking about payments
+   * @returns - Student name and payment data
+   */
+  async getStudentsByCourseWithPaymentData(id: number): Promise<PaymentsDto> {
+    const invoiceDates = await this.prisma.courseInvoiceDates.findMany({
+      where: { courseId: id },
+      select: { invoiceDateid: true },
+    });
+
+    const invoiceDateIds = invoiceDates.map((invoiceDate) => invoiceDate.invoiceDateid);
+
+    const students = await this.prisma.student.findMany({
+      where: { Participant: { some: { courseId: id } } },
+      include: {
+        Participant: { where: { courseId: id }, select: { Course: { select: { courseId: true } } } },
+        Payment: { where: { invoiceDateId: { in: invoiceDateIds } }, include: { InvoiceDates: true } },
+      },
+    });
+
+    // Szöveges CourseId!
+    const courseCode = students[0]?.Participant[0]?.Course.courseId ?? '';
+    const payments = this.studentHelpers.parsePayments(students);
+
+    return {
+      courseId: courseCode,
+      payments: payments,
+    };
+  }
+
+  /**
+   * TODO - tesztelni, hogy megfelelően működik-e nagyméretű adathalmazra is (kb. 20 diák, 13 dátum)
+   * @param updates Attendance records that we would like to update
+   * @returns
+   */
   async updateAttendanceBulk(updates: UpdateAttendanceDto[]) {
     return this.prisma.$transaction(async (tx) => {
       const results = [];
 
       for (const { studentId, lessondateId, attended } of updates) {
-        const existing = await tx.attendance.findFirst({
-          where: { studentId, lessondateId },
-        });
-
-        if (!existing) {
-          throw new Error(`Attendance not found for studentId ${studentId}, lessondateId ${lessondateId}`);
+        try {
+          const updated = await tx.attendance.update({
+            where: {
+              studentId_lessondateId: { studentId, lessondateId },
+            },
+            data: { attended },
+          });
+          results.push(updated);
+        } catch (e) {
+          if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2025') {
+            throw new Error(`A jelenléti rekord nem található a diákra=${studentId}, és a dátumra=${lessondateId}`);
+          }
+          throw e;
         }
-
-        const updated = await tx.attendance.update({
-          where: { id: existing.id },
-          data: { attended },
-        });
-
-        results.push(updated);
       }
 
       return results;
     });
   }
 
+  /**
+   * Updates student data in the database - TODO: bekötni a SAPI-ba is
+   * @param updateBody - Data coming from the Frontend
+   * @returns - Updated student data
+   */
   async updateStudentDetails(updateBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {
     return await this.prisma.student.update({
       where: { id: updateBody.id },
       data: updateBody,
     });
   }
-
-  /**
-   * Helper function for parsing students from SAPI to DB
-   */
-  parseStudents = (students: NewStudentsDto[]): CreateStudentDto[] => {
-    const parsedStudents: CreateStudentDto[] = students.map((s) => ({
-      sapId: s.id,
-      subdate: addTwoHoursToDate(s.subdate),
-      email: s.email,
-      firstname: s.mssys_firstname,
-      lastname: s.mssys_lastname,
-      billCompany: s.mssys_bill_company,
-      city: s.mssys_bill_city,
-      zip: s.mssys_bill_zip.trim() === '' ? null : parseInt(s.mssys_bill_zip, 10),
-      address: s.mssys_bill_address,
-      coupon: s.mssys_coupon,
-      vatNum: s.mssys_vat_number,
-      billingAddressTypeId:
-        s.mssys_billing_address_type.trim() === '' ? null : parseInt(s.mssys_billing_address_type, 10),
-      childName: s.gyermek_neve,
-      childMail: s.gyermek_email,
-      childGrade: s.gyermek_osztalyfoka.trim() === '' ? null : parseInt(s.gyermek_osztalyfoka, 10),
-      childTAJ: s.gyermek_taj,
-      specialDiet: s.kulonleges_etrendet_ker.toLowerCase() === 'igen',
-      specialDietDesc: s.kulonleges_etrend,
-      mobile: s.mssys_mobile,
-      packageType: s.csomag_tipus,
-      packageCode: s.csomag_kod,
-      disease: s.betegsege_van.toLowerCase() === 'igen',
-      diseaseDesc: s.betegseg,
-      discount: s.kedvezmeny_1,
-      discount2: s.kedvezmeny_2,
-    }));
-    return parsedStudents;
-  };
 }

@@ -9,20 +9,21 @@ datasource db {
 }
 
 model Course {
-  id                Int                 @id @default(autoincrement())
-  courseId          String              @unique @db.VarChar
-  description       String              @db.VarChar
-  startDate         DateTime            @db.Timestamp(6)
-  startTime         String              @db.VarChar
-  endTime           String              @db.VarChar
-  headcount         Int?
-  maxHeadCount      Int
-  active            Boolean             @default(true)
-  locked            Boolean             @default(false)
+  id                Int                  @id @default(autoincrement())
+  courseId          String               @unique @db.VarChar
+  description       String               @db.VarChar
+  active            Boolean              @default(true)
+  endTime           String               @db.VarChar
   groupId           Int
+  headcount         Int?
   locationId        Int
-  group             Group               @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  location          Location            @relation(fields: [locationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  startDate         DateTime             @db.Timestamp(6)
+  startTime         String               @db.VarChar
+  locked            Boolean              @default(false)
+  maxHeadCount      Int
+  group             Group                @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  location          Location             @relation(fields: [locationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  CouseInvoiceDates CourseInvoiceDates[]
   CourseLessonDates CourseLessonDates[]
   Course_Package    Course_Package[]
   Participant       Participant[]
@@ -30,43 +31,46 @@ model Course {
 
 model Student {
   id                   Int                 @id @default(autoincrement())
-  sapId                Int                 @unique
-  subdate              DateTime            @db.Timestamp(6)
   email                String              @db.VarChar
-  firstname            String              @db.VarChar
   lastname             String              @db.VarChar
+  firstname            String              @db.VarChar
   billCompany          String?             @db.VarChar
   city                 String?             @db.VarChar
   zip                  Int?
   address              String?             @db.VarChar
-  coupon               String?             @db.VarChar
-  vatNum               String?             @db.VarChar
-  billingAddressTypeId Int?
-  childName            String              @db.VarChar
-  childMail            String?             @db.VarChar
-  childGrade           Int?
-  childTAJ             String?             @db.VarChar
-  specialDiet          Boolean?            @default(false)
-  specialDietDesc      String?             @db.VarChar
   mobile               String?             @db.VarChar
-  packageType          String              @db.VarChar
-  packageCode          String              @db.VarChar
-  disease              Boolean?            @default(false)
-  diseaseDesc          String?             @db.VarChar
+  billingAddressTypeId Int?
+  childGrade           Int?
+  childMail            String?             @db.VarChar
+  childName            String              @db.VarChar
+  childTAJ             String?             @db.VarChar
+  coupon               String?             @db.VarChar
   discount             String?             @db.VarChar
   discount2            String?             @db.VarChar
+  disease              Boolean?            @default(false)
+  diseaseDesc          String?             @db.VarChar
+  packageCode          String              @db.VarChar
+  packageType          String              @db.VarChar
+  sapId                Int                 @unique
+  specialDiet          Boolean?            @default(false)
+  specialDietDesc      String?             @db.VarChar
+  subdate              DateTime            @db.Timestamp(6)
+  vatNum               String?             @db.VarChar
   attendance           Attendance[]
   Participant          Participant[]
+  Payment              Payment[]
   BillingAddressType   BillingAddressType? @relation(fields: [billingAddressTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Attendance {
   id           Int          @id @default(autoincrement())
-  lessondateId Int?
   studentId    Int?
   attended     Boolean?     @default(false)
+  lessondateId Int?
   LessonDates  LessonDates? @relation(fields: [lessondateId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   student      Student?     @relation(fields: [studentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([studentId, lessondateId], map: "attendance_student_lesson_unique")
 }
 
 model Group {
@@ -84,12 +88,15 @@ model Location {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar
-  email    String @unique @db.VarChar
-  password String @db.VarChar
-  roleId   Int
-  role     Role   @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id            Int       @id @default(autoincrement())
+  email         String    @unique @db.VarChar
+  name          String    @db.VarChar
+  password      String    @db.VarChar
+  roleId        Int
+  agentKey      String?   @db.VarChar
+  sessionCookie String?   @db.VarChar
+  Payments      Payment[]
+  role          Role      @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Role {
@@ -118,6 +125,10 @@ model Course_Package {
   courseId  Int
   Course    Course  @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Package   Package @relation(fields: [packageId], references: [packageId], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([packageId, courseId], map: "course_package_unique")
+  @@index([courseId], map: "idx_course_package_course_id")
+  @@index([packageId], map: "idx_course_package_package_id")
 }
 
 model LessonDates {
@@ -149,18 +160,50 @@ model Participant {
   Student   Student @relation(fields: [studentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+model InvoiceDates {
+  id                 Int                  @id @default(autoincrement())
+  date               DateTime             @db.Timestamp(6)
+  description        String?              @db.VarChar
+  CourseInvoiceDates CourseInvoiceDates[]
+  Payment            Payment[]
+}
+
+model CourseInvoiceDates {
+  id            Int           @id @default(autoincrement())
+  courseId      Int?
+  invoiceDateid Int?
+  Course        Course?       @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  InvoiceDates  InvoiceDates? @relation(fields: [invoiceDateid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Payment {
+  id            Int          @id @default(autoincrement())
+  invoiceDateId Int
+  studentId     Int
+  billerId      Int?
+  payed         Boolean?
+  amount        Int?
+  invoiceNumber String?      @db.VarChar
+  User          User?        @relation(fields: [billerId], references: [id], onDelete: Restrict)
+  InvoiceDates  InvoiceDates @relation(fields: [invoiceDateId], references: [id])
+  Students      Student      @relation(fields: [studentId], references: [id])
+
+  @@unique([studentId, invoiceDateId], map: "studentId_invoiceDateId_unique")
+}
+
 view ActiveCoursesView {
-  id               Int       @unique
-  courseId         String?   @db.VarChar
-  groupDescription String?   @db.VarChar
-  occupancy        Int?
-  description      String?
-  headcount        Int?
-  maxHeadCount     Int?
-  price            Int?
-  startDate        DateTime? @db.Timestamp(6)
-  startTime        String?   @db.VarChar
-  endTime          String?   @db.VarChar
-  active           Boolean?
-  locked           Boolean?
+  id                  Int       @unique
+  courseId            String?   @db.VarChar
+  groupDescription    String?   @db.VarChar
+  locationDescription String?   @db.VarChar
+  occupancy           Int?
+  price               String?
+  headcount           Int?
+  maxHeadCount        Int?
+  description         String?
+  locked              Boolean?
+  startDate           DateTime? @db.Timestamp(6)
+  startTime           String?   @db.VarChar
+  endTime             String?   @db.VarChar
+  active              Boolean?
 }

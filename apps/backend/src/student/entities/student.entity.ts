@@ -1,6 +1,6 @@
 import { IsBoolean, IsEmail, IsInt, IsOptional, IsString } from '@nestjs/class-validator';
 import { Student } from '@prisma/client';
-import { IsNumber } from 'class-validator';
+import { IsIn, IsNumber } from 'class-validator';
 
 export class StudentDto implements Student {
   id: number;
@@ -201,4 +201,24 @@ export class UpdateStudentDetailsDTO {
   @IsString()
   @IsOptional()
   discount2?: string;
+}
+
+export class PaymentDto {
+  invoiceDateId: number;
+  date: Date;
+  description?: string;
+  billerId: number;
+  payed: boolean;
+  amount: number;
+  invoiceNumber: string;
+}
+
+export class StudentPaymentDto {
+  studentName: string;
+  Payments: PaymentDto[];
+}
+
+export class PaymentsDto {
+  courseId: string;
+  payments: StudentPaymentDto[];
 }

@@ -14,6 +14,7 @@ import { LocationModule } from './location/location.module';
 import { PackageModule } from './package/package.module';
 import { StudentModule } from './student/student.module';
 import { UserModule } from './user/user.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     AuthModule,
     PackageModule,
+    InvoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
