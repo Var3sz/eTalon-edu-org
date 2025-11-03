@@ -17,13 +17,15 @@ export class ActiveCourseDto implements ActiveCoursesView {
   @ApiProperty()
   groupDescription: string;
   @ApiProperty()
+  locationDescription: string;
+  @ApiProperty()
   occupancy: number;
   @ApiProperty({ required: false, nullable: true })
   headcount: number | null;
   @ApiProperty()
   maxHeadCount: number;
   @ApiProperty()
-  price: number;
+  price: string;
   @ApiProperty()
   startDate: Date;
   @ApiProperty()

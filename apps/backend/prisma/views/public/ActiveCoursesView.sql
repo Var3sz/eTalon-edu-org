@@ -2,6 +2,7 @@ SELECT
   c.id,
   c."courseId",
   g.description AS "groupDescription",
+  l.description AS "locationDescription",
   (
     round(
       CASE
@@ -14,6 +15,9 @@ SELECT
       END
     )
   ) :: integer AS occupancy,
+  NULL :: text AS price,
+  c.headcount,
+  c."maxHeadCount",
   (
     (
       (
@@ -29,27 +33,18 @@ SELECT
       ) || ', ' :: text
     ) || (l.description) :: text
   ) AS description,
-  c.headcount,
-  c."maxHeadCount",
-  p.price,
+  c.locked,
   c."startDate",
   c."startTime",
   c."endTime",
-  c.active,
-  c.locked
+  c.active
 FROM
   (
     (
-      (
-        (
-          "Course" c
-          LEFT JOIN "Group" g ON ((c."groupId" = g.id))
-        )
-        LEFT JOIN "Location" l ON ((c."locationId" = l.id))
-      )
-      LEFT JOIN "Course_Package" cp ON ((cp."courseId" = c.id))
+      "Course" c
+      LEFT JOIN "Group" g ON ((c."groupId" = g.id))
     )
-    LEFT JOIN "Package" p ON (((p."packageId") :: text = (cp."packageId") :: text))
+    LEFT JOIN "Location" l ON ((c."locationId" = l.id))
   )
 WHERE
   (c.active = TRUE);

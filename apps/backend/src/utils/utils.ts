@@ -1,3 +1,18 @@
+import { format } from 'date-fns';
+import { hu } from 'date-fns/locale';
+import { DatePatterns } from 'src/api/consts/date-patterns';
+
+export const formatDateCustom = (date: Date | string | null, pattern: string = DatePatterns.DATE) => {
+  if (date) {
+    return format(date, pattern, {
+      locale: hu,
+    });
+  } else {
+    return null;
+  }
+};
+
+// Számla Agent util függvények a Session kezeléshez
 /** Kinyeri a JSESSIONID értéket a Set-Cookie fejlécekből (string vagy string[]). */
 export function extractJSessionId(setCookie: string | string[] | undefined): string | null {
   if (!setCookie) return null;

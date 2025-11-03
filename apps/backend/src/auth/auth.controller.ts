@@ -16,10 +16,10 @@ export class AuthController {
   ) {}
 
   // Regisztráció nem lesz lehetséges a portálon!
-  // @Post('register')
-  // async registerUser(@Body() dto: CreateUserDto) {
-  //   return await this.userService.create(dto);
-  // }
+  @Post('register')
+  async registerUser(@Body() dto: CreateUserDto) {
+    return await this.userService.create(dto);
+  }
 
   @Post('login')
   async login(@Body() dto: LoginDto) {

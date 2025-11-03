@@ -4,6 +4,7 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SAPIService } from 'src/SAPI/SAPI.service';
 
 import {
+  PaymentsDto,
   StudentAttendanceDto,
   StudentDetailsDTO,
   UpdateAttendanceDto,
@@ -24,8 +25,8 @@ export class StudentController {
     return await this.studentService.getAllStudents();
   }
 
-  // This querys the SAPI database in every 15 minutes if the application is runnin
-  @Cron('0 */15 * * * *')
+  // This querys the SAPI database in every 15 minutes if the application is running
+  @Cron('0 * * * * *')
   async insertStudentsFromSAPIDatabase() {
     const latestSubDate = await this.studentService.getLatestSubDate();
     const newStudents = await this.sapiService.fetchStudents(latestSubDate);
@@ -39,6 +40,12 @@ export class StudentController {
   @ApiOkResponse({ status: 200, type: StudentAttendanceDto })
   async getStudentsByCourseWithAttendances(@Param('id', ParseIntPipe) id: number): Promise<StudentAttendanceDto> {
     return await this.studentService.getStudentsByCourseWithAttendances(id);
+  }
+
+  @Get('GetStudentsByCourseWithPayments/:id')
+  @ApiOkResponse({ status: 200, type: PaymentsDto })
+  async getStudentsByCourseWithPayments(@Param('id', ParseIntPipe) id: number): Promise<PaymentsDto> {
+    return await this.studentService.getStudentsByCourseWithPaymentData(id);
   }
 
   @Put('UpdateAttendances')

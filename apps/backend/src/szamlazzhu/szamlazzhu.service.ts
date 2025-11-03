@@ -5,7 +5,7 @@ import FormData = require('form-data');
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { PrismaService } from 'nestjs-prisma';
-import { buildCookieHeaderFromJ, extractJSessionId } from './utils/jsessionid.util';
+import { buildCookieHeaderFromJ, extractJSessionId } from '../utils/utils';
 
 type BuildArgs = {
   agentKey: string;
@@ -13,7 +13,7 @@ type BuildArgs = {
   issuerTaxNumber?: string;
   additiv?: boolean;
   payments: Payment[];
-  scope?: string;
+  userId?: number;
 };
 
 export type AgentResult =
@@ -70,9 +70,9 @@ export class SzamlazzHUService {
   }
 
   async registerCreditEntry(args: BuildArgs) {
-    const scope = args.scope ?? 'szamlazz-agent:default';
+    const userId = args.userId ?? -1;
 
-    const currentJ = await this.getJSessionId(scope);
+    const currentJ = await this.getJSessionId(userId);
     const cookieHeader = buildCookieHeaderFromJ(currentJ);
 
     const xmlBuf = this.buildCreditXMLBuffer(args);
@@ -103,7 +103,7 @@ export class SzamlazzHUService {
       const newJ = extractJSessionId(setCookie);
       let jsessionUpdated = false;
       if (newJ && newJ !== currentJ) {
-        await this.upsertJSessionId(scope, newJ);
+        await this.upsertJSessionId(userId, newJ);
         jsessionUpdated = true;
       }
 
@@ -137,17 +137,15 @@ export class SzamlazzHUService {
     }
   }
 
-  async getJSessionId(scope: string): Promise<string | null> {
-    //const row = await this.prismaService.agentSession.findUnique({ where: { scope } });
-    //return row.jessionId ?? null;
-    return '';
+  async getJSessionId(billerId: number): Promise<string | null> {
+    const row = await this.prismaService.user.findUnique({ where: { id: billerId } });
+    return row.sessionCookie ?? null;
   }
 
-  async upsertJSessionId(scope: string, jsessionId: string): Promise<void> {
-    // await this.prismaService.agentSession.upsert({
-    //   where: { scope },
-    //   create: { scope, jsessionId },
-    //   update: { jsessionId },
-    // });
+  async upsertJSessionId(billerId: number, jsessionId: string): Promise<void> {
+    await this.prismaService.user.update({
+      where: { id: billerId },
+      data: { sessionCookie: jsessionId },
+    });
   }
 }
