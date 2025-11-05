@@ -4,18 +4,19 @@ import { useMemo } from 'react';
 
 import TabProvider, { TabProviderModel } from '@/components/tabs/tab-provider';
 import { useGetCourseDataByIdQuery } from '@/hooks/courses/edit-course/use-get-course-data-by-id-query';
-import { CourseDto } from '@/models/Api';
 
 import CoursePlanDateManagementClient from './course-plan-date-management-client';
 import EditCourseClientFormBase from './edit-course-client-form-base';
-import FormSwitchInput from '@/components/form/form-switch-input';
+import { useSession } from 'next-auth/react';
 
 type EditCourseClientProps = {
   courseId: string;
 };
 
 export default function EditCourseClient({ courseId }: EditCourseClientProps) {
-  const courseData = useGetCourseDataByIdQuery(courseId);
+  const { data: session } = useSession();
+
+  const courseData = useGetCourseDataByIdQuery(courseId, session?.tokens.accessToken ?? '');
 
   const courseEditTabs: TabProviderModel = useMemo(() => {
     return courseData !== undefined
@@ -24,14 +25,22 @@ export default function EditCourseClient({ courseId }: EditCourseClientProps) {
           tabs: [
             {
               isDefault: true,
-              children: <EditCourseClientFormBase courseId={courseId} courseData={courseData} />,
+              children: (
+                <EditCourseClientFormBase
+                  courseId={courseId}
+                  courseData={courseData}
+                  token={session?.tokens.accessToken ?? ''}
+                />
+              ),
               key: 'details',
               label: 'Kurzus adatok',
               tiggerStyle: 'flex gap-3',
               visible: true,
             },
             {
-              children: <CoursePlanDateManagementClient courseId={courseId} />,
+              children: (
+                <CoursePlanDateManagementClient courseId={courseId} token={session?.tokens.accessToken ?? ''} />
+              ),
               key: 'dates',
               label: 'Kurzus dátumok',
               visible: true,

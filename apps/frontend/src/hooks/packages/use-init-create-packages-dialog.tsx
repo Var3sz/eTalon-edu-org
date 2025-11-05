@@ -10,9 +10,10 @@ import { useForm } from 'react-hook-form';
 
 type UseInitCreatePackagesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
-export default function useInitCreatePackagesDialog({ setOpenChangeDialog }: UseInitCreatePackagesDialogProps) {
+export default function useInitCreatePackagesDialog({ setOpenChangeDialog, token }: UseInitCreatePackagesDialogProps) {
   const queryClient = useQueryClient();
   const [isPending, startTransaction] = useTransition();
   const form = useForm<CreatePackagesFormModel>({

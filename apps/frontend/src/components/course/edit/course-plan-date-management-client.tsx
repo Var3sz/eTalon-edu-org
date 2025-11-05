@@ -8,16 +8,23 @@ import { SimpleTable } from '@/components/tables/simple-table';
 import AddButton from '@/components/ui/add-button';
 import { useGetCourseDatesDataByIdQuery } from '@/hooks/courses/edit-course/use-get-course-dates-data-by-id-query';
 import { LessonDateDto } from '@/models/Api';
+import { useSession } from 'next-auth/react';
 
 type CoursePlanDateManagementClientProps = {
   courseId: string;
+  token: string;
 };
 
-export default function CoursePlanDateManagementClient({ courseId }: CoursePlanDateManagementClientProps) {
-  const { data: courseDatesResponse, isLoading } = useGetCourseDatesDataByIdQuery(courseId);
+export default function CoursePlanDateManagementClient({ courseId, token }: CoursePlanDateManagementClientProps) {
+  const { data: courseDatesResponse, isLoading } = useGetCourseDatesDataByIdQuery(courseId, token);
 
   const courseDates: LessonDateDto[] =
     courseDatesResponse?.status === 200 && courseDatesResponse.data.length > 0 ? courseDatesResponse.data : [];
+
+  useEffect(() => {
+    console.log('token', token);
+    console.log('date', courseDates);
+  }, [token, courseDates]);
 
   const courseDateCols = CourseDatesColumns(courseId);
 
@@ -36,7 +43,7 @@ export default function CoursePlanDateManagementClient({ courseId }: CoursePlanD
           title='Kurzus dátumok hozzáadása'
           triggerElement={<AddButton title='Új dátumok' buttonStyle='self-center' asChild />}
         >
-          <CreateCourseDatesDialog courseId={courseId} />
+          <CreateCourseDatesDialog courseId={courseId} token={token} />
         </CustomInnerStateDialog>
       </div>
       <SimpleTable columns={courseDateCols} defaultData={courseDates} />

@@ -5,16 +5,19 @@ import { DataTable } from '@/components/tables/data-table';
 import useGetCoursesDataQuery from '@/hooks/courses/course-plan/use-get-courses-data-query';
 
 import CreateCoursesDialog from '../../dialogs/course/create-courses-dialog';
+import { useSession } from 'next-auth/react';
 
 export default function CoursePlannerClient() {
-  const coursesData = useGetCoursesDataQuery();
+  const { data: session } = useSession();
+
+  const coursesData = useGetCoursesDataQuery(session?.tokens.accessToken ?? '');
 
   const toolbarProps = {
     title: 'Kurzustervező',
     hasAddButton: true,
     addButtonTitle: 'Új kurzusok',
     dialogTitle: 'Kurzusok létrehozása',
-    dialogComponent: <CreateCoursesDialog />,
+    dialogComponent: <CreateCoursesDialog token={session?.tokens.accessToken ?? ''} />,
   };
 
   return (

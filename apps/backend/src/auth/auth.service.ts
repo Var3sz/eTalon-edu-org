@@ -7,7 +7,7 @@ import { compare } from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/auth.dto';
 
-const EXPIRE_TIME = 20 * 1000;
+const EXPIRE_TIME = 5 * 60 * 60 * 1000;
 
 @Injectable()
 export class AuthService {

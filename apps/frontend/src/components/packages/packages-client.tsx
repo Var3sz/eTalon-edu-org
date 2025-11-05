@@ -8,9 +8,11 @@ import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
 import { useMemo } from 'react';
 import PackageTableClient from './package-table-client';
 import PackageAssignClient from './package-assign-client';
+import { useSession } from 'next-auth/react';
 
 export default function PackagesClient() {
-  const packages = useGetPackagesDataQuery();
+  const { data: session } = useSession();
+  const packages = useGetPackagesDataQuery(session?.tokens.accessToken ?? '');
 
   const packagePlannerTabs: TabProviderModel = useMemo(() => {
     return packages
@@ -19,7 +21,7 @@ export default function PackagesClient() {
           tabs: [
             {
               isDefault: true,
-              children: <PackageTableClient packages={packages} />,
+              children: <PackageTableClient packages={packages} token={session?.tokens.accessToken ?? ''} />,
               key: 'details',
               label: 'Csomagok áttekintése',
               tiggerStyle: 'flex gap-3',

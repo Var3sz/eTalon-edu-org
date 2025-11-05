@@ -15,14 +15,14 @@ const getGroupsUrl = () => {
   return `${process.env.SERVER_BASE_URL}groups/GetGroups`;
 };
 
-export const GetBillingTypes = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return httpRequestGET<ResponseType>(getBillingTypesUrl(), process.env.JWT_TOKEN!);
+export const GetBillingTypes = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getBillingTypesUrl(), token);
 };
 
-export const GetLocations = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return httpRequestGET<ResponseType>(getLocationsUrl(), process.env.JWT_TOKEN!);
+export const GetLocations = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getLocationsUrl(), token);
 };
 
-export const GetGroups = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return httpRequestGET<ResponseType>(getGroupsUrl(), process.env.JWT_TOKEN!);
+export const GetGroups = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getGroupsUrl(), token);
 };
