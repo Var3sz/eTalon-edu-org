@@ -22,6 +22,7 @@ export type StudentDataProps<T extends FieldValues> = {
         }>
       | undefined
   ) => void;
+  token: string;
 };
 
 export default function StudentDefaultData<T extends FieldValues>({ formControl, inEdit }: StudentDataProps<T>) {

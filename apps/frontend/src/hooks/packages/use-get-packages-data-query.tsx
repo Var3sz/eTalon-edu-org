@@ -6,6 +6,7 @@ export default function useGetPackagesDataQuery(token: string) {
   const { data: packagesResponse } = useSuspenseQuery({
     queryKey: ['packages'],
     queryFn: () => GetPackages<PackageDto[]>(token),
+    staleTime: 60 * 60 * 1000,
   });
 
   if (packagesResponse.status === 200) {

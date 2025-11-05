@@ -23,7 +23,7 @@ export default function useInitCreatePackagesDialog({ setOpenChangeDialog, token
 
   const onValidSubmit = (formModel: CreatePackagesFormModel) => {
     startTransaction(async () => {
-      const createResponse = await CreatePackagesRequest(formModel);
+      const createResponse = await CreatePackagesRequest(formModel, token);
       if (createResponse.status === 200 || createResponse.status === 201) {
         await queryClient.invalidateQueries({ queryKey: ['packages'] });
         toast({

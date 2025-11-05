@@ -7,6 +7,7 @@ export default function useGetGroupsQuery(token: string) {
   const { data: groupsResponse } = useSuspenseQuery({
     queryKey: ['groups'],
     queryFn: () => GetGroups<GroupDto[]>(token),
+    staleTime: 60 * 60 * 1000,
   });
 
   if (groupsResponse.status === 200) {

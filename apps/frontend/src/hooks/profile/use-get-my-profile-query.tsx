@@ -9,6 +9,7 @@ export default function useGetMyProfileQuery(userId: number, token: string) {
   const { data: response } = useSuspenseQuery({
     queryKey: ['my-profile', userId],
     queryFn: () => GetMyProfile<ProfileDto>(userId, token),
+    staleTime: 60 * 60 * 1000,
   });
   if (response.status === 200) return response.data;
 }

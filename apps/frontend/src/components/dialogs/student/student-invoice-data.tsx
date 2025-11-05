@@ -14,8 +14,9 @@ export default function StudentInvoiceData<T extends FieldValues>({
   formControl,
   formSetValue,
   inEdit,
+  token,
 }: StudentDataProps<T>) {
-  const billingTypes = useGetBillingTypesQuery();
+  const billingTypes = useGetBillingTypesQuery(token);
 
   return (
     <Accordion type='single' collapsible defaultValue='paymentInfo' className='space-y-4'>

@@ -51,6 +51,7 @@ export type ColumnGroupModel<T> = {
 export type ClickableColumnModel<TData> = {
   dialogTitle?: string;
   courseId: string;
+  token: string;
 } & ColumnBaseModel<TData>;
 
 export type CheckboxColumnModel<TData> = {

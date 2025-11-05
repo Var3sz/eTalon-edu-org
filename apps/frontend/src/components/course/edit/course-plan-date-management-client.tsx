@@ -8,7 +8,6 @@ import { SimpleTable } from '@/components/tables/simple-table';
 import AddButton from '@/components/ui/add-button';
 import { useGetCourseDatesDataByIdQuery } from '@/hooks/courses/edit-course/use-get-course-dates-data-by-id-query';
 import { LessonDateDto } from '@/models/Api';
-import { useSession } from 'next-auth/react';
 
 type CoursePlanDateManagementClientProps = {
   courseId: string;
@@ -26,7 +25,7 @@ export default function CoursePlanDateManagementClient({ courseId, token }: Cour
     console.log('date', courseDates);
   }, [token, courseDates]);
 
-  const courseDateCols = CourseDatesColumns(courseId);
+  const courseDateCols = CourseDatesColumns(courseId, token);
 
   useEffect(() => {
     const url = new URL(window.location.href);

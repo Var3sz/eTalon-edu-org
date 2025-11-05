@@ -7,6 +7,7 @@ export default function useGetLocationsQuery(token: string) {
   const { data: locationsResponse } = useSuspenseQuery({
     queryKey: ['locations'],
     queryFn: () => GetLocations<LocationDto[]>(token),
+    staleTime: 60 * 60 * 1000,
   });
 
   if (locationsResponse.status === 200) {

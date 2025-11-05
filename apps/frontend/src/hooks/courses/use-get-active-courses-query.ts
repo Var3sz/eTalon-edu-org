@@ -7,5 +7,6 @@ export default function useGetActiveCoursesQuery(token: string) {
   return useSuspenseQuery({
     queryKey: ['active-courses'],
     queryFn: () => GetActiveCourses<ActiveCourseDto[]>(token),
+    staleTime: 60 * 60 * 1000,
   });
 }

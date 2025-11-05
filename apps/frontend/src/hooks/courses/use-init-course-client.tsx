@@ -16,6 +16,7 @@ import {
 
 type UseInitCourseClientProps = {
   courseId: string;
+  token: string;
 };
 
 export type StudentAttendance = {
@@ -35,11 +36,11 @@ export type StudentAttendanceForm = {
   };
 };
 
-export default function useInitCourseClient({ courseId }: UseInitCourseClientProps) {
+export default function useInitCourseClient({ courseId, token }: UseInitCourseClientProps) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
-  const { data: studentsDataResponse, isLoading } = useGetCourseDetailsById(Number(courseId));
+  const { data: studentsDataResponse, isLoading } = useGetCourseDetailsById(Number(courseId), token);
   const course: StudentAttendanceDto | null =
     studentsDataResponse?.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
 
@@ -61,7 +62,7 @@ export default function useInitCourseClient({ courseId }: UseInitCourseClientPro
         }));
       });
 
-      const updateResponse = await UpdateAttendancesRequest(payload);
+      const updateResponse = await UpdateAttendancesRequest(payload, token);
 
       if (updateResponse.status === 200) {
         await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });

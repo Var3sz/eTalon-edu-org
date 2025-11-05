@@ -14,12 +14,14 @@ type UseInitEditCourseDateDialogProps = {
   courseId: string;
   rowData: LessonDateDto;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
 export default function useInitEditCourseDateDialog({
   courseId,
   rowData,
   setOpenChangeDialog,
+  token,
 }: UseInitEditCourseDateDialogProps) {
   const queryClient = useQueryClient();
   const [isPending, startTransaction] = useTransition();
@@ -31,7 +33,7 @@ export default function useInitEditCourseDateDialog({
 
   const onValidSubmit = (formModel: UpdateCourseDateFormModel) => {
     startTransaction(async () => {
-      const updateResponse = await UpdateCourseDateRequest(formModel);
+      const updateResponse = await UpdateCourseDateRequest(formModel, token);
       if (updateResponse.status === 200 || updateResponse.status === 201) {
         await queryClient.invalidateQueries({ queryKey: ['course-dates', { id: courseId }] });
         toast({

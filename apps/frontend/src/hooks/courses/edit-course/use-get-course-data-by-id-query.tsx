@@ -9,7 +9,7 @@ export function useGetCourseDataByIdQuery(courseId: string, token: string) {
   const { data: courseDataResponse } = useSuspenseQuery({
     queryKey: ['course', { id: courseId }],
     queryFn: () => GetCourseById<CourseDto>(courseId, token),
-    staleTime: 60_000,
+    staleTime: 60 * 60 * 1000,
   });
 
   if (courseDataResponse.status === 200) {

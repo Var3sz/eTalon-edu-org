@@ -7,6 +7,7 @@ export default function useGetCoursesDataQuery(token: string) {
   const { data: coursesResponse } = useSuspenseQuery({
     queryKey: ['courses'],
     queryFn: () => GetCourses<CourseDto[]>(token),
+    staleTime: 60 * 60 * 1000,
   });
 
   if (coursesResponse.status === 200) {

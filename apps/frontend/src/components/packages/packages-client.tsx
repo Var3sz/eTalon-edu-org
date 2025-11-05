@@ -1,9 +1,6 @@
 'use client';
 
 import useGetPackagesDataQuery from '@/hooks/packages/use-get-packages-data-query';
-import { DataTable } from '../tables/data-table';
-import PackageTableColumns from '../columns/package/package-table-colums';
-import CreatePackagesDialog from '../dialogs/package/create-packages-dialog';
 import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
 import { useMemo } from 'react';
 import PackageTableClient from './package-table-client';
@@ -28,7 +25,7 @@ export default function PackagesClient() {
               visible: true,
             },
             {
-              children: <PackageAssignClient />,
+              children: <PackageAssignClient token={session?.tokens.accessToken ?? ''} />,
               key: 'assign',
               label: 'Kurzushoz rendelés',
               visible: true,

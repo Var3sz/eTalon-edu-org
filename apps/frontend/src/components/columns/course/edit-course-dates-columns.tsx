@@ -10,7 +10,7 @@ import EditCourseDateActionsColumn from '@/components/tables/columns/components/
 import { TableLocales } from '@/locales/table-locales';
 import { LessonDateDto } from '@/models/Api';
 
-export default function CourseDatesColumns(courseId: string): ColumnDef<LessonDateDto>[] {
+export default function CourseDatesColumns(courseId: string, token: string): ColumnDef<LessonDateDto>[] {
   return useMemo(
     () => [
       CountingTableColumn<LessonDateDto>({
@@ -36,6 +36,7 @@ export default function CourseDatesColumns(courseId: string): ColumnDef<LessonDa
         editable: true,
         courseId: courseId,
         size: 60,
+        token: token,
       }),
     ],
     []

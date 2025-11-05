@@ -24,20 +24,23 @@ export const GetPackages = async <ResponseType>(token: string): Promise<FetchRes
 };
 
 export const CreatePackages = async <RequestType, ResponseType>(
-  body: RequestType
+  body: RequestType,
+  token: string
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPOST<RequestType, ResponseType>(getCreatePackagesUrl(), process.env.JWT_TOKEN!, body);
+  return await httpRequestPOST<RequestType, ResponseType>(getCreatePackagesUrl(), token, body);
 };
 
 export const GetCoursePackageData = async <ResponseType>(
   type: string,
-  locationId: number
+  locationId: number,
+  token: string
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET<ResponseType>(getCoursePackageDataurl(type, locationId), process.env.JWT_TOKEN!);
+  return await httpRequestGET<ResponseType>(getCoursePackageDataurl(type, locationId), token);
 };
 
 export const AssingPackagesToCourses = async <RequestType, ResponseType>(
-  body: RequestType
+  body: RequestType,
+  token: string
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPOST(assignPackagesToCoursesUrl(), process.env.JWT_TOKEN!, body);
+  return await httpRequestPOST(assignPackagesToCoursesUrl(), token, body);
 };

@@ -16,12 +16,14 @@ type StudentDetailsDialogProps = {
   courseId: string;
   studentData: StudentAttendance;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
 export default function StudentDetailsDialog({
   courseId,
   studentData,
   setOpenChangeDialog,
+  token,
 }: StudentDetailsDialogProps) {
   const [isPending, startTransaction] = useTransition();
 
@@ -30,10 +32,16 @@ export default function StudentDetailsDialog({
     studentData: studentData,
     startTransaction: startTransaction,
     setOpenChangeDialog: setOpenChangeDialog,
+    token: token,
   });
   const formValues = useWatch({ control: form.control }) as UpdateStudentDetailsFormModel;
 
-  const formParams = { formControl: form.control, formSetValue: form.setValue, inEdit: formValues.Helpers.inEdit };
+  const formParams = {
+    formControl: form.control,
+    formSetValue: form.setValue,
+    inEdit: formValues.Helpers.inEdit,
+    token: token,
+  };
 
   return (
     <div className='max-h-[800px] overflow-y-auto'>
