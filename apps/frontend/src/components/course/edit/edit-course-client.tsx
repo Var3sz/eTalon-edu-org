@@ -9,6 +9,7 @@ import CoursePlanDateManagementClient from './course-plan-date-management-client
 import EditCourseClientFormBase from './edit-course-client-form-base';
 import { useSession } from 'next-auth/react';
 import CourseInvoiceDateManagementClient from './course-invoice-date-management-client';
+import { CourseDto } from '@/models/Api';
 
 type EditCourseClientProps = {
   courseId: string;
@@ -17,12 +18,15 @@ type EditCourseClientProps = {
 export default function EditCourseClient({ courseId }: EditCourseClientProps) {
   const { data: session } = useSession();
 
-  const courseData = useGetCourseDataByIdQuery(courseId, session?.tokens.accessToken ?? '');
+  const { data: courseDataResponse } = useGetCourseDataByIdQuery(courseId, session?.tokens.accessToken ?? '');
+
+  const courseData: CourseDto | null =
+    courseDataResponse.status === 200 && courseDataResponse.data !== undefined ? courseDataResponse.data : null;
 
   const courseEditTabs: TabProviderModel = useMemo(() => {
-    return courseData !== undefined
+    return courseDataResponse.status === 200
       ? {
-          isHidden: courseData === null,
+          isHidden: false,
           tabs: [
             {
               isDefault: true,
@@ -57,12 +61,12 @@ export default function EditCourseClient({ courseId }: EditCourseClientProps) {
           ],
         }
       : ({ isHidden: true, tabs: [] } as TabProviderModel);
-  }, [courseData]);
+  }, [courseDataResponse.status === 200 && courseDataResponse.data]);
 
   return (
     <div className='w-3/4 mx-auto flex flex-col gap-3'>
       <span className='text-3xl font-bold'>Kurzus módosítása - {courseData?.courseId}</span>
-      {courseData !== null && <TabProvider {...courseEditTabs} />}
+      <TabProvider {...courseEditTabs} />
     </div>
   );
 }

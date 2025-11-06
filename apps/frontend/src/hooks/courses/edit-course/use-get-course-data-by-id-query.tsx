@@ -6,13 +6,9 @@ import { GetCourseById } from '@/api/models/serviceEndpoints/course';
 import { CourseDto } from '@/models/Api';
 
 export function useGetCourseDataByIdQuery(courseId: string, token: string) {
-  const { data: courseDataResponse } = useSuspenseQuery({
+  return useSuspenseQuery({
     queryKey: ['course', { id: courseId }],
     queryFn: () => GetCourseById<CourseDto>(courseId, token),
     staleTime: 60 * 60 * 1000,
   });
-
-  if (courseDataResponse.status === 200) {
-    return courseDataResponse.data;
-  }
 }

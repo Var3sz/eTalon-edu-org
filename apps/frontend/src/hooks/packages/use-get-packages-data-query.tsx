@@ -3,13 +3,9 @@ import { PackageDto } from '@/models/Api';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 export default function useGetPackagesDataQuery(token: string) {
-  const { data: packagesResponse } = useSuspenseQuery({
+  return useSuspenseQuery({
     queryKey: ['packages'],
     queryFn: () => GetPackages<PackageDto[]>(token),
     staleTime: 60 * 60 * 1000,
   });
-
-  if (packagesResponse.status === 200) {
-    return packagesResponse.data;
-  }
 }
