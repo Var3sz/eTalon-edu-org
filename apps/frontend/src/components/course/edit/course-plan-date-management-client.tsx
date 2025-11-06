@@ -20,11 +20,6 @@ export default function CoursePlanDateManagementClient({ courseId, token }: Cour
   const courseDates: LessonDateDto[] =
     courseDatesResponse?.status === 200 && courseDatesResponse.data.length > 0 ? courseDatesResponse.data : [];
 
-  useEffect(() => {
-    console.log('token', token);
-    console.log('date', courseDates);
-  }, [token, courseDates]);
-
   const courseDateCols = CourseDatesColumns(courseId, token);
 
   useEffect(() => {

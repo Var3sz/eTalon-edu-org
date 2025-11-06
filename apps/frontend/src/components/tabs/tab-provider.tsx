@@ -1,4 +1,3 @@
-import { AlertTriangle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { ReactElement } from 'react';
 
@@ -34,14 +33,14 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
     return 'details';
   };
 
-  return isHidden ? null : (
+  return isHidden === false ? (
     <Tabs
       defaultValue={handleTabDefaultValue()}
       className={cn('w-full font-breuer-medium text-black flex flex-col gap-2', mainTabStyle)}
     >
       <TabsList
         className={cn(
-          'bg-white rounded-t-xl shadow-md w-1/4',
+          'bg-white rounded-t-xl shadow-md w-1/2',
           'mb-2',
           'max-h-10 overflow-hidden',
           'p-0 rounded-t-xl',
@@ -58,7 +57,7 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
                   'hover:text-[#8cc63f] hover:border-[#8cc63f] w-1/2',
                   tab.tiggerStyle
                 )}
-                key={`contract-tab-trigger-${tab.key}`}
+                key={`tab-trigger-${tab.key}`}
                 value={tab.key}
               >
                 {tab.label}
@@ -73,5 +72,7 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
         </TabsContent>
       ))}
     </Tabs>
+  ) : (
+    <></>
   );
 }

@@ -36,6 +36,19 @@ const updateLessonDateUrl = () => {
   return `${process.env.SERVER_BASE_URL}courses/UpdateLessonDate`;
 };
 
+// InvoiceDates
+const getInvoiceDatesByCourseIdUrl = (courseId: string) => {
+  return `${process.env.SERVER_BASE_URL}courses/InvoiceDatesByCourseId/${courseId}`;
+};
+
+const createInvoiceDatesUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/CreateInvoiceDates`;
+};
+
+const updateInvoiceDateUrl = () => {
+  return `${process.env.SERVER_BASE_URL}courses/UpdateInvoiceDate`;
+};
+
 // HTTP functions
 export const GetCourses = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestGET<ResponseType>(getCoursesUrl(), token);
@@ -87,4 +100,26 @@ export const UpdateLessonDate = async <RequestType, ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestPUT(updateLessonDateUrl(), token, body);
+};
+
+// InvoiceDate
+export const GetInvoiceDatesByCourseId = async <ResponseType>(
+  courseId: string,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET(getInvoiceDatesByCourseIdUrl(courseId), token);
+};
+
+export const CreateInvoiceDates = async <RequestType, ResponseType>(
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPOST(createInvoiceDatesUrl(), token, body);
+};
+
+export const UpdateInvoiceDate = async <RequestType, ResponseType>(
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPUT(updateInvoiceDateUrl(), token, body);
 };

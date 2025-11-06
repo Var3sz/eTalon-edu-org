@@ -8,6 +8,7 @@ import { useGetCourseDataByIdQuery } from '@/hooks/courses/edit-course/use-get-c
 import CoursePlanDateManagementClient from './course-plan-date-management-client';
 import EditCourseClientFormBase from './edit-course-client-form-base';
 import { useSession } from 'next-auth/react';
+import CourseInvoiceDateManagementClient from './course-invoice-date-management-client';
 
 type EditCourseClientProps = {
   courseId: string;
@@ -43,6 +44,14 @@ export default function EditCourseClient({ courseId }: EditCourseClientProps) {
               ),
               key: 'dates',
               label: 'Kurzus dátumok',
+              visible: true,
+            },
+            {
+              children: (
+                <CourseInvoiceDateManagementClient courseId={courseId} token={session?.tokens.accessToken ?? ''} />
+              ),
+              key: 'invoiceDates',
+              label: 'Számlázási dátumok',
               visible: true,
             },
           ],

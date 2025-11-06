@@ -20,4 +20,8 @@ export const TableLocales = {
     date: 'Óra dátuma',
     description: 'Óra leírása',
   },
+  invoiceDate: {
+    date: 'Számlázás dátuma',
+    description: 'Megjegyzés',
+  },
 };

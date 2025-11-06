@@ -32,4 +32,10 @@ export const FormLocales = {
     date: 'Óra dátuma',
     description: 'Óra leírása',
   },
+  invoiceDate: {
+    new: 'Számlázási dátumok létrehozása',
+    edit: 'Számlázási dátum módosítása',
+    date: 'Számlázás dátuma',
+    description: 'Megjegyzés',
+  },
 };

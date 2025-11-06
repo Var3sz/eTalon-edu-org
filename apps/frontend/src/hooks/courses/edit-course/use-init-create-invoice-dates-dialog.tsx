@@ -4,37 +4,37 @@ import { Dispatch, SetStateAction, useMemo, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { toast } from '@/components/ui/use-toast';
-import { CreateCourseDatesRequest } from '@/models/course/action/create-course-dates-action';
-import { CreateCourseDatesFormModel } from '@/models/course/types';
-import { CreateCourseDatesFormDefault } from '@/validation/default-values/course/create-course-dates-form-default';
-import { CreateCourseDatesFormSchema } from '@/validation/schemas/course/create-course-dates-schema';
+import { CreateInvoiceDatesFormModel } from '@/models/course/types';
+import { CreateInvoiceDatesFormSchema } from '@/validation/schemas/course/create-invoice-dates-schema';
+import { CreateInvoiceDatesFormDefault } from '@/validation/default-values/course/create-invoice-dates-form-default';
+import { CreateInvoiceDatesRequest } from '@/models/course/action/create-invoice-dates-action';
 
-type UseInitCreateCourseDatesDialogProps = {
+type UseInitCreateInvoiceDatesDialogProps = {
   courseId: string;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
   token: string;
 };
 
-export default function useInitCreateCourseDatesDialog({
+export default function useInitCreateInvoiceDatesDialog({
   courseId,
   setOpenChangeDialog,
   token,
-}: UseInitCreateCourseDatesDialogProps) {
+}: UseInitCreateInvoiceDatesDialogProps) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
-  const form = useForm<CreateCourseDatesFormModel>({
-    defaultValues: CreateCourseDatesFormDefault(),
-    resolver: yupResolver<CreateCourseDatesFormModel>(CreateCourseDatesFormSchema),
+  const form = useForm<CreateInvoiceDatesFormModel>({
+    defaultValues: CreateInvoiceDatesFormDefault(),
+    resolver: yupResolver<CreateInvoiceDatesFormModel>(CreateInvoiceDatesFormSchema),
   });
 
-  const onValidSubmit = (formModel: CreateCourseDatesFormModel) => {
+  const onValidSubmit = (formModel: CreateInvoiceDatesFormModel) => {
     startTransaction(async () => {
-      const createResponse = await CreateCourseDatesRequest(courseId, formModel, token);
+      const createResponse = await CreateInvoiceDatesRequest(courseId, formModel, token);
       if (createResponse.status === 200 || createResponse.status === 201) {
-        await queryClient.invalidateQueries({ queryKey: ['course-dates', { id: courseId }] });
+        await queryClient.invalidateQueries({ queryKey: ['invoice-dates', { id: courseId }] });
         toast({
-          title: 'Sikeres létrehozás!',
+          title: 'Sikeres Létrehozás!',
           variant: 'success',
         });
         setOpenChangeDialog && setOpenChangeDialog(false);
