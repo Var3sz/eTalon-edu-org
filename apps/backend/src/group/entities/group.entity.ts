@@ -7,6 +7,8 @@ export class GroupDto implements Group {
   id: number;
   @ApiProperty()
   description: string;
+  @ApiProperty()
+  isDeleted: string;
 }
 
 export class UpdateGroupsInputDto {
@@ -18,4 +20,8 @@ export class UpdateGroupsInputDto {
   @IsNotEmpty()
   @IsString()
   description: string;
+
+  @ApiProperty()
+  @IsString()
+  isDeleted: string;
 }

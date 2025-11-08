@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 import { CourseService } from './course.service';
 import {
@@ -13,7 +14,6 @@ import {
   UpdateInvoiceDateDto,
   UpdateLessonDateDto,
 } from './entities/course.entity';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @ApiTags('Courses')
 @ApiBearerAuth()

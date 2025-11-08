@@ -1,4 +1,4 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { GetCourseDatesByCourseId } from '@/api/models/serviceEndpoints/course';
 import { LessonDateDto } from '@/models/Api';

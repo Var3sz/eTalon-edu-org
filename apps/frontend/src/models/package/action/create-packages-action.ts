@@ -1,6 +1,7 @@
-import { CreatePackageDto, PackageDto } from '@/models/Api';
-import { CreatePackagesFormModel } from '../types';
 import { CreatePackages } from '@/api/models/serviceEndpoints/packages';
+import { CreatePackageDto, PackageDto } from '@/models/Api';
+
+import { CreatePackagesFormModel } from '../types';
 
 const parseCreateBody = (formModel: CreatePackagesFormModel): CreatePackageDto[] => {
   const packages = formModel.PackageList.map((c) => {

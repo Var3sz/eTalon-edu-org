@@ -1,11 +1,12 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+
 import CoursePlanColumns from '@/components/columns/course/course-plan-columns';
 import { DataTable } from '@/components/tables/data-table';
 import useGetCoursesDataQuery from '@/hooks/courses/course-plan/use-get-courses-data-query';
 
 import CreateCoursesDialog from '../../dialogs/course/create-courses-dialog';
-import { useSession } from 'next-auth/react';
 
 export default function CoursePlannerClient() {
   const { data: session } = useSession();

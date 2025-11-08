@@ -25,7 +25,7 @@ declare module '@tanstack/table-core' {
     addRow: () => void;
     removeRow: (id: number) => void;
   }
-  interface ColumnMeta<TData extends unknown, TValue> {
+  interface ColumnMeta<TData, TValue> {
     displayName: string;
   }
 }

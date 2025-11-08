@@ -77,6 +77,6 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
       ))}
     </Tabs>
   ) : (
-    <></>
+    <div />
   );
 }

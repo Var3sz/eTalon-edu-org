@@ -1,14 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Edit2 } from 'lucide-react';
 
-import EditCouseDateDialog from '@/components/dialogs/course/edit-course-date-dialog';
+import EditInvoiceDateDialog from '@/components/dialogs/course/edit-invoice-date-dialog';
 import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import { FormLocales } from '@/locales/form-locales';
 import { LessonDateDto } from '@/models/Api';
 
 import { ColumnBaseModel } from '../../../types/column-types';
 import { SimpleTableColumnHeader } from '../../headers/simple-table-column.header';
-import EditInvoiceDateDialog from '@/components/dialogs/course/edit-invoice-date-dialog';
 
 type EditInvoiceDateActionsColumnProps<T> = {
   courseId: string;
@@ -25,7 +24,6 @@ export default function EditInvoiceDateActionsColumn<T>({
   courseId,
   token,
   editable = false,
-  deletable = false,
 }: EditInvoiceDateActionsColumnProps<T>): ColumnDef<T> {
   return {
     id: id,

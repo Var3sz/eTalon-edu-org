@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from 'react';
+import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import FormDateInput from '@/components/form/form-date-input';
 import FormTextInput from '@/components/form/form-text-input';
@@ -7,8 +10,6 @@ import useInitEditInvoiceDateDialog from '@/hooks/courses/edit-course/use-init-e
 import { FormLocales } from '@/locales/form-locales';
 import { InvoiceDateDto } from '@/models/Api';
 import { UpdateInvoiceDateFormModel } from '@/models/course/types';
-import { Dispatch, SetStateAction } from 'react';
-import { useWatch } from 'react-hook-form';
 
 type EditInvoiceDateDialogProps = {
   courseId: string;

@@ -5,6 +5,7 @@ export const UpdateGroupFormData = (rowData: GroupDto): UpdateGroupFormModel => 
   return {
     id: rowData.id,
     description: rowData.description,
+    isDeleted: rowData.isDeleted,
     Helpers: {
       inEdit: false,
     },

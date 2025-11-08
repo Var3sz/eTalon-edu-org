@@ -5,7 +5,7 @@ import { CreateUserDto } from 'src/user/dto/user.dto';
 import { UserService } from 'src/user/user.service';
 
 jest.mock('bcrypt', () => {
-  hash: jest.fn().mockResolvedValue('hashed_pw');
+  jest.fn().mockResolvedValue('hashed_pw');
 });
 
 describe('UserService', () => {

@@ -1,11 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { Edit2 } from 'lucide-react';
+
+import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
+import EditLocationDialog from '@/components/dialogs/location/edit-location-dialog';
+import { FormLocales } from '@/locales/form-locales';
+import { LocationDto } from '@/models/Api';
+
 import { ActionsTableColumnModel } from '../../../types/column-types';
 import { SimpleTableColumnHeader } from '../../headers/simple-table-column.header';
-import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
-import { FormLocales } from '@/locales/form-locales';
-import { Edit2 } from 'lucide-react';
-import { LocationDto } from '@/models/Api';
-import EditLocationDialog from '@/components/dialogs/location/edit-location-dialog';
 
 type LocationActionsTableColumnModel<T> = ActionsTableColumnModel<T> & { token: string };
 

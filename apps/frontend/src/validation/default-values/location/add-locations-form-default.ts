@@ -1,4 +1,3 @@
-import { AddGroupsFormModel } from '@/models/group/types';
 import { AddLocationsFormModel } from '@/models/location/type';
 
 export const AddLocationsFormDefault = (): AddLocationsFormModel => {
@@ -6,6 +5,7 @@ export const AddLocationsFormDefault = (): AddLocationsFormModel => {
     LocationList: [
       {
         description: null,
+        isDeleted: 'N',
       },
     ],
     Helpers: {

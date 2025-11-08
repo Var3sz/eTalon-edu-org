@@ -1,11 +1,13 @@
-import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
-import { SimpleTable } from '../tables/simple-table';
-import GroupColumns from '../columns/group/group-columns';
 import { useEffect } from 'react';
-import CustomInnerStateDialog from '../dialogs/custom-innerstate-dialog';
+
+import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import { FormLocales } from '@/locales/form-locales';
-import AddButton from '../ui/add-button';
+
+import GroupColumns from '../columns/group/group-columns';
+import CustomInnerStateDialog from '../dialogs/custom-innerstate-dialog';
 import AddGroupsDialog from '../dialogs/group/add-groups-dialog';
+import { SimpleTable } from '../tables/simple-table';
+import AddButton from '../ui/add-button';
 
 type ManageGroupsClientModel = {
   token: string;

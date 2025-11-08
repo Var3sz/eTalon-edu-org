@@ -1,6 +1,7 @@
 'use server';
 
 import { FetchResponse } from '@/api/types/fetch-response';
+
 import { httpRequestGET, httpRequestPOST } from '../api';
 
 const getPackagesUrl = () => {

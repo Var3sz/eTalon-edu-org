@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsString, IsNumber, IsOptional, IsBoolean, IsArray, ValidateNested } from 'class-validator';
+import { IsArray, IsBoolean, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export type Payment = {
   datum: string;

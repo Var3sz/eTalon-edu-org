@@ -7,7 +7,6 @@ import CountingTableColumn from '@/components/tables/columns/components/action-c
 import DateInputColumn from '@/components/tables/columns/components/input-columns/date-input-column';
 import NumberInputColumn from '@/components/tables/columns/components/input-columns/number-input-column';
 import SelectTableColumn from '@/components/tables/columns/components/input-columns/select-input-column';
-import SwitchTableColumn from '@/components/tables/columns/components/input-columns/switch-input-column';
 import TextInputColumn from '@/components/tables/columns/components/input-columns/text-input-column';
 import TimePickerInputColumn from '@/components/tables/columns/components/input-columns/time-picker-input-column';
 import { FormLocales } from '@/locales/form-locales';

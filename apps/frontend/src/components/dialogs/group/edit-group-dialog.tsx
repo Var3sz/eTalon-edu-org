@@ -1,5 +1,7 @@
+import { Dispatch, SetStateAction } from 'react';
+import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
-import FormDateInput from '@/components/form/form-date-input';
 import FormTextInput from '@/components/form/form-text-input';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -7,8 +9,6 @@ import useInitEditGroupDialog from '@/hooks/group/use-init-edit-group-dialog';
 import { FormLocales } from '@/locales/form-locales';
 import { GroupDto } from '@/models/Api';
 import { UpdateGroupFormModel } from '@/models/group/types';
-import { Dispatch, SetStateAction } from 'react';
-import { useWatch } from 'react-hook-form';
 
 type EditGroupDialogModel = {
   rowData: GroupDto;

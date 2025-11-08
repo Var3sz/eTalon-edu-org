@@ -16,7 +16,6 @@ import { FormLocales } from '@/locales/form-locales';
 import { CourseDto } from '@/models/Api';
 import { UpdateCourseFormModel } from '@/models/course/types';
 import { ItemModel } from '@/models/ui/form-props';
-import { useEffect } from 'react';
 
 type EditCourseClientFormBaseProps = {
   courseId: string;

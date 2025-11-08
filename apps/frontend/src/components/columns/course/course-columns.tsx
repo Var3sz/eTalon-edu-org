@@ -4,13 +4,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
 import ActionsTableColumn from '@/components/tables/columns/components/action-columns/actions-table-column';
+import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 import TextWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/text-with-filter-table-column';
 import LockedTableColumn from '@/components/tables/columns/components/special-columns/lock-table-column';
 import ProgressBarColumn from '@/components/tables/columns/components/special-columns/progress-bar-column';
 import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { TableLocales } from '@/locales/table-locales';
 import { ActiveCourseDto } from '@/models/Api';
-import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 
 export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
   return useMemo(

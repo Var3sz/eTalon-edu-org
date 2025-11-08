@@ -1,12 +1,11 @@
-import { FieldValues } from 'react-hook-form';
-import { cn } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { CheckIcon, ChevronDown, SearchIcon } from 'lucide-react';
-import { id } from 'date-fns/locale';
+import { Dispatch, SetStateAction, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 import { ItemModel } from '@/models/ui/form-props';
 
 type NoFormSelectInputModel = {
@@ -65,8 +64,8 @@ export default function NoFormSelectInput({
   };
 
   const onSelectFuntion = (item: ItemModel) => {
-    setValue(+item.value);
-    callbackFunction && callbackFunction(valueType === 'string' ? item.value : +item.value);
+    setValue(Number(item.value));
+    callbackFunction && callbackFunction(valueType === 'string' ? item.value : Number(item.value));
     setOpen(false);
   };
 
@@ -86,7 +85,7 @@ export default function NoFormSelectInput({
             className={cn('w-[260px] text-left  aria-[invalid=true]:border-[#dc2626]', inputTextStyle)}
             disabled={disabled}
           >
-            <div className={'flex' + (disabled === true ? ' text-opacity-50' : '')}>
+            <div className={`flex${disabled === true ? ' text-opacity-50' : ''}`}>
               <span className='text-left font-normal overflow-hidden truncate'>{getSelectedValue()}</span>
               {specialSearch ? (
                 <SearchIcon className='ml-auto' stroke={iconColor} />

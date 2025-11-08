@@ -1,7 +1,7 @@
-import { BillingAddressTypeController } from 'src/billing-type/billing-address-type.controller';
-import { BillingAddressTypeDto } from 'src/billing-type/entities/billing-address-type.entity';
 import { Test } from '@nestjs/testing';
+import { BillingAddressTypeController } from 'src/billing-type/billing-address-type.controller';
 import { BillingAddressTypeService } from 'src/billing-type/billing-address-type.service';
+import { BillingAddressTypeDto } from 'src/billing-type/entities/billing-address-type.entity';
 
 describe('BillingAddressTypeController', () => {
   let controller: BillingAddressTypeController;

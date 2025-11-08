@@ -1,15 +1,16 @@
-import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { ColumnDef } from '@tanstack/react-table';
-import { toast } from '@/components/ui/use-toast';
-import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
-import { AssignPackageToCourseDto, PackageCourseAssignDto } from '@/models/Api';
-import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
-import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
-import { AssingPackagesToCoursesRequest } from '@/models/package/action/assing-packages-to-course-action';
 import { useQueryClient } from '@tanstack/react-query';
-import { useGetCoursePackageDataQuery } from '@/models/package/action/get-course-package-data-action';
+import { ColumnDef } from '@tanstack/react-table';
+import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+
 import { FetchResponse } from '@/api/types/fetch-response';
+import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
+import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
+import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
+import { toast } from '@/components/ui/use-toast';
+import { AssignPackageToCourseDto } from '@/models/Api';
+import { AssingPackagesToCoursesRequest } from '@/models/package/action/assing-packages-to-course-action';
+import { useGetCoursePackageDataQuery } from '@/models/package/action/get-course-package-data-action';
 
 export type CoursePackageRow = {
   courseId: number;
@@ -22,16 +23,6 @@ export type PackageAssignFormModel = {
   Helpers: {
     inEdit: boolean;
   };
-};
-
-type CoursePackageData = {
-  courseId: number;
-  courseName: string;
-  packages: Array<{
-    packageId: number;
-    packageName: string;
-    assigned: boolean;
-  }>;
 };
 
 type UseCoursePackageFormDataModel = {

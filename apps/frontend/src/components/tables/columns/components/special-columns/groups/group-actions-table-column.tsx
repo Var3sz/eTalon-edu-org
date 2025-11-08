@@ -1,11 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { Edit2 } from 'lucide-react';
+
+import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
+import EditGroupDialog from '@/components/dialogs/group/edit-group-dialog';
+import { FormLocales } from '@/locales/form-locales';
+import { GroupDto } from '@/models/Api';
+
 import { ActionsTableColumnModel } from '../../../types/column-types';
 import { SimpleTableColumnHeader } from '../../headers/simple-table-column.header';
-import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
-import { FormLocales } from '@/locales/form-locales';
-import { Edit2 } from 'lucide-react';
-import { GroupDto } from '@/models/Api';
-import EditGroupDialog from '@/components/dialogs/group/edit-group-dialog';
 
 type GroupActionsTableColumnModel<T> = ActionsTableColumnModel<T> & { token: string };
 

@@ -1,9 +1,10 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+
 import CourseColumns from '@/components/columns/course/course-columns';
 import { DataTable } from '@/components/tables/data-table';
 import useInitCourseTableClient from '@/hooks/courses/use-init-course-table-client';
-import { useSession } from 'next-auth/react';
 
 export default function CoursesTableClient() {
   const { data: session } = useSession();

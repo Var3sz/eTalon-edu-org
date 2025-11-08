@@ -1,9 +1,10 @@
+import { ColumnDef } from '@tanstack/react-table';
+import { useMemo } from 'react';
+
 import CountingTableColumn from '@/components/tables/columns/components/action-columns/counting-table-column';
 import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
 import GroupActionsTableColumn from '@/components/tables/columns/components/special-columns/groups/group-actions-table-column';
 import { GroupDto } from '@/models/Api';
-import { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
 
 export default function GroupColumns(token: string): ColumnDef<GroupDto>[] {
   const columns = useMemo(

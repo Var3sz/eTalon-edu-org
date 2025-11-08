@@ -27,8 +27,6 @@ export default function CreateCoursesDialog({ setOpenChangeDialog, token }: Crea
 
   const formValues = useWatch({ control: form.control }) as CreateCoursesFormModel;
 
-  console.log(formValues);
-
   const [tableLength, setTableLength] = useState<number>(formValues.CourseList.length);
 
   useEffect(() => {

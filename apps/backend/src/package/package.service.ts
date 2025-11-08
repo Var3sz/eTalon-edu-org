@@ -156,7 +156,7 @@ export class PackageService {
     // createMany és deleteMany visszatérési értéke: { count: number }
     let created = 0;
     let deleted = 0;
-    let skipped = assignments.length - toCreate.length - toDelete.length;
+    const skipped = assignments.length - toCreate.length - toDelete.length;
 
     if (toCreate.length && toDelete.length) {
       created = results[0]?.count ?? 0;

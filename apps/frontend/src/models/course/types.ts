@@ -63,7 +63,7 @@ export type UpdateCourseFormModel = {
 export type CreateCourseFormModel = {
   description: string | null;
   courseId: string | null;
-  headcount?: number | null;
+  headcount: number | null;
   maxHeadCount: number | null;
   startDate: Date | null;
   startTime: string | null;

@@ -1,5 +1,6 @@
-import { ProfileDto } from '@/models/Api';
 import { useEffect } from 'react';
+
+import { ProfileDto } from '@/models/Api';
 
 type ProfileDataClientModel = {
   profileData: ProfileDto;

@@ -5,6 +5,7 @@ import { BooleanField, RequiredNumberField, RequiredStringField } from '@/valida
 export const updateLocationSchema = yup.object().shape({
   id: RequiredNumberField,
   description: RequiredStringField,
+  isDeleted: RequiredStringField,
   Helpers: yup.object().shape({
     inEdit: BooleanField,
   }),
