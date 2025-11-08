@@ -81,9 +81,15 @@ export class StudentHelpers {
         diseaseDesc: s.diseaseDesc,
         discount: s.discount,
         discount2: s.discount2,
+        // attendance: s.attendance.map((a) => ({
+        //   lessonDateId: a.lessondateId,
+        //   date: a.LessonDates?.date!,
+        //   description: a.LessonDates?.description ?? '',
+        //   attended: a.attended ?? false,
+        // })),
         attendance: s.attendance.map((a) => ({
           lessonDateId: a.lessondateId,
-          date: a.LessonDates?.date!,
+          date: a.LessonDates?.date,
           description: a.LessonDates?.description ?? '',
           attended: a.attended ?? false,
         })),

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 import { NewStudentsDto } from 'src/api/consts/SAPI';
-import { addTwoHoursToDate } from 'src/lib/helper';
 
 import {
   PaymentsDto,

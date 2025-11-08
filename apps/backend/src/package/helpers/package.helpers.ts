@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Group, Location, Package } from '@prisma/client';
 
 import { PackageDto } from '../dto/package.entity';
 

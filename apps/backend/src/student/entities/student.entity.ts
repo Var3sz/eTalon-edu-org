@@ -1,6 +1,6 @@
 import { IsBoolean, IsEmail, IsInt, IsOptional, IsString } from '@nestjs/class-validator';
 import { Student } from '@prisma/client';
-import { IsIn, IsNumber } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class StudentDto implements Student {
   id: number;
