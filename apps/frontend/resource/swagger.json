@@ -689,10 +689,94 @@
         ]
       }
     },
+    "/locations/UpdateLocations": {
+      "put": {
+        "operationId": "LocationsController_updateGroups",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateLocationsInputDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Locations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/groups/GetGroups": {
       "get": {
         "operationId": "GroupController_getGroups",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/groups/UpdateGroups": {
+      "put": {
+        "operationId": "GroupController_updateGroups",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateGroupsInputDto"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -1816,11 +1900,43 @@
           "description"
         ]
       },
+      "UpdateLocationsInputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "nullable": true
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description"
+        ]
+      },
       "GroupDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description"
+        ]
+      },
+      "UpdateGroupsInputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "nullable": true
           },
           "description": {
             "type": "string"

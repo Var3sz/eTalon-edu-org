@@ -230,8 +230,18 @@ export interface LocationDto {
   description: string;
 }
 
+export interface UpdateLocationsInputDto {
+  id: number | null;
+  description: string;
+}
+
 export interface GroupDto {
   id: number;
+  description: string;
+}
+
+export interface UpdateGroupsInputDto {
+  id: number | null;
   description: string;
 }
 

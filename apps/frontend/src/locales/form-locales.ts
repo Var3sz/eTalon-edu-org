@@ -38,4 +38,12 @@ export const FormLocales = {
     date: 'Számlázás dátuma',
     description: 'Megjegyzés',
   },
+  groups: {
+    edit: 'Csoport módosítása',
+    description: 'Csoport megnevezése',
+  },
+  locations: {
+    edit: 'Helyszín módosítása',
+    description: 'Helyszín neve',
+  },
 };
