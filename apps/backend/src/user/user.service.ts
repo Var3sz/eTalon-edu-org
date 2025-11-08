@@ -20,7 +20,7 @@ export class UserService {
     const newUser = await this.prisma.user.create({
       data: {
         ...dto,
-        role: { connect: { id: 1 } },
+        role: { connect: { id: 2 } },
         password: await hash(dto.password, 10),
         sessionCookie: null,
         agentKey: null,

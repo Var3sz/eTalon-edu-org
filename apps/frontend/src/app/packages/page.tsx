@@ -3,13 +3,16 @@ import { prefetchGroupsQuery } from '@/hooks/group/prefetch/prefetch-groups-quer
 import { prefetchLocationsQuery } from '@/hooks/location/prefetch/prefetch-locations-query';
 import { prefetchPackagesDataQuery } from '@/hooks/packages/prefetch/prefetch-packages-data-query';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 
 export default async function Page() {
   const queryClient = new QueryClient();
+  const session = await getServerSession(authOptions);
 
-  await prefetchPackagesDataQuery(queryClient);
-  await prefetchLocationsQuery(queryClient);
-  await prefetchGroupsQuery(queryClient);
+  await prefetchPackagesDataQuery(queryClient, session?.tokens.accessToken ?? '');
+  await prefetchLocationsQuery(queryClient, session?.tokens.accessToken ?? '');
+  await prefetchGroupsQuery(queryClient, session?.tokens.accessToken ?? '');
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

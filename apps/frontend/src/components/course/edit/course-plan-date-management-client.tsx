@@ -11,15 +11,16 @@ import { LessonDateDto } from '@/models/Api';
 
 type CoursePlanDateManagementClientProps = {
   courseId: string;
+  token: string;
 };
 
-export default function CoursePlanDateManagementClient({ courseId }: CoursePlanDateManagementClientProps) {
-  const { data: courseDatesResponse, isLoading } = useGetCourseDatesDataByIdQuery(courseId);
+export default function CoursePlanDateManagementClient({ courseId, token }: CoursePlanDateManagementClientProps) {
+  const { data: courseDatesResponse, isLoading } = useGetCourseDatesDataByIdQuery(courseId, token);
 
   const courseDates: LessonDateDto[] =
     courseDatesResponse?.status === 200 && courseDatesResponse.data.length > 0 ? courseDatesResponse.data : [];
 
-  const courseDateCols = CourseDatesColumns(courseId);
+  const courseDateCols = CourseDatesColumns(courseId, token);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -36,7 +37,7 @@ export default function CoursePlanDateManagementClient({ courseId }: CoursePlanD
           title='Kurzus dátumok hozzáadása'
           triggerElement={<AddButton title='Új dátumok' buttonStyle='self-center' asChild />}
         >
-          <CreateCourseDatesDialog courseId={courseId} />
+          <CreateCourseDatesDialog courseId={courseId} token={token} />
         </CustomInnerStateDialog>
       </div>
       <SimpleTable columns={courseDateCols} defaultData={courseDates} />

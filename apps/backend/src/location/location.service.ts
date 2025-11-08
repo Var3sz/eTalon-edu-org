@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
-import { LocationDto } from './entities/location.entity';
+import { LocationDto, UpdateLocationsInputDto } from './entities/location.entity';
 
 @Injectable()
 export class LocationService {
@@ -9,5 +9,25 @@ export class LocationService {
 
   async getLocations(): Promise<LocationDto[]> {
     return this.prisma.location.findMany();
+  }
+
+  async updateLocations(inputDto: UpdateLocationsInputDto[]): Promise<LocationDto[]> {
+    const ops = inputDto.map((row) => {
+      const { id, ...data } = row;
+
+      if (id !== undefined && id !== null) {
+        return this.prisma.location.update({
+          where: { id: id },
+          data: data,
+        });
+      }
+
+      return this.prisma.location.create({
+        data: data,
+      });
+    });
+
+    const locations = await this.prisma.$transaction(ops);
+    return locations;
   }
 }

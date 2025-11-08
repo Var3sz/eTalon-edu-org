@@ -4,7 +4,7 @@ import { UpdateStudentDetails } from '@/api/models/serviceEndpoints/students';
 import { StudentDetailsDTO, UpdateStudentDetailsDTO } from '@/models/Api';
 import { UpdateStudentDetailsFormModel } from '@/models/students/types';
 
-export const UpdateStudentDetailsAction = async (formModel: UpdateStudentDetailsFormModel) => {
+export const UpdateStudentDetailsAction = async (formModel: UpdateStudentDetailsFormModel, token: string) => {
   const parsedBody: UpdateStudentDetailsDTO = {
     email: formModel.email,
     lastname: formModel.lastname,
@@ -32,5 +32,5 @@ export const UpdateStudentDetailsAction = async (formModel: UpdateStudentDetails
     discount: formModel.discount,
     discount2: formModel.discount2,
   };
-  return await UpdateStudentDetails<UpdateStudentDetailsDTO, StudentDetailsDTO>(parsedBody);
+  return await UpdateStudentDetails<UpdateStudentDetailsDTO, StudentDetailsDTO>(parsedBody, token);
 };

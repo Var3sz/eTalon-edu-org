@@ -10,16 +10,20 @@ import NavigationBar from '@/components/navigation/navigation-bar';
 import { ClientProvider } from '@/components/providers';
 import Providers from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
   title: 'Etalon org. website',
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default async function RootLayout(props: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang='hu'>
       <body>
-        <Providers>
+        <Providers session={session}>
           <NavigationBar />
           <Toaster />
           <main className='p-2'>

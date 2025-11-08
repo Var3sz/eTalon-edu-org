@@ -1,30 +1,64 @@
 'use client';
 
+import { RoleTypes } from '@/api/consts/roles';
 import useGetMyProfileQuery from '@/hooks/profile/use-get-my-profile-query';
+import { ProfileDto } from '@/models/Api';
+import { useSession } from 'next-auth/react';
+import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
+import { useMemo } from 'react';
+import ProfileDataClient from './ProfileDataClient';
+import { Key } from 'lucide-react';
+import ManageGroupsClient from '../management/manage-groups-client';
+import ManageLocationsClient from '../management/manage-locations-client';
 
 type ProfileClientProps = {
-  token: string;
   userId: number;
 };
 
-export default function ProfileClient({ userId, token }: ProfileClientProps) {
-  const profileData = useGetMyProfileQuery(userId, token);
+export default function ProfileClient({ userId }: ProfileClientProps) {
+  const { data: session } = useSession();
+
+  const { data: profileDataResponse } = useGetMyProfileQuery(userId, session?.tokens.accessToken ?? '');
+
+  const profileData: ProfileDto | null =
+    profileDataResponse.status === 200 && profileDataResponse.data !== undefined ? profileDataResponse.data : null;
+
+  const profileTabs: TabProviderModel = useMemo(() => {
+    return profileDataResponse.status === 200
+      ? {
+          isHidden: false,
+          tabs: [
+            {
+              isDefault: true,
+              children: <ProfileDataClient profileData={profileData!} />,
+              key: 'details',
+              label: 'Profil adatok',
+              tiggerStyle: 'flex gap-3',
+              visible: true,
+            },
+            {
+              children: <ManageGroupsClient token={session?.tokens.accessToken ?? ''} />,
+              key: 'groups',
+              label: 'Csoportok kezelése',
+              tiggerStyle: 'flex gap-3',
+              visible: profileDataResponse.data.roleId === RoleTypes.ADMIN,
+            },
+            {
+              children: <ManageLocationsClient token={session?.tokens.accessToken ?? ''} />,
+              key: 'locations',
+              label: 'Helyszínek kezelése',
+              tiggerStyle: 'flex gap-3',
+              visible: profileDataResponse.data.roleId === RoleTypes.ADMIN,
+            },
+          ],
+        }
+      : ({ isHidden: true, tabs: [] } as TabProviderModel);
+  }, [profileDataResponse.status === 200 && profileDataResponse.data]);
 
   return (
-    <div>
-      <span className='text-4xl font-bold'>Profil</span>
-      {profileData && (
-        <div className='flex gap-5'>
-          <div className='flex flex-col'>
-            <span className='font-bold'>E-mail</span>
-            <span>{profileData.email}</span>
-          </div>
-          <div className='flex flex-col'>
-            <span className='font-bold'>Név</span>
-            <span>{profileData.name}</span>
-          </div>
-        </div>
-      )}
+    <div className='w-3/4 mx-auto flex flex-col gap-3'>
+      <span className='text-3xl font-bold'>Profil adatok</span>
+      <TabProvider {...profileTabs} />
     </div>
   );
 }

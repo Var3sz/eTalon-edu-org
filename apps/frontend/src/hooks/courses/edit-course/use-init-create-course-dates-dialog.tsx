@@ -12,11 +12,13 @@ import { CreateCourseDatesFormSchema } from '@/validation/schemas/course/create-
 type UseInitCreateCourseDatesDialogProps = {
   courseId: string;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
 export default function useInitCreateCourseDatesDialog({
   courseId,
   setOpenChangeDialog,
+  token,
 }: UseInitCreateCourseDatesDialogProps) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
@@ -28,11 +30,11 @@ export default function useInitCreateCourseDatesDialog({
 
   const onValidSubmit = (formModel: CreateCourseDatesFormModel) => {
     startTransaction(async () => {
-      const createResponse = await CreateCourseDatesRequest(courseId, formModel);
+      const createResponse = await CreateCourseDatesRequest(courseId, formModel, token);
       if (createResponse.status === 200 || createResponse.status === 201) {
         await queryClient.invalidateQueries({ queryKey: ['course-dates', { id: courseId }] });
         toast({
-          title: 'Sikeres frissítés!',
+          title: 'Sikeres létrehozás!',
           variant: 'success',
         });
         setOpenChangeDialog && setOpenChangeDialog(false);

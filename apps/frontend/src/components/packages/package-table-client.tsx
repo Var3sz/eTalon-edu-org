@@ -6,9 +6,10 @@ import { useEffect } from 'react';
 
 type PackageTableClientProps = {
   packages: PackageDto[];
+  token: string;
 };
 
-export default function PackageTableClient({ packages }: PackageTableClientProps) {
+export default function PackageTableClient({ packages, token }: PackageTableClientProps) {
   useEffect(() => {
     const url = new URL(window.location.href);
     url.searchParams.set('tab', 'details');
@@ -20,7 +21,7 @@ export default function PackageTableClient({ packages }: PackageTableClientProps
     hasAddButton: true,
     addButtonTitle: 'Új csomagok',
     dialogTitle: 'Csomagok létrehozása',
-    dialogComponent: <CreatePackagesDialog />,
+    dialogComponent: <CreatePackagesDialog token={token} />,
   };
 
   return (

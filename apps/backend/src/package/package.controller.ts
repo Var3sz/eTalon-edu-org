@@ -1,10 +1,13 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { PackageService } from './package.service';
 import { AssignPackageToCourseDto, CreatePackageDto, PackageDto } from './dto/package.entity';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @ApiTags('Package')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('packages')
 export class PackageController {
   constructor(private packageService: PackageService) {}

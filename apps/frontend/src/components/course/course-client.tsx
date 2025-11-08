@@ -8,15 +8,19 @@ import useInitCourseClient, { StudentAttendanceForm } from '@/hooks/courses/use-
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
 import { useWatch } from 'react-hook-form';
+import { useSession } from 'next-auth/react';
 
 type CourseClientModel = {
   courseId: string;
 };
 
 export default function CourseClient({ courseId }: CourseClientModel) {
+  const { data: session } = useSession();
+
   const { form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols } =
     useInitCourseClient({
       courseId: courseId,
+      token: session?.tokens.accessToken ?? '',
     });
 
   const formValues = useWatch({ control: form.control }) as StudentAttendanceForm;
@@ -35,6 +39,7 @@ export default function CourseClient({ courseId }: CourseClientModel) {
               dateColumns: dateCols,
               formControl: form.control,
               inEdit: formValues.Helpers.inEdit,
+              token: session?.tokens.accessToken ?? '',
             })}
             defaultData={courseData}
           />

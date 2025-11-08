@@ -17,19 +17,22 @@ const getUpdateStudentDetailsUrl = () => {
 };
 
 export const GetStudentsByCourseWithAttendances = async <ResponseType>(
-  courseId: number
+  courseId: number,
+  token: string
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestGET(getStudentsByCourseWithAttendancesUrl(courseId), process.env.JWT_TOKEN!);
+  return await httpRequestGET(getStudentsByCourseWithAttendancesUrl(courseId), token);
 };
 
 export const UpdateAttendances = async <RequestType, ResponseType>(
-  body: RequestType
+  body: RequestType,
+  token: string
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPUT(getUpdateAttendancesUrl(), process.env.JWT_TOKEN!, body);
+  return await httpRequestPUT(getUpdateAttendancesUrl(), token, body);
 };
 
 export const UpdateStudentDetails = async <RequestType, ResponseType>(
-  body: RequestType
+  body: RequestType,
+  token: string
 ): Promise<FetchResponse<ResponseType>> => {
-  return await httpRequestPUT(getUpdateStudentDetailsUrl(), process.env.JWT_TOKEN!, body);
+  return await httpRequestPUT(getUpdateStudentDetailsUrl(), token, body);
 };

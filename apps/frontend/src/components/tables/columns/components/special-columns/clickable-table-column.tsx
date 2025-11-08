@@ -13,6 +13,7 @@ export default function ClickableTableColumn<T>({
   headerTitle,
   courseId,
   dialogTitle = '',
+  token,
 }: ClickableColumnModel<T>): ColumnDef<T> {
   return {
     id: id,
@@ -34,7 +35,7 @@ export default function ClickableTableColumn<T>({
             headerStyle='font-bold'
             triggerElement={<span className='cursor-pointer '>{value}</span>}
           >
-            <StudentDetailsDialog courseId={courseId} studentData={row.original as StudentAttendance} />
+            <StudentDetailsDialog courseId={courseId} studentData={row.original as StudentAttendance} token={token} />
           </CustomInnerStateDialog>
         </div>
       );

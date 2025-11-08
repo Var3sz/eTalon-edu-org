@@ -1,9 +1,12 @@
-import { Body, Controller, Put } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { InvoiceService } from './invoice.service';
 import { UpdatePaymentsDto } from './entities/invoice.entity';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @ApiTags('Invoice')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('invoice')
 export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
