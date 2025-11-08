@@ -1,8 +1,10 @@
-import { PackageDto } from '@/models/Api';
-import PackageTableColumns from '../columns/package/package-table-colums';
-import { DataTable } from '../tables/data-table';
-import CreatePackagesDialog from '../dialogs/package/create-packages-dialog';
 import { useEffect } from 'react';
+
+import { PackageDto } from '@/models/Api';
+
+import PackageTableColumns from '../columns/package/package-table-colums';
+import CreatePackagesDialog from '../dialogs/package/create-packages-dialog';
+import { DataTable } from '../tables/data-table';
 
 type PackageTableClientProps = {
   packages: PackageDto[];

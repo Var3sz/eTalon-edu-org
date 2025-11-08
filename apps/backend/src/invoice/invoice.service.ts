@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { SzamlazzHUService } from 'src/szamlazzhu/szamlazzhu.service';
-import { BulkPaymentResult, UpdatePaymentsDto } from './entities/invoice.entity';
-import { formatDateCustom } from 'src/utils/utils';
 import { DatePatterns } from 'src/api/consts/date-patterns';
+import { SzamlazzHUService } from 'src/szamlazzhu/szamlazzhu.service';
+import { formatDateCustom } from 'src/utils/utils';
+
+import { BulkPaymentResult, UpdatePaymentsDto } from './entities/invoice.entity';
 
 @Injectable()
 export class InvoiceService {

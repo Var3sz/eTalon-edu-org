@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from 'react';
+import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import FormTextInput from '@/components/form/form-text-input';
 import { Button } from '@/components/ui/button';
@@ -6,8 +9,6 @@ import useInitEditLocationDialog from '@/hooks/location/use-init-edit-location-d
 import { FormLocales } from '@/locales/form-locales';
 import { LocationDto } from '@/models/Api';
 import { UpdateLocationFormModel } from '@/models/location/type';
-import { Dispatch, SetStateAction } from 'react';
-import { useWatch } from 'react-hook-form';
 
 type EditLocationDialogModel = {
   rowData: LocationDto;

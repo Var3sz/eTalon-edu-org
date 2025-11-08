@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { AdminGuard } from 'src/auth/guards/role.guard';
 
 import { LocationDto, UpdateLocationsInputDto } from './entities/location.entity';
 import { LocationService } from './location.service';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { AdminGuard } from 'src/auth/guards/role.guard';
 
 @ApiTags('Locations')
 @ApiBearerAuth()

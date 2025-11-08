@@ -1,7 +1,8 @@
-import { CanActivate, ExecutionContext, Injectable, ForbiddenException, UnauthorizedException } from '@nestjs/common';
+import * as process from 'node:process';
+
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import * as process from 'node:process';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()

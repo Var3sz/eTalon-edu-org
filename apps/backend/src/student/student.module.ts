@@ -1,12 +1,11 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { SAPIService } from 'src/SAPI/SAPI.service';
 
+import { StudentHelpers } from './helpers/student.helpers';
 import { StudentController } from './student.controller';
 import { StudentService } from './student.service';
-import { StudentHelpers } from './helpers/student.helpers';
-import { JwtService } from '@nestjs/jwt';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @Module({
   imports: [HttpModule],

@@ -1,6 +1,7 @@
 export type UpdateGroupFormModel = {
   id: number;
   description: string;
+  isDeleted: string;
   Helpers: {
     inEdit: boolean;
   };
@@ -8,6 +9,7 @@ export type UpdateGroupFormModel = {
 
 export type AddGroupFormModel = {
   description: string | null;
+  isDeleted: string | null;
 };
 
 export type AddGroupsFormModel = {

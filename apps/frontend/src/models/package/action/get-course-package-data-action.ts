@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { GetCoursePackageData } from '@/api/models/serviceEndpoints/packages';
 import { FetchResponse } from '@/api/types/fetch-response';
 import { CoursePackageRow } from '@/hooks/packages/use-init-package-assign-client';
 import { PackageCourseAssignDto } from '@/models/Api';
-import { useQuery } from '@tanstack/react-query';
 
 type UseGetCoursePackageDataQueryModel = {
   type: string | null;
@@ -43,7 +44,7 @@ export function useGetCoursePackageDataQuery({ type, locationId, token, onError 
 
       return transformed;
     },
-    enabled: !!type && !!locationId,
+    enabled: Boolean(type) && Boolean(locationId),
     staleTime: 60 * 60 * 1000, // 1 óra,
   });
 }

@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
+
 import { Payment } from './entities/szamlazzhu.entity';
 import xmlbuilder = require('xmlbuilder');
 import FormData = require('form-data');
-import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { PrismaService } from 'nestjs-prisma';
+import { firstValueFrom } from 'rxjs';
+
 import { buildCookieHeaderFromJ, extractJSessionId } from '../utils/utils';
 
 type BuildArgs = {

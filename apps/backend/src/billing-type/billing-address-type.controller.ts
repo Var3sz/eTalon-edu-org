@@ -1,9 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 import { BillingAddressTypeService } from './billing-address-type.service';
 import { BillingAddressTypeDto } from './entities/billing-address-type.entity';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @ApiTags('BillingAddressTypes')
 @ApiBearerAuth()

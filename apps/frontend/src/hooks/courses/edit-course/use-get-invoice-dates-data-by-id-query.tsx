@@ -1,6 +1,7 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
+
 import { GetInvoiceDatesByCourseId } from '@/api/models/serviceEndpoints/course';
 import { InvoiceDateDto } from '@/models/Api';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export function useGetInvoiceDatesDataByIdQuery(courseId: string, token: string) {
   return useSuspenseQuery({

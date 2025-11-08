@@ -1,14 +1,16 @@
 'use server';
 
-import { LocationDto, UpdateLocationsInputDto } from '@/models/Api';
-import { UpdateLocationFormModel } from '../type';
 import { UpdateLocationData } from '@/api/models/serviceEndpoints/helpers';
+import { LocationDto, UpdateLocationsInputDto } from '@/models/Api';
+
+import { UpdateLocationFormModel } from '../type';
 
 const parseLocationData = (formModel: UpdateLocationFormModel): UpdateLocationsInputDto[] => {
   return [
     {
       id: formModel.id!,
       description: formModel.description,
+      isDeleted: formModel.isDeleted,
     },
   ];
 };

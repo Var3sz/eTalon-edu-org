@@ -1,8 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { NewStudentsDto } from 'src/api/consts/SAPI';
 import { addTwoHoursToDate } from 'src/lib/helper';
+
 import { CreateStudentDto, PaymentDto, StudentDto, StudentPaymentDto } from '../entities/student.entity';
-import { Injectable } from '@nestjs/common';
-import { Student } from '@prisma/client';
 
 @Injectable()
 export class StudentHelpers {
@@ -81,9 +81,15 @@ export class StudentHelpers {
         diseaseDesc: s.diseaseDesc,
         discount: s.discount,
         discount2: s.discount2,
+        // attendance: s.attendance.map((a) => ({
+        //   lessonDateId: a.lessondateId,
+        //   date: a.LessonDates?.date!,
+        //   description: a.LessonDates?.description ?? '',
+        //   attended: a.attended ?? false,
+        // })),
         attendance: s.attendance.map((a) => ({
           lessonDateId: a.lessondateId,
-          date: a.LessonDates?.date!,
+          date: a.LessonDates?.date,
           description: a.LessonDates?.description ?? '',
           attended: a.attended ?? false,
         })),

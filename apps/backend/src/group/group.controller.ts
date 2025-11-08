@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { AdminGuard } from 'src/auth/guards/role.guard';
 
 import { GroupDto, UpdateGroupsInputDto } from './entities/group.entity';
 import { GroupService } from './group.service';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { AdminGuard } from 'src/auth/guards/role.guard';
 
 @ApiTags('Groups')
 @ApiBearerAuth()

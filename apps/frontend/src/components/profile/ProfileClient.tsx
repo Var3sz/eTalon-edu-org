@@ -1,15 +1,16 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+import { useMemo } from 'react';
+
 import { RoleTypes } from '@/api/consts/roles';
 import useGetMyProfileQuery from '@/hooks/profile/use-get-my-profile-query';
 import { ProfileDto } from '@/models/Api';
-import { useSession } from 'next-auth/react';
-import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
-import { useMemo } from 'react';
-import ProfileDataClient from './ProfileDataClient';
-import { Key } from 'lucide-react';
+
 import ManageGroupsClient from '../management/manage-groups-client';
 import ManageLocationsClient from '../management/manage-locations-client';
+import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
+import ProfileDataClient from './ProfileDataClient';
 
 type ProfileClientProps = {
   userId: number;

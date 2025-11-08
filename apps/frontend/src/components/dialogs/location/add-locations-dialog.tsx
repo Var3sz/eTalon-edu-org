@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Control, useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import CreateLocationsColumns from '@/components/columns/location/create-locations-columns';
 import { SimpleTable } from '@/components/tables/simple-table';
@@ -5,8 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import useInitAddLocationsDialog from '@/hooks/location/use-init-add-locations-dialog';
 import { AddLocationsFormModel } from '@/models/location/type';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Control, useWatch } from 'react-hook-form';
 
 export type AddLocationsDialogModel = {
   token: string;
@@ -44,6 +45,7 @@ export default function AddLocationsDialog({ token, setOpenChangeDialog }: AddLo
             form={{ formId: 'LocationList', formSetValue: form.setValue }}
             newRowElement={{
               description: null,
+              isDeleted: 'N',
             }}
           />
           <div className='flex gap-5 mt-5 self-end'>

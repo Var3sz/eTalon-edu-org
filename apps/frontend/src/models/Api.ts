@@ -228,20 +228,24 @@ export interface BillingAddressTypeDto {
 export interface LocationDto {
   id: number;
   description: string;
+  isDeleted: string;
 }
 
 export interface UpdateLocationsInputDto {
   id: number | null;
+  isDeleted: string;
   description: string;
 }
 
 export interface GroupDto {
   id: number;
   description: string;
+  isDeleted: string;
 }
 
 export interface UpdateGroupsInputDto {
   id: number | null;
+  isDeleted: string;
   description: string;
 }
 

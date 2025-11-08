@@ -5,6 +5,7 @@ export const UpdateLocationFormData = (rowData: LocationDto): UpdateLocationForm
   return {
     id: rowData.id,
     description: rowData.description,
+    isDeleted: rowData.isDeleted,
     Helpers: {
       inEdit: false,
     },

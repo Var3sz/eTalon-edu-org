@@ -15,7 +15,7 @@ import {
 } from '@/validation/default-values/student/student-attendace-form-default';
 
 type UseInitCourseClientProps = {
-  courseId: string;
+  CourseId: string;
   token: string;
 };
 
@@ -36,15 +36,15 @@ export type StudentAttendanceForm = {
   };
 };
 
-export default function useInitCourseClient({ courseId, token }: UseInitCourseClientProps) {
+export default function useInitCourseClient({ CourseId, token }: UseInitCourseClientProps) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
-  const { data: studentsDataResponse, isLoading } = useGetCourseDetailsById(Number(courseId), token);
+  const { data: studentsDataResponse, isLoading } = useGetCourseDetailsById(Number(CourseId), token);
   const course: StudentAttendanceDto | null =
     studentsDataResponse?.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
 
-  const [CourseId, setCourseId] = useState<string | null>(null);
+  const [courseId, setCourseId] = useState<string | null>(null);
   const [courseData, setCourseData] = useState<StudentAttendance[]>([]);
   const [attendanceOnly, setAttendanceOnly] = useState<AttendanceForm[]>();
 
@@ -65,7 +65,7 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
       const updateResponse = await UpdateAttendancesRequest(payload, token);
 
       if (updateResponse.status === 200) {
-        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });
+        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(CourseId)] });
         toast({ variant: 'success', title: 'Sikeres frissítés!', description: 'A jelenlétek frissítése sikeres!' });
         form.setValue('Helpers.inEdit', false);
       } else {
@@ -191,7 +191,7 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
   }, [form.getValues().Helpers.inEdit]);
 
   return useMemo(
-    () => ({ form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols }),
-    [form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols]
+    () => ({ form, isPending, isLoading, onInvalidSubmit, onValidSubmit, courseId, courseData, dateCols }),
+    [form, isPending, isLoading, onInvalidSubmit, onValidSubmit, courseId, courseData, dateCols]
   );
 }

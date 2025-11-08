@@ -33,7 +33,7 @@ export default function ActionsTableColumn<T>({
         )
       );
     },
-    cell: ({ row, cell }) => {
+    cell: ({ row }) => {
       return (
         <div className='flex items-center justify-center gap-1'>
           {select &&

@@ -7,6 +7,8 @@ export class LocationDto implements Location {
   id: number;
   @ApiProperty()
   description: string;
+  @ApiProperty()
+  isDeleted: string;
 }
 
 export class UpdateLocationsInputDto {
@@ -18,4 +20,8 @@ export class UpdateLocationsInputDto {
   @IsNotEmpty()
   @IsString()
   description: string;
+
+  @ApiProperty()
+  @IsString()
+  isDeleted: string;
 }

@@ -6,11 +6,10 @@ import BinActionTableColumn from '@/components/tables/columns/components/action-
 import CountingTableColumn from '@/components/tables/columns/components/action-columns/counting-table-column';
 import NumberInputColumn from '@/components/tables/columns/components/input-columns/number-input-column';
 import SelectTableColumn from '@/components/tables/columns/components/input-columns/select-input-column';
-import SwitchTableColumn from '@/components/tables/columns/components/input-columns/switch-input-column';
 import TextInputColumn from '@/components/tables/columns/components/input-columns/text-input-column';
 import { FormLocales } from '@/locales/form-locales';
-import { CreatePackageFormModel } from '@/models/package/types';
 import { GroupDto, LocationDto } from '@/models/Api';
+import { CreatePackageFormModel } from '@/models/package/types';
 
 export default function CreatePackagesColumns<FormType extends FieldValues>(
   formControl: Control<FormType>,

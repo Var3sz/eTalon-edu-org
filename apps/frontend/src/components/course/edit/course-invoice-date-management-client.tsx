@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import LoadingFullScreen from '@/app/loading';
 import InvoiceDatesColumns from '@/components/columns/course/edit-invoice-dates-columns';
 import CreateInvoiceDatesDialog from '@/components/dialogs/course/create-invoice-dates-dialog';
@@ -6,7 +8,6 @@ import { SimpleTable } from '@/components/tables/simple-table';
 import AddButton from '@/components/ui/add-button';
 import { useGetInvoiceDatesDataByIdQuery } from '@/hooks/courses/edit-course/use-get-invoice-dates-data-by-id-query';
 import { InvoiceDateDto } from '@/models/Api';
-import { useEffect } from 'react';
 
 type CourseInvoiceDateManagementClientModel = {
   courseId: string;

@@ -1,10 +1,10 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { getServerSession } from 'next-auth';
 
 import CourseClient from '@/components/course/course-client';
 import { prefetchBillingTypesQuery } from '@/hooks/billing-type/prefetch/prefetch-billing-types-query';
+import { authOptions } from '@/lib/authOptions';
 import { BaseServerPropsWithId } from '@/models/page/types';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export default async function Page({ params }: BaseServerPropsWithId) {
   const queryClient = new QueryClient();
@@ -14,7 +14,7 @@ export default async function Page({ params }: BaseServerPropsWithId) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <CourseClient courseId={params.id} />
+      <CourseClient CourseId={params.id} />
     </HydrationBoundary>
   );
 }

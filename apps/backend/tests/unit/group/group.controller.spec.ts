@@ -23,8 +23,8 @@ describe('GroupController', () => {
 
   it('Controller delegates to the service and returns the group data', async () => {
     const rows: GroupDto[] = [
-      { id: 1, description: 'Maths' },
-      { id: 2, description: 'Literature' },
+      { id: 1, description: 'Maths', isDeleted: 'N' },
+      { id: 2, description: 'Literature', isDeleted: 'N' },
     ];
     serviceMock.getGroups.mockResolvedValue(rows);
 

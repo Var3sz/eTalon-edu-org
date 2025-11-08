@@ -21,7 +21,7 @@ export default function CheckboxTableColumn<FormType extends FieldValues, TableT
     header: ({ header, column, table }) => (
       <InputHeader headerTitle={headerTitle} header={header} column={column} table={table} />
     ),
-    cell: ({ cell, row }) => {
+    cell: ({ row }) => {
       return (
         <div className='flex w-full h-full items-center justify-center'>
           <FormCheckboxInput

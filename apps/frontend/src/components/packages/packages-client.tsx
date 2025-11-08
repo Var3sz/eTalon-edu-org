@@ -1,12 +1,14 @@
 'use client';
 
-import useGetPackagesDataQuery from '@/hooks/packages/use-get-packages-data-query';
-import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
-import { useMemo } from 'react';
-import PackageTableClient from './package-table-client';
-import PackageAssignClient from './package-assign-client';
 import { useSession } from 'next-auth/react';
+import { useMemo } from 'react';
+
+import useGetPackagesDataQuery from '@/hooks/packages/use-get-packages-data-query';
 import { PackageDto } from '@/models/Api';
+
+import TabProvider, { TabProviderModel } from '../tabs/tab-provider';
+import PackageAssignClient from './package-assign-client';
+import PackageTableClient from './package-table-client';
 
 export default function PackagesClient() {
   const { data: session } = useSession();

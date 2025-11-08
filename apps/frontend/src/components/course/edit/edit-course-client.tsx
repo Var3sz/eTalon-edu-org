@@ -1,15 +1,15 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 
 import TabProvider, { TabProviderModel } from '@/components/tabs/tab-provider';
 import { useGetCourseDataByIdQuery } from '@/hooks/courses/edit-course/use-get-course-data-by-id-query';
+import { CourseDto } from '@/models/Api';
 
+import CourseInvoiceDateManagementClient from './course-invoice-date-management-client';
 import CoursePlanDateManagementClient from './course-plan-date-management-client';
 import EditCourseClientFormBase from './edit-course-client-form-base';
-import { useSession } from 'next-auth/react';
-import CourseInvoiceDateManagementClient from './course-invoice-date-management-client';
-import { CourseDto } from '@/models/Api';
 
 type EditCourseClientProps = {
   courseId: string;

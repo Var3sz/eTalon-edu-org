@@ -1,8 +1,9 @@
 import { Body, Controller, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { InvoiceService } from './invoice.service';
-import { UpdatePaymentsDto } from './entities/invoice.entity';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
+
+import { UpdatePaymentsDto } from './entities/invoice.entity';
+import { InvoiceService } from './invoice.service';
 
 @ApiTags('Invoice')
 @ApiBearerAuth()

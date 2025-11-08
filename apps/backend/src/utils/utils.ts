@@ -27,7 +27,7 @@ export function extractJSessionId(setCookie: string | string[] | undefined): str
     const first = parts[0]?.trim(); // "JSESSIONID=abc123"
     if (!first) continue;
     const [name, value] = first.split('=');
-    if (name?.trim().toUpperCase() === 'JSESSIONID' && value != null) {
+    if (name?.trim().toUpperCase() === 'JSESSIONID' && value !== null) {
       return value.trim();
     }
   }

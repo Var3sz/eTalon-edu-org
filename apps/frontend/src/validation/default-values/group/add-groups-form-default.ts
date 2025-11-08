@@ -5,6 +5,7 @@ export const AddGroupsFormDefault = (): AddGroupsFormModel => {
     GroupList: [
       {
         description: null,
+        isDeleted: 'N',
       },
     ],
     Helpers: {
