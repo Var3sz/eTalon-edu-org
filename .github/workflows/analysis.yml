@@ -66,7 +66,7 @@ jobs:
         run: yarn install
 
       - name: Generate Prisma client
-        run: yarn prisma generate
+        run: yarn prisma generate --schema apps/backend/prisma/schema.prisma
 
       - name: Build
         run: yarn build:backend
