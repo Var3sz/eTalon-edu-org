@@ -5,3 +5,14 @@ export type UpdateLocationFormModel = {
     inEdit: boolean;
   };
 };
+
+export type AddLocationFormModel = {
+  description: string | null;
+};
+
+export type AddLocationsFormModel = {
+  LocationList: AddLocationFormModel[];
+  Helpers: {
+    inEdit: boolean;
+  };
+};

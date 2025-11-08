@@ -41,9 +41,11 @@ export const FormLocales = {
   groups: {
     edit: 'Csoport módosítása',
     description: 'Csoport megnevezése',
+    add: 'Csoportok hozzáadása',
   },
   locations: {
     edit: 'Helyszín módosítása',
     description: 'Helyszín neve',
+    add: 'Helyszínek hozzáadása',
   },
 };
