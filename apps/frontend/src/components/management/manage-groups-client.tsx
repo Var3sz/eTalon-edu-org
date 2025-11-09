@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-
-import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import { FormLocales } from '@/locales/form-locales';
 
 import GroupColumns from '../columns/group/group-columns';
@@ -8,24 +5,21 @@ import CustomInnerStateDialog from '../dialogs/custom-innerstate-dialog';
 import AddGroupsDialog from '../dialogs/group/add-groups-dialog';
 import { SimpleTable } from '../tables/simple-table';
 import AddButton from '../ui/add-button';
+import useInitManageGroupsClient from '@/hooks/group/use-init-manage-groups-client';
+import LoadingFullScreen from '@/app/loading';
 
 type ManageGroupsClientModel = {
   token: string;
 };
 
 export default function ManageGroupsClient({ token }: ManageGroupsClientModel) {
-  const groups = useGetGroupsQuery(token);
+  const { groups, isPending, DeleteGroup } = useInitManageGroupsClient(token);
 
-  const groupColumns = GroupColumns(token);
-
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('tab', 'groups');
-    window.history.replaceState(null, '', url.toString());
-  }, []);
+  const groupColumns = GroupColumns(DeleteGroup, token);
 
   return (
     <div className='flex flex-col gap-5'>
+      {isPending && <LoadingFullScreen />}
       <div className='flex gap-5'>
         <span className='font-bold text-3xl'>Csoportok kezelése</span>
         <CustomInnerStateDialog

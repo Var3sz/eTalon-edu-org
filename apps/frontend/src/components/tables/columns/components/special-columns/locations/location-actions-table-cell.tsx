@@ -13,9 +13,16 @@ type LocationActionsTableCellModel<T> = {
   edit: boolean;
   deletable: boolean;
   token: string;
+  DeleteLocation: (data: LocationDto) => void;
 };
 
-export default function LocationActionsTableCell<T>({ edit, deletable, token, row }: LocationActionsTableCellModel<T>) {
+export default function LocationActionsTableCell<T>({
+  edit,
+  deletable,
+  token,
+  row,
+  DeleteLocation,
+}: LocationActionsTableCellModel<T>) {
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   return (
     <div className='w-full flex justify-evenly'>
@@ -32,7 +39,9 @@ export default function LocationActionsTableCell<T>({ edit, deletable, token, ro
           title='Figyelem!'
           description={'Biztosan törölni szeretné a kiválasztott helyszínt?'}
           cancelAction={() => setAlertOpen(false)}
-          confirmAction={() => {}}
+          confirmAction={() => {
+            DeleteLocation(row.original as LocationDto);
+          }}
         />
       )}
     </div>

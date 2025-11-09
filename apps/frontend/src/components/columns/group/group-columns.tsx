@@ -6,7 +6,7 @@ import TextTableColumn from '@/components/tables/columns/components/basic-column
 import GroupActionsTableColumn from '@/components/tables/columns/components/special-columns/groups/group-actions-table-column';
 import { GroupDto } from '@/models/Api';
 
-export default function GroupColumns(token: string): ColumnDef<GroupDto>[] {
+export default function GroupColumns(DeleteGroup: (data: GroupDto) => void, token: string): ColumnDef<GroupDto>[] {
   const columns = useMemo(
     () => [
       CountingTableColumn<GroupDto>({
@@ -25,6 +25,7 @@ export default function GroupColumns(token: string): ColumnDef<GroupDto>[] {
         accessorKey: 'action',
         headerTitle: 'Műveletek',
         token: token,
+        DeleteGroup: DeleteGroup,
       }),
     ],
     []

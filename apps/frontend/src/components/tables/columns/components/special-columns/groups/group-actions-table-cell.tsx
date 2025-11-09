@@ -13,9 +13,16 @@ type GroupActionsTableCellModel<T> = {
   edit: boolean;
   deletable: boolean;
   token: string;
+  DeleteGroup: (data: GroupDto) => void;
 };
 
-export default function GroupActionsTableCell<T>({ edit, deletable, token, row }: GroupActionsTableCellModel<T>) {
+export default function GroupActionsTableCell<T>({
+  edit,
+  deletable,
+  token,
+  row,
+  DeleteGroup,
+}: GroupActionsTableCellModel<T>) {
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   return (
     <div className='w-full flex justify-evenly'>
@@ -32,7 +39,9 @@ export default function GroupActionsTableCell<T>({ edit, deletable, token, row }
           title='Figyelem!'
           description={'Biztosan törölni szeretné a kiválasztott csoportot?'}
           cancelAction={() => setAlertOpen(false)}
-          confirmAction={() => {}}
+          confirmAction={() => {
+            DeleteGroup(row.original as GroupDto);
+          }}
         />
       )}
     </div>
