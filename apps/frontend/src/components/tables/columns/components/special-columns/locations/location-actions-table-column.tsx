@@ -1,9 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import { LocationDto } from '@/models/Api';
+
 import { ActionsTableColumnModel } from '../../../types/column-types';
 import { SimpleTableColumnHeader } from '../../headers/simple-table-column.header';
 import LocationActionsTableCell from './location-actions-table-cell';
-import { LocationDto } from '@/models/Api';
 
 type LocationActionsTableColumnModel<T> = {
   token: string;

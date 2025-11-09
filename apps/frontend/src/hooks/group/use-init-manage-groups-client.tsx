@@ -1,10 +1,12 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useTransition } from 'react';
-import useGetGroupsQuery from './use-get-groups-query';
+
+import { toast } from '@/components/ui/use-toast';
 import { GroupDto } from '@/models/Api';
 import { updateGroupDataRequest } from '@/models/group/action/update-group-request';
 import { UpdateGroupFormModel } from '@/models/group/types';
-import { toast } from '@/components/ui/use-toast';
-import { useQueryClient } from '@tanstack/react-query';
+
+import useGetGroupsQuery from './use-get-groups-query';
 
 export default function useInitManageGroupsClient(token: string) {
   const queryClient = useQueryClient();

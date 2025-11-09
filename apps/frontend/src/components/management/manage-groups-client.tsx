@@ -1,3 +1,5 @@
+import LoadingFullScreen from '@/app/loading';
+import useInitManageGroupsClient from '@/hooks/group/use-init-manage-groups-client';
 import { FormLocales } from '@/locales/form-locales';
 
 import GroupColumns from '../columns/group/group-columns';
@@ -5,8 +7,6 @@ import CustomInnerStateDialog from '../dialogs/custom-innerstate-dialog';
 import AddGroupsDialog from '../dialogs/group/add-groups-dialog';
 import { SimpleTable } from '../tables/simple-table';
 import AddButton from '../ui/add-button';
-import useInitManageGroupsClient from '@/hooks/group/use-init-manage-groups-client';
-import LoadingFullScreen from '@/app/loading';
 
 type ManageGroupsClientModel = {
   token: string;

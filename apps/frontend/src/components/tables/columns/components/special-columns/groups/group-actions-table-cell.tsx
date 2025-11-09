@@ -1,11 +1,12 @@
+import { Cell, Row } from '@tanstack/react-table';
+import { Edit2, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+
 import ConfirmDialog from '@/components/dialogs/confirm-dialog';
 import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import EditGroupDialog from '@/components/dialogs/group/edit-group-dialog';
 import { FormLocales } from '@/locales/form-locales';
 import { GroupDto } from '@/models/Api';
-import { Edit2, Trash2 } from 'lucide-react';
-import { useState } from 'react';
-import { Cell, Row } from '@tanstack/react-table';
 
 type GroupActionsTableCellModel<T> = {
   cell: Cell<T, unknown>;
@@ -37,7 +38,7 @@ export default function GroupActionsTableCell<T>({
           open={alertOpen}
           onOpenChange={setAlertOpen}
           title='Figyelem!'
-          description={'Biztosan törölni szeretné a kiválasztott csoportot?'}
+          description='Biztosan törölni szeretné a kiválasztott csoportot?'
           cancelAction={() => setAlertOpen(false)}
           confirmAction={() => {
             DeleteGroup(row.original as GroupDto);

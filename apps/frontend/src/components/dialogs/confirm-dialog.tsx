@@ -1,4 +1,7 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react';
+
+import { DialogLocales } from '@/locales/dialog-locales';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +13,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '../ui/alert-dialog';
-import { DialogLocales } from '@/locales/dialog-locales';
 
 export type ConfirmDialogModel = {
   title: string;

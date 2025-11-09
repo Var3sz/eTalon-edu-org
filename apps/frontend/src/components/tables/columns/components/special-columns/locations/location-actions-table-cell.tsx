@@ -1,11 +1,12 @@
+import { Cell, Row } from '@tanstack/react-table';
+import { Edit2, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+
 import ConfirmDialog from '@/components/dialogs/confirm-dialog';
 import CustomInnerStateDialog from '@/components/dialogs/custom-innerstate-dialog';
 import EditLocationDialog from '@/components/dialogs/location/edit-location-dialog';
 import { FormLocales } from '@/locales/form-locales';
 import { LocationDto } from '@/models/Api';
-import { Cell, Row } from '@tanstack/react-table';
-import { Edit2, Trash2 } from 'lucide-react';
-import { useState } from 'react';
 
 type LocationActionsTableCellModel<T> = {
   cell: Cell<T, unknown>;
@@ -37,7 +38,7 @@ export default function LocationActionsTableCell<T>({
           open={alertOpen}
           onOpenChange={setAlertOpen}
           title='Figyelem!'
-          description={'Biztosan törölni szeretné a kiválasztott helyszínt?'}
+          description='Biztosan törölni szeretné a kiválasztott helyszínt?'
           cancelAction={() => setAlertOpen(false)}
           confirmAction={() => {
             DeleteLocation(row.original as LocationDto);

@@ -1,3 +1,5 @@
+import LoadingFullScreen from '@/app/loading';
+import useInitManageLocationsClient from '@/hooks/location/use-init-manage-locations-client';
 import { FormLocales } from '@/locales/form-locales';
 
 import LocationColumns from '../columns/location/location-columns';
@@ -5,8 +7,6 @@ import CustomInnerStateDialog from '../dialogs/custom-innerstate-dialog';
 import AddLocationsDialog from '../dialogs/location/add-locations-dialog';
 import { SimpleTable } from '../tables/simple-table';
 import AddButton from '../ui/add-button';
-import useInitManageLocationsClient from '@/hooks/location/use-init-manage-locations-client';
-import LoadingFullScreen from '@/app/loading';
 
 type ManageLocationsClientModel = {
   token: string;

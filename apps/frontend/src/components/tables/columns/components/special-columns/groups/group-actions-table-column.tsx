@@ -1,9 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import { GroupDto } from '@/models/Api';
+
 import { ActionsTableColumnModel } from '../../../types/column-types';
 import { SimpleTableColumnHeader } from '../../headers/simple-table-column.header';
 import GroupActionsTableCell from './group-actions-table-cell';
-import { GroupDto } from '@/models/Api';
 
 type GroupActionsTableColumnModel<T> = {
   token: string;

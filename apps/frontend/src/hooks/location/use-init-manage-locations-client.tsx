@@ -1,10 +1,12 @@
-import { LocationDto } from '@/models/Api';
-import useGetLocationsQuery from './use-get-locations-query';
-import { useEffect, useMemo, useTransition } from 'react';
-import { UpdateLocationFormModel } from '@/models/location/type';
-import { updateLocationDataRequest } from '@/models/location/action/update-location-request';
-import { toast } from '@/components/ui/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useMemo, useTransition } from 'react';
+
+import { toast } from '@/components/ui/use-toast';
+import { LocationDto } from '@/models/Api';
+import { updateLocationDataRequest } from '@/models/location/action/update-location-request';
+import { UpdateLocationFormModel } from '@/models/location/type';
+
+import useGetLocationsQuery from './use-get-locations-query';
 
 export default function useInitManageLocationsClient(token: string) {
   const queryClient = useQueryClient();
