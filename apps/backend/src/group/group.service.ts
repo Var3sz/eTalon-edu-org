@@ -12,7 +12,7 @@ export class GroupService {
    * @returns {GroupDto[]} Groups (maths, literature/grammar etc.)
    */
   async getGroups(): Promise<GroupDto[]> {
-    return this.prisma.group.findMany();
+    return this.prisma.group.findMany({ where: { isDeleted: 'N' } });
   }
 
   async updateGroups(inputDto: UpdateGroupsInputDto[]): Promise<GroupDto[]> {

@@ -23,7 +23,7 @@ export default function LocationColumns(token: string): ColumnDef<LocationDto>[]
       LocationActionsTableColumn<LocationDto>({
         id: 'actions',
         accessorKey: 'action',
-        headerTitle: 'Módosítás',
+        headerTitle: 'Műveletek',
         token: token,
       }),
     ],

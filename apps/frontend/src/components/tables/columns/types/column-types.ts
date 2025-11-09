@@ -7,6 +7,7 @@ export type ActionsTableColumnModel<TData> = {
   select?: boolean;
   redirect?: boolean;
   edit?: boolean;
+  deletable?: boolean;
   redirection?: (cell: any) => string;
   dialogTitle?: string;
 } & ColumnBaseModel<TData>;

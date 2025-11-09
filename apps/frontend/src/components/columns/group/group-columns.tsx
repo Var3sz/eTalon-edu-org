@@ -23,7 +23,7 @@ export default function GroupColumns(token: string): ColumnDef<GroupDto>[] {
       GroupActionsTableColumn<GroupDto>({
         id: 'actions',
         accessorKey: 'action',
-        headerTitle: 'Módosítás',
+        headerTitle: 'Műveletek',
         token: token,
       }),
     ],
