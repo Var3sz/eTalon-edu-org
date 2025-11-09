@@ -14,6 +14,7 @@ type TabModel = {
   tiggerStyle?: string;
   children: ReactElement;
   visible?: boolean;
+  contentStyle?: string;
 };
 
 export type TabProviderModel = {
@@ -71,7 +72,11 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
       </TabsList>
 
       {tabs.map((tab) => (
-        <TabsContent key={tab.key} value={tab.key} className='w-full bg-white border-rounded rounded p-6 shadow-sm'>
+        <TabsContent
+          key={tab.key}
+          value={tab.key}
+          className={cn('w-full bg-white border-rounded rounded p-6 shadow-sm', tab.contentStyle)}
+        >
           {tab.children}
         </TabsContent>
       ))}

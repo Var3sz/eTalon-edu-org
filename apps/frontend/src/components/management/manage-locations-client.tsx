@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-
-import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
+import LoadingFullScreen from '@/app/loading';
+import useInitManageLocationsClient from '@/hooks/location/use-init-manage-locations-client';
 import { FormLocales } from '@/locales/form-locales';
 
 import LocationColumns from '../columns/location/location-columns';
@@ -14,18 +13,13 @@ type ManageLocationsClientModel = {
 };
 
 export default function ManageLocationsClient({ token }: ManageLocationsClientModel) {
-  const locations = useGetLocationsQuery(token);
+  const { locations, isPending, DeleteLocation } = useInitManageLocationsClient(token);
 
-  const locationColumns = LocationColumns(token);
-
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('tab', 'locations');
-    window.history.replaceState(null, '', url.toString());
-  }, []);
+  const locationColumns = LocationColumns(DeleteLocation, token);
 
   return (
     <div className='flex flex-col gap-5'>
+      {isPending && <LoadingFullScreen />}
       <div className='flex gap-5'>
         <span className='font-bold text-3xl'>Helyszínek kezelése</span>
         <CustomInnerStateDialog

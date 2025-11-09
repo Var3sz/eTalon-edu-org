@@ -8,7 +8,10 @@ export class LocationService {
   constructor(private prisma: PrismaService) {}
 
   async getLocations(): Promise<LocationDto[]> {
-    return this.prisma.location.findMany();
+    return this.prisma.location.findMany({
+      where: { isDeleted: 'N' },
+      orderBy: { id: 'asc' },
+    });
   }
 
   async updateLocations(inputDto: UpdateLocationsInputDto[]): Promise<LocationDto[]> {

@@ -43,6 +43,7 @@ export default function ProfileClient({ userId }: ProfileClientProps) {
               label: 'Csoportok kezelése',
               tiggerStyle: 'flex gap-3',
               visible: profileDataResponse.data.roleId === RoleTypes.ADMIN,
+              contentStyle: 'w-3/4',
             },
             {
               children: <ManageLocationsClient token={session?.tokens.accessToken ?? ''} />,
@@ -50,6 +51,7 @@ export default function ProfileClient({ userId }: ProfileClientProps) {
               label: 'Helyszínek kezelése',
               tiggerStyle: 'flex gap-3',
               visible: profileDataResponse.data.roleId === RoleTypes.ADMIN,
+              contentStyle: 'w-3/4',
             },
           ],
         }

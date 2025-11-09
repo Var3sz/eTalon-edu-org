@@ -6,7 +6,10 @@ import TextTableColumn from '@/components/tables/columns/components/basic-column
 import LocationActionsTableColumn from '@/components/tables/columns/components/special-columns/locations/location-actions-table-column';
 import { LocationDto } from '@/models/Api';
 
-export default function LocationColumns(token: string): ColumnDef<LocationDto>[] {
+export default function LocationColumns(
+  DeleteLocation: (data: LocationDto) => void,
+  token: string
+): ColumnDef<LocationDto>[] {
   const columns = useMemo(
     () => [
       CountingTableColumn<LocationDto>({
@@ -23,8 +26,9 @@ export default function LocationColumns(token: string): ColumnDef<LocationDto>[]
       LocationActionsTableColumn<LocationDto>({
         id: 'actions',
         accessorKey: 'action',
-        headerTitle: 'Módosítás',
+        headerTitle: 'Műveletek',
         token: token,
+        DeleteLocation: DeleteLocation,
       }),
     ],
     []
