@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put, UseGuards } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { SAPIService } from 'src/SAPI/SAPI.service';
 
@@ -55,6 +55,7 @@ export class StudentController {
 
   @Put('UpdateAttendances')
   @UseGuards(JwtGuard)
+  @ApiBody({ type: UpdateAttendanceDto, isArray: true })
   async updateAttendance(@Body() dto: UpdateAttendanceDto[]) {
     return this.studentService.updateAttendanceBulk(dto);
   }

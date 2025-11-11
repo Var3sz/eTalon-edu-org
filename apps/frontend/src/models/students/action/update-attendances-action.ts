@@ -2,8 +2,8 @@
 
 import { UpdateAttendances } from '@/api/models/serviceEndpoints/students';
 
-import { UpdateAttendancesType } from '../types';
+import { UpdateAttendanceDto } from '@/models/Api';
 
-export const UpdateAttendancesRequest = async (body: UpdateAttendancesType[], token: string) => {
-  return await UpdateAttendances<UpdateAttendancesType[], any[]>(body, token);
+export const UpdateAttendancesRequest = async (body: UpdateAttendanceDto[], token: string) => {
+  return await UpdateAttendances<UpdateAttendanceDto[], any[]>(body, token);
 };

@@ -3,10 +3,9 @@ import { prefetchActiveCoursesQuery } from '@/hooks/courses/prefetch/prefetch-ac
 import { authOptions } from '@/lib/authOptions';
 import { BaseServerPropsWithId } from '@/models/page/types';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { ToyBrick } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 
-export default async function Page({ params }: BaseServerPropsWithId) {
+export default async function Page() {
   const queryClient = new QueryClient();
   const session = await getServerSession(authOptions);
 
@@ -14,7 +13,7 @@ export default async function Page({ params }: BaseServerPropsWithId) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PaymentsTableClient courseId={params.id} />
+      <PaymentsTableClient />
     </HydrationBoundary>
   );
 }

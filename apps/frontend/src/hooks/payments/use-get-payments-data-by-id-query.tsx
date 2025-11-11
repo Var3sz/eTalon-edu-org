@@ -1,0 +1,10 @@
+import { GetStudentsByCourseWithPayments } from '@/api/models/serviceEndpoints/students';
+import { StudentPaymentDto } from '@/models/Api';
+import { useQuery } from '@tanstack/react-query';
+
+export default function useGetPaymentsDataByCourseId(courseId: string, token: string) {
+  return useQuery({
+    queryKey: ['payments-data', courseId],
+    queryFn: () => GetStudentsByCourseWithPayments<StudentPaymentDto>(courseId, token),
+  });
+}

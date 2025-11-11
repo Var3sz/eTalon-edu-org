@@ -6,11 +6,7 @@ import { DataTable } from '@/components/tables/data-table';
 import useInitPaymentsTableClient from '@/hooks/payments/use-init-payments-table-client';
 import { useSession } from 'next-auth/react';
 
-type PaymentsTableClientProps = {
-  courseId: string;
-};
-
-export default function PaymentsTableClient({ courseId }: PaymentsTableClientProps) {
+export default function PaymentsTableClient() {
   const { data: session } = useSession();
 
   const { courses } = useInitPaymentsTableClient(session?.tokens.accessToken ?? '');
