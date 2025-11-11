@@ -57,7 +57,7 @@ export default function FormTimePickerInput<T extends FieldValues>({
                 maxLength={5}
                 inputMode='numeric'
                 placeholder={placeholder}
-                className='w-[250px]'
+                className='w-[250px] bg-white'
                 disabled={disabled}
               />
             ) : (

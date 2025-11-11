@@ -14,7 +14,7 @@ export default async function Page({ params }: BaseServerPropsWithId) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <CourseClient CourseId={params.id} />
+      <CourseClient courseId={params.id} />
     </HydrationBoundary>
   );
 }
