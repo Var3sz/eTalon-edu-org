@@ -12,7 +12,7 @@ import { CourseRedirectionFunction } from '@/components/tables/columns/utils/red
 import { TableLocales } from '@/locales/table-locales';
 import { ActiveCourseDto } from '@/models/Api';
 
-export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
+export default function CourseColumns(redirectFunction: (cell: any) => string): ColumnDef<ActiveCourseDto>[] {
   return useMemo(
     () => [
       ActionsTableColumn<ActiveCourseDto>({
@@ -20,8 +20,7 @@ export default function CourseColumns(): ColumnDef<ActiveCourseDto>[] {
         accessorKey: 'actions',
         headerTitle: '',
         redirect: true,
-        redirection: CourseRedirectionFunction,
-        dialogTitle: 'Kurzus dátumok módosítása',
+        redirection: redirectFunction,
         size: 50,
       }),
       TextWithFilterTableColumn<ActiveCourseDto>({

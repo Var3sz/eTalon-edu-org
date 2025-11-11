@@ -16,6 +16,14 @@ const getUpdateStudentDetailsUrl = () => {
   return `${process.env.SERVER_BASE_URL}students/UpdateStudentDetails`;
 };
 
+const getStudentsByCourseWithPaymentsUrl = (courseId: number) => {
+  return `${process.env.SERVER_BASE_URL}students/GetStudentsByCourseWithPayments/${courseId}`;
+};
+
+const getUpdateStudentPaymentsUrl = () => {
+  return `${process.env.SERVER_BASE_URL}invoice/UpdateStudentPayments`;
+};
+
 export const GetStudentsByCourseWithAttendances = async <ResponseType>(
   courseId: number,
   token: string
@@ -35,4 +43,18 @@ export const UpdateStudentDetails = async <RequestType, ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestPUT(getUpdateStudentDetailsUrl(), token, body);
+};
+
+export const GetStudentsByCourseWithPayments = async <ResponseType>(
+  courseId: number,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET(getStudentsByCourseWithPaymentsUrl(courseId), token);
+};
+
+export const UpdateStudentPayments = async <RequestType, ResponseType>(
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPUT(getUpdateStudentPaymentsUrl(), token, body);
 };

@@ -11,3 +11,9 @@ export const CourseRedirectionFunction = (row: ActiveCourseDto) => {
   baseUrl += row.id;
   return baseUrl;
 };
+
+export const CoursePaymentsRedirectionFunction = (row: ActiveCourseDto) => {
+  let baseUrl = '/course/payment/';
+  baseUrl += row.id;
+  return baseUrl;
+};

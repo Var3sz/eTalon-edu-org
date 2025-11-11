@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import CourseColumns from '@/components/columns/course/course-columns';
 import { DataTable } from '@/components/tables/data-table';
 import useInitCourseTableClient from '@/hooks/courses/use-init-course-table-client';
+import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 
 export default function CoursesTableClient() {
   const { data: session } = useSession();
@@ -17,7 +18,12 @@ export default function CoursesTableClient() {
 
   return (
     <div className='w-3/4 py-10 mx-auto'>
-      <DataTable columns={CourseColumns()} data={courses} hasToolbar toolbarProps={courseToolbarProps} />
+      <DataTable
+        columns={CourseColumns(CourseRedirectionFunction)}
+        data={courses}
+        hasToolbar
+        toolbarProps={courseToolbarProps}
+      />
     </div>
   );
 }
