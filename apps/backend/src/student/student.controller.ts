@@ -29,7 +29,7 @@ export class StudentController {
   }
 
   // This querys the SAPI database in every 15 minutes if the application is running
-  @Cron('0 * * * * *')
+  @Cron('0 */15 * * * *')
   async insertStudentsFromSAPIDatabase() {
     const latestSubDate = await this.studentService.getLatestSubDate();
     const newStudents = await this.sapiService.fetchStudents(latestSubDate);
