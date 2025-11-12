@@ -1,10 +1,11 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+
 import CourseColumns from '@/components/columns/course/course-columns';
 import { CoursePaymentsRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { DataTable } from '@/components/tables/data-table';
 import useInitPaymentsTableClient from '@/hooks/payments/use-init-payments-table-client';
-import { useSession } from 'next-auth/react';
 
 export default function PaymentsTableClient() {
   const { data: session } = useSession();

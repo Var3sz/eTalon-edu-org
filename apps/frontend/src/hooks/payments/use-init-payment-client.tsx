@@ -1,7 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useState, useTransition } from 'react';
-import useGetPaymentsDataByCourseId from './use-get-payments-data-by-id-query';
+
 import { StudentPaymentDto } from '@/models/Api';
+
+import useGetPaymentsDataByCourseId from './use-get-payments-data-by-id-query';
 
 type UseInitPaymentClientModel = {
   courseId: string;

@@ -1,9 +1,10 @@
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { getServerSession } from 'next-auth';
+
 import PaymentsTableClient from '@/components/payments/table/payments-table-client';
 import { prefetchActiveCoursesQuery } from '@/hooks/courses/prefetch/prefetch-active-courses-query';
 import { authOptions } from '@/lib/authOptions';
 import { BaseServerPropsWithId } from '@/models/page/types';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { getServerSession } from 'next-auth';
 
 export default async function Page() {
   const queryClient = new QueryClient();

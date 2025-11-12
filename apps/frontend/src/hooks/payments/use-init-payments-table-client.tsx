@@ -1,5 +1,7 @@
-import { ActiveCourseDto } from '@/models/Api';
 import { useMemo } from 'react';
+
+import { ActiveCourseDto } from '@/models/Api';
+
 import useGetActiveCoursesQuery from '../courses/use-get-active-courses-query';
 
 export default function useInitPaymentsTableClient(token: string) {
