@@ -11,9 +11,3 @@ export type AttendanceDateColumnType = {
   date: string;
   description: string;
 };
-
-export type UpdateAttendancesType = {
-  studentId: number;
-  lessondateId: number;
-  attended: boolean;
-};

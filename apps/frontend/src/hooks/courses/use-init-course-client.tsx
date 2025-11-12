@@ -15,7 +15,7 @@ import {
 } from '@/validation/default-values/student/student-attendace-form-default';
 
 type UseInitCourseClientProps = {
-  CourseId: string;
+  courseId: string;
   token: string;
 };
 
@@ -36,56 +36,24 @@ export type StudentAttendanceForm = {
   };
 };
 
-export default function useInitCourseClient({ CourseId, token }: UseInitCourseClientProps) {
+export default function useInitCourseClient({ courseId, token }: UseInitCourseClientProps) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
-  const { data: studentsDataResponse, isLoading } = useGetCourseDetailsById(Number(CourseId), token);
+  // jelenléti adatok lekérdezése adott kurzushoz
+  const { data: studentsDataResponse } = useGetCourseDetailsById(courseId, token);
   const course: StudentAttendanceDto | null =
     studentsDataResponse?.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
 
-  const [courseId, setCourseId] = useState<string | null>(null);
+  // Állapotok
+  const [courseName, setCourseName] = useState<string | null>(null);
   const [courseData, setCourseData] = useState<StudentAttendance[]>([]);
   const [attendanceOnly, setAttendanceOnly] = useState<AttendanceForm[]>();
 
+  // Form a jelenlétek kezelésére
   const form = useForm<StudentAttendanceForm>({
     defaultValues: StudentAttendanceFormDefault(),
   });
-
-  const onValidSubmit = (data: StudentAttendanceForm) => {
-    startTransaction(async () => {
-      const payload = data.attendance.flatMap(({ studentId, ...rest }) => {
-        return Object.entries(rest).map(([lessondateId, attended]) => ({
-          studentId,
-          lessondateId: Number(lessondateId),
-          attended: Boolean(attended),
-        }));
-      });
-
-      const updateResponse = await UpdateAttendancesRequest(payload, token);
-
-      if (updateResponse.status === 200) {
-        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(CourseId)] });
-        toast({ variant: 'success', title: 'Sikeres frissítés!', description: 'A jelenlétek frissítése sikeres!' });
-        form.setValue('Helpers.inEdit', false);
-      } else {
-        toast({
-          title: 'Sikertelen frissítés!',
-          description: updateResponse.status === 500 && updateResponse.error.Message,
-          variant: 'destructive',
-        });
-      }
-    });
-  };
-
-  const onInvalidSubmit = (e: any) => {
-    console.error(e);
-    toast({
-      title: 'Hibás adatok!',
-      description: 'Hiba történt a validáció során!',
-      variant: 'destructive',
-    });
-  };
 
   const dateCols: AttendanceDateColumnType[] = useMemo(() => {
     if (!course) return [];
@@ -110,7 +78,7 @@ export default function useInitCourseClient({ CourseId, token }: UseInitCourseCl
 
   useEffect(() => {
     if (course !== null) {
-      setCourseId(course.courseId);
+      setCourseName(course.courseId);
 
       // Extract and normalize attendance dates
       const allDates = course.students.flatMap((student) =>
@@ -190,8 +158,44 @@ export default function useInitCourseClient({ CourseId, token }: UseInitCourseCl
     }
   }, [form.getValues().Helpers.inEdit]);
 
+  // Form submit - backend-re megyünk frissíteni a jelenléti adatokat
+  const onValidSubmit = (data: StudentAttendanceForm) => {
+    startTransaction(async () => {
+      const payload = data.attendance.flatMap(({ studentId, ...rest }) => {
+        return Object.entries(rest).map(([lessondateId, attended]) => ({
+          studentId,
+          lessondateId: Number(lessondateId),
+          attended: Boolean(attended),
+        }));
+      });
+
+      const updateResponse = await UpdateAttendancesRequest(payload, token);
+
+      if (updateResponse.status === 200) {
+        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', courseId] });
+        toast({ variant: 'success', title: 'Sikeres frissítés!', description: 'A jelenlétek frissítése sikeres!' });
+        form.setValue('Helpers.inEdit', false);
+      } else {
+        toast({
+          title: 'Sikertelen frissítés!',
+          description: updateResponse.status === 500 && updateResponse.error.Message,
+          variant: 'destructive',
+        });
+      }
+    });
+  };
+
+  const onInvalidSubmit = (e: any) => {
+    console.error(e);
+    toast({
+      title: 'Hibás adatok!',
+      description: 'Hiba történt a validáció során!',
+      variant: 'destructive',
+    });
+  };
+
   return useMemo(
-    () => ({ form, isPending, isLoading, onInvalidSubmit, onValidSubmit, courseId, courseData, dateCols }),
-    [form, isPending, isLoading, onInvalidSubmit, onValidSubmit, courseId, courseData, dateCols]
+    () => ({ form, isPending, onInvalidSubmit, onValidSubmit, courseName, courseData, dateCols }),
+    [form, isPending, onInvalidSubmit, onValidSubmit, courseName, courseData, dateCols]
   );
 }

@@ -4,6 +4,7 @@ export const Links: NavigationType[] = [
   { name: 'Jelenlét', link: '/courses' },
   { name: 'Kurzustervező', link: '/course/planner' },
   { name: 'Csomagtervező', link: '/packages' },
+  { name: 'Számlázás', link: '/payments' },
 ];
 
 export const ProfileLinks: NavigationType[] = [

@@ -3,14 +3,14 @@
 import { useSession } from 'next-auth/react';
 
 import CourseColumns from '@/components/columns/course/course-columns';
-import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
+import { CoursePaymentsRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { DataTable } from '@/components/tables/data-table';
-import useInitCourseTableClient from '@/hooks/courses/use-init-course-table-client';
+import useInitPaymentsTableClient from '@/hooks/payments/use-init-payments-table-client';
 
-export default function CoursesTableClient() {
+export default function PaymentsTableClient() {
   const { data: session } = useSession();
 
-  const { courses } = useInitCourseTableClient(session?.tokens.accessToken ?? '');
+  const { courses } = useInitPaymentsTableClient(session?.tokens.accessToken ?? '');
 
   const courseToolbarProps = {
     title: 'Aktív kurzusok',
@@ -19,7 +19,7 @@ export default function CoursesTableClient() {
   return (
     <div className='w-3/4 py-10 mx-auto'>
       <DataTable
-        columns={CourseColumns(CourseRedirectionFunction)}
+        columns={CourseColumns(CoursePaymentsRedirectionFunction)}
         data={courses}
         hasToolbar
         toolbarProps={courseToolbarProps}

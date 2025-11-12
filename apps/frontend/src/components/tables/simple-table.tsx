@@ -78,7 +78,7 @@ export function SimpleTable<TData, TValue>({
   return (
     <div>
       <div className='rounded-md border'>
-        <Table className='table-auto border-collapse'>
+        <Table className='table-auto border-collapse min-w-max'>
           <TableHeader className='bg-gray-300'>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableColumnRow key={headerGroup.id}>

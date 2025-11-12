@@ -162,6 +162,12 @@ export interface PaymentsDto {
   payments: StudentPaymentDto[];
 }
 
+export interface UpdateAttendanceDto {
+  studentId: number;
+  lessondateId: number;
+  attended: boolean;
+}
+
 export interface UpdateStudentDetailsDTO {
   id: number;
   sapId: number;

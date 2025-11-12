@@ -12,30 +12,28 @@ import { Button } from '../ui/button';
 import { Form } from '../ui/form';
 
 type CourseClientModel = {
-  CourseId: string;
+  courseId: string;
 };
 
-export default function CourseClient({ CourseId }: CourseClientModel) {
+export default function CourseClient({ courseId }: CourseClientModel) {
   const { data: session } = useSession();
 
-  const { form, isPending, isLoading, onInvalidSubmit, onValidSubmit, courseId, courseData, dateCols } =
-    useInitCourseClient({
-      CourseId: CourseId,
-      token: session?.tokens.accessToken ?? '',
-    });
+  const { form, isPending, onInvalidSubmit, onValidSubmit, courseName, courseData, dateCols } = useInitCourseClient({
+    courseId: courseId,
+    token: session?.tokens.accessToken ?? '',
+  });
 
   const formValues = useWatch({ control: form.control }) as StudentAttendanceForm;
 
   return (
     <div className='w-3/4 py-10 mx-auto'>
       {isPending && <LoadingFullScreen />}
-      {isLoading && <LoadingFullScreen />}
-      <span className='block font-bold text-3xl mb-3'>Jelenléti adatok{courseId ? ` - ${courseId}` : ''}</span>
+      <span className='block font-bold text-3xl mb-3'>Jelenléti adatok{courseName ? ` - ${courseName}` : ''}</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)} className='flex flex-col'>
           <SimpleTable
             columns={StudentColumns({
-              courseId: CourseId,
+              courseId: courseId,
               courseData: courseData,
               dateColumns: dateCols,
               formControl: form.control,

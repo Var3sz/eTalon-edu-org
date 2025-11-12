@@ -536,7 +536,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/UpdateAttendanceDto"
                 }
               }
             }
@@ -1558,6 +1558,21 @@
           }
         },
         "required": ["courseId", "payments"]
+      },
+      "UpdateAttendanceDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "number"
+          },
+          "lessondateId": {
+            "type": "number"
+          },
+          "attended": {
+            "type": "boolean"
+          }
+        },
+        "required": ["studentId", "lessondateId", "attended"]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",

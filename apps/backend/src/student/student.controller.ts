@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put, UseGuards } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { SAPIService } from 'src/SAPI/SAPI.service';
 
@@ -29,7 +29,7 @@ export class StudentController {
   }
 
   // This querys the SAPI database in every 15 minutes if the application is running
-  @Cron('0 * * * * *')
+  @Cron('0 */15 * * * *')
   async insertStudentsFromSAPIDatabase() {
     const latestSubDate = await this.studentService.getLatestSubDate();
     const newStudents = await this.sapiService.fetchStudents(latestSubDate);
@@ -55,6 +55,7 @@ export class StudentController {
 
   @Put('UpdateAttendances')
   @UseGuards(JwtGuard)
+  @ApiBody({ type: UpdateAttendanceDto, isArray: true })
   async updateAttendance(@Body() dto: UpdateAttendanceDto[]) {
     return this.studentService.updateAttendanceBulk(dto);
   }

@@ -139,7 +139,11 @@ export class StudentService {
       where: { Participant: { some: { courseId: id } } },
       include: {
         Participant: { where: { courseId: id }, select: { Course: { select: { courseId: true } } } },
-        attendance: { where: { lessondateId: { in: lessonDateIds } }, include: { LessonDates: true } },
+        attendance: {
+          where: { lessondateId: { in: lessonDateIds } },
+          include: { LessonDates: true },
+          orderBy: { LessonDates: { date: 'asc' } },
+        },
       },
     });
 
@@ -170,7 +174,11 @@ export class StudentService {
       where: { Participant: { some: { courseId: id } } },
       include: {
         Participant: { where: { courseId: id }, select: { Course: { select: { courseId: true } } } },
-        Payment: { where: { invoiceDateId: { in: invoiceDateIds } }, include: { InvoiceDates: true } },
+        Payment: {
+          where: { invoiceDateId: { in: invoiceDateIds } },
+          include: { InvoiceDates: true },
+          orderBy: { InvoiceDates: { date: 'asc' } },
+        },
       },
     });
 
