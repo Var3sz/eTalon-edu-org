@@ -171,17 +171,36 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
   const onValidFormSubmit = (data: StudentPaymentForm) => {
     startTransaction(async () => {
       const payload: UpdatePaymentsDto[] = data.payments.flatMap(({ studentId, ...rest }) => {
-        return Object.entries(rest).map(([invoceDateId, cell]) => ({
-          studentId: studentId,
-          invoceDateId: invoceDateId,
-          billerId: userId,
-          payed: Boolean(cell?.payed),
-          payedAmount: Number(cell?.amount ?? 0),
-          invoiceNumber: cell?.invoiceNumber ?? '',
-        }));
+        return Object.entries(rest).map(([invoiceDateId, cell]) => {
+          const { payed, amount, invoiceNumber } = cell as PaymentCell;
+          return {
+            studentId: studentId,
+            invoiceDateId: Number(invoiceDateId),
+            billerId: userId,
+            payed: payed,
+            payedAmount: amount,
+            invoiceNumber: invoiceNumber,
+          };
+        });
       });
 
       const updateResponse = await UpdatePaymentsRequest(payload, token);
+
+      if (updateResponse.status === 200) {
+        await queryClient.invalidateQueries({ queryKey: ['payments-data', courseId] });
+        toast({
+          variant: 'success',
+          title: 'Sikeres frissítés!',
+          description: 'A fizetési adatok frissítése sikeres!',
+        });
+        form.setValue('Helpers.inEdit', false);
+      } else {
+        toast({
+          title: 'Sikertelen frissítés!',
+          description: updateResponse.status === 500 && updateResponse.error.Message,
+          variant: 'destructive',
+        });
+      }
     });
   };
 
