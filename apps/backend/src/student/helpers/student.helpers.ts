@@ -103,6 +103,7 @@ export class StudentHelpers {
     const payments = students.map((student) => {
       return {
         studentName: student.childName,
+        studentId: student.id,
         Payments: student.Payment.map((payment) => {
           return {
             invoiceDateId: payment.invoiceDateId,

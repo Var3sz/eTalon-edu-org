@@ -153,6 +153,7 @@ export interface PaymentDto {
 }
 
 export interface StudentPaymentDto {
+  studentId: number;
   studentName: string;
   Payments: PaymentDto[];
 }

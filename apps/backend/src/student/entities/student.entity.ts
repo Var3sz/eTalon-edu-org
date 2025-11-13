@@ -215,6 +215,7 @@ export class PaymentDto {
 
 export class StudentPaymentDto {
   studentName: string;
+  studentId: number;
   Payments: PaymentDto[];
 }
 

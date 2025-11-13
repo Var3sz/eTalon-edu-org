@@ -11,3 +11,9 @@ export type AttendanceDateColumnType = {
   date: string;
   description: string;
 };
+
+export type PaymentDateColumnType = {
+  invoiceDateId: number;
+  date: string;
+  description: string;
+};
