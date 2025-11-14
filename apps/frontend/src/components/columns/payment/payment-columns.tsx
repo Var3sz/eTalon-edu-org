@@ -51,6 +51,7 @@ export default function PaymentColumns<T extends FieldValues>({
             formControl,
             inEdit: inEdit,
             size: 100,
+            cellStyle: 'max-w-[150px]',
           }),
           CheckboxTableColumn<T, StudentPayment>({
             id: `${accessorKey}.payed`,
@@ -69,6 +70,8 @@ export default function PaymentColumns<T extends FieldValues>({
             formControl,
             inEdit: inEdit,
             size: 100,
+            unitOfMeasureLabel: 'Ft',
+            cellStyle: 'max-w-[130px] justify-end text-right',
           }),
           NumberInputColumn<T, StudentPayment>({
             id: `${accessorKey}.amountToBePayed`,
@@ -78,6 +81,8 @@ export default function PaymentColumns<T extends FieldValues>({
             formControl,
             inEdit: inEdit,
             size: 100,
+            unitOfMeasureLabel: 'Ft',
+            cellStyle: 'max-w-[130px] justify-end text-right',
           }),
         ],
       });
