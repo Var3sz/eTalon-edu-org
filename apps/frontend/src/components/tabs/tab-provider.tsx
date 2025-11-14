@@ -45,7 +45,6 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
     >
       <TabsList
         className={cn(
-          // FONTOS: ne legyen w-1/2, helyette:
           'inline-flex w-fit self-start',
           'bg-white rounded-t-xl shadow-md',
           'mb-2 max-h-10 overflow-hidden p-0 rounded-t-xl',
@@ -60,9 +59,7 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
               'relative px-5 py-2 border-b-2 text-lg transition-colors duration-200',
               'data-[state=active]:text-[#ffffff] data-[state=active]:bg-[#8cc63f]',
               'hover:text-[#8cc63f] hover:border-[#8cc63f]',
-              // NINCS w-full!
-              // Itt határozod meg a "tab egység" méretét:
-              'min-w-[200px]', // vagy pl. 'w-48'
+              'min-w-[240px]',
               tab.tiggerStyle
             )}
           >
