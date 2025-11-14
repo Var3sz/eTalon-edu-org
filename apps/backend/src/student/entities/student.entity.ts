@@ -211,6 +211,7 @@ export class PaymentDto {
   payed: boolean;
   amount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 }
 
 export class StudentPaymentDto {

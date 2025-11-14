@@ -150,11 +150,12 @@ export interface PaymentDto {
   payed: boolean;
   amount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 }
 
 export interface StudentPaymentDto {
-  studentId: number;
   studentName: string;
+  studentId: number;
   Payments: PaymentDto[];
 }
 
@@ -328,4 +329,5 @@ export interface UpdatePaymentsDto {
   payed: boolean;
   payedAmount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 }

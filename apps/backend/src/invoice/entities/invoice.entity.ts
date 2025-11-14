@@ -18,6 +18,9 @@ export class UpdatePaymentsDto {
 
   @IsString()
   invoiceNumber: string;
+
+  @IsInt()
+  amountToBePayed: number;
 }
 
 export type BulkPaymentResult = {

@@ -23,6 +23,7 @@ export type PaymentCell = {
   payed: boolean;
   amount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 };
 
 export type StudentPayment = {
@@ -124,6 +125,7 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
             payed: Boolean(att?.payed),
             amount: att?.amount ?? 0,
             invoiceNumber: att?.invoiceNumber ?? '',
+            amountToBePayed: att?.amountToBePayed ?? 0,
           };
         });
 
@@ -172,35 +174,38 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
     startTransaction(async () => {
       const payload: UpdatePaymentsDto[] = data.payments.flatMap(({ studentId, ...rest }) => {
         return Object.entries(rest).map(([invoiceDateId, cell]) => {
-          const { payed, amount, invoiceNumber } = cell as PaymentCell;
+          const { payed, amount, invoiceNumber, amountToBePayed } = cell as PaymentCell;
           return {
             studentId: studentId,
             invoiceDateId: Number(invoiceDateId),
             billerId: userId,
             payed: payed,
-            payedAmount: amount,
+            payedAmount: Number(amount),
             invoiceNumber: invoiceNumber,
+            amountToBePayed: Number(amountToBePayed),
           };
         });
       });
 
-      const updateResponse = await UpdatePaymentsRequest(payload, token);
+      console.log(payload);
 
-      if (updateResponse.status === 200) {
-        await queryClient.invalidateQueries({ queryKey: ['payments-data', courseId] });
-        toast({
-          variant: 'success',
-          title: 'Sikeres frissítés!',
-          description: 'A fizetési adatok frissítése sikeres!',
-        });
-        form.setValue('Helpers.inEdit', false);
-      } else {
-        toast({
-          title: 'Sikertelen frissítés!',
-          description: updateResponse.status === 500 && updateResponse.error.Message,
-          variant: 'destructive',
-        });
-      }
+      // const updateResponse = await UpdatePaymentsRequest(payload, token);
+
+      // if (updateResponse.status === 200) {
+      //   await queryClient.invalidateQueries({ queryKey: ['payments-data', courseId] });
+      //   toast({
+      //     variant: 'success',
+      //     title: 'Sikeres frissítés!',
+      //     description: 'A fizetési adatok frissítése sikeres!',
+      //   });
+      //   form.setValue('Helpers.inEdit', false);
+      // } else {
+      //   toast({
+      //     title: 'Sikertelen frissítés!',
+      //     description: updateResponse.status === 500 && updateResponse.error.Message,
+      //     variant: 'destructive',
+      //   });
+      // }
     });
   };
 

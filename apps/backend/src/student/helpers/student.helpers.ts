@@ -113,6 +113,7 @@ export class StudentHelpers {
             payed: payment.payed,
             amount: payment.amount,
             invoiceNumber: payment.invoiceNumber,
+            amountToBePayed: payment.amountToBePayed,
           } as PaymentDto;
         }),
       } as StudentPaymentDto;
