@@ -169,4 +169,11 @@ export class PackageService {
 
     return { created, deleted, skipped };
   }
+
+  async inactivatePackageById(id: number): Promise<any> {
+    return await this.prisma.package.update({
+      where: { id: id },
+      data: { active: false },
+    });
+  }
 }

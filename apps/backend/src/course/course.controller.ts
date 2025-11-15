@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
@@ -98,5 +98,11 @@ export class CourseController {
   @ApiOkResponse({ type: LessonDateDto })
   async updateInvoiceDate(@Body() updateBody: UpdateInvoiceDateDto) {
     return await this.courseService.updateInvoiceDate(updateBody);
+  }
+
+  @Delete('/InactivateCourse/:id')
+  @ApiOkResponse()
+  async inactivateCourseById(@Param('id', ParseIntPipe) id: number) {
+    return await this.courseService.inactivateCourseById(id);
   }
 }

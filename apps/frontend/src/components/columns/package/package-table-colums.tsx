@@ -4,10 +4,28 @@ import { useMemo } from 'react';
 import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 import TextWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/text-with-filter-table-column';
 import { PackageDto } from '@/models/Api';
+import PackageActionsTableColumn from '@/components/tables/columns/components/special-columns/package/package-actions-table-column';
+import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
 
-export default function PackageTableColumns(): ColumnDef<PackageDto>[] {
+type PackageTableColumnsModel = {
+  inactivePackageFunction?: (courseId: number) => void;
+};
+
+export default function PackageTableColumns({
+  inactivePackageFunction,
+}: PackageTableColumnsModel): ColumnDef<PackageDto>[] {
   return useMemo(
     () => [
+      PackageActionsTableColumn<PackageDto>({
+        id: 'actions',
+        accessorKey: 'actions',
+        headerTitle: '',
+        redirect: true,
+        deletable: true,
+        confirmTitle: 'Figyelem!',
+        confirmDesc: 'Biztosan inaktiválja a kiválasztott csomagot?',
+        deleteFunction: inactivePackageFunction,
+      }),
       TextWithFilterTableColumn<PackageDto>({
         id: 'type',
         accessorKey: 'type',
@@ -34,6 +52,10 @@ export default function PackageTableColumns(): ColumnDef<PackageDto>[] {
         id: 'groupDesc',
         accessorKey: 'groupDesc',
         headerTitle: 'Csoport',
+      }),
+      HiddenTableColumn<PackageDto>({
+        id: 'id',
+        accessorKey: 'id',
       }),
     ],
     []

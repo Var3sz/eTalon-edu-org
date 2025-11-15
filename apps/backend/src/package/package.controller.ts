@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
@@ -35,5 +35,11 @@ export class PackageController {
   @ApiBody({ type: AssignPackageToCourseDto, isArray: true })
   async assignCoursesToPackages(@Body() assignments: AssignPackageToCourseDto[]) {
     return this.packageService.assignCourseToPackage(assignments);
+  }
+
+  @Delete('/InactivatePackage/:id')
+  @ApiOkResponse()
+  async inactivatePackageById(@Param('id', ParseIntPipe) id: number) {
+    return await this.packageService.inactivatePackageById(id);
   }
 }
