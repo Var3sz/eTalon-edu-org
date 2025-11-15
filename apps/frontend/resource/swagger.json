@@ -464,6 +464,34 @@
         ]
       }
     },
+    "/courses/InactivateCourse/{id}": {
+      "delete": {
+        "operationId": "CourseController_inactivateCourseById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/students/GetStudents": {
       "get": {
         "operationId": "StudentController_getAllStudents",
@@ -1044,6 +1072,114 @@
           },
           "201": {
             "description": ""
+          }
+        },
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/packages/InactivatePackage/{id}": {
+      "delete": {
+        "operationId": "PackageController_inactivatePackageById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/packages/GetPackageById/{id}": {
+      "get": {
+        "operationId": "PackageController_getPackageById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RawPackageDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/packages/UpdatePackage/{id}": {
+      "put": {
+        "operationId": "PackageController_updatePackage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePackageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RawPackageDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -2207,6 +2343,80 @@
           "courseId",
           "packageId",
           "assign"
+        ]
+      },
+      "RawPackageDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          },
+          "isAssigned": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "packageId",
+          "price",
+          "locationId",
+          "active",
+          "groupId",
+          "isAssigned"
+        ]
+      },
+      "UpdatePackageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "packageId",
+          "price",
+          "type",
+          "locationId",
+          "active",
+          "groupId"
         ]
       },
       "UpdatePaymentsDto": {

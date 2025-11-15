@@ -2,7 +2,7 @@
 
 import { FetchResponse } from '@/api/types/fetch-response';
 
-import { httpRequestDELETE, httpRequestGET, httpRequestPOST } from '../api';
+import { httpRequestDELETE, httpRequestGET, httpRequestPOST, httpRequestPUT } from '../api';
 
 const getPackagesUrl = () => {
   return `${process.env.SERVER_BASE_URL}packages/GetPackages`;
@@ -22,6 +22,14 @@ const assignPackagesToCoursesUrl = () => {
 
 const getInactivatePackageUrl = (packageId: number) => {
   return `${process.env.SERVER_BASE_URL}packages/InactivatePackage/${packageId}`;
+};
+
+const getPackageByIdUrl = (packageId: string) => {
+  return `${process.env.SERVER_BASE_URL}packages/GetPackageById/${packageId}`;
+};
+
+const updatePackageByIdUrl = (packageId: number) => {
+  return `${process.env.SERVER_BASE_URL}packages/UpdatePackage/${packageId}`;
 };
 
 export const GetPackages = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
@@ -55,4 +63,19 @@ export const InactivatePackage = async <RequestType, ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestDELETE<RequestType, ResponseType>(getInactivatePackageUrl(packageId), token);
+};
+
+export const GetPackageById = async <ResponseType>(
+  packageId: string,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestGET<ResponseType>(getPackageByIdUrl(packageId), token);
+};
+
+export const UpdatePackageData = async <RequestType, ResponseType>(
+  packageId: number,
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestPUT<RequestType, ResponseType>(updatePackageByIdUrl(packageId), token, body);
 };
