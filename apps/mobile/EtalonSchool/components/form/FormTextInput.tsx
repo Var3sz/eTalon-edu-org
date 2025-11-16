@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+
 import { FormBaseProps } from '../../models/ui/form-props';
 
 export default function FormTextInput<T extends FieldValues>({

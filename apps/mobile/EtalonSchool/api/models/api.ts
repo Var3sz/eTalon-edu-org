@@ -1,8 +1,8 @@
+import { logger } from '../../lib/logger';
+import { ApiLocales } from '../../locales/api';
 import { FetchOptions } from '../types/fetch-options';
 import { FetchErrorBody, FetchResponse, FetchResponseOK } from '../types/fetch-response';
 import { fetchOptions } from './fetch-options';
-import { logger } from '../../lib/logger';
-import { ApiLocales } from '../../locales/api';
 
 type LogDebug = {
   status: number;

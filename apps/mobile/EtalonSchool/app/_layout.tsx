@@ -1,8 +1,9 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { colors } from '../lib/colors';
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { ActivityIndicator, View } from 'react-native';
+
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { colors } from '../lib/colors';
 
 function Gate({ children }: { children: React.ReactNode }) {
   const { isReady } = useAuth();

@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+
 import { ValidationLocales } from '../../locales/validation-locales';
 
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/;

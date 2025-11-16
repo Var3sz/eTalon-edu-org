@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+
 import { getAccessToken } from '../lib/auth/securestore';
 
 interface AuthContextType {
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     (async () => {
       const access = await getAccessToken();
-      setIsAuthenticated(!!access);
+      setIsAuthenticated(Boolean(access));
       setIsReady(true);
     })();
   }, []);

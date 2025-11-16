@@ -54,7 +54,7 @@ export default function FormDateInput<T extends FieldValues>({
                 <Calendar
                   mode='single'
                   selected={field.value ? new Date(field.value) : undefined}
-                  onSelect={(date) => field.onChange(date?.toISOString() ?? '')}
+                  onSelect={(date: any) => field.onChange(date?.toISOString() ?? '')}
                   initialFocus
                 />
               </PopoverContent>

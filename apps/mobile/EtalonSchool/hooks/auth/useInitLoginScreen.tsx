@@ -1,10 +1,11 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useMemo, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
+
 import { Login } from '../../api/models/serviceEndpoints/auth';
 import { LoginDto } from '../../models/auth';
-import { Alert } from 'react-native';
-import { useForm } from 'react-hook-form';
 import { LoginFormDefault } from '../../models/validation/default/auth/auth-form-default';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../models/validation/schemas/auth/auth-schema';
 
 export default function useInitLoginScreen() {
