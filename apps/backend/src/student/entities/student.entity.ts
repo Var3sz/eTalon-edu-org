@@ -211,10 +211,12 @@ export class PaymentDto {
   payed: boolean;
   amount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 }
 
 export class StudentPaymentDto {
   studentName: string;
+  studentId: number;
   Payments: PaymentDto[];
 }
 

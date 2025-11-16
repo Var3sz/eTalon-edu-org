@@ -61,6 +61,7 @@ export class StudentService {
             packageId: student.packageCode,
           },
           include: {
+            Package: true,
             Course: {
               include: {
                 CourseLessonDates: {
@@ -113,6 +114,7 @@ export class StudentService {
                   billerId: null,
                   amount: 0,
                   invoiceNumber: null,
+                  amountToBePayed: course.Package.price,
                 },
               })
             )

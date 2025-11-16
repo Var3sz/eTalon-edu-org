@@ -196,4 +196,11 @@ export class CourseService {
   async updateInvoiceDate(updateBody: UpdateInvoiceDateDto): Promise<InvoiceDateDto> {
     return await this.prisma.invoiceDates.update({ where: { id: updateBody.id }, data: updateBody });
   }
+
+  async inactivateCourseById(id: number): Promise<CourseDto> {
+    return await this.prisma.course.update({
+      where: { id: id },
+      data: { active: false },
+    });
+  }
 }

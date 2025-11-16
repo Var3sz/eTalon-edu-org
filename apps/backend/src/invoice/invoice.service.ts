@@ -126,6 +126,7 @@ export class InvoiceService {
               amount: u.payedAmount,
               invoiceNumber: u.invoiceNumber,
               billerId: u.billerId,
+              amountToBePayed: u.amountToBePayed,
             },
           });
         });

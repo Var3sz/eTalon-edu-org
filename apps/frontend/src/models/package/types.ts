@@ -13,3 +13,16 @@ export type CreatePackagesFormModel = {
     inEdit: boolean;
   };
 };
+
+export type UpdatePackageFormModel = {
+  id: number | null;
+  packageId: string | null;
+  price: number | null;
+  active: boolean;
+  groupId: number | null;
+  locationId: number | null;
+  type: string | null;
+  Helpers: {
+    inEdit: boolean;
+  };
+};

@@ -179,16 +179,17 @@ model CourseInvoiceDates {
 }
 
 model Payment {
-  id            Int          @id @default(autoincrement())
-  invoiceDateId Int
-  studentId     Int
-  billerId      Int?
-  payed         Boolean?
-  amount        Int?
-  invoiceNumber String?      @db.VarChar
-  User          User?        @relation(fields: [billerId], references: [id], onDelete: Restrict)
-  InvoiceDates  InvoiceDates @relation(fields: [invoiceDateId], references: [id])
-  Students      Student      @relation(fields: [studentId], references: [id])
+  id              Int          @id @default(autoincrement())
+  invoiceDateId   Int
+  studentId       Int
+  billerId        Int?
+  payed           Boolean?
+  amount          Int?
+  invoiceNumber   String?      @db.VarChar
+  amountToBePayed Int?
+  User            User?        @relation(fields: [billerId], references: [id], onDelete: Restrict)
+  InvoiceDates    InvoiceDates @relation(fields: [invoiceDateId], references: [id])
+  Students        Student      @relation(fields: [studentId], references: [id])
 
   @@unique([studentId, invoiceDateId], map: "studentId_invoiceDateId_unique")
 }

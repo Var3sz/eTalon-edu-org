@@ -150,10 +150,12 @@ export interface PaymentDto {
   payed: boolean;
   amount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 }
 
 export interface StudentPaymentDto {
   studentName: string;
+  studentId: number;
   Payments: PaymentDto[];
 }
 
@@ -320,6 +322,27 @@ export interface AssignPackageToCourseDto {
   assign: boolean;
 }
 
+export interface RawPackageDto {
+  type: string;
+  id: number;
+  packageId: string;
+  price: number;
+  locationId: number;
+  active: boolean;
+  groupId: number;
+  isAssigned: boolean;
+}
+
+export interface UpdatePackageDto {
+  id: number;
+  packageId: string;
+  price: number;
+  type: string;
+  locationId: number;
+  active: boolean;
+  groupId: number;
+}
+
 export interface UpdatePaymentsDto {
   studentId: number;
   invoiceDateId: number;
@@ -327,4 +350,5 @@ export interface UpdatePaymentsDto {
   payed: boolean;
   payedAmount: number;
   invoiceNumber: string;
+  amountToBePayed: number;
 }

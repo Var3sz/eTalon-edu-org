@@ -4,6 +4,7 @@ import { FieldValues } from 'react-hook-form';
 import FormNumberInput from '@/components/form/form-number-input';
 import InputHeader from '@/components/tables/columns/components/headers/input-column-header';
 import { ColumnInputModel } from '@/components/tables/columns/types/column-types';
+import { cn } from '@/lib/utils';
 
 export default function NumberInputColumn<FormType extends FieldValues, TableType>({
   id,
@@ -15,6 +16,7 @@ export default function NumberInputColumn<FormType extends FieldValues, TableTyp
   disabled = false,
   unitOfMeasureLabel,
   required,
+  cellStyle = '',
 }: ColumnInputModel<FormType, TableType>): ColumnDef<TableType> {
   return {
     id: id,
@@ -31,12 +33,13 @@ export default function NumberInputColumn<FormType extends FieldValues, TableTyp
       />
     ),
     cell: ({ row }) => (
-      <div className='my-2'>
+      <div className={cn('my-2', cellStyle)}>
         <FormNumberInput
           inEdit={inEdit}
           removeLabel
           formControl={formControl!}
           disabled={disabled}
+          inputStyle={cellStyle}
           unitOfMeasureLabel={unitOfMeasureLabel}
           id={String(accessorKey)?.replace('[index]', `[${row.index}]`)}
         />

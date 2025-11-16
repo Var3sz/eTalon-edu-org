@@ -1,6 +1,6 @@
 'use server';
 
-import { httpRequestGET, httpRequestPOST, httpRequestPUT } from '@/api/models/api';
+import { httpRequestDELETE, httpRequestGET, httpRequestPOST, httpRequestPUT } from '@/api/models/api';
 import { FetchResponse } from '@/api/types/fetch-response';
 
 const getCoursesUrl = () => {
@@ -47,6 +47,10 @@ const createInvoiceDatesUrl = () => {
 
 const updateInvoiceDateUrl = () => {
   return `${process.env.SERVER_BASE_URL}courses/UpdateInvoiceDate`;
+};
+
+const getInactivateCourseUrl = (courseId: number) => {
+  return `${process.env.SERVER_BASE_URL}courses/InactivateCourse/${courseId}`;
 };
 
 // HTTP functions
@@ -122,4 +126,11 @@ export const UpdateInvoiceDate = async <RequestType, ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestPUT(updateInvoiceDateUrl(), token, body);
+};
+
+export const InactivateCourse = async <RequestType, ResponseType>(
+  courseId: number,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return await httpRequestDELETE<RequestType, ResponseType>(getInactivateCourseUrl(courseId), token);
 };

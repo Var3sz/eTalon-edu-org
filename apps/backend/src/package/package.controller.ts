@@ -1,8 +1,14 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
-import { AssignPackageToCourseDto, CreatePackageDto, PackageDto } from './dto/package.entity';
+import {
+  AssignPackageToCourseDto,
+  CreatePackageDto,
+  PackageDto,
+  RawPackageDto,
+  UpdatePackageDto,
+} from './dto/package.entity';
 import { PackageService } from './package.service';
 
 @ApiTags('Package')
@@ -35,5 +41,28 @@ export class PackageController {
   @ApiBody({ type: AssignPackageToCourseDto, isArray: true })
   async assignCoursesToPackages(@Body() assignments: AssignPackageToCourseDto[]) {
     return this.packageService.assignCourseToPackage(assignments);
+  }
+
+  @Delete('/InactivatePackage/:id')
+  @ApiOkResponse()
+  async inactivatePackageById(@Param('id', ParseIntPipe) id: number) {
+    return await this.packageService.inactivatePackageById(id);
+  }
+
+  /**
+   *
+   * @param id Id of the package
+   * @returns Corresponding package
+   */
+  @Get('/GetPackageById/:id')
+  @ApiOkResponse({ type: RawPackageDto })
+  async getPackageById(@Param('id', ParseIntPipe) id: number) {
+    return await this.packageService.getPackageById(id);
+  }
+
+  @Put('/UpdatePackage/:id')
+  @ApiOkResponse({ type: RawPackageDto })
+  async updatePackage(@Param('id', ParseIntPipe) id: number, @Body() updateBody: UpdatePackageDto) {
+    return await this.packageService.updatePackage(updateBody, id);
   }
 }

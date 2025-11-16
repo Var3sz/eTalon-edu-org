@@ -1,7 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
-import { AssignPackageToCourseDto, CreatePackageDto, PackageCourseAssignDto, PackageDto } from './dto/package.entity';
+import {
+  AssignPackageToCourseDto,
+  CreatePackageDto,
+  PackageCourseAssignDto,
+  PackageDto,
+  RawPackageDto,
+  UpdatePackageDto,
+} from './dto/package.entity';
 import { PackageHelpers } from './helpers/package.helpers';
 
 @Injectable()
@@ -22,6 +29,9 @@ export class PackageService {
       include: {
         Location: true,
         Group: true,
+      },
+      orderBy: {
+        id: 'asc',
       },
     });
 
@@ -168,5 +178,45 @@ export class PackageService {
     }
 
     return { created, deleted, skipped };
+  }
+
+  async inactivatePackageById(id: number): Promise<any> {
+    return await this.prisma.package.update({
+      where: { id: id },
+      data: { active: false },
+    });
+  }
+
+  /**
+   * Gives back a package specified by an id
+   * @param id Id of the package which needs to be returned
+   * @returns The corresponding package
+   */
+  async getPackageById(id: number): Promise<RawPackageDto> {
+    const Package = await this.prisma.package.findUnique({
+      where: { id },
+      include: { Course_Package: { select: { id: true } } },
+    });
+
+    if (!Package) {
+      throw new NotFoundException(`Package with id ${id} not found`);
+    }
+
+    return { ...Package, isAssigned: Package.Course_Package.length > 0 };
+  }
+
+  /**
+   * Update one package with the given id
+   * @param updateBody Body of the request with the updated package
+   * @param id Id of the package that we want to update
+   * @returns Updated package
+   */
+  async updatePackage(updateBody: UpdatePackageDto, id: number): Promise<RawPackageDto> {
+    const Package = await this.prisma.package.update({
+      where: { id },
+      data: updateBody,
+      include: { Course_Package: { select: { id: true } } },
+    });
+    return { ...Package, isAssigned: Package.Course_Package.length > 0 };
   }
 }

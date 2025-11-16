@@ -42,7 +42,7 @@ export default function FormTextInput<T extends FieldValues>({
                 disabled={disabled}
               />
             ) : (
-              <Label className='w-[250px] font-normal'>{field.value}</Label>
+              <Label className={cn('w-[250px] font-normal', inputStyle)}>{field.value}</Label>
             )}
           </FormControl>
           <FormMessage />
