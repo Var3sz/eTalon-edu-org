@@ -1,6 +1,6 @@
 import { CreateCourses } from '@/api/models/serviceEndpoints/course';
 import { parseDateToISO } from '@/lib/utils';
-import { UpdateCourseDto } from '@/models/Api';
+import { CourseDto, UpdateCourseDto } from '@/models/Api';
 
 import { CreateCoursesFormModel } from '../types';
 
@@ -23,7 +23,7 @@ const parseCreateBody = (formModel: CreateCoursesFormModel): UpdateCourseDto[] =
   return courses;
 };
 
-export const CreateCoursesRequest = async (formModel: CreateCoursesFormModel) => {
+export const CreateCoursesRequest = async (formModel: CreateCoursesFormModel, token: string) => {
   const parsedBody = parseCreateBody(formModel);
-  return await CreateCourses<UpdateCourseDto[], any>(parsedBody);
+  return await CreateCourses<UpdateCourseDto[], CourseDto[]>(parsedBody, token);
 };

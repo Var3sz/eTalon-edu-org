@@ -202,3 +202,25 @@ export class UpdateStudentDetailsDTO {
   @IsOptional()
   discount2?: string;
 }
+
+export class PaymentDto {
+  invoiceDateId: number;
+  date: Date;
+  description?: string;
+  billerId: number;
+  payed: boolean;
+  amount: number;
+  invoiceNumber: string;
+  amountToBePayed: number;
+}
+
+export class StudentPaymentDto {
+  studentName: string;
+  studentId: number;
+  Payments: PaymentDto[];
+}
+
+export class PaymentsDto {
+  courseId: string;
+  payments: StudentPaymentDto[];
+}

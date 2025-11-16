@@ -4,9 +4,12 @@ import { PrismaService } from 'nestjs-prisma';
 import {
   ActiveCourseDto,
   CourseDto,
+  CreateInvoiceDateDto,
   CreateLessonDateDto,
+  InvoiceDateDto,
   LessonDateDto,
   UpdateCourseDto,
+  UpdateInvoiceDateDto,
   UpdateLessonDateDto,
 } from './entities/course.entity';
 
@@ -27,15 +30,6 @@ export class CourseService {
    */
   async getActiveCourses(): Promise<ActiveCourseDto[]> {
     return this.prisma.activeCoursesView.findMany({ orderBy: { startDate: 'asc' } });
-  }
-
-  /**
-   * Gives back all of the currently active courses with the packages and their prices
-   * @returns {ActiveCourseDto[]} Currently active courses
-   * TODO
-   */
-  async getActiveCoursesWithPackageInformation(): Promise<ActiveCourseDto[]> {
-    return this.prisma.activeCoursesView.findMany();
   }
 
   /**
@@ -94,16 +88,15 @@ export class CourseService {
 
   async getCourseLessonDates(courseId: number): Promise<LessonDateDto[]> {
     return this.prisma.lessonDates.findMany({
-      where: {
-        CourseLessonDates: {
-          some: {
-            courseId,
-          },
-        },
-      },
-      orderBy: {
-        date: 'asc',
-      },
+      where: { CourseLessonDates: { some: { courseId } } },
+      orderBy: { date: 'asc' },
+    });
+  }
+
+  async getCourseInvoiceDates(courseId: number): Promise<InvoiceDateDto[]> {
+    return this.prisma.invoiceDates.findMany({
+      where: { CourseInvoiceDates: { some: { courseId } } },
+      orderBy: { date: 'asc' },
     });
   }
 
@@ -150,10 +143,64 @@ export class CourseService {
     });
   }
 
+  async createInvoiceDates(createBody: CreateInvoiceDateDto): Promise<InvoiceDateDto[]> {
+    return this.prisma.$transaction(async (tx) => {
+      const invoiceDates: InvoiceDateDto[] = [];
+
+      // 1. Create new lesson dates (sequentially to avoid sequence collision)
+      for (const body of createBody.dateInfo) {
+        const created = await tx.invoiceDates.create({ data: body });
+        invoiceDates.push(created);
+      }
+
+      // 2. Create course-lesson date relations (sequentially)
+      for (const invoiceDate of invoiceDates) {
+        await tx.courseInvoiceDates.create({
+          data: {
+            courseId: createBody.courseId,
+            invoiceDateid: invoiceDate.id,
+          },
+        });
+      }
+
+      // 3. Get all students participating in the course
+      const participants = await tx.participant.findMany({
+        where: { courseId: createBody.courseId },
+        select: { studentId: true },
+      });
+
+      // 4. Create payment records for each student and each lesson date
+      for (const participant of participants) {
+        for (const invoiceDate of invoiceDates) {
+          await tx.payment.create({
+            data: {
+              invoiceDateId: invoiceDate.id,
+              studentId: participant.studentId,
+              payed: false,
+              amount: 0,
+              invoiceNumber: null,
+              billerId: null,
+            },
+          });
+        }
+      }
+
+      return invoiceDates;
+    });
+  }
+
   async updateLessonDate(updateBody: UpdateLessonDateDto): Promise<LessonDateDto> {
-    return await this.prisma.lessonDates.update({
-      where: { id: updateBody.id },
-      data: updateBody,
+    return await this.prisma.lessonDates.update({ where: { id: updateBody.id }, data: updateBody });
+  }
+
+  async updateInvoiceDate(updateBody: UpdateInvoiceDateDto): Promise<InvoiceDateDto> {
+    return await this.prisma.invoiceDates.update({ where: { id: updateBody.id }, data: updateBody });
+  }
+
+  async inactivateCourseById(id: number): Promise<CourseDto> {
+    return await this.prisma.course.update({
+      where: { id: id },
+      data: { active: false },
     });
   }
 }

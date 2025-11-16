@@ -2,7 +2,7 @@ export interface CourseDto {
   description: string;
   id: number;
   courseId: string;
-  headcount?: number | null;
+  headcount: number | null;
   maxHeadCount: number;
   /** @format date-time */
   startDate: string;
@@ -19,10 +19,11 @@ export interface ActiveCourseDto {
   id: number;
   courseId: string;
   groupDescription: string;
+  locationDescription: string;
   occupancy: number;
-  headcount?: number | null;
+  headcount: number | null;
   maxHeadCount: number;
-  price: number;
+  price: string;
   /** @format date-time */
   startDate: string;
   startTime: string;
@@ -34,7 +35,7 @@ export interface ActiveCourseDto {
 export interface UpdateCourseDto {
   description: string;
   courseId: string;
-  headcount?: number | null;
+  headcount: number | null;
   maxHeadCount: number;
   /** @format date-time */
   startDate: string;
@@ -53,6 +54,13 @@ export interface LessonDateDto {
   date: string;
 }
 
+export interface InvoiceDateDto {
+  id: number;
+  description: string | null;
+  /** @format date-time */
+  date: string;
+}
+
 export interface LessonDateInfoDto {
   /** @format date-time */
   date: string;
@@ -64,7 +72,25 @@ export interface CreateLessonDateDto {
   dateInfo: LessonDateInfoDto[];
 }
 
+export interface InvoiceDateInfoDto {
+  /** @format date-time */
+  date: string;
+  description: string | null;
+}
+
+export interface CreateInvoiceDateDto {
+  courseId: number;
+  dateInfo: InvoiceDateInfoDto[];
+}
+
 export interface UpdateLessonDateDto {
+  id: number;
+  /** @format date-time */
+  date: string;
+  description: string | null;
+}
+
+export interface UpdateInvoiceDateDto {
   id: number;
   /** @format date-time */
   date: string;
@@ -75,7 +101,7 @@ export interface AttendanceDto {
   lessonDateId: number;
   /** @format date-time */
   date: string;
-  description?: string;
+  description: string;
   attended: boolean;
 }
 
@@ -115,32 +141,61 @@ export interface StudentAttendanceDto {
   students: StudentDto[];
 }
 
+export interface PaymentDto {
+  invoiceDateId: number;
+  /** @format date-time */
+  date: string;
+  description: string;
+  billerId: number;
+  payed: boolean;
+  amount: number;
+  invoiceNumber: string;
+  amountToBePayed: number;
+}
+
+export interface StudentPaymentDto {
+  studentName: string;
+  studentId: number;
+  Payments: PaymentDto[];
+}
+
+export interface PaymentsDto {
+  courseId: string;
+  payments: StudentPaymentDto[];
+}
+
+export interface UpdateAttendanceDto {
+  studentId: number;
+  lessondateId: number;
+  attended: boolean;
+}
+
 export interface UpdateStudentDetailsDTO {
   id: number;
   sapId: number;
   email: string;
   firstname: string;
   lastname: string;
-  billCompany?: string;
-  city?: string;
-  zip?: number;
-  address?: string;
-  coupon?: string;
-  vatNum?: string;
+  billCompany: string;
+  city: string;
+  zip: number;
+  address: string;
+  coupon: string;
+  vatNum: string;
   billingAddressTypeId: number;
   childName: string;
-  childMail?: string;
-  childGrade?: number;
-  childTAJ?: string;
+  childMail: string;
+  childGrade: number;
+  childTAJ: string;
   specialDiet: boolean;
-  specialDietDesc?: string;
-  mobile?: string;
-  packageType?: string;
-  packageCode?: string;
+  specialDietDesc: string;
+  mobile: string;
+  packageType: string;
+  packageCode: string;
   disease: boolean;
-  diseaseDesc?: string;
-  discount?: string;
-  discount2?: string;
+  diseaseDesc: string;
+  discount: string;
+  discount2: string;
 }
 
 export interface StudentDetailsDTO {
@@ -181,10 +236,24 @@ export interface BillingAddressTypeDto {
 export interface LocationDto {
   id: number;
   description: string;
+  isDeleted: string;
+}
+
+export interface UpdateLocationsInputDto {
+  id: number | null;
+  isDeleted: string;
+  description: string;
 }
 
 export interface GroupDto {
   id: number;
+  description: string;
+  isDeleted: string;
+}
+
+export interface UpdateGroupsInputDto {
+  id: number | null;
+  isDeleted: string;
   description: string;
 }
 
@@ -251,4 +320,35 @@ export interface AssignPackageToCourseDto {
   courseId: number;
   packageId: string;
   assign: boolean;
+}
+
+export interface RawPackageDto {
+  type: string;
+  id: number;
+  packageId: string;
+  price: number;
+  locationId: number;
+  active: boolean;
+  groupId: number;
+  isAssigned: boolean;
+}
+
+export interface UpdatePackageDto {
+  id: number;
+  packageId: string;
+  price: number;
+  type: string;
+  locationId: number;
+  active: boolean;
+  groupId: number;
+}
+
+export interface UpdatePaymentsDto {
+  studentId: number;
+  invoiceDateId: number;
+  billerId: number;
+  payed: boolean;
+  payedAmount: number;
+  invoiceNumber: string;
+  amountToBePayed: number;
 }

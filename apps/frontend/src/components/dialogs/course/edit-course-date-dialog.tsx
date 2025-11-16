@@ -14,14 +14,21 @@ import { UpdateCourseDateFormModel } from '@/models/course/types';
 type EditCourseDateDialogProps = {
   courseId: string;
   rowData: LessonDateDto;
+  token: string;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function EditCourseDateDialog({ courseId, rowData, setOpenChangeDialog }: EditCourseDateDialogProps) {
+export default function EditCourseDateDialog({
+  courseId,
+  rowData,
+  token,
+  setOpenChangeDialog,
+}: EditCourseDateDialogProps) {
   const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitEditCourseDateDialog({
     courseId,
     rowData,
     setOpenChangeDialog,
+    token,
   });
   const formValues = useWatch({ control: form.control }) as UpdateCourseDateFormModel;
 

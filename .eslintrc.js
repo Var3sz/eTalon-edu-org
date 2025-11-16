@@ -18,7 +18,6 @@ module.exports = {
     ],
     eqeqeq: 'error',
     'max-depth': 'error',
-    'max-lines': 'error',
     'no-alert': 'error',
     'no-array-constructor': 'error',
     'no-console': [
@@ -30,8 +29,6 @@ module.exports = {
     'no-eval': 'error',
     'no-implicit-coercion': 'error',
     'no-lonely-if': 'error',
-    'no-nested-ternary': 'error',
-    'no-negated-condition': 'error',
     'no-unneeded-ternary': 'error',
     'no-undef-init': 'error',
     'no-underscore-dangle': 'error',

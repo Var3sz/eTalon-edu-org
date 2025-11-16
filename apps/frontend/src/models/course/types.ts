@@ -7,6 +7,15 @@ export type UpdateCourseDateFormModel = {
   };
 };
 
+export type UpdateInvoiceDateFormModel = {
+  id: number | null;
+  date: Date | null;
+  description: string | null;
+  Helpers: {
+    inEdit: boolean;
+  };
+};
+
 export type CreateCourseDateFormModel = {
   id: number | null;
   date: Date | null;
@@ -15,6 +24,19 @@ export type CreateCourseDateFormModel = {
 
 export type CreateCourseDatesFormModel = {
   CourseDateList: CreateCourseDateFormModel[];
+  Helpers: {
+    inEdit: boolean;
+  };
+};
+
+export type CreateInvoiceDateFormModel = {
+  id: number | null;
+  date: Date | null;
+  description: string | null;
+};
+
+export type CreateInvoiceDatesFormModel = {
+  InvoiceDateList: CreateInvoiceDateFormModel[];
   Helpers: {
     inEdit: boolean;
   };
@@ -41,7 +63,7 @@ export type UpdateCourseFormModel = {
 export type CreateCourseFormModel = {
   description: string | null;
   courseId: string | null;
-  headcount?: number | null;
+  headcount: number | null;
   maxHeadCount: number | null;
   startDate: Date | null;
   startTime: string | null;

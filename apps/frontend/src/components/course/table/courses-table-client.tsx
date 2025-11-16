@@ -1,11 +1,16 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+
 import CourseColumns from '@/components/columns/course/course-columns';
+import { CourseRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { DataTable } from '@/components/tables/data-table';
 import useInitCourseTableClient from '@/hooks/courses/use-init-course-table-client';
 
 export default function CoursesTableClient() {
-  const { courses } = useInitCourseTableClient();
+  const { data: session } = useSession();
+
+  const { courses } = useInitCourseTableClient(session?.tokens.accessToken ?? '');
 
   const courseToolbarProps = {
     title: 'Aktív kurzusok',
@@ -13,7 +18,12 @@ export default function CoursesTableClient() {
 
   return (
     <div className='w-3/4 py-10 mx-auto'>
-      <DataTable columns={CourseColumns()} data={courses} hasToolbar toolbarProps={courseToolbarProps} />
+      <DataTable
+        columns={CourseColumns(CourseRedirectionFunction)}
+        data={courses}
+        hasToolbar
+        toolbarProps={courseToolbarProps}
+      />
     </div>
   );
 }

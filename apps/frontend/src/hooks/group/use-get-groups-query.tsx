@@ -3,10 +3,11 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { GetGroups } from '@/api/models/serviceEndpoints/helpers';
 import { GroupDto } from '@/models/Api';
 
-export default function useGetGroupsQuery() {
+export default function useGetGroupsQuery(token: string) {
   const { data: groupsResponse } = useSuspenseQuery({
     queryKey: ['groups'],
-    queryFn: () => GetGroups<GroupDto[]>(),
+    queryFn: () => GetGroups<GroupDto[]>(token),
+    staleTime: 60 * 60 * 1000,
   });
 
   if (groupsResponse.status === 200) {

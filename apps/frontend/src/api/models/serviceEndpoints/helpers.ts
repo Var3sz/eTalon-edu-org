@@ -1,6 +1,6 @@
 'use server';
 
-import { httpRequestGET } from '@/api/models/api';
+import { httpRequestGET, httpRequestPUT } from '@/api/models/api';
 import { FetchResponse } from '@/api/types/fetch-response';
 
 const getBillingTypesUrl = () => {
@@ -11,18 +11,40 @@ const getLocationsUrl = () => {
   return `${process.env.SERVER_BASE_URL}locations/GetLocations`;
 };
 
+const getUpdateLocationDataUrl = () => {
+  return `${process.env.SERVER_BASE_URL}locations/UpdateLocations`;
+};
+
 const getGroupsUrl = () => {
   return `${process.env.SERVER_BASE_URL}groups/GetGroups`;
 };
 
-export const GetBillingTypes = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return httpRequestGET<ResponseType>(getBillingTypesUrl(), process.env.JWT_TOKEN!);
+const getUpdateGroupDataUrl = () => {
+  return `${process.env.SERVER_BASE_URL}groups/UpdateGroups`;
 };
 
-export const GetLocations = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return httpRequestGET<ResponseType>(getLocationsUrl(), process.env.JWT_TOKEN!);
+export const GetBillingTypes = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getBillingTypesUrl(), token);
 };
 
-export const GetGroups = async <ResponseType>(): Promise<FetchResponse<ResponseType>> => {
-  return httpRequestGET<ResponseType>(getGroupsUrl(), process.env.JWT_TOKEN!);
+export const GetLocations = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getLocationsUrl(), token);
+};
+
+export const UpdateLocationData = async <RequestType, ResponseType>(
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestPUT<RequestType, ResponseType>(getUpdateLocationDataUrl(), token, body);
+};
+
+export const GetGroups = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getGroupsUrl(), token);
+};
+
+export const UpdateGroupData = async <RequestType, ResponseType>(
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestPUT<RequestType, ResponseType>(getUpdateGroupDataUrl(), token, body);
 };

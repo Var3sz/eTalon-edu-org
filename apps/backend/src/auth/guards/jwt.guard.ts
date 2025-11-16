@@ -28,6 +28,8 @@ export class JwtGuard implements CanActivate {
 
   // Check if there is an authorization header and if it is a Bearer token
   private extractTokenFromHeader(request: Request) {
+    const auth = request.headers.authorization;
+    if (!auth) return undefined;
     const [type, token] = request.headers.authorization.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }

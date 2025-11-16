@@ -12,12 +12,18 @@ import { CreateCourseDatesFormModel } from '@/models/course/types';
 type CreateCourseDatesDialogProps = {
   courseId: string;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
-export default function CreateCourseDatesDialog({ courseId, setOpenChangeDialog }: CreateCourseDatesDialogProps) {
+export default function CreateCourseDatesDialog({
+  courseId,
+  setOpenChangeDialog,
+  token,
+}: CreateCourseDatesDialogProps) {
   const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitCreateCourseDatesDialog({
     courseId,
     setOpenChangeDialog,
+    token,
   });
 
   const formValues = useWatch({ control: form.control }) as CreateCourseDatesFormModel;

@@ -12,7 +12,7 @@ import { UpdateCourseFormModel } from '@/models/course/types';
 import { UpdateCourseFormData } from '@/validation/default-values/course/update-course-form-data';
 import { updateCourseSchema } from '@/validation/schemas/course/update-course-schema';
 
-export default function useInitEditCourseClientFormBase(courseId: string, courseData: CourseDto) {
+export default function useInitEditCourseClientFormBase(courseId: string, courseData: CourseDto, token: string) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
@@ -23,7 +23,7 @@ export default function useInitEditCourseClientFormBase(courseId: string, course
 
   const onValidFormSubmit = (formModel: UpdateCourseFormModel) => {
     startTransaction(async () => {
-      const updateResponse = await UpdateCourseDataRequest(formModel);
+      const updateResponse = await UpdateCourseDataRequest(formModel, token);
       if (updateResponse.status === 200) {
         await queryClient.invalidateQueries({ queryKey: ['course', { id: courseId }] });
         toast({

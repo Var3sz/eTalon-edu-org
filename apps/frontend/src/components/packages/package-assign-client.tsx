@@ -12,22 +12,27 @@ import { SimpleTable } from '../tables/simple-table';
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
 
-export default function PackageAssignClient() {
-  const locations = useGetLocationsQuery();
+type PackageAssignClientModel = {
+  token: string;
+};
+
+export default function PackageAssignClient({ token }: PackageAssignClientModel) {
+  const locations = useGetLocationsQuery(token);
 
   const [type, setType] = useState<string | null>(null);
   const [locationId, setLocationId] = useState<number | null>(null);
 
-  const { form, isPending, columns, data, onValidSubmit, onInvalidSubmit } = useInitPackageAssignClient({
+  const { form, isPending, isLoading, columns, data, onValidSubmit, onInvalidSubmit } = useInitPackageAssignClient({
     type,
     locationId,
+    token,
   });
 
   const formValues = useWatch({ control: form.control }) as PackageAssignFormModel;
 
   return (
     <div className='flex flex-col gap-5'>
-      {isPending && <LoadingFullScreen />}
+      {(isPending || isLoading) && <LoadingFullScreen />}
       <span className='text-3xl font-bold'>Csomagok hozzárendelése</span>
       <div className='flex gap-5'>
         <NoFormTextInput value={type} setValue={setType} text='Csomag típus' withLabel />

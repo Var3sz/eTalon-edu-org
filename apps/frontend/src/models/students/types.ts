@@ -12,8 +12,8 @@ export type AttendanceDateColumnType = {
   description: string;
 };
 
-export type UpdateAttendancesType = {
-  studentId: number;
-  lessondateId: number;
-  attended: boolean;
+export type PaymentDateColumnType = {
+  invoiceDateId: number;
+  date: string;
+  description: string;
 };

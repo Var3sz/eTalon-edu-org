@@ -1,4 +1,5 @@
-import { AlertTriangle } from 'lucide-react';
+'use client';
+
 import { useSearchParams } from 'next/navigation';
 import { ReactElement } from 'react';
 
@@ -13,6 +14,7 @@ type TabModel = {
   tiggerStyle?: string;
   children: ReactElement;
   visible?: boolean;
+  contentStyle?: string;
 };
 
 export type TabProviderModel = {
@@ -34,44 +36,49 @@ export default function TabProvider({ tabs, isHidden = false, mainTabStyle, tabL
     return 'details';
   };
 
-  return isHidden ? null : (
+  const visibleTabs = tabs.filter((tab) => tab.visible);
+
+  return isHidden === false ? (
     <Tabs
       defaultValue={handleTabDefaultValue()}
       className={cn('w-full font-breuer-medium text-black flex flex-col gap-2', mainTabStyle)}
     >
       <TabsList
         className={cn(
-          'bg-white rounded-t-xl shadow-md w-1/4',
-          'mb-2',
-          'max-h-10 overflow-hidden',
-          'p-0 rounded-t-xl',
+          'inline-flex w-fit self-start',
+          'bg-white rounded-t-xl shadow-md',
+          'mb-2 max-h-10 overflow-hidden p-0 rounded-t-xl',
           tabListStyle
         )}
       >
-        {tabs.map(
-          (tab) =>
-            tab.visible && (
-              <TabsTrigger
-                className={cn(
-                  'relative px-5 py-2 border-b-2 text-lg transition-colors duration-200',
-                  'data-[state=active]:text-[#ffffff] data-[state=active]:bg-[#8cc63f]',
-                  'hover:text-[#8cc63f] hover:border-[#8cc63f] w-1/2',
-                  tab.tiggerStyle
-                )}
-                key={`contract-tab-trigger-${tab.key}`}
-                value={tab.key}
-              >
-                {tab.label}
-              </TabsTrigger>
-            )
-        )}
+        {visibleTabs.map((tab) => (
+          <TabsTrigger
+            key={`tab-trigger-${tab.key}`}
+            value={tab.key}
+            className={cn(
+              'relative px-5 py-2 border-b-2 text-lg transition-colors duration-200',
+              'data-[state=active]:text-[#ffffff] data-[state=active]:bg-[#8cc63f]',
+              'hover:text-[#8cc63f] hover:border-[#8cc63f]',
+              'min-w-[240px]',
+              tab.tiggerStyle
+            )}
+          >
+            {tab.label}
+          </TabsTrigger>
+        ))}
       </TabsList>
 
       {tabs.map((tab) => (
-        <TabsContent key={tab.key} value={tab.key} className='bg-white border-rounded rounded p-6 shadow-sm'>
+        <TabsContent
+          key={tab.key}
+          value={tab.key}
+          className={cn('w-full bg-white border-rounded rounded p-6 shadow-sm', tab.contentStyle)}
+        >
           {tab.children}
         </TabsContent>
       ))}
     </Tabs>
+  ) : (
+    <div />
   );
 }

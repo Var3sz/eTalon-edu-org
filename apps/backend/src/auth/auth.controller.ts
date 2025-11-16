@@ -15,6 +15,7 @@ export class AuthController {
     private authService: AuthService
   ) {}
 
+  // Regisztráció nem lesz lehetséges a portálon!
   @Post('register')
   async registerUser(@Body() dto: CreateUserDto) {
     return await this.userService.create(dto);

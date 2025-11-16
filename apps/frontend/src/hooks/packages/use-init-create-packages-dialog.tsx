@@ -11,9 +11,10 @@ import { CreatePackagesSchema } from '@/validation/schemas/package/create-packag
 
 type UseInitCreatePackagesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
-export default function useInitCreatePackagesDialog({ setOpenChangeDialog }: UseInitCreatePackagesDialogProps) {
+export default function useInitCreatePackagesDialog({ setOpenChangeDialog, token }: UseInitCreatePackagesDialogProps) {
   const queryClient = useQueryClient();
   const [isPending, startTransaction] = useTransition();
   const form = useForm<CreatePackagesFormModel>({
@@ -23,7 +24,7 @@ export default function useInitCreatePackagesDialog({ setOpenChangeDialog }: Use
 
   const onValidSubmit = (formModel: CreatePackagesFormModel) => {
     startTransaction(async () => {
-      const createResponse = await CreatePackagesRequest(formModel);
+      const createResponse = await CreatePackagesRequest(formModel, token);
       if (createResponse.status === 200 || createResponse.status === 201) {
         await queryClient.invalidateQueries({ queryKey: ['packages'] });
         toast({

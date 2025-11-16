@@ -13,19 +13,19 @@ import { CreateCoursesFormModel } from '@/models/course/types';
 
 type CreateCoursesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
-export default function CreateCoursesDialog({ setOpenChangeDialog }: CreateCoursesDialogProps) {
+export default function CreateCoursesDialog({ setOpenChangeDialog, token }: CreateCoursesDialogProps) {
   const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitCreateCoursesDialog({
     setOpenChangeDialog,
+    token,
   });
 
-  const groups = useGetGroupsQuery();
-  const locations = useGetLocationsQuery();
+  const groups = useGetGroupsQuery(token);
+  const locations = useGetLocationsQuery(token);
 
   const formValues = useWatch({ control: form.control }) as CreateCoursesFormModel;
-
-  console.log(formValues);
 
   const [tableLength, setTableLength] = useState<number>(formValues.CourseList.length);
 

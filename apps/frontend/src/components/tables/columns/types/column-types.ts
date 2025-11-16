@@ -7,6 +7,7 @@ export type ActionsTableColumnModel<TData> = {
   select?: boolean;
   redirect?: boolean;
   edit?: boolean;
+  deletable?: boolean;
   redirection?: (cell: any) => string;
   dialogTitle?: string;
 } & ColumnBaseModel<TData>;
@@ -51,6 +52,7 @@ export type ColumnGroupModel<T> = {
 export type ClickableColumnModel<TData> = {
   dialogTitle?: string;
   courseId: string;
+  token: string;
 } & ColumnBaseModel<TData>;
 
 export type CheckboxColumnModel<TData> = {

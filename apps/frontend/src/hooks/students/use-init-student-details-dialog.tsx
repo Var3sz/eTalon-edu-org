@@ -17,6 +17,7 @@ type UseInitStudentDetailsDialogProps = {
   studentData: StudentAttendance;
   startTransaction: TransitionStartFunction;
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
 export default function useInitStudentDetailsDialog({
@@ -24,6 +25,7 @@ export default function useInitStudentDetailsDialog({
   studentData,
   startTransaction,
   setOpenChangeDialog,
+  token,
 }: UseInitStudentDetailsDialogProps) {
   const queryClient = useQueryClient();
 
@@ -34,9 +36,9 @@ export default function useInitStudentDetailsDialog({
 
   const onValidFormSubmit = (formModel: UpdateStudentDetailsFormModel) => {
     startTransaction(async () => {
-      const updateResponse = await UpdateStudentDetailsAction(formModel);
+      const updateResponse = await UpdateStudentDetailsAction(formModel, token);
       if (updateResponse.status === 200) {
-        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', Number(courseId)] });
+        await queryClient.invalidateQueries({ queryKey: ['course-details-by-id', courseId] });
         toast({ variant: 'success', title: 'Sikeres frissítés!' });
         setOpenChangeDialog && setOpenChangeDialog(false);
       } else {

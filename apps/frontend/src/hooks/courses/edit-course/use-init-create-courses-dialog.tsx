@@ -11,9 +11,10 @@ import { CreateCoursesSchema } from '@/validation/schemas/course/create-courses-
 
 type UseInitCreateCoursesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
-export default function useInitCreateCoursesDialog({ setOpenChangeDialog }: UseInitCreateCoursesDialogProps) {
+export default function useInitCreateCoursesDialog({ setOpenChangeDialog, token }: UseInitCreateCoursesDialogProps) {
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
@@ -24,7 +25,7 @@ export default function useInitCreateCoursesDialog({ setOpenChangeDialog }: UseI
 
   const onValidSubmit = (formModel: CreateCoursesFormModel) => {
     startTransaction(async () => {
-      const createResponse = await CreateCoursesRequest(formModel);
+      const createResponse = await CreateCoursesRequest(formModel, token);
       if (createResponse.status === 200 || createResponse.status === 201) {
         await queryClient.invalidateQueries({ queryKey: ['courses'] });
         toast({

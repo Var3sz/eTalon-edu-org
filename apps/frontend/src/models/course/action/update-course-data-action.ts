@@ -2,7 +2,7 @@
 
 import { UpdateCourseData } from '@/api/models/serviceEndpoints/course';
 import { parseDateToISO } from '@/lib/utils';
-import { UpdateCourseDto } from '@/models/Api';
+import { CourseDto, UpdateCourseDto } from '@/models/Api';
 
 import { UpdateCourseFormModel } from '../types';
 
@@ -22,7 +22,7 @@ const parseUpdateCourseData = (formModel: UpdateCourseFormModel): UpdateCourseDt
   };
 };
 
-export const UpdateCourseDataRequest = async (formModel: UpdateCourseFormModel) => {
+export const UpdateCourseDataRequest = async (formModel: UpdateCourseFormModel, token: string) => {
   const parsedBody = parseUpdateCourseData(formModel);
-  return await UpdateCourseData<UpdateCourseDto, any>(formModel.id!, parsedBody);
+  return await UpdateCourseData<UpdateCourseDto, CourseDto>(formModel.id!, parsedBody, token);
 };

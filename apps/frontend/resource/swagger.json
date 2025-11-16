@@ -38,7 +38,14 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/GetActiveCourses": {
@@ -60,7 +67,14 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/GetCourseById/{id}": {
@@ -88,7 +102,14 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/UpdateCourse/{id}": {
@@ -126,7 +147,14 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/CreateCourses": {
@@ -174,7 +202,14 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/CourseDatesByCourseId/{id}": {
@@ -205,7 +240,52 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/courses/InvoiceDatesByCourseId/{id}": {
+      "get": {
+        "operationId": "CourseController_getInvoiceDates",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceDateDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/CreateLessonDates": {
@@ -250,7 +330,66 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/courses/CreateInvoiceDates": {
+      "post": {
+        "operationId": "CourseController_createInvoiceDates",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInvoiceDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceDateDto"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceDateDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/courses/UpdateLessonDate": {
@@ -279,10 +418,81 @@
             }
           }
         },
-        "tags": ["Courses"]
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
-    "/students/students": {
+    "/courses/UpdateInvoiceDate": {
+      "put": {
+        "operationId": "CourseController_updateInvoiceDate",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonDateDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/courses/InactivateCourse/{id}": {
+      "delete": {
+        "operationId": "CourseController_inactivateCourseById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/students/GetStudents": {
       "get": {
         "operationId": "StudentController_getAllStudents",
         "parameters": [],
@@ -291,7 +501,14 @@
             "description": ""
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/students/GetStudentsByCourseWithAttendances/{id}": {
@@ -319,7 +536,49 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/students/GetStudentsByCourseWithPayments/{id}": {
+      "get": {
+        "operationId": "StudentController_getStudentsByCourseWithPayments",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/students/UpdateAttendances": {
@@ -333,7 +592,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/UpdateAttendanceDto"
                 }
               }
             }
@@ -354,7 +613,14 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/students/UpdateStudentDetails": {
@@ -383,7 +649,14 @@
             }
           }
         },
-        "tags": ["Students"]
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/billingAddressType/GetBillingAddressTypes": {
@@ -405,7 +678,14 @@
             }
           }
         },
-        "tags": ["BillingAddressTypes"]
+        "tags": [
+          "BillingAddressTypes"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/locations/GetLocations": {
@@ -427,7 +707,56 @@
             }
           }
         },
-        "tags": ["Locations"]
+        "tags": [
+          "Locations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/locations/UpdateLocations": {
+      "put": {
+        "operationId": "LocationsController_updateGroups",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateLocationsInputDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Locations"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/groups/GetGroups": {
@@ -449,7 +778,56 @@
             }
           }
         },
-        "tags": ["Groups"]
+        "tags": [
+          "Groups"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/groups/UpdateGroups": {
+      "put": {
+        "operationId": "GroupController_updateGroups",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateGroupsInputDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/user/{id}": {
@@ -477,7 +855,9 @@
             }
           }
         },
-        "tags": ["Users"]
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/auth/register": {
@@ -499,7 +879,9 @@
             "description": ""
           }
         },
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/auth/login": {
@@ -521,7 +903,9 @@
             "description": ""
           }
         },
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/auth/refresh": {
@@ -533,7 +917,9 @@
             "description": ""
           }
         },
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/packages/GetPackages": {
@@ -555,7 +941,14 @@
             }
           }
         },
-        "tags": ["Package"]
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/packages/CreatePackages": {
@@ -603,7 +996,14 @@
             }
           }
         },
-        "tags": ["Package"]
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/packages/GetPackagesAndCoursesByLocGroupType": {
@@ -616,14 +1016,6 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "groupId",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
             }
           },
           {
@@ -647,10 +1039,17 @@
             }
           }
         },
-        "tags": ["Package"]
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
-    "/packages/assign": {
+    "/packages/AssignPackagesToCourses": {
       "post": {
         "operationId": "PackageController_assignCoursesToPackages",
         "parameters": [],
@@ -672,17 +1071,157 @@
             "description": ""
           },
           "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/packages/InactivatePackage/{id}": {
+      "delete": {
+        "operationId": "PackageController_inactivatePackageById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/packages/GetPackageById/{id}": {
+      "get": {
+        "operationId": "PackageController_getPackageById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/RawPackageDto"
                 }
               }
             }
           }
         },
-        "tags": ["Package"]
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/packages/UpdatePackage/{id}": {
+      "put": {
+        "operationId": "PackageController_updatePackage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePackageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RawPackageDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Package"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/invoice/UpdateStudentPayments": {
+      "put": {
+        "operationId": "InvoiceController_UpdateStudentPayments",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdatePaymentsDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Invoice"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     }
   },
@@ -699,6 +1238,13 @@
     }
   ],
   "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
     "schemas": {
       "CourseDto": {
         "type": "object",
@@ -771,6 +1317,9 @@
           "groupDescription": {
             "type": "string"
           },
+          "locationDescription": {
+            "type": "string"
+          },
           "occupancy": {
             "type": "number"
           },
@@ -782,7 +1331,7 @@
             "type": "number"
           },
           "price": {
-            "type": "number"
+            "type": "string"
           },
           "startDate": {
             "format": "date-time",
@@ -806,6 +1355,7 @@
           "id",
           "courseId",
           "groupDescription",
+          "locationDescription",
           "occupancy",
           "maxHeadCount",
           "price",
@@ -883,7 +1433,32 @@
             "type": "string"
           }
         },
-        "required": ["id", "description", "date"]
+        "required": [
+          "id",
+          "description",
+          "date"
+        ]
+      },
+      "InvoiceDateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "date"
+        ]
       },
       "LessonDateInfoDto": {
         "type": "object",
@@ -897,7 +1472,10 @@
             "nullable": true
           }
         },
-        "required": ["date", "description"]
+        "required": [
+          "date",
+          "description"
+        ]
       },
       "CreateLessonDateDto": {
         "type": "object",
@@ -912,7 +1490,45 @@
             }
           }
         },
-        "required": ["courseId", "dateInfo"]
+        "required": [
+          "courseId",
+          "dateInfo"
+        ]
+      },
+      "InvoiceDateInfoDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "date",
+          "description"
+        ]
+      },
+      "CreateInvoiceDateDto": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "number"
+          },
+          "dateInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceDateInfoDto"
+            }
+          }
+        },
+        "required": [
+          "courseId",
+          "dateInfo"
+        ]
       },
       "UpdateLessonDateDto": {
         "type": "object",
@@ -929,7 +1545,32 @@
             "nullable": true
           }
         },
-        "required": ["id", "date", "description"]
+        "required": [
+          "id",
+          "date",
+          "description"
+        ]
+      },
+      "UpdateInvoiceDateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "date",
+          "description"
+        ]
       },
       "AttendanceDto": {
         "type": "object",
@@ -948,7 +1589,11 @@
             "type": "boolean"
           }
         },
-        "required": ["lessonDateId", "date", "attended"]
+        "required": [
+          "lessonDateId",
+          "date",
+          "attended"
+        ]
       },
       "StudentDto": {
         "type": "object",
@@ -1082,7 +1727,108 @@
             }
           }
         },
-        "required": ["courseId", "students"]
+        "required": [
+          "courseId",
+          "students"
+        ]
+      },
+      "PaymentDto": {
+        "type": "object",
+        "properties": {
+          "invoiceDateId": {
+            "type": "number"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "billerId": {
+            "type": "number"
+          },
+          "payed": {
+            "type": "boolean"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "invoiceNumber": {
+            "type": "string"
+          },
+          "amountToBePayed": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "invoiceDateId",
+          "date",
+          "billerId",
+          "payed",
+          "amount",
+          "invoiceNumber",
+          "amountToBePayed"
+        ]
+      },
+      "StudentPaymentDto": {
+        "type": "object",
+        "properties": {
+          "studentName": {
+            "type": "string"
+          },
+          "studentId": {
+            "type": "number"
+          },
+          "Payments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentDto"
+            }
+          }
+        },
+        "required": [
+          "studentName",
+          "studentId",
+          "Payments"
+        ]
+      },
+      "PaymentsDto": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "string"
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentPaymentDto"
+            }
+          }
+        },
+        "required": [
+          "courseId",
+          "payments"
+        ]
+      },
+      "UpdateAttendanceDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "number"
+          },
+          "lessondateId": {
+            "type": "number"
+          },
+          "attended": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "studentId",
+          "lessondateId",
+          "attended"
+        ]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",
@@ -1297,7 +2043,10 @@
             "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description"
+        ]
       },
       "LocationDto": {
         "type": "object",
@@ -1307,9 +2056,36 @@
           },
           "description": {
             "type": "string"
+          },
+          "isDeleted": {
+            "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description",
+          "isDeleted"
+        ]
+      },
+      "UpdateLocationsInputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "isDeleted",
+          "description"
+        ]
       },
       "GroupDto": {
         "type": "object",
@@ -1319,9 +2095,36 @@
           },
           "description": {
             "type": "string"
+          },
+          "isDeleted": {
+            "type": "string"
           }
         },
-        "required": ["id", "description"]
+        "required": [
+          "id",
+          "description",
+          "isDeleted"
+        ]
+      },
+      "UpdateGroupsInputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "isDeleted",
+          "description"
+        ]
       },
       "ProfileDto": {
         "type": "object",
@@ -1339,7 +2142,12 @@
             "type": "number"
           }
         },
-        "required": ["id", "email", "name", "roleId"]
+        "required": [
+          "id",
+          "email",
+          "name",
+          "roleId"
+        ]
       },
       "CreateUserDto": {
         "type": "object",
@@ -1354,7 +2162,11 @@
             "type": "string"
           }
         },
-        "required": ["name", "email", "password"]
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
       },
       "LoginDto": {
         "type": "object",
@@ -1366,7 +2178,10 @@
             "type": "string"
           }
         },
-        "required": ["username", "password"]
+        "required": [
+          "username",
+          "password"
+        ]
       },
       "PackageDto": {
         "type": "object",
@@ -1399,7 +2214,17 @@
             "type": "string"
           }
         },
-        "required": ["type", "id", "packageId", "price", "locationId", "locationDesc", "active", "groupId", "groupDesc"]
+        "required": [
+          "type",
+          "id",
+          "packageId",
+          "price",
+          "locationId",
+          "locationDesc",
+          "active",
+          "groupId",
+          "groupDesc"
+        ]
       },
       "CreatePackageDto": {
         "type": "object",
@@ -1423,7 +2248,14 @@
             "type": "number"
           }
         },
-        "required": ["packageId", "price", "type", "locationId", "active", "groupId"]
+        "required": [
+          "packageId",
+          "price",
+          "type",
+          "locationId",
+          "active",
+          "groupId"
+        ]
       },
       "CourseAssignDto": {
         "type": "object",
@@ -1435,7 +2267,10 @@
             "type": "string"
           }
         },
-        "required": ["id", "courseId"]
+        "required": [
+          "id",
+          "courseId"
+        ]
       },
       "PackageAssignDto": {
         "type": "object",
@@ -1444,7 +2279,9 @@
             "type": "string"
           }
         },
-        "required": ["packageId"]
+        "required": [
+          "packageId"
+        ]
       },
       "AssingDto": {
         "type": "object",
@@ -1456,7 +2293,10 @@
             "type": "string"
           }
         },
-        "required": ["courseId", "packageId"]
+        "required": [
+          "courseId",
+          "packageId"
+        ]
       },
       "PackageCourseAssignDto": {
         "type": "object",
@@ -1480,7 +2320,11 @@
             }
           }
         },
-        "required": ["courses", "packages", "assignments"]
+        "required": [
+          "courses",
+          "packages",
+          "assignments"
+        ]
       },
       "AssignPackageToCourseDto": {
         "type": "object",
@@ -1495,7 +2339,120 @@
             "type": "boolean"
           }
         },
-        "required": ["courseId", "packageId", "assign"]
+        "required": [
+          "courseId",
+          "packageId",
+          "assign"
+        ]
+      },
+      "RawPackageDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          },
+          "isAssigned": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "packageId",
+          "price",
+          "locationId",
+          "active",
+          "groupId",
+          "isAssigned"
+        ]
+      },
+      "UpdatePackageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "locationId": {
+            "type": "number"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "packageId",
+          "price",
+          "type",
+          "locationId",
+          "active",
+          "groupId"
+        ]
+      },
+      "UpdatePaymentsDto": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "number"
+          },
+          "invoiceDateId": {
+            "type": "number"
+          },
+          "billerId": {
+            "type": "number"
+          },
+          "payed": {
+            "type": "boolean"
+          },
+          "payedAmount": {
+            "type": "number"
+          },
+          "invoiceNumber": {
+            "type": "string"
+          },
+          "amountToBePayed": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "studentId",
+          "invoiceDateId",
+          "billerId",
+          "payed",
+          "payedAmount",
+          "invoiceNumber",
+          "amountToBePayed"
+        ]
       }
     }
   }

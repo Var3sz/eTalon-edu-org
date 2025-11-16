@@ -1,6 +1,6 @@
 import { IsDateString, IsNotEmpty, IsString, ValidateNested } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ActiveCoursesView, Course, LessonDates } from '@prisma/client';
+import { ActiveCoursesView, Course, InvoiceDates, LessonDates } from '@prisma/client';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsNumber } from 'class-validator';
 
@@ -17,13 +17,15 @@ export class ActiveCourseDto implements ActiveCoursesView {
   @ApiProperty()
   groupDescription: string;
   @ApiProperty()
+  locationDescription: string;
+  @ApiProperty()
   occupancy: number;
   @ApiProperty({ required: false, nullable: true })
   headcount: number | null;
   @ApiProperty()
   maxHeadCount: number;
   @ApiProperty()
-  price: number;
+  price: string;
   @ApiProperty()
   startDate: Date;
   @ApiProperty()
@@ -121,10 +123,25 @@ export class LessonDateDto implements LessonDates {
   date: Date;
 }
 
+export class InvoiceDateDto implements InvoiceDates {
+  id: number;
+  description: string | null;
+  date: Date;
+}
+
 /**
  * Dto for creating LessonDates
  */
 export class LessonDateInfoDto {
+  @IsDateString()
+  @IsNotEmpty()
+  date: Date;
+
+  @IsString()
+  description: string | null;
+}
+
+export class InvoiceDateInfoDto {
   @IsDateString()
   @IsNotEmpty()
   date: Date;
@@ -142,10 +159,31 @@ export class CreateLessonDateDto {
   dateInfo: LessonDateInfoDto[];
 }
 
+export class CreateInvoiceDateDto {
+  @IsNumber()
+  courseId: number;
+
+  @ValidateNested({ each: true })
+  @Type(() => InvoiceDateInfoDto)
+  dateInfo: InvoiceDateInfoDto[];
+}
+
 /**
  * Dto for updating a single LessonDate
  */
 export class UpdateLessonDateDto {
+  @IsNumber()
+  id: number;
+
+  @IsDateString()
+  @IsNotEmpty()
+  date: Date;
+
+  @IsString()
+  description: string | null;
+}
+
+export class UpdateInvoiceDateDto {
   @IsNumber()
   id: number;
 

@@ -32,4 +32,25 @@ export const FormLocales = {
     date: 'Óra dátuma',
     description: 'Óra leírása',
   },
+  invoiceDate: {
+    new: 'Számlázási dátumok létrehozása',
+    edit: 'Számlázási dátum módosítása',
+    date: 'Számlázás dátuma',
+    description: 'Megjegyzés',
+  },
+  groups: {
+    edit: 'Csoport módosítása',
+    description: 'Csoport megnevezése',
+    add: 'Csoportok hozzáadása',
+  },
+  locations: {
+    edit: 'Helyszín módosítása',
+    description: 'Helyszín neve',
+    add: 'Helyszínek hozzáadása',
+  },
+  package: {
+    type: 'Csomag típusa',
+    packageId: 'Csomag azonosító',
+    price: 'Ár',
+  },
 };

@@ -26,8 +26,9 @@ export class RefreshJwtGuard implements CanActivate {
     return true;
   }
 
-  // Check if there is an authorization header and if it is a Bearer token
   private extractTokenFromHeader(request: Request) {
+    const auth = request.headers.authorization;
+    if (!auth) return undefined;
     const [type, token] = request.headers.authorization.split(' ') ?? [];
     return type === 'Refresh' ? token : undefined;
   }

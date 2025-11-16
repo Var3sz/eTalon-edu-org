@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { useWatch } from 'react-hook-form';
 
 import LoadingFullScreen from '@/app/loading';
@@ -15,18 +16,19 @@ type CourseClientModel = {
 };
 
 export default function CourseClient({ courseId }: CourseClientModel) {
-  const { form, isPending, isLoading, onInvalidSubmit, onValidSubmit, CourseId, courseData, dateCols } =
-    useInitCourseClient({
-      courseId: courseId,
-    });
+  const { data: session } = useSession();
+
+  const { form, isPending, onInvalidSubmit, onValidSubmit, courseName, courseData, dateCols } = useInitCourseClient({
+    courseId: courseId,
+    token: session?.tokens.accessToken ?? '',
+  });
 
   const formValues = useWatch({ control: form.control }) as StudentAttendanceForm;
 
   return (
     <div className='w-3/4 py-10 mx-auto'>
       {isPending && <LoadingFullScreen />}
-      {isLoading && <LoadingFullScreen />}
-      <span className='block font-bold text-3xl mb-3'>Jelenléti adatok{CourseId ? ` - ${CourseId}` : ''}</span>
+      <span className='block font-bold text-3xl mb-3'>Jelenléti adatok{courseName ? ` - ${courseName}` : ''}</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)} className='flex flex-col'>
           <SimpleTable
@@ -36,6 +38,7 @@ export default function CourseClient({ courseId }: CourseClientModel) {
               dateColumns: dateCols,
               formControl: form.control,
               inEdit: formValues.Helpers.inEdit,
+              token: session?.tokens.accessToken ?? '',
             })}
             defaultData={courseData}
           />

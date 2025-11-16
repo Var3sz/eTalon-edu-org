@@ -14,7 +14,7 @@ const parseCourseDateData = (formModel: UpdateCourseDateFormModel): LessonDateDt
   };
 };
 
-export const UpdateCourseDateRequest = async (formModel: UpdateCourseDateFormModel) => {
+export const UpdateCourseDateRequest = async (formModel: UpdateCourseDateFormModel, token: string) => {
   const parsedBody = parseCourseDateData(formModel);
-  return await UpdateLessonDate<UpdateLessonDateDto, any>(parsedBody);
+  return await UpdateLessonDate<UpdateLessonDateDto, LessonDateDto>(parsedBody, token);
 };

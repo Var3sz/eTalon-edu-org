@@ -13,13 +13,17 @@ import { CreatePackagesFormModel } from '@/models/package/types';
 
 type CreatePackagesDialogProps = {
   setOpenChangeDialog?: Dispatch<SetStateAction<boolean>>;
+  token: string;
 };
 
-export default function CreatePackagesDialog({ setOpenChangeDialog }: CreatePackagesDialogProps) {
-  const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitCreatePackagesDialog({ setOpenChangeDialog });
+export default function CreatePackagesDialog({ setOpenChangeDialog, token }: CreatePackagesDialogProps) {
+  const { form, isPending, onValidSubmit, onInvalidSubmit } = useInitCreatePackagesDialog({
+    setOpenChangeDialog,
+    token,
+  });
 
-  const locations = useGetLocationsQuery();
-  const groups = useGetGroupsQuery();
+  const locations = useGetLocationsQuery(token);
+  const groups = useGetGroupsQuery(token);
 
   const formValues = useWatch({ control: form.control }) as CreatePackagesFormModel;
 
@@ -36,8 +40,6 @@ export default function CreatePackagesDialog({ setOpenChangeDialog }: CreatePack
     locations!,
     groups!
   );
-
-  console.log(formValues);
 
   return (
     <div>

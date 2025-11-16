@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Put, UseGuards } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { SAPIService } from 'src/SAPI/SAPI.service';
 
 import {
+  PaymentsDto,
   StudentAttendanceDto,
   StudentDetailsDTO,
   UpdateAttendanceDto,
@@ -12,6 +14,7 @@ import {
 import { StudentService } from './student.service';
 
 @ApiTags('Students')
+@ApiBearerAuth()
 @Controller('students')
 export class StudentController {
   constructor(
@@ -19,12 +22,13 @@ export class StudentController {
     private sapiService: SAPIService
   ) {}
 
-  @Get('students')
+  @Get('GetStudents')
+  @UseGuards(JwtGuard)
   async getAllStudents() {
     return await this.studentService.getAllStudents();
   }
 
-  // This querys the SAPI database in every 15 minutes if the application is runnin
+  // This querys the SAPI database in every 15 minutes if the application is running
   @Cron('0 */15 * * * *')
   async insertStudentsFromSAPIDatabase() {
     const latestSubDate = await this.studentService.getLatestSubDate();
@@ -36,17 +40,28 @@ export class StudentController {
   }
 
   @Get('GetStudentsByCourseWithAttendances/:id')
+  @UseGuards(JwtGuard)
   @ApiOkResponse({ status: 200, type: StudentAttendanceDto })
   async getStudentsByCourseWithAttendances(@Param('id', ParseIntPipe) id: number): Promise<StudentAttendanceDto> {
     return await this.studentService.getStudentsByCourseWithAttendances(id);
   }
 
+  @Get('GetStudentsByCourseWithPayments/:id')
+  @UseGuards(JwtGuard)
+  @ApiOkResponse({ status: 200, type: PaymentsDto })
+  async getStudentsByCourseWithPayments(@Param('id', ParseIntPipe) id: number): Promise<PaymentsDto> {
+    return await this.studentService.getStudentsByCourseWithPaymentData(id);
+  }
+
   @Put('UpdateAttendances')
+  @UseGuards(JwtGuard)
+  @ApiBody({ type: UpdateAttendanceDto, isArray: true })
   async updateAttendance(@Body() dto: UpdateAttendanceDto[]) {
     return this.studentService.updateAttendanceBulk(dto);
   }
 
   @Put('/UpdateStudentDetails')
+  @UseGuards(JwtGuard)
   @ApiOkResponse({ status: 200, type: StudentDetailsDTO })
   async updateStudentDetails(@Body() updateBody: UpdateStudentDetailsDTO): Promise<StudentDetailsDTO> {
     return this.studentService.updateStudentDetails(updateBody);

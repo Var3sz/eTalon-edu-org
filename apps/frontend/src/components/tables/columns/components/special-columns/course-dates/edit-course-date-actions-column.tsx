@@ -13,6 +13,7 @@ type EditCourseDateActionsColumnProps<T> = {
   courseId: string;
   editable?: boolean;
   deletable?: boolean;
+  token: string;
 } & ColumnBaseModel<T>;
 
 export default function EditCourseDateActionsColumn<T>({
@@ -21,6 +22,7 @@ export default function EditCourseDateActionsColumn<T>({
   size,
   headerTitle,
   courseId,
+  token,
   editable = false,
   deletable = false,
 }: EditCourseDateActionsColumnProps<T>): ColumnDef<T> {
@@ -34,7 +36,7 @@ export default function EditCourseDateActionsColumn<T>({
         <div className='w-fit mx-auto flex space-between gap-5'>
           {editable && (
             <CustomInnerStateDialog title={FormLocales.courseDate.edit} triggerElement={<Edit2 />}>
-              <EditCouseDateDialog courseId={courseId} rowData={row.original as LessonDateDto} />
+              <EditCouseDateDialog courseId={courseId} rowData={row.original as LessonDateDto} token={token} />
             </CustomInnerStateDialog>
           )}
           {deletable && (

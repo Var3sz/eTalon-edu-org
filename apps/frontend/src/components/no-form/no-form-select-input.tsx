@@ -1,8 +1,6 @@
 import { Label } from '@radix-ui/react-label';
-import { id } from 'date-fns/locale';
 import { CheckIcon, ChevronDown, SearchIcon } from 'lucide-react';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { FieldValues } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';

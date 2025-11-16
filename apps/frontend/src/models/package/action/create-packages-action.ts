@@ -1,5 +1,5 @@
 import { CreatePackages } from '@/api/models/serviceEndpoints/packages';
-import { CreatePackageDto } from '@/models/Api';
+import { CreatePackageDto, PackageDto } from '@/models/Api';
 
 import { CreatePackagesFormModel } from '../types';
 
@@ -17,7 +17,7 @@ const parseCreateBody = (formModel: CreatePackagesFormModel): CreatePackageDto[]
   return packages;
 };
 
-export const CreatePackagesRequest = async (formModel: CreatePackagesFormModel) => {
+export const CreatePackagesRequest = async (formModel: CreatePackagesFormModel, token: string) => {
   const parsedBody = parseCreateBody(formModel);
-  return await CreatePackages<CreatePackageDto[], any>(parsedBody);
+  return await CreatePackages<CreatePackageDto[], PackageDto[]>(parsedBody, token);
 };

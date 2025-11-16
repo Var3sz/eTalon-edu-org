@@ -21,18 +21,20 @@ import { ItemModel } from '@/models/ui/form-props';
 type EditCourseClientFormBaseProps = {
   courseId: string;
   courseData: CourseDto | null;
+  token: string;
 };
 
-export default function EditCourseClientFormBase({ courseId, courseData }: EditCourseClientFormBaseProps) {
+export default function EditCourseClientFormBase({ courseId, courseData, token }: EditCourseClientFormBaseProps) {
   const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitEditCourseClientFormBase(
     courseId,
-    courseData!
+    courseData!,
+    token
   );
 
   const formValues = useWatch({ control: form.control }) as UpdateCourseFormModel;
 
-  const groups = useGetGroupsQuery();
-  const locations = useGetLocationsQuery();
+  const groups = useGetGroupsQuery(token);
+  const locations = useGetLocationsQuery(token);
 
   return (
     <div>

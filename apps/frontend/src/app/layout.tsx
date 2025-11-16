@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import { getServerSession } from 'next-auth';
 import React, { Suspense } from 'react';
 
 import LoadingFullScreen from '@/app/loading';
@@ -10,16 +11,19 @@ import NavigationBar from '@/components/navigation/navigation-bar';
 import { ClientProvider } from '@/components/providers';
 import Providers from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
+import { authOptions } from '@/lib/authOptions';
 
 export const metadata: Metadata = {
   title: 'Etalon org. website',
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default async function RootLayout(props: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang='hu'>
       <body>
-        <Providers>
+        <Providers session={session}>
           <NavigationBar />
           <Toaster />
           <main className='p-2'>

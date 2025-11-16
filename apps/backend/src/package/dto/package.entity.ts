@@ -23,6 +23,25 @@ export class PackageDto implements Package {
   groupDesc: string;
 }
 
+export class RawPackageDto implements Package {
+  @ApiProperty()
+  type: string;
+  @ApiProperty()
+  id: number;
+  @ApiProperty()
+  packageId: string;
+  @ApiProperty()
+  price: number;
+  @ApiProperty()
+  locationId: number;
+  @ApiProperty()
+  active: boolean;
+  @ApiProperty()
+  groupId: number;
+  @ApiProperty()
+  isAssigned: boolean;
+}
+
 export class CreatePackageDto {
   @ApiProperty()
   @IsString()
@@ -51,6 +70,10 @@ export class CreatePackageDto {
 
 export class UpdatePackageDto {
   @ApiProperty()
+  @IsInt()
+  id: number;
+
+  @ApiProperty()
   @IsString()
   packageId: string;
 
@@ -61,6 +84,18 @@ export class UpdatePackageDto {
   @ApiProperty()
   @IsString()
   type: string;
+
+  @ApiProperty()
+  @IsInt()
+  locationId: number;
+
+  @ApiProperty()
+  @IsBoolean()
+  active: boolean;
+
+  @ApiProperty()
+  @IsInt()
+  groupId: number;
 }
 
 class CourseAssignDto {

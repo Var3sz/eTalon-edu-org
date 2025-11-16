@@ -1,17 +1,23 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 import { CourseService } from './course.service';
 import {
   ActiveCourseDto,
   CourseDto,
+  CreateInvoiceDateDto,
   CreateLessonDateDto,
+  InvoiceDateDto,
   LessonDateDto,
   UpdateCourseDto,
+  UpdateInvoiceDateDto,
   UpdateLessonDateDto,
 } from './entities/course.entity';
 
 @ApiTags('Courses')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('courses')
 export class CourseController {
   constructor(private courseService: CourseService) {}
@@ -64,15 +70,39 @@ export class CourseController {
     return await this.courseService.getCourseLessonDates(id);
   }
 
+  @Get('/InvoiceDatesByCourseId/:id')
+  @ApiOkResponse({ type: InvoiceDateDto, isArray: true })
+  async getInvoiceDates(@Param('id', ParseIntPipe) id: number) {
+    return await this.courseService.getCourseInvoiceDates(id);
+  }
+
   @Post('/CreateLessonDates')
   @ApiOkResponse({ type: LessonDateDto, isArray: true })
   async createLessonDates(@Body() createBody: CreateLessonDateDto) {
     return await this.courseService.createLessonDates(createBody);
   }
 
+  @Post('/CreateInvoiceDates')
+  @ApiOkResponse({ type: InvoiceDateDto, isArray: true })
+  async createInvoiceDates(@Body() createBody: CreateInvoiceDateDto) {
+    return await this.courseService.createInvoiceDates(createBody);
+  }
+
   @Put('/UpdateLessonDate')
   @ApiOkResponse({ type: LessonDateDto })
   async updateLessonDate(@Body() updateBody: UpdateLessonDateDto) {
     return await this.courseService.updateLessonDate(updateBody);
+  }
+
+  @Put('/UpdateInvoiceDate')
+  @ApiOkResponse({ type: LessonDateDto })
+  async updateInvoiceDate(@Body() updateBody: UpdateInvoiceDateDto) {
+    return await this.courseService.updateInvoiceDate(updateBody);
+  }
+
+  @Delete('/InactivateCourse/:id')
+  @ApiOkResponse()
+  async inactivateCourseById(@Param('id', ParseIntPipe) id: number) {
+    return await this.courseService.inactivateCourseById(id);
   }
 }

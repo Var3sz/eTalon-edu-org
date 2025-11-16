@@ -16,6 +16,7 @@ type StudentAttendanceProps<T extends FieldValues> = {
   dateColumns: AttendanceDateColumnType[];
   formControl: Control<T>;
   inEdit: boolean;
+  token: string;
 };
 export default function StudentColumns<T extends FieldValues>({
   courseId,
@@ -23,6 +24,7 @@ export default function StudentColumns<T extends FieldValues>({
   dateColumns,
   formControl,
   inEdit,
+  token,
 }: StudentAttendanceProps<T>): ColumnDef<StudentAttendance>[] {
   return useMemo(() => {
     const staticColumns: ColumnDef<StudentAttendance>[] = [
@@ -33,6 +35,7 @@ export default function StudentColumns<T extends FieldValues>({
         dialogTitle: 'Gyermek adatai',
         courseId: courseId,
         size: 200,
+        token: token,
       }),
     ];
 
