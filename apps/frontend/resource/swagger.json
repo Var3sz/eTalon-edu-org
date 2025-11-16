@@ -38,9 +38,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -67,9 +65,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -102,9 +98,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -147,9 +141,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -202,9 +194,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -240,9 +230,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -278,9 +266,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -330,9 +316,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -382,9 +366,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -418,9 +400,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -454,9 +434,7 @@
             }
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -482,9 +460,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Courses"
-        ],
+        "tags": ["Courses"],
         "security": [
           {
             "bearer": []
@@ -501,9 +477,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Students"
-        ],
+        "tags": ["Students"],
         "security": [
           {
             "bearer": []
@@ -536,9 +510,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ],
+        "tags": ["Students"],
         "security": [
           {
             "bearer": []
@@ -571,9 +543,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ],
+        "tags": ["Students"],
         "security": [
           {
             "bearer": []
@@ -613,9 +583,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ],
+        "tags": ["Students"],
         "security": [
           {
             "bearer": []
@@ -649,9 +617,7 @@
             }
           }
         },
-        "tags": [
-          "Students"
-        ],
+        "tags": ["Students"],
         "security": [
           {
             "bearer": []
@@ -678,9 +644,7 @@
             }
           }
         },
-        "tags": [
-          "BillingAddressTypes"
-        ],
+        "tags": ["BillingAddressTypes"],
         "security": [
           {
             "bearer": []
@@ -707,9 +671,7 @@
             }
           }
         },
-        "tags": [
-          "Locations"
-        ],
+        "tags": ["Locations"],
         "security": [
           {
             "bearer": []
@@ -749,9 +711,7 @@
             }
           }
         },
-        "tags": [
-          "Locations"
-        ],
+        "tags": ["Locations"],
         "security": [
           {
             "bearer": []
@@ -778,9 +738,7 @@
             }
           }
         },
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "security": [
           {
             "bearer": []
@@ -820,9 +778,7 @@
             }
           }
         },
-        "tags": [
-          "Groups"
-        ],
+        "tags": ["Groups"],
         "security": [
           {
             "bearer": []
@@ -855,9 +811,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ]
+        "tags": ["Users"]
       }
     },
     "/auth/register": {
@@ -879,9 +833,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/login": {
@@ -903,9 +855,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/refresh": {
@@ -917,9 +867,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/packages/GetPackages": {
@@ -941,9 +889,7 @@
             }
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -996,9 +942,7 @@
             }
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -1039,9 +983,7 @@
             }
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -1074,9 +1016,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -1102,9 +1042,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -1137,9 +1075,7 @@
             }
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -1182,9 +1118,7 @@
             }
           }
         },
-        "tags": [
-          "Package"
-        ],
+        "tags": ["Package"],
         "security": [
           {
             "bearer": []
@@ -1214,9 +1148,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Invoice"
-        ],
+        "tags": ["Invoice"],
         "security": [
           {
             "bearer": []
@@ -1433,11 +1365,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description",
-          "date"
-        ]
+        "required": ["id", "description", "date"]
       },
       "InvoiceDateDto": {
         "type": "object",
@@ -1454,11 +1382,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description",
-          "date"
-        ]
+        "required": ["id", "description", "date"]
       },
       "LessonDateInfoDto": {
         "type": "object",
@@ -1472,10 +1396,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "date",
-          "description"
-        ]
+        "required": ["date", "description"]
       },
       "CreateLessonDateDto": {
         "type": "object",
@@ -1490,10 +1411,7 @@
             }
           }
         },
-        "required": [
-          "courseId",
-          "dateInfo"
-        ]
+        "required": ["courseId", "dateInfo"]
       },
       "InvoiceDateInfoDto": {
         "type": "object",
@@ -1507,10 +1425,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "date",
-          "description"
-        ]
+        "required": ["date", "description"]
       },
       "CreateInvoiceDateDto": {
         "type": "object",
@@ -1525,10 +1440,7 @@
             }
           }
         },
-        "required": [
-          "courseId",
-          "dateInfo"
-        ]
+        "required": ["courseId", "dateInfo"]
       },
       "UpdateLessonDateDto": {
         "type": "object",
@@ -1545,11 +1457,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "id",
-          "date",
-          "description"
-        ]
+        "required": ["id", "date", "description"]
       },
       "UpdateInvoiceDateDto": {
         "type": "object",
@@ -1566,11 +1474,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "id",
-          "date",
-          "description"
-        ]
+        "required": ["id", "date", "description"]
       },
       "AttendanceDto": {
         "type": "object",
@@ -1589,11 +1493,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "lessonDateId",
-          "date",
-          "attended"
-        ]
+        "required": ["lessonDateId", "date", "attended"]
       },
       "StudentDto": {
         "type": "object",
@@ -1727,10 +1627,7 @@
             }
           }
         },
-        "required": [
-          "courseId",
-          "students"
-        ]
+        "required": ["courseId", "students"]
       },
       "PaymentDto": {
         "type": "object",
@@ -1761,15 +1658,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "invoiceDateId",
-          "date",
-          "billerId",
-          "payed",
-          "amount",
-          "invoiceNumber",
-          "amountToBePayed"
-        ]
+        "required": ["invoiceDateId", "date", "billerId", "payed", "amount", "invoiceNumber", "amountToBePayed"]
       },
       "StudentPaymentDto": {
         "type": "object",
@@ -1787,11 +1676,7 @@
             }
           }
         },
-        "required": [
-          "studentName",
-          "studentId",
-          "Payments"
-        ]
+        "required": ["studentName", "studentId", "Payments"]
       },
       "PaymentsDto": {
         "type": "object",
@@ -1806,10 +1691,7 @@
             }
           }
         },
-        "required": [
-          "courseId",
-          "payments"
-        ]
+        "required": ["courseId", "payments"]
       },
       "UpdateAttendanceDto": {
         "type": "object",
@@ -1824,11 +1706,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "studentId",
-          "lessondateId",
-          "attended"
-        ]
+        "required": ["studentId", "lessondateId", "attended"]
       },
       "UpdateStudentDetailsDTO": {
         "type": "object",
@@ -2043,10 +1921,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description"
-        ]
+        "required": ["id", "description"]
       },
       "LocationDto": {
         "type": "object",
@@ -2061,11 +1936,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description",
-          "isDeleted"
-        ]
+        "required": ["id", "description", "isDeleted"]
       },
       "UpdateLocationsInputDto": {
         "type": "object",
@@ -2081,11 +1952,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "isDeleted",
-          "description"
-        ]
+        "required": ["id", "isDeleted", "description"]
       },
       "GroupDto": {
         "type": "object",
@@ -2100,11 +1967,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "description",
-          "isDeleted"
-        ]
+        "required": ["id", "description", "isDeleted"]
       },
       "UpdateGroupsInputDto": {
         "type": "object",
@@ -2120,11 +1983,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "isDeleted",
-          "description"
-        ]
+        "required": ["id", "isDeleted", "description"]
       },
       "ProfileDto": {
         "type": "object",
@@ -2142,12 +2001,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "id",
-          "email",
-          "name",
-          "roleId"
-        ]
+        "required": ["id", "email", "name", "roleId"]
       },
       "CreateUserDto": {
         "type": "object",
@@ -2162,11 +2016,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "email",
-          "password"
-        ]
+        "required": ["name", "email", "password"]
       },
       "LoginDto": {
         "type": "object",
@@ -2178,10 +2028,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "username",
-          "password"
-        ]
+        "required": ["username", "password"]
       },
       "PackageDto": {
         "type": "object",
@@ -2214,17 +2061,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "id",
-          "packageId",
-          "price",
-          "locationId",
-          "locationDesc",
-          "active",
-          "groupId",
-          "groupDesc"
-        ]
+        "required": ["type", "id", "packageId", "price", "locationId", "locationDesc", "active", "groupId", "groupDesc"]
       },
       "CreatePackageDto": {
         "type": "object",
@@ -2248,14 +2085,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "packageId",
-          "price",
-          "type",
-          "locationId",
-          "active",
-          "groupId"
-        ]
+        "required": ["packageId", "price", "type", "locationId", "active", "groupId"]
       },
       "CourseAssignDto": {
         "type": "object",
@@ -2267,10 +2097,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "courseId"
-        ]
+        "required": ["id", "courseId"]
       },
       "PackageAssignDto": {
         "type": "object",
@@ -2279,9 +2106,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "packageId"
-        ]
+        "required": ["packageId"]
       },
       "AssingDto": {
         "type": "object",
@@ -2293,10 +2118,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "courseId",
-          "packageId"
-        ]
+        "required": ["courseId", "packageId"]
       },
       "PackageCourseAssignDto": {
         "type": "object",
@@ -2320,11 +2142,7 @@
             }
           }
         },
-        "required": [
-          "courses",
-          "packages",
-          "assignments"
-        ]
+        "required": ["courses", "packages", "assignments"]
       },
       "AssignPackageToCourseDto": {
         "type": "object",
@@ -2339,11 +2157,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "courseId",
-          "packageId",
-          "assign"
-        ]
+        "required": ["courseId", "packageId", "assign"]
       },
       "RawPackageDto": {
         "type": "object",
@@ -2373,16 +2187,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "type",
-          "id",
-          "packageId",
-          "price",
-          "locationId",
-          "active",
-          "groupId",
-          "isAssigned"
-        ]
+        "required": ["type", "id", "packageId", "price", "locationId", "active", "groupId", "isAssigned"]
       },
       "UpdatePackageDto": {
         "type": "object",
@@ -2409,15 +2214,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "id",
-          "packageId",
-          "price",
-          "type",
-          "locationId",
-          "active",
-          "groupId"
-        ]
+        "required": ["id", "packageId", "price", "type", "locationId", "active", "groupId"]
       },
       "UpdatePaymentsDto": {
         "type": "object",

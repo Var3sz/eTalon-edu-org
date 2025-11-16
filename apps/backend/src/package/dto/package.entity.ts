@@ -1,4 +1,4 @@
-import { ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Package } from '@prisma/client';
 import { IsBoolean, IsInt, IsString } from 'class-validator';
 

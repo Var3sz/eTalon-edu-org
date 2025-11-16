@@ -2,12 +2,12 @@
 
 import { useSession } from 'next-auth/react';
 
+import LoadingFullScreen from '@/app/loading';
 import CoursePlanColumns from '@/components/columns/course/course-plan-columns';
 import { DataTable } from '@/components/tables/data-table';
+import useInitCoursePlannerClient from '@/hooks/courses/course-plan/use-init-course-planner-client';
 
 import CreateCoursesDialog from '../../dialogs/course/create-courses-dialog';
-import useInitCoursePlannerClient from '@/hooks/courses/course-plan/use-init-course-planner-client';
-import LoadingFullScreen from '@/app/loading';
 
 export default function CoursePlannerClient() {
   const { data: session } = useSession();

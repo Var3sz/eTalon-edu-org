@@ -1,3 +1,7 @@
+import { ColumnDef } from '@tanstack/react-table';
+import { useMemo } from 'react';
+import { Control, FieldValues } from 'react-hook-form';
+
 import TextTableColumn from '@/components/tables/columns/components/basic-columns/text-table-column';
 import CheckboxTableColumn from '@/components/tables/columns/components/input-columns/checkbox-input-column';
 import NumberInputColumn from '@/components/tables/columns/components/input-columns/number-input-column';
@@ -7,9 +11,6 @@ import { StudentAttendance } from '@/hooks/courses/use-init-course-client';
 import { StudentPayment } from '@/hooks/payments/use-init-payment-client';
 import { StudentLocales } from '@/locales/student-locales';
 import { PaymentDateColumnType } from '@/models/students/types';
-import { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { Control, FieldValues } from 'react-hook-form';
 
 type PaymentColumnProps<T extends FieldValues> = {
   paymentData: StudentPayment[];

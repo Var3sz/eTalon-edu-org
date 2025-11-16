@@ -1,17 +1,19 @@
+import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
 import useGetGroupsQuery from '@/hooks/group/use-get-groups-query';
 import useGetLocationsQuery from '@/hooks/location/use-get-locations-query';
-import { RawPackageDto } from '@/models/Api';
-import { useWatch } from 'react-hook-form';
-import { Form } from '../ui/form';
-import { UpdatePackageFormModel } from '@/models/package/types';
-import FormTextInput from '../form/form-text-input';
+import useInitEditPackageClientFormBase from '@/hooks/packages/use-init-edit-package-client-form-base';
 import { FormLocales } from '@/locales/form-locales';
+import { RawPackageDto } from '@/models/Api';
+import { UpdatePackageFormModel } from '@/models/package/types';
+import { ItemModel } from '@/models/ui/form-props';
+
 import FormNumberInput from '../form/form-number-input';
 import FormSelectInput from '../form/form-select-input';
-import { ItemModel } from '@/models/ui/form-props';
+import FormTextInput from '../form/form-text-input';
 import { Button } from '../ui/button';
-import useInitEditPackageClientFormBase from '@/hooks/packages/use-init-edit-package-client-form-base';
+import { Form } from '../ui/form';
 
 type EditPackageClientFormBaseProps = {
   packageId: string;

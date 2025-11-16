@@ -1,6 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { ActionsTableColumnModel } from '../../../types/column-types';
+
 import { Checkbox } from '@/components/ui/checkbox';
+
+import { ActionsTableColumnModel } from '../../../types/column-types';
 import CourseActionsTableCell from './course-actions-table-cell';
 
 type CourseActionsTableColumnModel<T> = {
@@ -43,7 +45,7 @@ export default function CourseActionsTableColumn<T>({
         row={row}
         deletable={deletable}
         deleteFunction={deleteFunction!}
-        redirect={true}
+        redirect
         redirection={redirection!}
       />
     ),

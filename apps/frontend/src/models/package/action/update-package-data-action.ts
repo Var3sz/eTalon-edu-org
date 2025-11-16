@@ -1,6 +1,7 @@
-import { RawPackageDto, UpdatePackageDto } from '@/models/Api';
-import { UpdatePackageFormModel } from '../types';
 import { UpdatePackageData } from '@/api/models/serviceEndpoints/packages';
+import { RawPackageDto, UpdatePackageDto } from '@/models/Api';
+
+import { UpdatePackageFormModel } from '../types';
 
 const parseUpdatePackageData = (formModel: UpdatePackageFormModel): UpdatePackageDto => {
   return {

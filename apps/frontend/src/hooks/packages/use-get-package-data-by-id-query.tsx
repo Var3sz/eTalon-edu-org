@@ -2,8 +2,8 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { RawPackageDto } from '@/models/Api';
 import { GetPackageById } from '@/api/models/serviceEndpoints/packages';
+import { RawPackageDto } from '@/models/Api';
 
 export function useGetPackageDataByIdQuery(packageId: string, token: string) {
   return useSuspenseQuery({

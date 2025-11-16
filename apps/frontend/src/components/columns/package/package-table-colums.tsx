@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 
 import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 import TextWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/text-with-filter-table-column';
-import { PackageDto } from '@/models/Api';
-import PackageActionsTableColumn from '@/components/tables/columns/components/special-columns/package/package-actions-table-column';
 import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
+import PackageActionsTableColumn from '@/components/tables/columns/components/special-columns/package/package-actions-table-column';
 import { PackageEditRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
+import { PackageDto } from '@/models/Api';
 
 type PackageTableColumnsModel = {
   inactivePackageFunction?: (courseId: number) => void;

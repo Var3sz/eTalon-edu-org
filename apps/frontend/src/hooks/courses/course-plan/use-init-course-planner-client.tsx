@@ -1,8 +1,10 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useTransition } from 'react';
-import useGetCoursesDataQuery from './use-get-courses-data-query';
+
 import { InactivateCourse } from '@/api/models/serviceEndpoints/course';
 import { toast } from '@/components/ui/use-toast';
-import { useQueryClient } from '@tanstack/react-query';
+
+import useGetCoursesDataQuery from './use-get-courses-data-query';
 
 export default function useInitCoursePlannerClient(token: string) {
   const [isPending, startTransaction] = useTransition();

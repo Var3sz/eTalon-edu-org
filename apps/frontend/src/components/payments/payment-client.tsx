@@ -1,14 +1,15 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-
-import useInitPaymentClient, { StudentPaymentForm } from '@/hooks/payments/use-init-payment-client';
 import { useWatch } from 'react-hook-form';
+
 import LoadingFullScreen from '@/app/loading';
-import { Form } from '../ui/form';
+import useInitPaymentClient, { StudentPaymentForm } from '@/hooks/payments/use-init-payment-client';
+
+import PaymentColumns from '../columns/payment/payment-columns';
 import { SimpleTable } from '../tables/simple-table';
 import { Button } from '../ui/button';
-import PaymentColumns from '../columns/payment/payment-columns';
+import { Form } from '../ui/form';
 
 type PaymentClientProps = {
   courseId: string;
@@ -25,7 +26,6 @@ export default function PaymentClient({ courseId }: PaymentClientProps) {
     });
 
   const formValues = useWatch({ control: form.control }) as StudentPaymentForm;
-  console.log(formValues);
 
   return (
     <div className='w-3/4 py-10 mx-auto'>

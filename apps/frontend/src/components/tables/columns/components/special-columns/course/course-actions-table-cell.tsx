@@ -1,8 +1,9 @@
-import ConfirmDialog from '@/components/dialogs/confirm-dialog';
 import { Cell, Row } from '@tanstack/react-table';
 import { Eye, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+
+import ConfirmDialog from '@/components/dialogs/confirm-dialog';
 
 type CourseActionsTableCell<T> = {
   cell: Cell<T, unknown>;

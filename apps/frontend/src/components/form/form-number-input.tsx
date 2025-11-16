@@ -3,8 +3,8 @@ import { FieldValues, Path } from 'react-hook-form';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { FormBaseProps } from '@/models/ui/form-props';
 import { cn } from '@/lib/utils';
+import { FormBaseProps } from '@/models/ui/form-props';
 
 export default function FormNumberInput<T extends FieldValues>({
   id,

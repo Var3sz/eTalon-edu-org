@@ -4,11 +4,11 @@ import { useMemo } from 'react';
 import DateWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/date-with-filter-table-column';
 import NumberWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/number-with-filter-table-column';
 import TextWithFilterTableColumn from '@/components/tables/columns/components/filter-columns/text-with-filter-table-column';
+import CourseActionsTableColumn from '@/components/tables/columns/components/special-columns/course/course-actions-table-column';
+import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
 import { CourseEditRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 import { TableLocales } from '@/locales/table-locales';
 import { CourseDto } from '@/models/Api';
-import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
-import CourseActionsTableColumn from '@/components/tables/columns/components/special-columns/course/course-actions-table-column';
 
 type CoursePlanColumnsType = {
   inactiveCourseFunction?: (courseId: number) => void;

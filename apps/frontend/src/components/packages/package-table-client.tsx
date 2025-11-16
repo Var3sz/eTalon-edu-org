@@ -1,10 +1,10 @@
+import LoadingFullScreen from '@/app/loading';
+import useInitPackagesTableClient from '@/hooks/packages/use-init-packages-table-client';
 import { PackageDto } from '@/models/Api';
 
 import PackageTableColumns from '../columns/package/package-table-colums';
 import CreatePackagesDialog from '../dialogs/package/create-packages-dialog';
 import { DataTable } from '../tables/data-table';
-import useInitPackagesTableClient from '@/hooks/packages/use-init-packages-table-client';
-import LoadingFullScreen from '@/app/loading';
 
 type PackageTableClientProps = {
   packages: PackageDto[];

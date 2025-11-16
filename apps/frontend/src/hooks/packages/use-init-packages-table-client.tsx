@@ -1,7 +1,8 @@
-import { InactivatePackage } from '@/api/models/serviceEndpoints/packages';
-import { toast } from '@/components/ui/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useTransition } from 'react';
+
+import { InactivatePackage } from '@/api/models/serviceEndpoints/packages';
+import { toast } from '@/components/ui/use-toast';
 
 export default function useInitPackagesTableClient(token: string) {
   const [isPending, startTransaction] = useTransition();

@@ -1,17 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
 
+import { DatePatterns } from '@/api/consts/date-patterns';
+import { toast } from '@/components/ui/use-toast';
+import { formatDateCustom } from '@/lib/utils';
 import { PaymentsDto, StudentPaymentDto, UpdatePaymentsDto } from '@/models/Api';
+import { UpdatePaymentsRequest } from '@/models/payments/update-payments-action';
+import { PaymentDateColumnType } from '@/models/students/types';
+import { PaymentFormData } from '@/validation/default-values/payment/payment-form-data';
+import { PaymentFormDefault } from '@/validation/default-values/payment/payment-form-default';
 
 import useGetPaymentsDataByCourseId from './use-get-payments-data-by-id-query';
-import { useForm } from 'react-hook-form';
-import { PaymentDateColumnType } from '@/models/students/types';
-import { formatDateCustom } from '@/lib/utils';
-import { DatePatterns } from '@/api/consts/date-patterns';
-import { PaymentFormDefault } from '@/validation/default-values/payment/payment-form-default';
-import { PaymentFormData } from '@/validation/default-values/payment/payment-form-data';
-import { toast } from '@/components/ui/use-toast';
-import { UpdatePaymentsRequest } from '@/models/payments/update-payments-action';
 
 type UseInitPaymentClientModel = {
   courseId: string;
@@ -186,8 +186,6 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
           };
         });
       });
-
-      console.log(payload);
 
       // const updateResponse = await UpdatePaymentsRequest(payload, token);
 
