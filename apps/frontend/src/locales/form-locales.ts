@@ -48,4 +48,9 @@ export const FormLocales = {
     description: 'Helyszín neve',
     add: 'Helyszínek hozzáadása',
   },
+  package: {
+    type: 'Csomag típusa',
+    packageId: 'Csomag azonosító',
+    price: 'Ár',
+  },
 };

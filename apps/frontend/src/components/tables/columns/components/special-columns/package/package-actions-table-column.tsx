@@ -17,6 +17,7 @@ export default function PackageActionsTableColumn<T>({
   deletable = false,
   deleteFunction,
   redirection,
+  redirect,
 }: PackageActionsTableColumnModel<T>): ColumnDef<T> {
   return {
     id: id,
@@ -38,7 +39,14 @@ export default function PackageActionsTableColumn<T>({
       );
     },
     cell: ({ row, cell }) => (
-      <PackageActionsTableCell cell={cell} row={row} deletable={deletable} deleteFunction={deleteFunction!} />
+      <PackageActionsTableCell
+        cell={cell}
+        row={row}
+        redirect={true}
+        redirection={redirection!}
+        deletable={deletable}
+        deleteFunction={deleteFunction!}
+      />
     ),
   };
 }

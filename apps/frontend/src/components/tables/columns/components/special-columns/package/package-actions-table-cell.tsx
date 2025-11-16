@@ -1,6 +1,7 @@
 import ConfirmDialog from '@/components/dialogs/confirm-dialog';
 import { Cell, Row } from '@tanstack/react-table';
-import { Eye, Link, Trash2 } from 'lucide-react';
+import { Eye, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 type PackageActionsTableCell<T> = {

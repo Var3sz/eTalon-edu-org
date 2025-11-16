@@ -6,6 +6,7 @@ import TextWithFilterTableColumn from '@/components/tables/columns/components/fi
 import { PackageDto } from '@/models/Api';
 import PackageActionsTableColumn from '@/components/tables/columns/components/special-columns/package/package-actions-table-column';
 import HiddenTableColumn from '@/components/tables/columns/components/special-columns/hidden-table-column';
+import { PackageEditRedirectionFunction } from '@/components/tables/columns/utils/redirection-functions';
 
 type PackageTableColumnsModel = {
   inactivePackageFunction?: (courseId: number) => void;
@@ -25,6 +26,7 @@ export default function PackageTableColumns({
         confirmTitle: 'Figyelem!',
         confirmDesc: 'Biztosan inaktiválja a kiválasztott csomagot?',
         deleteFunction: inactivePackageFunction,
+        redirection: PackageEditRedirectionFunction,
       }),
       TextWithFilterTableColumn<PackageDto>({
         id: 'type',
