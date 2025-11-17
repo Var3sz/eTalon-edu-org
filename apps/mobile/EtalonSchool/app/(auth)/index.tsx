@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useWatch } from 'react-hook-form';
 import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import FormTextInput from '../../components//form/FormTextInput';
+import FormTextInput from '../../components/form/FormTextInput';
 import useInitLoginScreen from '../../hooks/auth/useInitLoginScreen';
 import { colors } from '../../lib/colors';
 import { LoginDto } from '../../models/auth';
@@ -20,7 +20,7 @@ export default function LoginScreen() {
     >
       <View style={styles.container}>
         <View style={styles.logoWrap}>
-          <Image source={require('../assets/splash.png')} style={styles.logo} resizeMode='contain' />
+          <Image source={require('../../assets/splash.png')} style={styles.logo} resizeMode='contain' />
         </View>
 
         <View style={styles.card}>
