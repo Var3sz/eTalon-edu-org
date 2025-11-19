@@ -10,7 +10,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { router } from 'expo-router';
 
 export default function LoginScreen() {
-  const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitLoginScreen();
+  const { form } = useInitLoginScreen();
   const formValues = useWatch(form) as LoginDto;
 
   const disabled = !formValues.username || !formValues.password;

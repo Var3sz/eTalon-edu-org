@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import CourseInfoRow from '../../courses/course-info-row';
+import CourseInfoRow from '../../shared/custom-info-row';
 
 type ShowCourseDialogProps = {
   course: any;

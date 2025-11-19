@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 type CourseListItemProps = {
   course: any;
   onPress: (course: any) => void;
-  onLongPress: (courseId: any) => void;
+  onLongPress?: (courseId: any) => void;
 };
 
 export default function CourseListItem({ course, onPress, onLongPress }: CourseListItemProps) {

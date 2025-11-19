@@ -4,35 +4,15 @@ import { useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 
 import { Login } from '../../api/models/serviceEndpoints/auth';
-import { LoginDto } from '../../models/auth';
 import { LoginFormDefault } from '../../models/validation/default/auth/auth-form-default';
 import { LoginSchema } from '../../models/validation/schemas/auth/auth-schema';
+import { LoginDto } from '../../models/auth/auth';
 
 export default function useInitLoginScreen() {
-  const [isPending, startTransaction] = useTransition();
-
   const form = useForm<LoginDto>({
     resolver: yupResolver(LoginSchema),
     defaultValues: LoginFormDefault(),
   });
 
-  const onValidFormSubmit = (formModel: LoginDto) => {
-    startTransaction(async () => {
-      const loginResponse = await Login<LoginDto, any>(formModel);
-      if (loginResponse.status === 200 || loginResponse.status === 201) {
-        Alert.alert('Sikeres');
-      } else {
-        Alert.alert('Sikertelen');
-      }
-    });
-  };
-
-  const onInvalidFormSubmit = (e: any) => {
-    console.error(e);
-  };
-
-  return useMemo(
-    () => ({ form, isPending, onValidFormSubmit, onInvalidFormSubmit }),
-    [isPending, form, onValidFormSubmit, onInvalidFormSubmit]
-  );
+  return useMemo(() => ({ form }), [form]);
 }
