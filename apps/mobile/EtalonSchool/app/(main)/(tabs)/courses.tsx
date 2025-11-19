@@ -1,30 +1,28 @@
 // app/(main)/(tabs)/courses.tsx
-import { View, Text, StyleSheet, FlatList, Modal, Button } from 'react-native';
+import { Text, StyleSheet, FlatList, Modal, Button } from 'react-native';
 import { coursesMock } from '../../../mock/courses';
-import { Ionicons } from '@expo/vector-icons';
 import CourseListItem from '../../../components/courses/course-list-item';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import ConfirmDialog from '../../../components/dialogs/confirm-dialog';
-
-const data = [
-  { id: '1', name: 'Apple' },
-  { id: '2', name: 'Banana' },
-  { id: '3', name: 'Orange' },
-  { id: '4', name: 'Orange' },
-];
+import CustomDialog from '../../../components/dialogs/custom-dialog';
+import ShowCourseDialog from '../../../components/dialogs/courses/show-course-dialog';
 
 export default function CoursesScreen() {
-  const [selectedCourse, setSelectedCourse] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false);
+  const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
 
   const handlePressCourse = (course: any) => {
     setSelectedCourse(course);
     setDialogOpen(true);
   };
 
+  const handleLongPressCourse = () => {
+    setConfirmDialogOpen(true);
+  };
+
   const handleCloseModal = () => {
-    setDialogOpen(false);
-    setSelectedCourse(null);
+    setConfirmDialogOpen(false);
   };
 
   const handlePositiveEvent = () => {};
@@ -34,48 +32,23 @@ export default function CoursesScreen() {
       <FlatList
         data={coursesMock}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <CourseListItem course={item} onPress={() => handlePressCourse(item)} />}
+        renderItem={({ item }) => (
+          <CourseListItem course={item} onPress={() => handlePressCourse(item)} onLongPress={handleLongPressCourse} />
+        )}
       />
 
       <ConfirmDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
+        open={confirmDialogOpen}
+        onOpenChange={setConfirmDialogOpen}
         onConfirm={handlePositiveEvent}
         onCancel={handleCloseModal}
-        title={'Biztosan lezárja a kurzust?'}
+        title={`Biztosan lezárja a kurzust?`}
         description={'Amennyiben lezárja a kurzust, az a későbbiekben nem lesz visszavonható!'}
       />
+
+      <CustomDialog open={dialogOpen} onOpenChange={setDialogOpen} title='Kurzus adatok'>
+        <ShowCourseDialog course={selectedCourse} />
+      </CustomDialog>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '80%',
-    minHeight: 200,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  modalText: {
-    fontSize: 15,
-    marginBottom: 4,
-  },
-  modalButton: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 4,
-    marginTop: 16,
-  },
-});

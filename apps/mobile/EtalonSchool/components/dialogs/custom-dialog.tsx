@@ -3,38 +3,23 @@ import { Button, Modal, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../lib/colors';
 import { Ionicons } from '@expo/vector-icons';
 
-type ConfirmDialogProps = {
+type CustomDialogProps = {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
-  onConfirm: () => void;
-  onCancel: () => void;
-  confirmText?: string;
-  cancelText?: string;
   title: string;
-  description: string;
+  children: ReactNode;
 };
 
-export default function ConfirmDialog({
-  open,
-  onOpenChange,
-  onConfirm,
-  onCancel,
-  confirmText = 'Megerősítés',
-  cancelText = 'Mégsem',
-  title,
-  description,
-}: ConfirmDialogProps) {
+export default function CustomDialog({ open, onOpenChange, title, children }: CustomDialogProps) {
   return (
     <Modal visible={open} onRequestClose={() => onOpenChange(false)} transparent animationType='fade'>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>{title}</Text>
-          <Text style={styles.modalText}>{description}</Text>
-
-          <View style={styles.modalButton}>
-            <Button title={cancelText} onPress={onCancel} color={colors.destructive} />
-            <Button title={confirmText} onPress={onConfirm} color={colors.primary} />
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>{title}</Text>
+            <Ionicons name='close' size={30} onPress={() => onOpenChange(false)} />
           </View>
+          {children}
         </View>
       </View>
     </Modal>
@@ -48,6 +33,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   modalContent: {
     width: '80%',
     minHeight: 80,
@@ -56,7 +45,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '700',
     marginBottom: 20,
   },

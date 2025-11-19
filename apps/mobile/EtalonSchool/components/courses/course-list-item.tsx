@@ -5,12 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 type CourseListItemProps = {
   course: any;
   onPress: (course: any) => void;
+  onLongPress: (courseId: any) => void;
 };
 
-export default function CourseListItem({ course, onPress }: CourseListItemProps) {
+export default function CourseListItem({ course, onPress, onLongPress }: CourseListItemProps) {
   return (
     <Pressable
       onPress={onPress}
+      onLongPress={onLongPress}
       style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
       disabled={course.closed === true}
     >
