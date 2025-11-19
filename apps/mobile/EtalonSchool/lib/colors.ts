@@ -6,4 +6,5 @@ export const colors = {
   primary: '#8CC63E',
   border: '#E5E7EB',
   destructive: '#FF0000',
+  black: '#000000',
 };

@@ -9,7 +9,11 @@ type CourseListItemProps = {
 
 export default function CourseListItem({ course, onPress }: CourseListItemProps) {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
+      disabled={course.closed === true}
+    >
       <View>
         <Text style={styles.title}>{course.courseId}</Text>
         <Text style={styles.group}>{course.group}</Text>

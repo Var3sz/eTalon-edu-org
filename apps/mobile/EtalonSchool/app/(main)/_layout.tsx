@@ -1,8 +1,9 @@
 import { Redirect, Stack, useRouter } from 'expo-router';
 
 import { useAuth } from '../../contexts/AuthContext';
-import { Pressable } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '../../lib/colors';
 
 export default function AppLayout() {
   // const { isAuthenticated, logout } = useAuth();
@@ -29,6 +30,20 @@ export default function AppLayout() {
             <>
               <Pressable style={{ marginRight: 2 }} onPress={() => router.replace('/(auth)')}>
                 <Ionicons name='log-out-outline' size={40} color='#000' />
+              </Pressable>
+            </>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name='profile'
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <>
+              <Pressable onPress={() => router.back()}>
+                <Ionicons name='arrow-back' size={40} color={colors.black} />
               </Pressable>
             </>
           ),
