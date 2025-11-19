@@ -1,6 +1,8 @@
 import { FetchResponse } from '../../types/fetch-response';
 import { httpRequestPOST } from '../api';
 
+export const SERVER_BASE_URL = 'http://172.20.10.2:3001/';
+
 const getLoginUrl = () => {
   return `http://172.20.10.2:3001/auth/login`;
 };

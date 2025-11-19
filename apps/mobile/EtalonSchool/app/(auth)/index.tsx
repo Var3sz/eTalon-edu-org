@@ -5,13 +5,17 @@ import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, Vie
 import FormTextInput from '../../components/form/FormTextInput';
 import useInitLoginScreen from '../../hooks/auth/useInitLoginScreen';
 import { colors } from '../../lib/colors';
-import { LoginDto } from '../../models/auth';
+import { LoginDto } from '../../models/auth/auth';
+import { useAuth } from '../../contexts/AuthContext';
+import { router } from 'expo-router';
 
 export default function LoginScreen() {
   const { form, isPending, onValidFormSubmit, onInvalidFormSubmit } = useInitLoginScreen();
   const formValues = useWatch(form) as LoginDto;
 
   const disabled = !formValues.username || !formValues.password;
+
+  // const { login } = useAuth();
 
   return (
     <KeyboardAvoidingView
@@ -32,7 +36,10 @@ export default function LoginScreen() {
             <FormTextInput id='password' label='Jelszó' formControl={form.control} secureTextEntry />
           </View>
           <Pressable
-            onPress={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)}
+            onPress={() => {
+              router.replace('/(main)/(tabs)/courses');
+              //login(formValues.username, formValues.password);
+            }} /* form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit) */
             disabled={disabled}
             style={({ pressed }) => [styles.button, { opacity: disabled ? 0.5 : pressed ? 0.9 : 1 }]}
           >

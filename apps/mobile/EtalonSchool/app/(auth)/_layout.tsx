@@ -14,6 +14,7 @@ export default function AuthLayout() {
           headerTitleStyle: { color: colors.text },
           contentStyle: { backgroundColor: colors.bg },
           headerTitleAlign: 'center',
+          headerShown: false,
         }}
       >
         <Stack.Screen name='index' options={{ headerShown: false }} />

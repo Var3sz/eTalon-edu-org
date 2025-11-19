@@ -1,15 +1,39 @@
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Stack, useRouter } from 'expo-router';
 
 import { useAuth } from '../../contexts/AuthContext';
+import { Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AppLayout() {
-  const { isAuthenticated } = useAuth();
-  if (!isAuthenticated) {
-    return <Redirect href='/(auth)' />;
-  }
+  // const { isAuthenticated, logout } = useAuth();
+  // if (!isAuthenticated) {
+  //   return <Redirect href='/(auth)' />;
+  // }
+  const router = useRouter();
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+      <Stack.Screen
+        name='(tabs)'
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerLeft: () => (
+            <>
+              <Pressable style={{ marginLeft: 2 }} onPress={() => router.push('/profile')}>
+                <Ionicons name='person-circle-outline' size={40} color='#000' />
+              </Pressable>
+            </>
+          ),
+          headerRight: () => (
+            <>
+              <Pressable style={{ marginRight: 2 }} onPress={() => router.replace('/(auth)')}>
+                <Ionicons name='log-out-outline' size={40} color='#000' />
+              </Pressable>
+            </>
+          ),
+        }}
+      />
     </Stack>
   );
 }
