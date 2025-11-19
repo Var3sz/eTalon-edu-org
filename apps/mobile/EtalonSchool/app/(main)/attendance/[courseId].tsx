@@ -99,22 +99,11 @@ export default function AttendanceByCourseScreen() {
     setStudentDialogOpen(true);
   };
 
-  const router = useRouter();
-
   return (
     <>
       <Stack.Screen
         options={{
-          headerShown: true,
           title: `Jelenlét - ${courseData.courseId}`,
-          headerTitleAlign: 'center',
-          headerLeft: () => (
-            <>
-              <Pressable onPress={() => router.back()}>
-                <Ionicons name='arrow-back' size={40} color={colors.black} />
-              </Pressable>
-            </>
-          ),
         }}
       />
 
