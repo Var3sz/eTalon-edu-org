@@ -5,4 +5,5 @@ export const colors = {
   subtext: '#6B7280',
   primary: '#8CC63E',
   border: '#E5E7EB',
+  destructive: '#FF0000',
 };

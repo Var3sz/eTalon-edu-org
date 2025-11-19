@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, FlatList, Modal, Button } from 'react-native';
 import { coursesMock } from '../../../mock/courses';
 import { Ionicons } from '@expo/vector-icons';
 import CourseListItem from '../../../components/courses/course-list-item';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
+import ConfirmDialog from '../../../components/dialogs/confirm-dialog';
 
 const data = [
   { id: '1', name: 'Apple' },
@@ -14,15 +15,15 @@ const data = [
 
 export default function CoursesScreen() {
   const [selectedCourse, setSelectedCourse] = useState<any>(null);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const handlePressCourse = (course: any) => {
     setSelectedCourse(course);
-    setModalVisible(true);
+    setDialogOpen(true);
   };
 
   const handleCloseModal = () => {
-    setModalVisible(false);
+    setDialogOpen(false);
     setSelectedCourse(null);
   };
 
@@ -36,28 +37,14 @@ export default function CoursesScreen() {
         renderItem={({ item }) => <CourseListItem course={item} onPress={() => handlePressCourse(item)} />}
       />
 
-      <Modal visible={modalVisible} transparent animationType='fade' onRequestClose={handleCloseModal}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            {selectedCourse && (
-              <>
-                <Text style={styles.modalTitle}>{selectedCourse.courseId}</Text>
-                <Text style={styles.modalText}>Csoport: {selectedCourse.group}</Text>
-                <Text style={styles.modalText}>Lezárt: {selectedCourse.closed ? 'Igen' : 'Nem'}</Text>
-
-                <View style={styles.modalButton}>
-                  <Button title='Bezárás' onPress={handleCloseModal} />
-                  <Button
-                    title='Megnyitás'
-                    onPress={handlePositiveEvent} // <-- Pozitív esemény
-                    color='#4CAF50'
-                  />
-                </View>
-              </>
-            )}
-          </View>
-        </View>
-      </Modal>
+      <ConfirmDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onConfirm={handlePositiveEvent}
+        onCancel={handleCloseModal}
+        title={'Biztosan lezárja a kurzust?'}
+        description={'Amennyiben lezárja a kurzust, az a későbbiekben nem lesz visszavonható!'}
+      />
     </>
   );
 }
