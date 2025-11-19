@@ -12,9 +12,8 @@ export default function CourseListItem({ course, onPress, onLongPress }: CourseL
   return (
     <Pressable
       onPress={onPress}
-      onLongPress={onLongPress}
+      onLongPress={course.closed ? undefined : onLongPress}
       style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
-      disabled={course.closed === true}
     >
       <View>
         <Text style={styles.title}>{course.courseId}</Text>
