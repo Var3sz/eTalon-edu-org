@@ -1,12 +1,9 @@
-// app/(main)/attendance/[courseId].tsx
 import { useMemo, useState } from 'react';
-import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { View, StyleSheet } from 'react-native';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import { Attendacemock } from '../../../mock/attendance';
 import CustomDialog from '../../../components/dialogs/custom-dialog';
 import ShowStudentDialog from '../../../components/dialogs/students/show-student-details-dialog';
-import { colors } from '../../../lib/colors';
 import { CourseAttendanceResponse, Student } from '../../../models/attendance/types';
 import AttendanceList from '../../../components/attendance/attendance-list';
 import AttendanceListHeader from '../../../components/attendance/attendance-list-header';

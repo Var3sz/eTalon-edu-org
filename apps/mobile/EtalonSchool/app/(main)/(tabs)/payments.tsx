@@ -4,12 +4,12 @@ import { coursesMock } from '../../../mock/courses';
 import CourseListItem from '../../../components/courses/course-list-item';
 import AppText from '../../../components/ui/app-text';
 
-export default function AttendanceScreen() {
+export default function PaymentsScreen() {
   const router = useRouter();
 
   const handlePressCourse = (courseId: string) => {
     router.push({
-      pathname: '/attendance/[courseId]',
+      pathname: '/payment/[courseId]',
       params: { courseId },
     });
   };
@@ -17,7 +17,7 @@ export default function AttendanceScreen() {
   return (
     <View style={styles.container}>
       <AppText weight='700' style={styles.title}>
-        Jelenlétek
+        Befizetések
       </AppText>
       <FlatList
         data={coursesMock}

@@ -28,7 +28,7 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name='invoices'
+        name='payments'
         options={{
           title: 'Számlázás',
           tabBarIcon: ({ color }) => <Ionicons name='wallet-outline' size={30} color={color} />,
