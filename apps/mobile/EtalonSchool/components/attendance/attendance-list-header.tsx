@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LessonAttendance } from '../../models/attendance/types';
+import AppText from '../ui/app-text';
 
 type AttendanceListHeaderProps = {
   lessons: LessonAttendance[];
@@ -32,8 +33,12 @@ export default function AttendanceListHeader({
       </Pressable>
 
       <View style={styles.headerCenter}>
-        <Text style={styles.lessonTitle}>{selectedLesson.description}</Text>
-        <Text style={styles.lessonDate}>{new Date(selectedLesson.date).toLocaleDateString('hu-HU')}</Text>
+        <AppText weight='600' style={styles.lessonTitle}>
+          {selectedLesson.description}
+        </AppText>
+        <AppText weight='600' style={styles.lessonDate}>
+          {new Date(selectedLesson.date).toLocaleDateString('hu-HU')}
+        </AppText>
       </View>
 
       <Pressable

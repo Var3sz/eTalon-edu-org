@@ -10,6 +10,7 @@ import { colors } from '../../../lib/colors';
 import { CourseAttendanceResponse, Student } from '../../../models/attendance/types';
 import AttendanceList from '../../../components/attendance/attendance-list';
 import AttendanceListHeader from '../../../components/attendance/attendance-list-header';
+import AppText from '../../../components/ui/app-text';
 
 // --- IDE JÖN MAJD AZ API VÁLASZ ---
 const MOCK_DATA: CourseAttendanceResponse = Attendacemock;
@@ -70,7 +71,7 @@ export default function AttendanceByCourseScreen() {
   if (!courseData || lessons.length === 0) {
     return (
       <View style={styles.center}>
-        <Text>Nincs elérhető jelenlét ehhez a kurzushoz.</Text>
+        <AppText weight='600'>Nincs elérhető jelenlét ehhez a kurzushoz.</AppText>
       </View>
     );
   }

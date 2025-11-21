@@ -10,11 +10,6 @@ export default function ShowCourseDialog({ course }: ShowCourseDialogProps) {
     <View style={styles.dialogBody}>
       <CourseInfoRow label='Kurzus azonosító' value={course.courseId} />
       <CourseInfoRow label='Csoport' value={course.group} />
-
-      {/* Későbbiek, ha kell */}
-      {/* <CourseInfoRow label="Helyszín" value={course.location} />
-      <CourseInfoRow label="Óra kezdete" value={course.startTime} />
-      <CourseInfoRow label="Óra vége" value={course.endTime} /> */}
     </View>
   );
 }

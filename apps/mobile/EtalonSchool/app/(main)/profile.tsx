@@ -1,18 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native';
+import AppText from '../../components/ui/app-text';
 
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       {/* Nagy kör avatar */}
       <View style={styles.avatar}>
-        <Text style={styles.avatarText}>VÁ</Text>
+        <AppText weight='600' style={styles.avatarText}>
+          VÁ
+        </AppText>
       </View>
 
       {/* Név */}
-      <Text style={styles.name}>Varga Ádám</Text>
+      <AppText weight='700' style={styles.name}>
+        Varga Ádám
+      </AppText>
 
       {/* Valami extra infó */}
-      <Text style={styles.subtitle}>adam.varga@bluebax.com</Text>
+      <AppText weight='500' style={styles.subtitle}>
+        adam.varga@bluebax.com
+      </AppText>
     </View>
   );
 }

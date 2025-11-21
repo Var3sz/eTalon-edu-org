@@ -8,6 +8,7 @@ import { colors } from '../../lib/colors';
 import { LoginDto } from '../../models/auth/auth';
 import { useAuth } from '../../contexts/AuthContext';
 import { router } from 'expo-router';
+import AppText from '../../components/ui/app-text';
 
 export default function LoginScreen() {
   const { form } = useInitLoginScreen();
@@ -28,7 +29,9 @@ export default function LoginScreen() {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.title}>Bejelentkezés</Text>
+          <AppText weight='700' style={styles.title}>
+            Bejelentkezés
+          </AppText>
           <View style={styles.field}>
             <FormTextInput id='username' label='E-mail' formControl={form.control} />
           </View>
@@ -43,11 +46,13 @@ export default function LoginScreen() {
             disabled={disabled}
             style={({ pressed }) => [styles.button, { opacity: disabled ? 0.5 : pressed ? 0.9 : 1 }]}
           >
-            <Text style={styles.buttonText}>Belépés</Text>
+            <AppText weight='600' style={styles.buttonText}>
+              Belépés
+            </AppText>
           </Pressable>
         </View>
 
-        <Text
+        <AppText
           style={styles.footer}
           numberOfLines={1}
           adjustsFontSizeToFit
@@ -55,7 +60,7 @@ export default function LoginScreen() {
           ellipsizeMode='tail'
         >
           © {new Date().getFullYear()} Etalon School
-        </Text>
+        </AppText>
       </View>
     </KeyboardAvoidingView>
   );

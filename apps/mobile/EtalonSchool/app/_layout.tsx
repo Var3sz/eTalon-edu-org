@@ -1,10 +1,18 @@
 // app/_layout.tsx
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, ActivityIndicator } from 'react-native';
+import { useFonts } from 'expo-font';
 
 import { colors } from '../lib/colors';
-import { useAuth, AuthProvider } from '../contexts/AuthContext';
+import { ActivityIndicator, View } from 'react-native';
+
+import {
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 
 function RootNavigator() {
   // const { isAuthenticated, user, loading } = useAuth();
@@ -47,6 +55,29 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    Inter300: Inter_300Light,
+    Inter400: Inter_400Regular,
+    Inter500: Inter_500Medium,
+    Inter600: Inter_600SemiBold,
+    Inter700: Inter_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.bg ?? '#ffffff',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size='small' color={colors.primary} />
+      </View>
+    );
+  }
+
   return (
     //<AuthProvider>
     <>

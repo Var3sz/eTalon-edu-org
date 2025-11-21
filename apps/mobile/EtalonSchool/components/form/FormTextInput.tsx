@@ -3,6 +3,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { FormBaseProps } from '../../models/ui/form-props';
+import AppText from '../ui/app-text';
 
 export default function FormTextInput<T extends FieldValues>({
   id,
@@ -18,7 +19,7 @@ export default function FormTextInput<T extends FieldValues>({
         name={id as Path<T>}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
-            <Text>{label}</Text>
+            <AppText weight='600'>{label}</AppText>
             <TextInput
               style={[styles.input, error && styles.inputError]}
               placeholder={placeholder}
@@ -27,7 +28,11 @@ export default function FormTextInput<T extends FieldValues>({
               value={value}
               secureTextEntry={secureTextEntry}
             />
-            {error && <Text style={styles.errorText}>{error.message}</Text>}
+            {error && (
+              <AppText weight='500' style={styles.errorText}>
+                {error.message}
+              </AppText>
+            )}
           </>
         )}
       />

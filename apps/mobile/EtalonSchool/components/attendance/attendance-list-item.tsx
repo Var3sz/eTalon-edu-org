@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LessonAttendance, Student } from '../../models/attendance/types';
 import { Ionicons } from '@expo/vector-icons';
+import AppText from '../ui/app-text';
 
 type AttendanceListItemProps = {
   selectedLesson: LessonAttendance;
@@ -25,11 +26,13 @@ export default function AttendanceListItem({
       style={({ pressed }) => [styles.studentRow, pressed && styles.studentRowPressed]}
     >
       <View>
-        <Text style={styles.studentName}>{student.childName}</Text>
+        <AppText weight='600' style={styles.studentName}>
+          {student.childName}
+        </AppText>
       </View>
 
       <View style={styles.status}>
-        <Text style={styles.statusText}>{attended ? 'Jelen' : 'Hiányzó'}</Text>
+        <AppText style={styles.statusText}>{attended ? 'Jelen' : 'Hiányzó'}</AppText>
         <Ionicons
           name={attended ? 'checkmark-circle' : 'close-circle'}
           size={24}
@@ -62,7 +65,6 @@ const styles = StyleSheet.create({
   },
   studentName: {
     fontSize: 16,
-    fontWeight: '600',
   },
   statusText: {
     fontSize: 14,

@@ -2,6 +2,7 @@ import { Children, Dispatch, ReactNode, SetStateAction } from 'react';
 import { Button, Modal, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../lib/colors';
 import { Ionicons } from '@expo/vector-icons';
+import AppText from '../ui/app-text';
 
 type ConfirmDialogProps = {
   open: boolean;
@@ -28,8 +29,10 @@ export default function ConfirmDialog({
     <Modal visible={open} onRequestClose={() => onOpenChange(false)} transparent animationType='fade'>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>{title}</Text>
-          <Text style={styles.modalText}>{description}</Text>
+          <AppText weight='700' style={styles.modalTitle}>
+            {title}
+          </AppText>
+          <AppText style={styles.modalText}>{description}</AppText>
 
           <View style={styles.modalButton}>
             <Button title={cancelText} onPress={onCancel} color={colors.destructive} />

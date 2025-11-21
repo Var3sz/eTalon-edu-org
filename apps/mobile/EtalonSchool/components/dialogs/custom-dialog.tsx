@@ -2,6 +2,7 @@ import { Children, Dispatch, ReactNode, SetStateAction } from 'react';
 import { Button, Modal, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../lib/colors';
 import { Ionicons } from '@expo/vector-icons';
+import AppText from '../ui/app-text';
 
 type CustomDialogProps = {
   open: boolean;
@@ -16,7 +17,9 @@ export default function CustomDialog({ open, onOpenChange, title, children }: Cu
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>{title}</Text>
+            <AppText weight='700' style={styles.modalTitle}>
+              {title}
+            </AppText>
             <Ionicons name='close' size={30} onPress={() => onOpenChange(false)} />
           </View>
           {children}

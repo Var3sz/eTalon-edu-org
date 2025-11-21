@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import AppText from '../ui/app-text';
 
 type CustomInfoRowProps = {
   label: string;
@@ -13,8 +14,10 @@ export default function CustomInfoRow({ label, value, rightIcon, showSeparator =
     <View style={styles.wrapper}>
       <View style={styles.row}>
         <View style={styles.textContainer}>
-          <Text style={styles.label}>{label}</Text>
-          <Text style={styles.value}>{value}</Text>
+          <AppText weight='600' style={styles.label}>
+            {label}
+          </AppText>
+          <AppText style={styles.value}>{value}</AppText>
         </View>
 
         {rightIcon && <View style={styles.iconWrapper}>{rightIcon}</View>}

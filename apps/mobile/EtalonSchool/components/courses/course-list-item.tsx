@@ -1,6 +1,7 @@
 // components/CourseListItem.js
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AppText from '../ui/app-text';
 
 type CourseListItemProps = {
   course: any;
@@ -16,11 +17,15 @@ export default function CourseListItem({ course, onPress, onLongPress }: CourseL
       style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
     >
       <View>
-        <Text style={styles.title}>{course.courseId}</Text>
-        <Text style={styles.group}>{course.group}</Text>
+        <AppText weight='600' style={styles.title}>
+          {course.courseId}
+        </AppText>
+        <AppText weight='600' style={styles.group}>
+          {course.group}
+        </AppText>
       </View>
       <View style={styles.countInfo}>
-        <Text style={styles.infoText}>{`${course.headCount} / ${course.maxHeadCount}`}</Text>
+        <AppText weight='600' style={styles.infoText}>{`${course.headCount} / ${course.maxHeadCount}`}</AppText>
         {course.closed && <Ionicons name='lock-closed' size={22} color='#000' />}
       </View>
     </Pressable>
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
   },
   group: {
     fontSize: 16,
-    color: '#555',
+    color: '#6b7280',
     marginTop: 2,
   },
   countInfo: {
