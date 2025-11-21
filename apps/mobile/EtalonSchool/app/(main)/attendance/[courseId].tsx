@@ -7,34 +7,9 @@ import { Attendacemock } from '../../../mock/attendance';
 import CustomDialog from '../../../components/dialogs/custom-dialog';
 import ShowStudentDialog from '../../../components/dialogs/students/show-student-details-dialog';
 import { colors } from '../../../lib/colors';
-
-// --- Típusok a backend struktúrára ---
-
-type LessonAttendance = {
-  lessonDateId: number;
-  date: string; // ISO string
-  description: string;
-  attended: boolean;
-};
-
-type Student = {
-  id: number;
-  firstname: string;
-  lastname: string;
-  childName: string;
-  email: string;
-  mobile: string;
-  city: string;
-  zip: number;
-  address: string;
-  sapId: number;
-  attendance: LessonAttendance[];
-};
-
-type CourseAttendanceResponse = {
-  courseId: string;
-  students: Student[];
-};
+import { CourseAttendanceResponse, Student } from '../../../models/attendance/types';
+import AttendanceList from '../../../components/attendance/attendance-list';
+import AttendanceListHeader from '../../../components/attendance/attendance-list-header';
 
 // --- IDE JÖN MAJD AZ API VÁLASZ ---
 const MOCK_DATA: CourseAttendanceResponse = Attendacemock;
@@ -52,14 +27,6 @@ export default function AttendanceByCourseScreen() {
   }, [courseData]);
 
   const [selectedLessonIndex, setSelectedLessonIndex] = useState(0);
-
-  if (!courseData || lessons.length === 0) {
-    return (
-      <View style={styles.center}>
-        <Text>Nincs elérhető jelenlét ehhez a kurzushoz.</Text>
-      </View>
-    );
-  }
 
   const selectedLesson = lessons[selectedLessonIndex];
 
@@ -99,6 +66,15 @@ export default function AttendanceByCourseScreen() {
     setStudentDialogOpen(true);
   };
 
+  // Ha nincsenek jelenléti adatok még egy adott kurzushoz
+  if (!courseData || lessons.length === 0) {
+    return (
+      <View style={styles.center}>
+        <Text>Nincs elérhető jelenlét ehhez a kurzushoz.</Text>
+      </View>
+    );
+  }
+
   return (
     <>
       <Stack.Screen
@@ -108,68 +84,19 @@ export default function AttendanceByCourseScreen() {
       />
 
       <View style={styles.container}>
-        {/* --- Fejléc: lapozás óradátumok között --- */}
-        <View style={styles.header}>
-          <Pressable
-            onPress={handlePrev}
-            disabled={selectedLessonIndex === 0}
-            style={({ pressed }) => [
-              styles.navButton,
-              selectedLessonIndex === 0 && styles.navButtonDisabled,
-              pressed && styles.navButtonPressed,
-            ]}
-          >
-            <Ionicons name='chevron-back' size={20} />
-          </Pressable>
+        <AttendanceListHeader
+          lessons={lessons}
+          selectedLesson={selectedLesson}
+          selectedLessonIndex={selectedLessonIndex}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
+        />
 
-          <View style={styles.headerCenter}>
-            <Text style={styles.lessonTitle}>{selectedLesson.description}</Text>
-            <Text style={styles.lessonDate}>{new Date(selectedLesson.date).toLocaleDateString('hu-HU')}</Text>
-          </View>
-
-          <Pressable
-            onPress={handleNext}
-            disabled={selectedLessonIndex === lessons.length - 1}
-            style={({ pressed }) => [
-              styles.navButton,
-              selectedLessonIndex === lessons.length - 1 && styles.navButtonDisabled,
-              pressed && styles.navButtonPressed,
-            ]}
-          >
-            <Ionicons name='chevron-forward' size={20} />
-          </Pressable>
-        </View>
-
-        {/* --- Diáklista az adott órára --- */}
-        <FlatList
-          data={courseData.students}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.listContent}
-          renderItem={({ item }) => {
-            const att = item.attendance.find((a) => a.lessonDateId === selectedLesson.lessonDateId);
-            const attended = att?.attended ?? false;
-
-            return (
-              <Pressable
-                onPress={() => handleToggleAttendance(item.id)}
-                onLongPress={() => handleOpenStudentDialog(item)}
-                style={({ pressed }) => [styles.studentRow, pressed && styles.studentRowPressed]}
-              >
-                <View>
-                  <Text style={styles.studentName}>{item.childName}</Text>
-                </View>
-
-                <View style={styles.status}>
-                  <Text style={styles.statusText}>{attended ? 'Jelen' : 'Hiányzó'}</Text>
-                  <Ionicons
-                    name={attended ? 'checkmark-circle' : 'close-circle'}
-                    size={24}
-                    color={attended ? '#16a34a' : '#dc2626'}
-                  />
-                </View>
-              </Pressable>
-            );
-          }}
+        <AttendanceList
+          students={courseData.students}
+          selectedLesson={selectedLesson}
+          handleOpenStudentDialog={handleOpenStudentDialog}
+          handleToggleAttendance={handleToggleAttendance}
         />
       </View>
 
@@ -190,68 +117,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 8,
-  },
-  headerCenter: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  lessonTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  lessonDate: {
-    fontSize: 14,
-    color: '#6b7280',
-  },
-  navButton: {
-    padding: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-  },
-  navButtonDisabled: {
-    opacity: 0.3,
-  },
-  navButtonPressed: {
-    opacity: 0.6,
-  },
-  listContent: {
-    paddingTop: 4,
-  },
-  studentRow: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    backgroundColor: '#fff',
-    marginBottom: 6,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    elevation: 1,
-  },
-  studentRowPressed: {
-    opacity: 0.7,
-  },
-  studentName: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  parentName: {
-    fontSize: 13,
-    color: '#6b7280',
-  },
-  status: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  statusText: {
-    fontSize: 14,
   },
 });
