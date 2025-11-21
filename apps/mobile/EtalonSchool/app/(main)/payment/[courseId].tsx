@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { StudentPayment, StudentPaymentResponse } from '../../../models/payment/type';
+import { Payment, StudentPayment, StudentPaymentResponse } from '../../../models/payment/type';
 import { PaymentMock } from '../../../mock/payment';
 import { useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -7,6 +7,12 @@ import AppText from '../../../components/ui/app-text';
 import CustomDialog from '../../../components/dialogs/custom-dialog';
 import PaymentListHeader from '../../../components/payments/payment-list-header';
 import PaymentList from '../../../components/payments/payment-list';
+import ShowPaymentDialog from '../../../components/dialogs/payment/show-payment-details-dialog';
+
+export type SelectedPaymentDetail = {
+  student: StudentPayment;
+  payment: Payment;
+};
 
 const MOCK_DATA: StudentPaymentResponse = PaymentMock;
 
@@ -34,19 +40,26 @@ export default function PaymentsByCourseScreen() {
     setSelectedPaymentIndex((prev) => (prev < payments.length - 1 ? prev + 1 : prev));
   };
 
-  //   const [selectedPaymentDetail, setSelectedPaymentDetail] = useState<StudentPayment | null>(null);
-  //   const [paymentDetailsDialogOpen, setPaymentDetailsDialogOpen] = useState(false);
+  const [selectedPaymentDetail, setSelectedPaymentDetail] = useState<SelectedPaymentDetail | null>(null);
+  const [paymentDetailsDialogOpen, setPaymentDetailsDialogOpen] = useState(false);
 
-  //   const handleOpenStudentDialog = (student: StudentPayment) => {
-  //     setSelectedPaymentDetail(student);
-  //     setPaymentDetailsDialogOpen(true);
-  //   };
+  const handleOpenPaymentDialog = (student: StudentPayment) => {
+    const paymentForStudent = student.Payments.find((p) => p.invoiceDateId === selectedPayment.invoiceDateId);
+
+    if (!paymentForStudent) return;
+
+    setSelectedPaymentDetail({
+      student,
+      payment: paymentForStudent,
+    });
+    setPaymentDetailsDialogOpen(true);
+  };
 
   // Ha nincsenek fizetési adatok még egy adott kurzushoz
   if (!paymentData || payments.length === 0) {
     return (
       <View style={styles.center}>
-        <AppText weight='600'>Nincs elérhető jelenlét ehhez a kurzushoz.</AppText>
+        <AppText weight='600'>Nincs elérhető befizetés ehhez a kurzushoz.</AppText>
       </View>
     );
   }
@@ -71,13 +84,13 @@ export default function PaymentsByCourseScreen() {
         <PaymentList
           students={paymentData.payments}
           selectedPayment={selectedPayment}
-          //   handleOpenStudentDialog={handleOpenStudentDialog}
+          handleOpenPaymentDialog={handleOpenPaymentDialog}
         />
       </View>
 
-      {/* <CustomDialog open={studentDialogOpen} onOpenChange={setStudentDialogOpen} title='Tanuló adatai'>
-        {selectedStudent && <ShowStudentDialog student={selectedStudent} />}
-      </CustomDialog> */}
+      <CustomDialog open={paymentDetailsDialogOpen} onOpenChange={setPaymentDetailsDialogOpen} title='Befizetés adatai'>
+        {selectedPaymentDetail && <ShowPaymentDialog paymentDetail={selectedPaymentDetail} />}
+      </CustomDialog>
     </>
   );
 }

@@ -6,23 +6,48 @@ import { Ionicons } from '@expo/vector-icons';
 type PaymentListItemProps = {
   selectedPayment: Payment;
   student: StudentPayment;
-  //   handleTogglePayment: (studentId: number) => void;
-  //   handleOpenStudentDialog: (student: Student) => void;
+  handleOpenPaymentDialog: (student: StudentPayment) => void;
 };
 
-export default function PaymentListItem({
-  selectedPayment,
-  student,
-  //   handleOpenStudentDialog,
-  //   handleTogglePayment,
-}: PaymentListItemProps) {
-  const att = student.Payments.find((a) => a.invoiceDateId === selectedPayment.invoiceDateId);
-  const payed = att?.payed ?? false;
+export default function PaymentListItem({ selectedPayment, student, handleOpenPaymentDialog }: PaymentListItemProps) {
+  const payment = student.Payments.find((a) => a.invoiceDateId === selectedPayment.invoiceDateId);
+  const payed = payment?.payed ?? false;
+  const payedAmount = payment?.amount ?? 0;
+
+  const getStatusText = (): string => {
+    let text = 'Nem fizetett';
+    if (payed === true) {
+      text = 'Fizetett';
+    } else if (payedAmount > 0) {
+      text = 'Hiányos';
+    }
+
+    return text;
+  };
+
+  const getStatusIcon = (): any => {
+    let text = 'close-circle';
+    if (payed === true) {
+      text = 'checkmark-circle';
+    } else if (payedAmount > 0) {
+      text = 'time';
+    }
+    return text;
+  };
+
+  const getStatusColor = (): any => {
+    let text = '#dc2626';
+    if (payed === true) {
+      text = '#16a34a';
+    } else if (payedAmount > 0) {
+      text = '#fcb04eff';
+    }
+    return text;
+  };
 
   return (
     <Pressable
-      //   onPress={() => handleToggleAttendance(student.id)}
-      //   onLongPress={() => handleOpenStudentDialog(student)}
+      onPress={() => handleOpenPaymentDialog(student)}
       style={({ pressed }) => [styles.studentRow, pressed && styles.studentRowPressed]}
     >
       <View>
@@ -32,8 +57,8 @@ export default function PaymentListItem({
       </View>
 
       <View style={styles.status}>
-        <AppText style={styles.statusText}>{payed ? 'Fizetett' : 'Nem fizetett'}</AppText>
-        <Ionicons name={payed ? 'checkmark-circle' : 'close-circle'} size={24} color={payed ? '#16a34a' : '#dc2626'} />
+        <AppText style={styles.statusText}>{getStatusText()}</AppText>
+        <Ionicons name={getStatusIcon()} size={24} color={getStatusColor()} />
       </View>
     </Pressable>
   );

@@ -1,27 +1,7 @@
 import { View, StyleSheet, Pressable, Linking } from 'react-native';
 import CustomInfoRow from '../../shared/custom-info-row';
 import { Ionicons } from '@expo/vector-icons';
-
-type LessonAttendance = {
-  lessonDateId: number;
-  date: string;
-  description: string;
-  attended: boolean;
-};
-
-type Student = {
-  id: number;
-  firstname: string;
-  lastname: string;
-  childName: string;
-  email: string;
-  mobile: string;
-  city: string;
-  zip: number;
-  address: string;
-  sapId: number;
-  attendance: LessonAttendance[];
-};
+import { Student } from '../../../models/attendance/types';
 
 type ShowStudentDialogProps = {
   student: Student;

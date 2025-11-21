@@ -5,10 +5,10 @@ import PaymentListItem from './payment-list-item';
 type PaymentListProps = {
   selectedPayment: Payment;
   students: StudentPayment[];
-  // handleOpenStudentDialog: (student: StudentPayment) => void;
+  handleOpenPaymentDialog: (student: StudentPayment) => void;
 };
 
-export default function PaymentList({ students, selectedPayment /* handleOpenStudentDialog */ }: PaymentListProps) {
+export default function PaymentList({ students, selectedPayment, handleOpenPaymentDialog }: PaymentListProps) {
   return (
     <FlatList
       data={students}
@@ -18,8 +18,7 @@ export default function PaymentList({ students, selectedPayment /* handleOpenStu
         <PaymentListItem
           selectedPayment={selectedPayment}
           student={item}
-          //   handleOpenStudentDialog={handleOpenStudentDialog}
-          //   handleToggleAttendance={handleToggleAttendance}
+          handleOpenPaymentDialog={handleOpenPaymentDialog}
         />
       )}
     />
