@@ -16,7 +16,7 @@ export default function LoginScreen() {
 
   const disabled = !formValues.username || !formValues.password;
 
-  // const { login } = useAuth();
+  const { isAuthenticated, login } = useAuth();
 
   return (
     <KeyboardAvoidingView
@@ -40,9 +40,11 @@ export default function LoginScreen() {
           </View>
           <Pressable
             onPress={() => {
-              router.replace('/(main)/(tabs)/courses');
-              //login(formValues.username, formValues.password);
-            }} /* form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit) */
+              login(formValues.username, formValues.password);
+              if (isAuthenticated) {
+                router.replace('/(main)/(tabs)/courses');
+              }
+            }}
             disabled={disabled}
             style={({ pressed }) => [styles.button, { opacity: disabled ? 0.5 : pressed ? 0.9 : 1 }]}
           >

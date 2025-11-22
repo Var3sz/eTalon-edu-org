@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
@@ -10,52 +11,65 @@ export type TokensType = {
   expiresIn: number; // ms
 };
 
-async function safeSetItem(key: string, value: string) {
+async function isSecureStoreAvailable() {
+  if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
+    return false;
+  }
+
   try {
-    await SecureStore.setItemAsync(key, value);
-  } catch (e) {
-    console.warn('[SecureStore] setItem error', key, e);
+    return await SecureStore.isAvailableAsync();
+  } catch {
+    return false;
   }
 }
 
-async function safeGetItem(key: string): Promise<string | null> {
+async function setItem(key: string, value: string | null) {
+  const available = await isSecureStoreAvailable();
+  if (!available) return;
+
+  try {
+    if (value == null) {
+      await SecureStore.deleteItemAsync(key);
+    } else {
+      await SecureStore.setItemAsync(key, value);
+    }
+  } catch (e) {
+    console.warn('SecureStore setItem error', e);
+  }
+}
+
+async function getItem(key: string): Promise<string | null> {
+  const available = await isSecureStoreAvailable();
+  if (!available) return null;
+
   try {
     return await SecureStore.getItemAsync(key);
   } catch (e) {
-    console.warn('[SecureStore] getItem error', key, e);
+    console.warn('SecureStore getItem error', e);
     return null;
   }
 }
 
-async function safeDeleteItem(key: string) {
-  try {
-    await SecureStore.deleteItemAsync(key);
-  } catch (e) {
-    console.warn('[SecureStore] deleteItem error', key, e);
-  }
+export async function saveAccessToken(token: string | null) {
+  return setItem(ACCESS_TOKEN_KEY, token);
 }
 
-export async function saveTokens(tokens: TokensType) {
-  await safeSetItem(ACCESS_TOKEN_KEY, tokens.accessToken);
-  await safeSetItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
-  await safeSetItem(EXPIRES_AT_KEY, String(tokens.expiresIn));
+export async function loadAccessToken() {
+  return getItem(ACCESS_TOKEN_KEY);
 }
 
-export async function getAccessToken() {
-  return await safeGetItem(ACCESS_TOKEN_KEY);
+export async function deleteAccessToken() {
+  return setItem(ACCESS_TOKEN_KEY, null);
 }
 
-export async function getRefreshToken() {
-  return await safeGetItem(REFRESH_TOKEN_KEY);
+export async function saveRefreshToken(token: string | null) {
+  return setItem(REFRESH_TOKEN_KEY, token);
 }
 
-export async function getExpiresAt(): Promise<number | null> {
-  const value = await safeGetItem(EXPIRES_AT_KEY);
-  return value ? Number(value) : null;
+export async function loadRefreshToken() {
+  return getItem(REFRESH_TOKEN_KEY);
 }
 
-export async function clearTokens() {
-  await safeDeleteItem(ACCESS_TOKEN_KEY);
-  await safeDeleteItem(REFRESH_TOKEN_KEY);
-  await safeDeleteItem(EXPIRES_AT_KEY);
+export async function deleteRefreshToken() {
+  return setItem(REFRESH_TOKEN_KEY, null);
 }

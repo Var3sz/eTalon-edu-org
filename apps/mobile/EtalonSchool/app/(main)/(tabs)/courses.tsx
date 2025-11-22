@@ -6,8 +6,11 @@ import ConfirmDialog from '../../../components/dialogs/confirm-dialog';
 import CustomDialog from '../../../components/dialogs/custom-dialog';
 import ShowCourseDialog from '../../../components/dialogs/courses/show-course-dialog';
 import AppText from '../../../components/ui/app-text';
+import { useAuth } from '../../../contexts/AuthContext';
 
 export default function CoursesScreen() {
+  const { getTokens } = useAuth();
+
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
@@ -40,6 +43,12 @@ export default function CoursesScreen() {
             <CourseListItem course={item} onPress={() => handlePressCourse(item)} onLongPress={handleLongPressCourse} />
           )}
         />
+        {/* <Button
+          title='AGGYAD A TOKENEKET!'
+          onPress={async () => {
+            await getTokens();
+          }}
+        ></Button> */}
       </View>
 
       <ConfirmDialog

@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { TokensType, User } from '../models/auth/auth';
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
-import { clearTokens, getAccessToken, getExpiresAt, getRefreshToken, saveTokens } from '../lib/auth/token-storage';
+import { loadAccessToken, loadRefreshToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -11,7 +11,7 @@ interface AuthContextType {
   accessToken: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  loading: boolean;
+  getTokens: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -19,21 +19,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  // const applyTokens = (tokens: TokensType | null) => {
-  //   if (tokens) {
-  //     setAccessToken(tokens.accessToken);
-  //     setRefreshToken(tokens.refreshToken);
-  //     setIsAuthenticated(true);
-  //   } else {
-  //     setAccessToken(null);
-  //     setRefreshToken(null);
-  //     setIsAuthenticated(false);
-  //   }
-  // };
 
   const login = async (email: string, password: string) => {
     const res = await fetch(`${SERVER_BASE_URL}auth/login`, {
@@ -52,56 +38,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { user, tokens } = response;
 
     setUser(user);
-    // applyTokens(tokens);
-    // await saveTokens(tokens);
+    setAccessToken(tokens.accessToken);
+    await saveAccessToken(tokens.accessToken);
+    await saveRefreshToken(tokens.refreshToken);
+    setIsAuthenticated(true);
   };
 
   const logout = async () => {
     setUser(null);
-    // applyTokens(null);
-    // await clearTokens();
+    setAccessToken(null);
+    await saveAccessToken(null);
+    await saveRefreshToken(null);
+    setIsAuthenticated(false);
   };
 
-  // useEffect(() => {
-  //   const initAuth = async () => {
-  //     try {
-  //       const [storedAccess, storedRefresh, expiresAt] = await Promise.all([
-  //         getAccessToken(),
-  //         getRefreshToken(),
-  //         getExpiresAt(),
-  //       ]);
+  const getTokens = async () => {
+    const access = await loadAccessToken();
+    const refresh = await loadRefreshToken();
 
-  //       if (!storedRefresh || !expiresAt) {
-  //         applyTokens(null);
-  //         return;
-  //       }
-
-  //       const now = Date.now();
-
-  //       if (storedAccess && now < expiresAt) {
-  //         applyTokens({
-  //           accessToken: storedAccess,
-  //           refreshToken: storedRefresh,
-  //           expiresIn: expiresAt,
-  //         });
-  //       } else {
-  //         await clearTokens();
-  //         applyTokens(null);
-  //       }
-  //     } catch (e) {
-  //       console.error('[Auth] initAuth error', e);
-  //       await clearTokens();
-  //       applyTokens(null);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   initAuth();
-  // }, []);
+    console.log(access, refresh, user);
+  };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, accessToken, loading, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, accessToken, login, logout, getTokens }}>
       {children}
     </AuthContext.Provider>
   );

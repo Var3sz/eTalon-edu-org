@@ -1,4 +1,3 @@
-// app/_layout.tsx
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
@@ -13,27 +12,10 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
 
 function RootNavigator() {
-  // const { isAuthenticated, user, loading } = useAuth();
-
-  // console.log(isAuthenticated);
-  // console.log(user);
-
-  // if (loading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         backgroundColor: colors.bg ?? '#ffffff',
-  //         alignItems: 'center',
-  //         justifyContent: 'center',
-  //       }}
-  //     >
-  //       <ActivityIndicator size='small' color={colors.primary} />
-  //     </View>
-  //   );
-  // }
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <Stack
@@ -45,11 +27,11 @@ function RootNavigator() {
         headerTitleAlign: 'center',
       }}
     >
-      {/* {isAuthenticated === true ? ( */}
-      <Stack.Screen name='(main)' options={{ headerShown: false }} />
-      {/*  ) : ( */}
-      <Stack.Screen name='(auth)' options={{ headerShown: false }} />
-      {/*  )} */}
+      {isAuthenticated === true ? (
+        <Stack.Screen name='(main)' options={{ headerShown: false }} />
+      ) : (
+        <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+      )}
     </Stack>
   );
 }
@@ -79,11 +61,11 @@ export default function RootLayout() {
   }
 
   return (
-    //<AuthProvider>
-    <>
-      <StatusBar style='dark' />
-      <RootNavigator />
-    </>
-    //</AuthProvider>
+    <AuthProvider>
+      <>
+        <StatusBar style='dark' />
+        <RootNavigator />
+      </>
+    </AuthProvider>
   );
 }
