@@ -22,7 +22,8 @@
         "backgroundColor": "#F3F4F6"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.EtalonSchool"
     },
     "web": {
       "favicon": "./assets/favicon.png"
