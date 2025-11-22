@@ -13,6 +13,10 @@ import {
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
+
+const queryClient = new QueryClient();
 
 function RootNavigator() {
   const { isAuthenticated, user } = useAuth();
@@ -45,27 +49,30 @@ export default function RootLayout() {
     Inter700: Inter_700Bold,
   });
 
-  if (!fontsLoaded) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.bg ?? '#ffffff',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator size='small' color={colors.primary} />
-      </View>
-    );
-  }
+  // if (!fontsLoaded) {
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         backgroundColor: colors.bg ?? '#ffffff',
+  //         alignItems: 'center',
+  //         justifyContent: 'center',
+  //       }}
+  //     >
+  //       <ActivityIndicator size='small' color={colors.primary} />
+  //     </View>
+  //   );
+  // }
 
   return (
-    <AuthProvider>
-      <>
-        <StatusBar style='dark' />
-        <RootNavigator />
-      </>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <>
+          <StatusBar style='dark' />
+          <RootNavigator />
+          <Toast />
+        </>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

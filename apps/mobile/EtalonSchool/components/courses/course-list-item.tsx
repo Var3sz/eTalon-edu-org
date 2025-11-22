@@ -1,10 +1,10 @@
-// components/CourseListItem.js
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AppText from '../ui/app-text';
+import { CourseDto } from '../../models/courses/types';
 
 type CourseListItemProps = {
-  course: any;
+  course: CourseDto;
   onPress: (course: any) => void;
   onLongPress?: (courseId: any) => void;
 };
@@ -13,7 +13,7 @@ export default function CourseListItem({ course, onPress, onLongPress }: CourseL
   return (
     <Pressable
       onPress={onPress}
-      onLongPress={course.closed ? undefined : onLongPress}
+      onLongPress={course.locked ? undefined : onLongPress}
       style={({ pressed }) => [styles.item, pressed && styles.itemPressed]}
     >
       <View>
@@ -21,12 +21,12 @@ export default function CourseListItem({ course, onPress, onLongPress }: CourseL
           {course.courseId}
         </AppText>
         <AppText weight='600' style={styles.group}>
-          {course.group}
+          {course.groupId}
         </AppText>
       </View>
       <View style={styles.countInfo}>
-        <AppText weight='600' style={styles.infoText}>{`${course.headCount} / ${course.maxHeadCount}`}</AppText>
-        {course.closed && <Ionicons name='lock-closed' size={22} color='#000' />}
+        <AppText weight='600' style={styles.infoText}>{`${course.headcount} / ${course.maxHeadCount}`}</AppText>
+        {course.locked && <Ionicons name='lock-closed' size={22} color='#000' />}
       </View>
     </Pressable>
   );

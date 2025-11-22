@@ -7,28 +7,26 @@ import CustomDialog from '../../../components/dialogs/custom-dialog';
 import ShowCourseDialog from '../../../components/dialogs/courses/show-course-dialog';
 import AppText from '../../../components/ui/app-text';
 import { useAuth } from '../../../contexts/AuthContext';
+import useInitCoursesScreen from '../../../hooks/courses/use-init-courses-screen';
 
 export default function CoursesScreen() {
-  const { getTokens } = useAuth();
+  // AccessToken lekérése Secure Store-ból
+  const { getAccessToken } = useAuth();
 
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false);
-  const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
-
-  const handlePressCourse = (course: any) => {
-    setSelectedCourse(course);
-    setDialogOpen(true);
-  };
-
-  const handleLongPressCourse = () => {
-    setConfirmDialogOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setConfirmDialogOpen(false);
-  };
-
-  const handlePositiveEvent = () => {};
+  const {
+    courses,
+    selectedCourse,
+    dialogOpen,
+    confirmDialogOpen,
+    setDialogOpen,
+    setConfirmDialogOpen,
+    handlePressCourse,
+    handleLongPressCourse,
+    handleCloseModal,
+    handlePositiveEvent,
+  } = useInitCoursesScreen({
+    getAccessToken: getAccessToken,
+  });
 
   return (
     <>
@@ -37,18 +35,16 @@ export default function CoursesScreen() {
           Kurzusok
         </AppText>
         <FlatList
-          data={coursesMock}
-          keyExtractor={(item) => item.id}
+          data={courses}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <CourseListItem course={item} onPress={() => handlePressCourse(item)} onLongPress={handleLongPressCourse} />
+            <CourseListItem
+              course={item}
+              onPress={() => handlePressCourse(item)}
+              onLongPress={() => handleLongPressCourse(item)}
+            />
           )}
         />
-        {/* <Button
-          title='AGGYAD A TOKENEKET!'
-          onPress={async () => {
-            await getTokens();
-          }}
-        ></Button> */}
       </View>
 
       <ConfirmDialog

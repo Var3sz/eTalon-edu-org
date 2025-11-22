@@ -4,21 +4,20 @@ import { Alert } from 'react-native';
 import { TokensType, User } from '../models/auth/auth';
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
 import { loadAccessToken, loadRefreshToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
+import Toast from 'react-native-toast-message';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
-  accessToken: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  getTokens: () => Promise<void>;
+  getAccessToken: () => Promise<string | null>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const login = async (email: string, password: string) => {
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (res.status !== 201 && res.status !== 200) {
       console.error('Login failed', res.status, res.statusText);
-      Alert.alert('Sikertelen bejelentkezés!');
+      Toast.show({ type: 'error', text1: 'Sikertelen bejelentkezés!', position: 'top' });
       return;
     }
 
@@ -38,7 +37,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { user, tokens } = response;
 
     setUser(user);
-    setAccessToken(tokens.accessToken);
     await saveAccessToken(tokens.accessToken);
     await saveRefreshToken(tokens.refreshToken);
     setIsAuthenticated(true);
@@ -46,21 +44,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     setUser(null);
-    setAccessToken(null);
     await saveAccessToken(null);
     await saveRefreshToken(null);
     setIsAuthenticated(false);
   };
 
-  const getTokens = async () => {
-    const access = await loadAccessToken();
-    const refresh = await loadRefreshToken();
-
-    console.log(access, refresh, user);
+  const getAccessToken = async () => {
+    const accessToken = await loadAccessToken();
+    return accessToken;
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, accessToken, login, logout, getTokens }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, getAccessToken }}>
       {children}
     </AuthContext.Provider>
   );
