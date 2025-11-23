@@ -1,14 +1,8 @@
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+import { TokensType } from '../../models/auth/auth';
 
-const ACCESS_TOKEN_KEY = 'access_token';
-const REFRESH_TOKEN_KEY = 'refresh_token';
-
-export type TokensType = {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number; // ms
-};
+const TOKENS_KEY = 'auth_tokens';
 
 async function isSecureStoreAvailable() {
   if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
@@ -49,26 +43,25 @@ async function getItem(key: string): Promise<string | null> {
   }
 }
 
-export async function saveAccessToken(token: string | null) {
-  return setItem(ACCESS_TOKEN_KEY, token);
+export async function saveTokens(tokens: TokensType | null) {
+  if (!tokens) {
+    await setItem(TOKENS_KEY, null);
+    return;
+  }
+  await setItem(TOKENS_KEY, JSON.stringify(tokens));
 }
 
-export async function loadAccessToken() {
-  return getItem(ACCESS_TOKEN_KEY);
+export async function loadTokens(): Promise<TokensType | null> {
+  const raw = await getItem(TOKENS_KEY);
+  if (!raw) return null;
+
+  try {
+    return JSON.parse(raw) as TokensType;
+  } catch {
+    return null;
+  }
 }
 
-export async function deleteAccessToken() {
-  return setItem(ACCESS_TOKEN_KEY, null);
-}
-
-export async function saveRefreshToken(token: string | null) {
-  return setItem(REFRESH_TOKEN_KEY, token);
-}
-
-export async function loadRefreshToken() {
-  return getItem(REFRESH_TOKEN_KEY);
-}
-
-export async function deleteRefreshToken() {
-  return setItem(REFRESH_TOKEN_KEY, null);
+export async function clearTokens() {
+  await setItem(TOKENS_KEY, null);
 }
