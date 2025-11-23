@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message';
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
 import { TokensType, User } from '../models/auth/auth';
 import { SplashScreen, useRouter } from 'expo-router';
-import { loadTokens, saveTokens } from '../lib/auth/token-storage';
+import { loadTokens, loadUser, saveTokens, saveUser } from '../lib/auth/token-storage';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(userFromApi);
     setTokens(tokensFromApi);
     await saveTokens(tokensFromApi);
+    await saveUser(userFromApi);
     setIsAuthenticated(true);
     router.replace('/(main)/(tabs)/courses');
   };
@@ -58,6 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     setTokens(null);
     await saveTokens(null);
+    await saveUser(null);
     setIsAuthenticated(false);
     router.replace('/(auth)');
   };
@@ -122,12 +124,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const getAuthFromStorage = async () => {
       try {
         const storedTokens = await loadTokens();
+        const storedUser = await loadUser();
 
         if (!storedTokens) {
           setIsAuthenticated(false);
+          setUser(null);
         } else {
           const refreshed = await refreshTokens();
           setIsAuthenticated(!!refreshed);
+          if (refreshed !== null) {
+            setUser(storedUser);
+          } else {
+            setUser(null);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -146,6 +155,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       SplashScreen.hideAsync();
     }
   }, [isReady]);
+
+  useEffect(() => console.log('USER', user), [user]);
 
   return (
     <AuthContext.Provider value={{ isReady, isAuthenticated, user, login, logout, getAccessToken }}>

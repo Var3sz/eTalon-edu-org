@@ -1,8 +1,9 @@
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
-import { TokensType } from '../../models/auth/auth';
+import { TokensType, User } from '../../models/auth/auth';
 
 const TOKENS_KEY = 'auth_tokens';
+const USER_KEY = 'user';
 
 async function isSecureStoreAvailable() {
   if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
@@ -62,6 +63,21 @@ export async function loadTokens(): Promise<TokensType | null> {
   }
 }
 
-export async function clearTokens() {
-  await setItem(TOKENS_KEY, null);
+export async function saveUser(user: User | null) {
+  if (!user) {
+    await setItem(USER_KEY, null);
+    return;
+  }
+  await setItem(USER_KEY, JSON.stringify(user));
+}
+
+export async function loadUser(): Promise<User | null> {
+  const raw = await getItem(USER_KEY);
+  if (!raw) return null;
+
+  try {
+    return JSON.parse(raw) as User;
+  } catch {
+    return null;
+  }
 }
