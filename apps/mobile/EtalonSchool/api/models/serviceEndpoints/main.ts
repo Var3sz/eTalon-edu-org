@@ -11,8 +11,14 @@ const getUpdateCourseStatusUrl = (courseId: number) => {
   return `${SERVER_BASE_URL}courses/UpdateCourse/${courseId}`;
 };
 
+// Jelenlétek
 const getAttendanceByCourseUrl = (courseId: number) => {
   return `${SERVER_BASE_URL}students/GetStudentsByCourseWithAttendances/${courseId}`;
+};
+
+// Befizetések
+const getPaymentsByCourseUrl = (courseId: number) => {
+  return `${SERVER_BASE_URL}students/GetStudentsByCourseWithPayments/${courseId}`;
 };
 
 // Kurzusok
@@ -34,4 +40,12 @@ export const GetAttendanceByCourse = async <ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return httpRequestGET<ResponseType>(getAttendanceByCourseUrl(courseId), token);
+};
+
+// Befizetések
+export const GetPaymentsByCourse = async <ResponseType>(
+  courseId: number,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getPaymentsByCourseUrl(courseId), token);
 };

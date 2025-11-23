@@ -2,10 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { Pressable } from 'react-native';
 import { colors } from '../../../lib/colors';
-import { useQueryClient } from '@tanstack/react-query';
 
 export default function AttendanceLayout() {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   return (

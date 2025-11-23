@@ -1,6 +1,6 @@
 import { View, StyleSheet, Pressable, Linking } from 'react-native';
 import CustomInfoRow from '../../shared/custom-info-row';
-import { SelectedPaymentDetail } from '../../../app/(main)/payment/[courseId]';
+import { SelectedPaymentDetail } from '../../../models/payment/type';
 
 type ShowPaymentDialogProps = {
   paymentDetail: SelectedPaymentDetail;

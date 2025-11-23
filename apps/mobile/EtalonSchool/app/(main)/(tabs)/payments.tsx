@@ -3,16 +3,15 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { coursesMock } from '../../../mock/courses';
 import CourseListItem from '../../../components/courses/course-list-item';
 import AppText from '../../../components/ui/app-text';
+import { useAuth } from '../../../contexts/AuthContext';
+import useInitPaymentScreen from '../../../hooks/payment/use-init-payment-screen';
 
 export default function PaymentsScreen() {
-  const router = useRouter();
+  const { getAccessToken } = useAuth();
 
-  const handlePressCourse = (courseId: string) => {
-    router.push({
-      pathname: '/payment/[courseId]',
-      params: { courseId },
-    });
-  };
+  const { courses, handlePressCourse } = useInitPaymentScreen({
+    getAccessToken: getAccessToken,
+  });
 
   return (
     <View style={styles.container}>
@@ -20,9 +19,9 @@ export default function PaymentsScreen() {
         Befizetések
       </AppText>
       <FlatList
-        data={coursesMock}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <CourseListItem course={item} onPress={() => handlePressCourse(item.courseId)} />}
+        data={courses}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <CourseListItem course={item} onPress={() => handlePressCourse(item.id)} />}
       />
     </View>
   );

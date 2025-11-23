@@ -19,3 +19,8 @@ export type StudentPaymentResponse = {
   courseId: string;
   payments: StudentPayment[];
 };
+
+export type SelectedPaymentDetail = {
+  student: StudentPayment;
+  payment: Payment;
+};
