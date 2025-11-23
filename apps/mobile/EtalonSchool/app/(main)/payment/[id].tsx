@@ -1,17 +1,18 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { Payment, SelectedPaymentDetail, StudentPayment, StudentPaymentResponse } from '../../../models/payment/type';
-import { PaymentMock } from '../../../mock/payment';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import AppText from '../../../components/ui/app-text';
+
 import CustomDialog from '../../../components/dialogs/custom-dialog';
-import PaymentListHeader from '../../../components/payments/payment-list-header';
-import PaymentList from '../../../components/payments/payment-list';
 import ShowPaymentDialog from '../../../components/dialogs/payment/show-payment-details-dialog';
+import PaymentList from '../../../components/payments/payment-list';
+import PaymentListHeader from '../../../components/payments/payment-list-header';
+import AppText from '../../../components/ui/app-text';
 import { useAuth } from '../../../contexts/AuthContext';
 import useInitPaymentsByCourseScreen from '../../../hooks/payment/use-init-payments-by-course-screen';
-import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../../lib/colors';
+import { PaymentMock } from '../../../mock/payment';
+import { Payment, SelectedPaymentDetail, StudentPayment, StudentPaymentResponse } from '../../../models/payment/type';
 
 export default function PaymentsByCourseScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();

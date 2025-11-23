@@ -11,6 +11,8 @@ export type CourseDto = {
   locked: boolean;
   groupId: number;
   locationId: number;
+  group: string;
+  location: string;
 };
 
 export type UpdateCourseDto = {

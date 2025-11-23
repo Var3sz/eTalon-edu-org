@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import AppText from '../ui/app-text';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+
 import { CourseDto } from '../../models/courses/types';
+import AppText from '../ui/app-text';
 
 type CourseListItemProps = {
   course: CourseDto;
@@ -21,7 +22,7 @@ export default function CourseListItem({ course, onPress, onLongPress }: CourseL
           {course.courseId}
         </AppText>
         <AppText weight='600' style={styles.group}>
-          {course.groupId}
+          {course.group}
         </AppText>
       </View>
       <View style={styles.countInfo}>

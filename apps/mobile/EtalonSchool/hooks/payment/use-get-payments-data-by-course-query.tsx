@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { StudentPaymentResponse } from '../../models/payment/type';
+
 import { GetPaymentsByCourse } from '../../api/models/serviceEndpoints/main';
+import { StudentPaymentResponse } from '../../models/payment/type';
 
 type UseGetPaymentsDataByCourseQueryProps = {
   courseId: number;

@@ -1,10 +1,11 @@
 import { useRouter } from 'expo-router';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { coursesMock } from '../../../mock/courses';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+
 import CourseListItem from '../../../components/courses/course-list-item';
 import AppText from '../../../components/ui/app-text';
 import { useAuth } from '../../../contexts/AuthContext';
 import useInitAttendanceScreen from '../../../hooks/attendance/use-init-attendance-screen';
+import { coursesMock } from '../../../mock/courses';
 
 export default function AttendanceScreen() {
   const { getAccessToken } = useAuth();

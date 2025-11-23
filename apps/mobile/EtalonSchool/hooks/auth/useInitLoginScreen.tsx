@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 
 import { Login } from '../../api/models/serviceEndpoints/auth';
+import { LoginDto } from '../../models/auth/auth';
 import { LoginFormDefault } from '../../models/validation/default/auth/auth-form-default';
 import { LoginSchema } from '../../models/validation/schemas/auth/auth-schema';
-import { LoginDto } from '../../models/auth/auth';
 
 export default function useInitLoginScreen() {
   const form = useForm<LoginDto>({

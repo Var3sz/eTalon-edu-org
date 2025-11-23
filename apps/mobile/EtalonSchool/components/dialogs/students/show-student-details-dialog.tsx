@@ -1,7 +1,8 @@
-import { View, StyleSheet, Pressable, Linking } from 'react-native';
-import CustomInfoRow from '../../shared/custom-info-row';
 import { Ionicons } from '@expo/vector-icons';
+import { Linking, Pressable, StyleSheet, View } from 'react-native';
+
 import { Student } from '../../../models/attendance/types';
+import CustomInfoRow from '../../shared/custom-info-row';
 
 type ShowStudentDialogProps = {
   student: Student;

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { GetActiveCourses } from '../../api/models/serviceEndpoints/main';
 import { CourseDto } from '../../models/courses/types';
 

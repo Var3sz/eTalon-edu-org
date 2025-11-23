@@ -1,4 +1,5 @@
 import { FlatList, StyleSheet } from 'react-native';
+
 import { Payment, StudentPayment } from '../../models/payment/type';
 import PaymentListItem from './payment-list-item';
 

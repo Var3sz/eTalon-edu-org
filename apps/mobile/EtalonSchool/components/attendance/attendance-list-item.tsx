@@ -1,6 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LessonAttendance, Student } from '../../models/attendance/types';
 import { Ionicons } from '@expo/vector-icons';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+
+import { LessonAttendance, Student } from '../../models/attendance/types';
 import AppText from '../ui/app-text';
 
 type AttendanceListItemProps = {

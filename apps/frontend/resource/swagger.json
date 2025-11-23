@@ -1218,6 +1218,12 @@
           },
           "locationId": {
             "type": "number"
+          },
+          "location": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
           }
         },
         "required": [
@@ -1231,7 +1237,9 @@
           "active",
           "locked",
           "groupId",
-          "locationId"
+          "locationId",
+          "location",
+          "group"
         ]
       },
       "ActiveCourseDto": {

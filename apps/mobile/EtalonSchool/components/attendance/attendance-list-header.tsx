@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+
 import { LessonAttendance } from '../../models/attendance/types';
 import AppText from '../ui/app-text';
 

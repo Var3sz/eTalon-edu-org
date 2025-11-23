@@ -1,14 +1,15 @@
-import { useMemo, useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import CustomDialog from '../../../components/dialogs/custom-dialog';
-import ShowStudentDialog from '../../../components/dialogs/students/show-student-details-dialog';
+import { useMemo, useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
+
 import AttendanceList from '../../../components/attendance/attendance-list';
 import AttendanceListHeader from '../../../components/attendance/attendance-list-header';
+import CustomDialog from '../../../components/dialogs/custom-dialog';
+import ShowStudentDialog from '../../../components/dialogs/students/show-student-details-dialog';
 import AppText from '../../../components/ui/app-text';
-import useInitAttendanceByCourseScreen from '../../../hooks/attendance/use-init-attendance-by-course-screen';
 import { useAuth } from '../../../contexts/AuthContext';
-import { Ionicons } from '@expo/vector-icons';
+import useInitAttendanceByCourseScreen from '../../../hooks/attendance/use-init-attendance-by-course-screen';
 import { colors } from '../../../lib/colors';
 
 export default function AttendanceByCourseScreen() {

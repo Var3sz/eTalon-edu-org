@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
-import useGetAttendanceDataByCourseQuery from './use-get-attendance-data-by-course-query';
-import { CourseAttendanceResponse, Student, UpdateAttendanceDto } from '../../models/attendance/types';
 import { useQueryClient } from '@tanstack/react-query';
-import { UpdateAttendancesRequest } from '../../models/attendance/action/update-attendances-action';
+import { useEffect, useMemo, useState } from 'react';
 import Toast from 'react-native-toast-message';
+
+import { UpdateAttendancesRequest } from '../../models/attendance/action/update-attendances-action';
+import { CourseAttendanceResponse, Student, UpdateAttendanceDto } from '../../models/attendance/types';
+import useGetAttendanceDataByCourseQuery from './use-get-attendance-data-by-course-query';
 
 type UseInitAttendanceByCourseScreenProps = {
   id: number;

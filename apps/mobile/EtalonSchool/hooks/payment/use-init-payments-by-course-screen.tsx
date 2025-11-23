@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
-import useGetPaymentsDataByCourseQuery from './use-get-payments-data-by-course-query';
 import { useEffect, useMemo, useState } from 'react';
+
 import { SelectedPaymentDetail, StudentPayment, StudentPaymentResponse } from '../../models/payment/type';
+import useGetPaymentsDataByCourseQuery from './use-get-payments-data-by-course-query';
 
 type UseInitPaymentsByCourseScreenProps = {
   id: number;

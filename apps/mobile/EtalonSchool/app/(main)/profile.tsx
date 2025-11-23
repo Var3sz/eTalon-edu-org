@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+
 import AppText from '../../components/ui/app-text';
 
 export default function ProfileScreen() {

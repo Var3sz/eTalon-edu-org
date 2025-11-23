@@ -1,10 +1,3 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useFonts } from 'expo-font';
-
-import { colors } from '../lib/colors';
-import { ActivityIndicator, View } from 'react-native';
-
 import {
   Inter_300Light,
   Inter_400Regular,
@@ -12,9 +5,15 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { colors } from '../lib/colors';
 
 const queryClient = new QueryClient();
 

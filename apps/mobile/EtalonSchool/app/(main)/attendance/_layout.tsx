@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { Pressable } from 'react-native';
+
 import { colors } from '../../../lib/colors';
 
 export default function AttendanceLayout() {

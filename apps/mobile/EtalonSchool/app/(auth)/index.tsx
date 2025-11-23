@@ -1,14 +1,14 @@
+import { router } from 'expo-router';
 import React from 'react';
 import { useWatch } from 'react-hook-form';
 import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import FormTextInput from '../../components/form/FormTextInput';
+import AppText from '../../components/ui/app-text';
+import { useAuth } from '../../contexts/AuthContext';
 import useInitLoginScreen from '../../hooks/auth/useInitLoginScreen';
 import { colors } from '../../lib/colors';
 import { LoginDto } from '../../models/auth/auth';
-import { useAuth } from '../../contexts/AuthContext';
-import { router } from 'expo-router';
-import AppText from '../../components/ui/app-text';
 
 export default function LoginScreen() {
   const { form } = useInitLoginScreen();

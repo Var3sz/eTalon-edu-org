@@ -1,4 +1,5 @@
 import { FlatList, StyleSheet } from 'react-native';
+
 import { LessonAttendance, Student } from '../../models/attendance/types';
 import AttendanceListItem from './attendance-list-item';
 

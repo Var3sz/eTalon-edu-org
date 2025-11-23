@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
-import useGetCoursesDataQuery from './use-get-courses-data-query';
-import { CourseDto, UpdateCourseDto } from '../../models/courses/types';
-import { UpdateCourseStatusRequest } from '../../models/courses/action/update-course-status-action';
-import Toast from 'react-native-toast-message';
 import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
+import Toast from 'react-native-toast-message';
+
+import { UpdateCourseStatusRequest } from '../../models/courses/action/update-course-status-action';
+import { CourseDto, UpdateCourseDto } from '../../models/courses/types';
+import useGetCoursesDataQuery from './use-get-courses-data-query';
 
 type UseInitCoursesScreenProps = {
   getAccessToken: () => Promise<string | null>;

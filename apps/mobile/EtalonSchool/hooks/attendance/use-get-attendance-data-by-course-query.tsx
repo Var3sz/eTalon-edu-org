@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { GetAttendanceByCourse } from '../../api/models/serviceEndpoints/main';
 import { CourseAttendanceResponse } from '../../models/attendance/types';
 

@@ -1,7 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, View } from 'react-native';
+
 import { Payment, StudentPayment } from '../../models/payment/type';
 import AppText from '../ui/app-text';
-import { Ionicons } from '@expo/vector-icons';
 
 type PaymentListItemProps = {
   selectedPayment: Payment;

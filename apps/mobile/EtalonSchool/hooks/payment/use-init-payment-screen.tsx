@@ -1,7 +1,8 @@
+import { useRouter } from 'expo-router';
 import { useMemo } from 'react';
+
 import { CourseDto } from '../../models/courses/types';
 import useGetCoursesDataQuery from '../courses/use-get-courses-data-query';
-import { useRouter } from 'expo-router';
 
 type UseInitPaymentScreenProps = {
   getAccessToken: () => Promise<string | null>;

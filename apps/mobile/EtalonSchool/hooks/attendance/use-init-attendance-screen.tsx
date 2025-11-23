@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
-import { CourseDto, UpdateCourseDto } from '../../models/courses/types';
-import { UpdateCourseStatusRequest } from '../../models/courses/action/update-course-status-action';
-import Toast from 'react-native-toast-message';
 import { useQueryClient } from '@tanstack/react-query';
-import useGetCoursesDataQuery from '../courses/use-get-courses-data-query';
 import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
+import Toast from 'react-native-toast-message';
+
+import { UpdateCourseStatusRequest } from '../../models/courses/action/update-course-status-action';
+import { CourseDto, UpdateCourseDto } from '../../models/courses/types';
+import useGetCoursesDataQuery from '../courses/use-get-courses-data-query';
 
 type UseInitAttendanceScreenProps = {
   getAccessToken: () => Promise<string | null>;

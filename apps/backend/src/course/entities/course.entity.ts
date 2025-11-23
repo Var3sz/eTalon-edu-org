@@ -66,6 +66,10 @@ export class CourseDto implements Course {
   groupId: number;
   @ApiProperty()
   locationId: number;
+  @ApiProperty()
+  location: string;
+  @ApiProperty()
+  group: string;
 }
 
 /**
