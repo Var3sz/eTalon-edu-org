@@ -11,29 +11,10 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import Toast from 'react-native-toast-message';
 
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { AuthProvider } from '../contexts/AuthContext';
 import { colors } from '../lib/colors';
 
 const queryClient = new QueryClient();
-
-function RootNavigator() {
-  const { isAuthenticated } = useAuth();
-
-  return (
-    <Stack
-      screenOptions={{
-        headerStyle: { backgroundColor: colors.bg },
-        headerShadowVisible: false,
-        headerTitleStyle: { color: colors.text },
-        contentStyle: { backgroundColor: colors.bg },
-        headerTitleAlign: 'center',
-      }}
-    >
-      <Stack.Screen name='(main)' options={{ headerShown: false }} />
-      <Stack.Screen name='(auth)' options={{ headerShown: false }} />
-    </Stack>
-  );
-}
 
 export default function RootLayout() {
   useFonts({
@@ -44,27 +25,23 @@ export default function RootLayout() {
     Inter700: Inter_700Bold,
   });
 
-  // if (!fontsLoaded) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         backgroundColor: colors.bg ?? '#ffffff',
-  //         alignItems: 'center',
-  //         justifyContent: 'center',
-  //       }}
-  //     >
-  //       <ActivityIndicator size='small' color={colors.primary} />
-  //     </View>
-  //   );
-  // }
-
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <>
           <StatusBar style='dark' />
-          <RootNavigator />
+          <Stack
+            screenOptions={{
+              headerStyle: { backgroundColor: colors.bg },
+              headerShadowVisible: false,
+              headerTitleStyle: { color: colors.text },
+              contentStyle: { backgroundColor: colors.bg },
+              headerTitleAlign: 'center',
+            }}
+          >
+            <Stack.Screen name='(main)' options={{ headerShown: false, animation: 'none' }} />
+            <Stack.Screen name='(auth)' options={{ headerShown: false, animation: 'none' }} />
+          </Stack>
           <Toast />
         </>
       </AuthProvider>

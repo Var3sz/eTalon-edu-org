@@ -4,9 +4,12 @@ import Toast from 'react-native-toast-message';
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
 import { loadAccessToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
 import { User } from '../models/auth/auth';
-import { useRouter } from 'expo-router';
+import { SplashScreen, useRouter } from 'expo-router';
+
+SplashScreen.preventAutoHideAsync();
 
 interface AuthContextType {
+  isReady: boolean;
   isAuthenticated: boolean;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
@@ -21,6 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   const login = async (email: string, password: string) => {
     const res = await fetch(`${SERVER_BASE_URL}auth/login`, {
@@ -58,8 +62,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return accessToken;
   };
 
+  // App startup - deciding where to navigate
+  useEffect(() => {
+    const getAuthFromStorage = async () => {
+      try {
+        const value = await loadAccessToken();
+        if (value !== null) {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      setIsReady(true);
+    };
+    getAuthFromStorage();
+  }, []);
+
+  // Hide splash screen when the application is in ready state
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, getAccessToken }}>
+    <AuthContext.Provider value={{ isReady, isAuthenticated, user, login, logout, getAccessToken }}>
       {children}
     </AuthContext.Provider>
   );

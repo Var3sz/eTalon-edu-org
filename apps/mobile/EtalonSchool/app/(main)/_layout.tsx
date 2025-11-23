@@ -6,7 +6,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import { colors } from '../../lib/colors';
 
 export default function AppLayout() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isReady, isAuthenticated, logout } = useAuth();
+
+  console.log(isReady);
+  console.log(isAuthenticated);
+
+  if (!isReady) {
+    return null;
+  }
+
   if (!isAuthenticated) {
     return <Redirect href='/(auth)' />;
   }
