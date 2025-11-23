@@ -3,16 +3,15 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { coursesMock } from '../../../mock/courses';
 import CourseListItem from '../../../components/courses/course-list-item';
 import AppText from '../../../components/ui/app-text';
+import { useAuth } from '../../../contexts/AuthContext';
+import useInitAttendanceScreen from '../../../hooks/attendance/use-init-attendance-screen';
 
 export default function AttendanceScreen() {
-  const router = useRouter();
+  const { getAccessToken } = useAuth();
 
-  const handlePressCourse = (courseId: string) => {
-    router.push({
-      pathname: '/attendance/[courseId]',
-      params: { courseId },
-    });
-  };
+  const { courses, handlePressCourse } = useInitAttendanceScreen({
+    getAccessToken: getAccessToken,
+  });
 
   return (
     <View style={styles.container}>
@@ -20,9 +19,9 @@ export default function AttendanceScreen() {
         Jelenlétek
       </AppText>
       <FlatList
-        data={coursesMock}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <CourseListItem course={item} onPress={() => handlePressCourse(item.courseId)} />}
+        data={courses}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <CourseListItem course={item} onPress={() => handlePressCourse(item.id)} />}
       />
     </View>
   );
