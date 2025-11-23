@@ -1,8 +1,5 @@
-// app/(main)/(tabs)/_layout.tsx
 import { Ionicons } from '@expo/vector-icons';
-import { Redirect, Tabs } from 'expo-router';
-
-import { useAuth } from '../../../contexts/AuthContext';
+import { Tabs } from 'expo-router';
 
 export default function TabsLayout() {
   return (

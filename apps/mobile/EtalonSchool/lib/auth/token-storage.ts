@@ -3,7 +3,6 @@ import { Platform } from 'react-native';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
-const EXPIRES_AT_KEY = 'expires_at'; // ms timestamp
 
 export type TokensType = {
   accessToken: string;
@@ -28,7 +27,7 @@ async function setItem(key: string, value: string | null) {
   if (!available) return;
 
   try {
-    if (value == null) {
+    if (value === null) {
       await SecureStore.deleteItemAsync(key);
     } else {
       await SecureStore.setItemAsync(key, value);

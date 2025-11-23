@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Redirect, Stack, useRouter } from 'expo-router';
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
 
 import { useAuth } from '../../contexts/AuthContext';
 import { colors } from '../../lib/colors';

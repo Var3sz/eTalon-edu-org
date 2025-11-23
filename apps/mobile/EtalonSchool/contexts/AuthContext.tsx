@@ -1,10 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
-import { loadAccessToken, loadRefreshToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
-import { TokensType, User } from '../models/auth/auth';
+import { loadAccessToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
+import { User } from '../models/auth/auth';
 
 interface AuthContextType {
   isAuthenticated: boolean;

@@ -40,7 +40,7 @@ export default function useInitCoursesScreen({ getAccessToken }: UseInitCoursesS
 
   const handlePositiveEvent = async () => {
     const token = await getAccessToken();
-    const { id, ...body } = selectedCourse!;
+    const { id, location, group, ...body } = selectedCourse!;
 
     const parsedBody = {
       ...body,

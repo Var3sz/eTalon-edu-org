@@ -1,8 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Children, Dispatch, ReactNode, SetStateAction } from 'react';
-import { Button, Modal, StyleSheet, Text, View } from 'react-native';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { Modal, StyleSheet, View } from 'react-native';
 
-import { colors } from '../../lib/colors';
 import AppText from '../ui/app-text';
 
 type CustomDialogProps = {

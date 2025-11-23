@@ -1,6 +1,6 @@
 import React from 'react';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Controller, FieldValues, Path } from 'react-hook-form';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 import { FormBaseProps } from '../../models/ui/form-props';
 import AppText from '../ui/app-text';

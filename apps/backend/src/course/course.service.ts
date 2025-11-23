@@ -1,5 +1,3 @@
-import { group } from 'node:console';
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 

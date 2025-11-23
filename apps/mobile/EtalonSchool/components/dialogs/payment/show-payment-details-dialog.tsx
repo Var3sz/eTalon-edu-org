@@ -1,4 +1,4 @@
-import { Linking, Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { SelectedPaymentDetail } from '../../../models/payment/type';
 import CustomInfoRow from '../../shared/custom-info-row';

@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import CustomDialog from '../../../components/dialogs/custom-dialog';
@@ -11,8 +10,6 @@ import AppText from '../../../components/ui/app-text';
 import { useAuth } from '../../../contexts/AuthContext';
 import useInitPaymentsByCourseScreen from '../../../hooks/payment/use-init-payments-by-course-screen';
 import { colors } from '../../../lib/colors';
-import { PaymentMock } from '../../../mock/payment';
-import { Payment, SelectedPaymentDetail, StudentPayment, StudentPaymentResponse } from '../../../models/payment/type';
 
 export default function PaymentsByCourseScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();

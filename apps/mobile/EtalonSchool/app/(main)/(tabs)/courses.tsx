@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Button, FlatList, Modal, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 import CourseListItem from '../../../components/courses/course-list-item';
 import ConfirmDialog from '../../../components/dialogs/confirm-dialog';
@@ -8,7 +7,6 @@ import CustomDialog from '../../../components/dialogs/custom-dialog';
 import AppText from '../../../components/ui/app-text';
 import { useAuth } from '../../../contexts/AuthContext';
 import useInitCoursesScreen from '../../../hooks/courses/use-init-courses-screen';
-import { coursesMock } from '../../../mock/courses';
 
 export default function CoursesScreen() {
   // AccessToken lekérése Secure Store-ból

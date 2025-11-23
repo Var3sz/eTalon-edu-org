@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import React from 'react';
 import { useWatch } from 'react-hook-form';
-import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import FormTextInput from '../../components/form/FormTextInput';
 import AppText from '../../components/ui/app-text';

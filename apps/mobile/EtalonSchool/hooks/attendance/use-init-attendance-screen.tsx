@@ -1,10 +1,7 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
-import Toast from 'react-native-toast-message';
+import { useMemo } from 'react';
 
-import { UpdateCourseStatusRequest } from '../../models/courses/action/update-course-status-action';
-import { CourseDto, UpdateCourseDto } from '../../models/courses/types';
+import { CourseDto } from '../../models/courses/types';
 import useGetCoursesDataQuery from '../courses/use-get-courses-data-query';
 
 type UseInitAttendanceScreenProps = {

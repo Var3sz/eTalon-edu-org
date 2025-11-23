@@ -5,11 +5,10 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
-import { QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
@@ -18,7 +17,7 @@ import { colors } from '../lib/colors';
 const queryClient = new QueryClient();
 
 function RootNavigator() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <Stack
@@ -40,7 +39,7 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  useFonts({
     Inter300: Inter_300Light,
     Inter400: Inter_400Regular,
     Inter500: Inter_500Medium,

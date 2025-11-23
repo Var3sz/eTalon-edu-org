@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { CourseDto } from '../../../models/courses/types';
 import CourseInfoRow from '../../shared/custom-info-row';
