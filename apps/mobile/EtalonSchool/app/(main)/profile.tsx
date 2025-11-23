@@ -1,8 +1,14 @@
 import { StyleSheet, View } from 'react-native';
 
 import AppText from '../../components/ui/app-text';
+import { useAuth } from '../../contexts/AuthContext';
+import useInitProfileScreen from '../../hooks/profile-screen/use-init-profile-screen';
 
 export default function ProfileScreen() {
+  const { user, getAccessToken } = useAuth();
+
+  const {} = useInitProfileScreen({ getAccessToken });
+
   return (
     <View style={styles.container}>
       {/* Nagy kör avatar */}
