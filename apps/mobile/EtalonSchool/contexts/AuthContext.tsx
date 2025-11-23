@@ -2,9 +2,9 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import Toast from 'react-native-toast-message';
 
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
-import { loadAccessToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
-import { User } from '../models/auth/auth';
+import { TokensType, User } from '../models/auth/auth';
 import { SplashScreen, useRouter } from 'expo-router';
+import { loadTokens, saveTokens } from '../lib/auth/token-storage';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,13 +19,17 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const REFRESH_THRESHOLD_MS = 30 * 1000;
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   const [user, setUser] = useState<User | null>(null);
+  const [tokens, setTokens] = useState<TokensType | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
 
+  // Login function
   const login = async (email: string, password: string) => {
     const res = await fetch(`${SERVER_BASE_URL}auth/login`, {
       method: 'POST',
@@ -40,41 +44,99 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const response = await res.json();
-    const { user, tokens } = response;
+    const { user: userFromApi, tokens: tokensFromApi } = response as { user: User; tokens: TokensType };
 
-    setUser(user);
-    await saveAccessToken(tokens.accessToken);
-    await saveRefreshToken(tokens.refreshToken);
+    setUser(userFromApi);
+    setTokens(tokensFromApi);
+    await saveTokens(tokensFromApi);
     setIsAuthenticated(true);
     router.replace('/(main)/(tabs)/courses');
   };
 
+  // Logout function
   const logout = async () => {
     setUser(null);
-    await saveAccessToken(null);
-    await saveRefreshToken(null);
+    setTokens(null);
+    await saveTokens(null);
     setIsAuthenticated(false);
     router.replace('/(auth)');
   };
 
-  const getAccessToken = async () => {
-    const accessToken = await loadAccessToken();
-    return accessToken;
+  // Refresh token
+  const refreshTokens = async (): Promise<TokensType | null> => {
+    try {
+      const currentTokens = tokens ?? (await loadTokens());
+
+      if (!currentTokens?.refreshToken) {
+        return null;
+      }
+
+      const res = await fetch(`${SERVER_BASE_URL}auth/refresh`, {
+        method: 'POST',
+        headers: {
+          authorization: `Refresh ${currentTokens.refreshToken}`,
+        },
+      });
+
+      if (!res.ok) {
+        console.error('Token refresh failed', res.status, res.statusText);
+        return null;
+      }
+
+      const newTokens = (await res.json()) as TokensType;
+      setTokens(newTokens);
+      await saveTokens(newTokens);
+      setIsAuthenticated(true);
+
+      return newTokens;
+    } catch (error) {
+      console.error('Token refresh error', error);
+      return null;
+    }
+  };
+
+  // Public getAccessToken for API calls (auto-refresh)
+  const getAccessToken = async (): Promise<string | null> => {
+    let currentTokens = tokens ?? (await loadTokens());
+    if (!currentTokens) {
+      setIsAuthenticated(false);
+      return null;
+    }
+
+    const now = Date.now();
+
+    if (currentTokens.expiresIn - now < REFRESH_THRESHOLD_MS) {
+      const refreshed = await refreshTokens();
+      if (!refreshed) {
+        setIsAuthenticated(false);
+        return null;
+      }
+      currentTokens = refreshed;
+    }
+
+    return currentTokens.accessToken;
   };
 
   // App startup - deciding where to navigate
   useEffect(() => {
     const getAuthFromStorage = async () => {
       try {
-        const value = await loadAccessToken();
-        if (value !== null) {
-          setIsAuthenticated(true);
+        const storedTokens = await loadTokens();
+
+        if (!storedTokens) {
+          setIsAuthenticated(false);
+        } else {
+          const refreshed = await refreshTokens();
+          setIsAuthenticated(!!refreshed);
         }
       } catch (error) {
         console.error(error);
+        setIsAuthenticated(false);
+      } finally {
+        setIsReady(true);
       }
-      setIsReady(true);
     };
+
     getAuthFromStorage();
   }, []);
 
