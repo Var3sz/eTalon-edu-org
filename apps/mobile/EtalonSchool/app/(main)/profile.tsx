@@ -7,25 +7,22 @@ import useInitProfileScreen from '../../hooks/profile-screen/use-init-profile-sc
 export default function ProfileScreen() {
   const { user, getAccessToken } = useAuth();
 
-  const {} = useInitProfileScreen({ getAccessToken });
+  const { profileData, getInitials } = useInitProfileScreen({ user, getAccessToken });
 
   return (
     <View style={styles.container}>
-      {/* Nagy kör avatar */}
       <View style={styles.avatar}>
         <AppText weight='600' style={styles.avatarText}>
-          VÁ
+          {getInitials(profileData?.name)}
         </AppText>
       </View>
 
-      {/* Név */}
       <AppText weight='700' style={styles.name}>
-        Varga Ádám
+        {profileData?.name}
       </AppText>
 
-      {/* Valami extra infó */}
       <AppText weight='500' style={styles.subtitle}>
-        adam.varga@bluebax.com
+        {profileData?.email}
       </AppText>
     </View>
   );

@@ -25,6 +25,11 @@ const getPaymentsByCourseUrl = (courseId: number) => {
   return `${SERVER_BASE_URL}students/GetStudentsByCourseWithPayments/${courseId}`;
 };
 
+// Profil adatok
+const getMyProfileDataUrl = (userId: number) => {
+  return `${SERVER_BASE_URL}user/${userId}`;
+};
+
 // Kurzusok
 export const GetActiveCourses = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
   return httpRequestGET<ResponseType>(getActiveCoursesUrl(), token);
@@ -59,4 +64,12 @@ export const GetPaymentsByCourse = async <ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return httpRequestGET<ResponseType>(getPaymentsByCourseUrl(courseId), token);
+};
+
+// Profil adatok
+export const GetMyProfile = async <ResponseType>(
+  userId: number,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestGET<ResponseType>(getMyProfileDataUrl(userId), token);
 };
