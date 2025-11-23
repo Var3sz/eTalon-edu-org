@@ -16,6 +16,10 @@ const getAttendanceByCourseUrl = (courseId: number) => {
   return `${SERVER_BASE_URL}students/GetStudentsByCourseWithAttendances/${courseId}`;
 };
 
+const getUpdateAttendancesUrl = () => {
+  return `${SERVER_BASE_URL}students/UpdateAttendances`;
+};
+
 // Befizetések
 const getPaymentsByCourseUrl = (courseId: number) => {
   return `${SERVER_BASE_URL}students/GetStudentsByCourseWithPayments/${courseId}`;
@@ -40,6 +44,13 @@ export const GetAttendanceByCourse = async <ResponseType>(
   token: string
 ): Promise<FetchResponse<ResponseType>> => {
   return httpRequestGET<ResponseType>(getAttendanceByCourseUrl(courseId), token);
+};
+
+export const UpdateAttendances = async <RequestType, ResponseType>(
+  body: RequestType,
+  token: string
+): Promise<FetchResponse<ResponseType>> => {
+  return httpRequestPUT<RequestType, ResponseType>(getUpdateAttendancesUrl(), token, body);
 };
 
 // Befizetések

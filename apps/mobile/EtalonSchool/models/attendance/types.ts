@@ -23,3 +23,9 @@ export type CourseAttendanceResponse = {
   courseId: string;
   students: Student[];
 };
+
+export type UpdateAttendanceDto = {
+  studentId: number;
+  lessondateId: number;
+  attended: boolean;
+};

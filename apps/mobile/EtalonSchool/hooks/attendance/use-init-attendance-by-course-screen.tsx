@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import useGetAttendanceDataByCourseQuery from './use-get-attendance-data-by-course-query';
-import { CourseAttendanceResponse, Student } from '../../models/attendance/types';
+import { CourseAttendanceResponse, Student, UpdateAttendanceDto } from '../../models/attendance/types';
 import { useQueryClient } from '@tanstack/react-query';
+import { UpdateAttendancesRequest } from '../../models/attendance/action/update-attendances-action';
+import Toast from 'react-native-toast-message';
 
 type UseInitAttendanceByCourseScreenProps = {
   id: number;
@@ -59,8 +61,6 @@ export default function useInitAttendanceByCourseScreen({ id, getAccessToken }: 
         }),
       };
     });
-
-    // TODO: itt majd API call a módosítás mentésére
   };
 
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
@@ -69,6 +69,32 @@ export default function useInitAttendanceByCourseScreen({ id, getAccessToken }: 
   const handleOpenStudentDialog = (student: Student) => {
     setSelectedStudent(student);
     setStudentDialogOpen(true);
+  };
+
+  // Jelenlétek frissítése backend hívás
+  const handleUpdateAttendances = async () => {
+    const token = await getAccessToken();
+
+    const mappedAttendanceData = (courseData?.students ?? []).flatMap((student) => {
+      return student.attendance.map(
+        (a) =>
+          ({
+            studentId: student.id,
+            lessondateId: a.lessonDateId,
+            attended: a.attended,
+          }) as UpdateAttendanceDto
+      );
+    });
+
+    const updateResponse = await UpdateAttendancesRequest(mappedAttendanceData, token ?? '');
+    if (updateResponse.status === 200 || updateResponse.status === 201) {
+      queryClient.invalidateQueries({
+        queryKey: ['attendance-by-course', { courseId: id }],
+      });
+      Toast.show({ type: 'success', text1: 'Sikeres jelenlét frissítés!' });
+    } else {
+      Toast.show({ type: 'error', text1: 'Sikertelen jelenlét frissítés!' });
+    }
   };
 
   return useMemo(
@@ -85,6 +111,7 @@ export default function useInitAttendanceByCourseScreen({ id, getAccessToken }: 
       handleOpenStudentDialog,
       handleToggleAttendance,
       setStudentDialogOpen,
+      handleUpdateAttendances,
     }),
     [
       courseData,
@@ -99,6 +126,7 @@ export default function useInitAttendanceByCourseScreen({ id, getAccessToken }: 
       handleOpenStudentDialog,
       handleToggleAttendance,
       setStudentDialogOpen,
+      handleUpdateAttendances,
     ]
   );
 }

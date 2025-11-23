@@ -29,6 +29,7 @@ export default function AttendanceByCourseScreen() {
     handleOpenStudentDialog,
     handleToggleAttendance,
     setStudentDialogOpen,
+    handleUpdateAttendances,
   } = useInitAttendanceByCourseScreen({
     id: Number(id),
     getAccessToken: getAccessToken,
@@ -86,6 +87,14 @@ export default function AttendanceByCourseScreen() {
           handleOpenStudentDialog={handleOpenStudentDialog}
           handleToggleAttendance={handleToggleAttendance}
         />
+
+        <View style={styles.bottomButtonWrapper}>
+          <Pressable style={styles.saveButton} onPress={() => handleUpdateAttendances()}>
+            <AppText weight='700' style={styles.saveButtonText}>
+              Mentés
+            </AppText>
+          </Pressable>
+        </View>
       </View>
 
       <CustomDialog open={studentDialogOpen} onOpenChange={setStudentDialogOpen} title='Tanuló adatai'>
@@ -105,5 +114,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  bottomButtonWrapper: {
+    paddingVertical: 16,
+  },
+  saveButton: {
+    backgroundColor: colors.primary,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
