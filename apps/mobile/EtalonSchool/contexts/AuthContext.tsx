@@ -4,6 +4,7 @@ import Toast from 'react-native-toast-message';
 import { SERVER_BASE_URL } from '../api/models/serviceEndpoints/auth';
 import { loadAccessToken, saveAccessToken, saveRefreshToken } from '../lib/auth/token-storage';
 import { User } from '../models/auth/auth';
+import { useRouter } from 'expo-router';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -16,6 +17,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -39,6 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await saveAccessToken(tokens.accessToken);
     await saveRefreshToken(tokens.refreshToken);
     setIsAuthenticated(true);
+    router.replace('/(main)/(tabs)/courses');
   };
 
   const logout = async () => {
@@ -46,6 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await saveAccessToken(null);
     await saveRefreshToken(null);
     setIsAuthenticated(false);
+    router.replace('/(auth)');
   };
 
   const getAccessToken = async () => {

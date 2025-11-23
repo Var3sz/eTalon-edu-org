@@ -39,11 +39,8 @@ export default function LoginScreen() {
             <FormTextInput id='password' label='Jelszó' formControl={form.control} secureTextEntry />
           </View>
           <Pressable
-            onPress={() => {
-              login(formValues.username, formValues.password);
-              if (isAuthenticated) {
-                router.replace('/(main)/(tabs)/courses');
-              }
+            onPress={async () => {
+              await login(formValues.username, formValues.password);
             }}
             disabled={disabled}
             style={({ pressed }) => [styles.button, { opacity: disabled ? 0.5 : pressed ? 0.9 : 1 }]}

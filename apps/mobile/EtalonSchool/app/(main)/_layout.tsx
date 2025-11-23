@@ -32,9 +32,6 @@ export default function AppLayout() {
                 style={{ marginRight: 2 }}
                 onPress={async () => {
                   await logout();
-                  if (!isAuthenticated) {
-                    return <Redirect href='/(auth)' />;
-                  }
                 }}
               >
                 <Ionicons name='log-out-outline' size={40} color='#000' />
