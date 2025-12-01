@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 
+import FormSwitchInput from '@/components/form/form-switch-input';
 import TabProvider, { TabProviderModel } from '@/components/tabs/tab-provider';
 import { useGetCourseDataByIdQuery } from '@/hooks/courses/edit-course/use-get-course-data-by-id-query';
 import { CourseDto } from '@/models/Api';

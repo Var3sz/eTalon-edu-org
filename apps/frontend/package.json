@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen-swagger": "swagger-typescript-api -p resource/swagger.json -o src/models"
+    "gen-swagger": "swagger-typescript-api generate -p resource/swagger.json -o src/models"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

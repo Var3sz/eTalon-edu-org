@@ -21,7 +21,30 @@ export class CourseService {
    * Gives back all of the courses which are active (raw form)
    */
   async getAllActiveCourse(): Promise<CourseDto[]> {
-    return await this.prisma.course.findMany({ where: { active: true }, orderBy: { startDate: 'asc' } });
+    const courses = await this.prisma.course.findMany({
+      where: { active: true },
+      orderBy: { startDate: 'asc' },
+      include: {
+        group: {
+          select: {
+            description: true,
+          },
+        },
+        location: {
+          select: {
+            description: true,
+          },
+        },
+      },
+    });
+
+    return courses.map((course) => {
+      return {
+        ...course,
+        location: course.location.description,
+        group: course.group.description,
+      };
+    });
   }
 
   /**
@@ -38,13 +61,27 @@ export class CourseService {
    * @returns The corresponding course
    */
   async getCourseById(id: number): Promise<CourseDto> {
-    const course = await this.prisma.course.findUnique({ where: { id } });
+    const course = await this.prisma.course.findUnique({
+      where: { id },
+      include: {
+        group: {
+          select: {
+            description: true,
+          },
+        },
+        location: {
+          select: {
+            description: true,
+          },
+        },
+      },
+    });
 
     if (!course) {
       throw new NotFoundException(`Course with id ${id} not found`);
     }
 
-    return course;
+    return { ...course, location: course.location.description, group: course.group.description };
   }
 
   /**
@@ -54,10 +91,24 @@ export class CourseService {
    * @returns Updated course
    */
   async updateCourse(updateBody: UpdateCourseDto, id: number): Promise<CourseDto> {
-    return this.prisma.course.update({
+    const updated = await this.prisma.course.update({
       where: { id },
       data: updateBody,
+      include: {
+        group: {
+          select: {
+            description: true,
+          },
+        },
+        location: {
+          select: {
+            description: true,
+          },
+        },
+      },
     });
+
+    return { ...updated, location: updated.location.description, group: updated.group.description };
   }
 
   /**
@@ -73,9 +124,21 @@ export class CourseService {
         for (const course of createBody) {
           const created = await tx.course.create({
             data: course,
+            include: {
+              group: {
+                select: {
+                  description: true,
+                },
+              },
+              location: {
+                select: {
+                  description: true,
+                },
+              },
+            },
           });
 
-          createdCourses.push(created);
+          createdCourses.push({ ...created, location: created.location.description, group: created.group.description });
         }
 
         return createdCourses;
@@ -198,9 +261,23 @@ export class CourseService {
   }
 
   async inactivateCourseById(id: number): Promise<CourseDto> {
-    return await this.prisma.course.update({
+    const updated = await this.prisma.course.update({
       where: { id: id },
       data: { active: false },
+      include: {
+        group: {
+          select: {
+            description: true,
+          },
+        },
+        location: {
+          select: {
+            description: true,
+          },
+        },
+      },
     });
+
+    return { ...updated, location: updated.location.description, group: updated.group.description };
   }
 }

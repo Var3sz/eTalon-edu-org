@@ -12,6 +12,8 @@ export interface CourseDto {
   locked: boolean;
   groupId: number;
   locationId: number;
+  location: string;
+  group: string;
 }
 
 export interface ActiveCourseDto {

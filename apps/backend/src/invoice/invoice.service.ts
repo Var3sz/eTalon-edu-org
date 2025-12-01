@@ -160,7 +160,7 @@ export class InvoiceService {
       okCount,
       skippedCount,
       total: updates.length,
-      stoppedAt: okCount === updates.length ? null : results.find((r) => !r.ok)?.index ?? 0,
+      stoppedAt: okCount === updates.length ? null : (results.find((r) => !r.ok)?.index ?? 0),
       results,
     };
   }
