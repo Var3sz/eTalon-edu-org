@@ -12,7 +12,6 @@ type UseInitPaymentsByCourseScreenProps = {
 export default function useInitPaymentsByCourseScreen({ id, getAccessToken }: UseInitPaymentsByCourseScreenProps) {
   const queryClient = useQueryClient();
 
-  // Alapadatok lekérdezése
   const { data: paymentsDataResponse } = useGetPaymentsDataByCourseQuery({
     courseId: id,
     getAccessToken: getAccessToken,
@@ -27,7 +26,6 @@ export default function useInitPaymentsByCourseScreen({ id, getAccessToken }: Us
     setPaymentData(paymentsData);
   }, [paymentsData]);
 
-  // PaymentDates
   const payments = useMemo(() => {
     if (!paymentData || paymentData.payments.length === 0) return [];
     return paymentData.payments[0].Payments;

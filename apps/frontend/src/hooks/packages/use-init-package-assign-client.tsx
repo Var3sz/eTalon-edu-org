@@ -101,7 +101,6 @@ export default function useCoursePackageFormData({ type, locationId, token }: Us
         });
       });
 
-      // Ellenőrzés
       const maxPerColumn = type === 'C' ? 2 : 1;
       const violated = Object.entries(columnCounts).find(([, count]) => count > maxPerColumn);
 
@@ -115,7 +114,6 @@ export default function useCoursePackageFormData({ type, locationId, token }: Us
         return;
       }
 
-      // DTO generálás
       const dtos: AssignPackageToCourseDto[] = assignments.flatMap((row: CoursePackageRow) => {
         const { courseId, courseName, ...rest } = row;
         return Object.entries(rest).map(([pkgKey, val]) => ({

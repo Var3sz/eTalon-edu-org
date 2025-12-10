@@ -1,6 +1,6 @@
 export type LessonAttendance = {
   lessonDateId: number;
-  date: string; // ISO string
+  date: string;
   description: string;
   attended: boolean;
 };

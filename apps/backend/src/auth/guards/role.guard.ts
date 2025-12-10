@@ -25,10 +25,9 @@ export class AdminGuard implements CanActivate {
 
       const user = await this.userService.findByEmail(payload.username);
 
-      // ide kerül be a user
       request['user'] = payload;
 
-      // admin ellenőrzés
+      // Check if the user has admin privileges
       if (user.roleId !== 1) {
         throw new ForbiddenException('Admin privileges required');
       }

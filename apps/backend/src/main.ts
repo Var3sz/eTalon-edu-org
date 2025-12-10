@@ -30,7 +30,6 @@ async function bootstrap() {
     jsonDocumentUrl: 'swagger/json',
   });
 
-  // Custom mapping: Prisma errors -> HTTP errors
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 

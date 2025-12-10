@@ -9,15 +9,12 @@ type UseInitAttendanceScreenProps = {
 };
 
 export default function useInitAttendanceScreen({ getAccessToken }: UseInitAttendanceScreenProps) {
-  // Navigáció
   const router = useRouter();
 
-  // Kurzusok lekérdezése
   const { data: coursesDataResponse } = useGetCoursesDataQuery({ getAccessToken: getAccessToken });
   const courses: CourseDto[] | [] =
     coursesDataResponse?.status === 200 && coursesDataResponse.data ? coursesDataResponse.data : [];
 
-  // Eseménykezelők
   const handlePressCourse = (id: number) => {
     router.push({
       pathname: '/attendance/[id]',

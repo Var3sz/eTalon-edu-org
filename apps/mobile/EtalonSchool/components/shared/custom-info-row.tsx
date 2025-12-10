@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   separator: {
     width: '100%',
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#d1d5db', // finom szürke
+    backgroundColor: '#d1d5db',
     marginTop: 6,
   },
 });

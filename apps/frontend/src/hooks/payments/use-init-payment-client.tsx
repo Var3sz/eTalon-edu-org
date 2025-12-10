@@ -88,7 +88,6 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
     if (payment !== null) {
       setCourseName(payment.courseId);
 
-      // Extract and normalize invoice dates
       const allDates = payment.payments.flatMap((payment) =>
         payment.Payments.map((a) => ({
           invoiceDateId: a.invoiceDateId,
@@ -97,7 +96,6 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
         }))
       );
 
-      // Remove duplicates by date
       const uniqueDateMap = new Map<string, { invoiceDateId: number; date: string; description: string }>();
       for (const entry of allDates) {
         if (!uniqueDateMap.has(entry.date)) {
@@ -105,7 +103,6 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
         }
       }
 
-      // Add synthetic id
       const dateColumns = Array.from(uniqueDateMap.values()).map((entry) => ({
         invoiceDateId: entry.invoiceDateId,
         date: entry.date,
@@ -169,7 +166,7 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
     }
   }, [form.getValues().Helpers.inEdit]);
 
-  // Form submit - backend-re megyünk frissíteni a fizetési adatokat
+  // Backend hívás az adatok frissítésére
   const onValidFormSubmit = (data: StudentPaymentForm) => {
     startTransaction(async () => {
       const payload: UpdatePaymentsDto[] = data.payments.flatMap(({ studentId, ...rest }) => {

@@ -35,7 +35,6 @@ export default function AttendanceByCourseScreen() {
     getAccessToken: getAccessToken,
   });
 
-  // Ha nincsenek jelenléti adatok még egy adott kurzushoz
   if (!courseData || lessons.length === 0) {
     return (
       <>

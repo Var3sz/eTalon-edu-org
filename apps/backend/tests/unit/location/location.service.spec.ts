@@ -18,8 +18,8 @@ describe('LocationService', () => {
   describe('getLocations', () => {
     it('should return all locations', async () => {
       const rows: LocationDto[] = [
-        { id: 1, description: 'Loc1' },
-        { id: 2, description: 'Loc2' },
+        { id: 1, description: 'Loc1', isDeleted: 'N' },
+        { id: 2, description: 'Loc2', isDeleted: 'N' },
       ];
 
       (prismaService as any).location.findMany.mockResolvedValue(rows);

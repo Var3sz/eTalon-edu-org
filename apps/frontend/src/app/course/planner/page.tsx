@@ -11,7 +11,6 @@ export default async function Page() {
   const queryClient = new QueryClient();
   const session = await getServerSession(authOptions);
 
-  // Prefetch function
   await prefetchCoursesDataQuery(queryClient, session?.tokens.accessToken ?? '');
   await prefetchGroupsQuery(queryClient, session?.tokens.accessToken ?? '');
   await prefetchLocationsQuery(queryClient, session?.tokens.accessToken ?? '');

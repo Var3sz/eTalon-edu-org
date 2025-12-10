@@ -4,7 +4,7 @@ export type CourseDto = {
   courseId: string;
   headcount: number | null;
   maxHeadCount: number;
-  startDate: string; // date-time
+  startDate: string;
   startTime: string;
   endTime: string;
   active: boolean;

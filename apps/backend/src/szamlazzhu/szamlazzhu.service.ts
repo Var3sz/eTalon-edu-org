@@ -42,7 +42,7 @@ export class SzamlazzHUService {
     private readonly prismaService: PrismaService
   ) {}
 
-  // Befizetés rögzítése XML minta felépítése
+  // Befizetés rögzítése XML felépítése
   buildCreditXMLBuffer({ agentKey, invoiceNumber, issuerTaxNumber, additiv, payments }: BuildArgs): Buffer {
     const root = xmlbuilder
       .create('xmlszamlakifiz', { encoding: 'UTF-8' })
@@ -100,7 +100,6 @@ export class SzamlazzHUService {
         })
       );
 
-      // 5) Új JSESSIONID kinyerése és feltételes upsert
       const setCookie = resp.headers?.['set-cookie'] as string[] | string | undefined;
       const newJ = extractJSessionId(setCookie);
       let jsessionUpdated = false;
@@ -109,7 +108,6 @@ export class SzamlazzHUService {
         jsessionUpdated = true;
       }
 
-      // 6) Válasz összerakása (siker: PDF; hiba: diagnosztika)
       const h = resp.headers as Record<string, any>;
       const ct = String(h['content-type'] ?? '').toLowerCase();
       const looksPdf = ct.includes('application/pdf') || Buffer.isBuffer(resp.data);
@@ -125,10 +123,10 @@ export class SzamlazzHUService {
     } catch (e: any) {
       const msg =
         e?.code === 'ECONNABORTED'
-          ? 'Időtúllépés az Agent hívás közben.'
+          ? 'Időtúllépés a Számla Agent hívása közben.'
           : e?.code
             ? `Hálózati hiba: ${e.code}`
-            : 'Ismeretlen hálózati hiba az Agent hívásnál.';
+            : 'Ismeretlen hálózati hiba a Számla Agent hívása során.';
 
       return {
         ok: false,

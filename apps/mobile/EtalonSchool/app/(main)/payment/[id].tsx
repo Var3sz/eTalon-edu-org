@@ -33,7 +33,6 @@ export default function PaymentsByCourseScreen() {
     getAccessToken: getAccessToken,
   });
 
-  // Ha nincsenek fizetési adatok még egy adott kurzushoz
   if (!paymentData || payments.length === 0) {
     return (
       <>

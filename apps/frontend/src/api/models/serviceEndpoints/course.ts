@@ -53,7 +53,6 @@ const getInactivateCourseUrl = (courseId: number) => {
   return `${process.env.SERVER_BASE_URL}courses/InactivateCourse/${courseId}`;
 };
 
-// HTTP functions
 export const GetCourses = async <ResponseType>(token: string): Promise<FetchResponse<ResponseType>> => {
   return await httpRequestGET<ResponseType>(getCoursesUrl(), token);
 };

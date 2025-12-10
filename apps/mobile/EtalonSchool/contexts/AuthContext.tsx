@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
 
-  // Login function
+  // Login
   const login = async (email: string, password: string) => {
     const res = await fetch(`${SERVER_BASE_URL}auth/login`, {
       method: 'POST',
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.replace('/(main)/(tabs)/courses');
   };
 
-  // Logout function
+  // Logout
   const logout = async () => {
     setUser(null);
     setTokens(null);
@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.replace('/(auth)');
   };
 
-  // Refresh token
   const refreshTokens = async (): Promise<TokensType | null> => {
     try {
       const currentTokens = tokens ?? (await loadTokens());
@@ -97,7 +96,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Public getAccessToken for API calls (auto-refresh)
   const getAccessToken = async (): Promise<string | null> => {
     let currentTokens = tokens ?? (await loadTokens());
     if (!currentTokens) {
@@ -119,7 +117,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return currentTokens.accessToken;
   };
 
-  // App startup - deciding where to navigate
+  // Ez azért kell, hogy ne kelljen minden egyes indításkor bejelentkezni
   useEffect(() => {
     const getAuthFromStorage = async () => {
       try {
@@ -149,7 +147,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     getAuthFromStorage();
   }, []);
 
-  // Hide splash screen when the application is in ready state
   useEffect(() => {
     if (isReady) {
       SplashScreen.hideAsync();

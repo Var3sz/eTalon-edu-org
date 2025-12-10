@@ -18,8 +18,8 @@ describe('GroupService', () => {
   describe('getGroups', () => {
     it('should return all groups', async () => {
       const rows: GroupDto[] = [
-        { id: 1, description: 'Group1' },
-        { id: 2, description: 'Group2' },
+        { id: 1, description: 'Group1', isDeleted: 'N' },
+        { id: 2, description: 'Group2', isDeleted: 'N' },
       ];
 
       (prismaService as any).group.findMany.mockResolvedValue(rows);

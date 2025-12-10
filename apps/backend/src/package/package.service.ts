@@ -139,10 +139,8 @@ export class PackageService {
     const toCreate = assignments.filter((a) => a.assign).map(({ courseId, packageId }) => ({ courseId, packageId }));
     const toDelete = assignments.filter((a) => !a.assign).map(({ courseId, packageId }) => ({ courseId, packageId }));
 
-    // Tranzakcióban kezeljük, mert törölni is kellhet a kapcsolótáblából!
     const tx: any[] = [];
 
-    // Hozzárendelések létrehozása, a duplikáltakat skipeljük!
     if (toCreate.length) {
       tx.push(
         this.prisma.course_Package.createMany({
@@ -152,7 +150,6 @@ export class PackageService {
       );
     }
 
-    // Korábbi hozzárendelések törlése, ha egy sor nem létezik, akkor nem töröl!
     if (toDelete.length) {
       tx.push(this.prisma.course_Package.deleteMany({ where: { OR: toDelete } }));
     }
@@ -163,7 +160,6 @@ export class PackageService {
 
     const results = await this.prisma.$transaction(tx);
 
-    // createMany és deleteMany visszatérési értéke: { count: number }
     let created = 0;
     let deleted = 0;
     const skipped = assignments.length - toCreate.length - toDelete.length;

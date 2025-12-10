@@ -167,13 +167,11 @@ export class CourseService {
     return this.prisma.$transaction(async (tx) => {
       const lessonDates: LessonDateDto[] = [];
 
-      // 1. Create new lesson dates (sequentially to avoid sequence collision)
       for (const body of createBody.dateInfo) {
         const created = await tx.lessonDates.create({ data: body });
         lessonDates.push(created);
       }
 
-      // 2. Create course-lesson date relations (sequentially)
       for (const lessonDate of lessonDates) {
         await tx.courseLessonDates.create({
           data: {
@@ -183,13 +181,11 @@ export class CourseService {
         });
       }
 
-      // 3. Get all students participating in the course
       const participants = await tx.participant.findMany({
         where: { courseId: createBody.courseId },
         select: { studentId: true },
       });
 
-      // 4. Create attendance records for each student and each lesson date
       for (const participant of participants) {
         for (const lessonDate of lessonDates) {
           await tx.attendance.create({
@@ -210,13 +206,11 @@ export class CourseService {
     return this.prisma.$transaction(async (tx) => {
       const invoiceDates: InvoiceDateDto[] = [];
 
-      // 1. Create new lesson dates (sequentially to avoid sequence collision)
       for (const body of createBody.dateInfo) {
         const created = await tx.invoiceDates.create({ data: body });
         invoiceDates.push(created);
       }
 
-      // 2. Create course-lesson date relations (sequentially)
       for (const invoiceDate of invoiceDates) {
         await tx.courseInvoiceDates.create({
           data: {
@@ -226,13 +220,11 @@ export class CourseService {
         });
       }
 
-      // 3. Get all students participating in the course
       const participants = await tx.participant.findMany({
         where: { courseId: createBody.courseId },
         select: { studentId: true },
       });
 
-      // 4. Create payment records for each student and each lesson date
       for (const participant of participants) {
         for (const invoiceDate of invoiceDates) {
           await tx.payment.create({

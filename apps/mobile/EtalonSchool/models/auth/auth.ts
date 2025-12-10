@@ -26,5 +26,5 @@ export type LoginResponse = {
 export type RefreshResponse = {
   accessToken: string;
   refreshToken: string;
-  expiresIn: number; // timestamp ms-ben
+  expiresIn: number;
 };

@@ -1,6 +1,6 @@
 export type Payment = {
   invoiceDateId: number;
-  date: string; // ISO string
+  date: string;
   description: string;
   billerId: number | null;
   payed: boolean;

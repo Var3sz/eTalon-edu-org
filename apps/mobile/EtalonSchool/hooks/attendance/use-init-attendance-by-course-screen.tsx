@@ -14,7 +14,6 @@ type UseInitAttendanceByCourseScreenProps = {
 export default function useInitAttendanceByCourseScreen({ id, getAccessToken }: UseInitAttendanceByCourseScreenProps) {
   const queryClient = useQueryClient();
 
-  // Alapadatok lekérdezése
   const { data: attendanceDataResponse } = useGetAttendanceDataByCourseQuery({
     courseId: id,
     getAccessToken: getAccessToken,
@@ -28,7 +27,6 @@ export default function useInitAttendanceByCourseScreen({ id, getAccessToken }: 
     setCourseData(attendanceData);
   }, [attendanceData]);
 
-  // LessonDates
   const lessons = useMemo(() => {
     if (!courseData || courseData.students.length === 0) return [];
     return courseData.students[0].attendance;

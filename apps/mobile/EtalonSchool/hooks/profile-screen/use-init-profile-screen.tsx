@@ -18,10 +18,9 @@ export default function useInitProfileScreen({ user, getAccessToken }: UseInitPr
     const parts = name.trim().split(' ').filter(Boolean);
 
     if (parts.length === 1) {
-      return parts[0].charAt(0).toUpperCase(); // Egyetlen név
+      return parts[0].charAt(0).toUpperCase();
     }
 
-    // Legalább 2 szó → első kettő kezdőbetűje
     return parts[0].charAt(0).toUpperCase() + parts[1].charAt(0).toUpperCase();
   };
 

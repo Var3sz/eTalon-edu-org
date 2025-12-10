@@ -40,7 +40,7 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
   const [isPending, startTransaction] = useTransition();
   const queryClient = useQueryClient();
 
-  // jelenléti adatok lekérdezése adott kurzushoz
+  // jelenléti adatok lekérdezése az adott kurzushoz
   const { data: studentsDataResponse } = useGetCourseDetailsById(courseId, token);
   const course: StudentAttendanceDto | null =
     studentsDataResponse?.status === 200 && studentsDataResponse.data ? studentsDataResponse.data : null;
@@ -80,7 +80,6 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
     if (course !== null) {
       setCourseName(course.courseId);
 
-      // Extract and normalize attendance dates
       const allDates = course.students.flatMap((student) =>
         student.attendance.map((a) => ({
           lessonDateId: a.lessonDateId,
@@ -89,7 +88,6 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
         }))
       );
 
-      // Remove duplicates by date
       const uniqueDateMap = new Map<string, { lessonDateId: number; date: string; description: string }>();
       for (const entry of allDates) {
         if (!uniqueDateMap.has(entry.date)) {
@@ -97,7 +95,6 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
         }
       }
 
-      // Add synthetic id
       const dateColumns = Array.from(uniqueDateMap.values()).map((entry) => ({
         lessondateId: entry.lessonDateId,
         date: entry.date,
@@ -158,7 +155,7 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
     }
   }, [form.getValues().Helpers.inEdit]);
 
-  // Form submit - backend-re megyünk frissíteni a jelenléti adatokat
+  // Backend hívás a jelenléti adatok frissítésére
   const onValidSubmit = (data: StudentAttendanceForm) => {
     startTransaction(async () => {
       const payload = data.attendance.flatMap(({ studentId, ...rest }) => {

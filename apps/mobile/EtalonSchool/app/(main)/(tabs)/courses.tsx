@@ -9,7 +9,6 @@ import { useAuth } from '../../../contexts/AuthContext';
 import useInitCoursesScreen from '../../../hooks/courses/use-init-courses-screen';
 
 export default function CoursesScreen() {
-  // AccessToken lekérése Secure Store-ból
   const { getAccessToken } = useAuth();
 
   const {

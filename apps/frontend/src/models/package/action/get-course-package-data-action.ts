@@ -45,6 +45,6 @@ export function useGetCoursePackageDataQuery({ type, locationId, token, onError 
       return transformed;
     },
     enabled: Boolean(type) && Boolean(locationId),
-    staleTime: 60 * 60 * 1000, // 1 óra,
+    staleTime: 60 * 60 * 1000,
   });
 }

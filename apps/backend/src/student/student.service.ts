@@ -52,10 +52,8 @@ export class StudentService {
 
     return this.prisma.$transaction(async (tx) => {
       for (const student of parsedStudents) {
-        // Diák létrehozása
         const createdStudent = await tx.student.create({ data: student });
 
-        // A beszúrt hallgató csomagkódjához tartozó kurzus lekérdezése
         const courses = await tx.course_Package.findMany({
           where: {
             packageId: student.packageCode,
@@ -79,7 +77,6 @@ export class StudentService {
           },
         });
 
-        // Hallgató hozzárendelése a megfelelő kurzushoz és az ahhoz tartozó kurzus dátumokhoz
         for (const course of courses) {
           await tx.participant.create({
             data: {
@@ -102,7 +99,6 @@ export class StudentService {
             )
           );
 
-          // Hallgató hozzárendelése a számlázási időszakokhoz
           const invoiceDates = course.Course.CouseInvoiceDates.map((cid) => cid.InvoiceDates);
           await Promise.all(
             invoiceDates.map((id) =>
@@ -149,7 +145,7 @@ export class StudentService {
       },
     });
 
-    // Szöveges CourseId!
+    // Szöveges kurzus azonosító
     const courseCode = students[0]?.Participant[0]?.Course.courseId ?? '';
     const studentDtos = this.studentHelpers.parseStudentsWithAttendance(students);
 
@@ -184,7 +180,7 @@ export class StudentService {
       },
     });
 
-    // Szöveges CourseId!
+    // Szöveges kurzus azonosító
     const courseCode = students[0]?.Participant[0]?.Course.courseId ?? '';
     const payments = this.studentHelpers.parsePayments(students);
 
@@ -214,7 +210,7 @@ export class StudentService {
           results.push(updated);
         } catch (e) {
           if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2025') {
-            throw new Error(`A jelenléti rekord nem található a diákra=${studentId}, és a dátumra=${lessondateId}`);
+            throw new Error(`A jelenléti nem találhatóak`);
           }
           throw e;
         }

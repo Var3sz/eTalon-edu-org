@@ -13,17 +13,14 @@ type UseInitCoursesScreenProps = {
 export default function useInitCoursesScreen({ getAccessToken }: UseInitCoursesScreenProps) {
   const queryClient = useQueryClient();
 
-  // Kurzusok lekérdezése
   const { data: coursesDataResponse } = useGetCoursesDataQuery({ getAccessToken: getAccessToken });
   const courses: CourseDto[] | [] =
     coursesDataResponse?.status === 200 && coursesDataResponse.data ? coursesDataResponse.data : [];
 
-  // Dialógus és egyéb állapotok
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<CourseDto | null>(null);
 
-  // Eseménykezelők
   const handlePressCourse = (course: CourseDto) => {
     setSelectedCourse(course);
     setDialogOpen(true);

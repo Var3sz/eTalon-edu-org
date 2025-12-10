@@ -16,7 +16,6 @@ export class InvoiceService {
   async updatePaymentBulk(updates: UpdatePaymentsDto[]) {
     const results: BulkPaymentResult[] = [];
 
-    // Egyedi diák-számlázási dátum párok
     const pairs = updates.map((u) => ({ studentId: u.studentId, invoiceDateId: u.invoiceDateId }));
     const currentRows = await this.prisma.payment.findMany({
       where: { OR: pairs },
@@ -28,7 +27,6 @@ export class InvoiceService {
     for (let i = 0; i < updates.length; i++) {
       const u = updates[i];
 
-      // 1/a) ZERO_AMOUNT skip
       if (u.payedAmount === 0) {
         results.push({
           index: i,
@@ -36,12 +34,11 @@ export class InvoiceService {
           ok: true,
           skipped: true,
           skipReason: 'ZERO_AMOUNT',
-          message: 'Kihagyva: a befizetett összeg nulla forint.',
+          message: 'A befizetett összeg nulla forint',
         });
         continue;
       }
 
-      // 1/b) UNCHANGED_AMOUNT skip (összeg nem változott a DB-hez képest)
       const key = `${u.studentId}-${u.invoiceDateId}`;
       const prevAmount = currentMap.get(key) ?? 0;
       if (u.payedAmount === prevAmount) {
@@ -51,7 +48,7 @@ export class InvoiceService {
           ok: true,
           skipped: true,
           skipReason: 'UNCHANGED_AMOUNT',
-          message: `Kihagyva: a befizetett összeg nem változott.`,
+          message: `A befizetett összeg nem változott.`,
         });
         continue;
       }
@@ -85,7 +82,7 @@ export class InvoiceService {
           datum,
           jogcim: 'Befizetés',
           osszeg: u.payedAmount,
-          leiras: `Student #${u.studentId} • ${u.invoiceNumber}`,
+          leiras: `Gyerek azonosítója: ${u.studentId}, számlaszám: ${u.invoiceNumber}`,
         },
       ];
 
@@ -103,17 +100,15 @@ export class InvoiceService {
 
       if (!isOk) {
         const msg =
-          (agentResp as any)?.error || (agentResp as any)?.bodySnippet || `Agent hívás sikertelen (HTTP ${status}).`;
+          (agentResp as any)?.error || (agentResp as any)?.bodySnippet || `Sikertelen rögzítés - HTTP ${status}`;
         results.push({ index: i, input: u, ok: false, status, message: msg });
         break;
       }
 
-      // 3) Saját DB frissítés per-tétel tranzakcióban
       const pdfBuf: Buffer | undefined = (agentResp as any).pdf;
 
       try {
         await this.prisma.$transaction(async (tx) => {
-          // A kapcsoló sor FRISSÍTÉSE (nincs upsert/insert: a sor már létezik)
           await tx.payment.update({
             where: {
               studentId_invoiceDateId: {
@@ -131,7 +126,6 @@ export class InvoiceService {
           });
         });
 
-        // update siker → frissítsük a currentMap-et, hogy a későbbi duplikátokat is helyesen ítéljük meg
         currentMap.set(key, u.payedAmount);
 
         results.push({
@@ -140,14 +134,14 @@ export class InvoiceService {
           ok: true,
           status,
           pdfSaved: Boolean(pdfBuf?.length),
-          message: 'Számla Agent hívás és adatbázis frissítése sikeres!',
+          message: 'A Számla Agent hívása és az adatbázis frissítése sikeres volt!',
         });
       } catch (dbErr: any) {
         results.push({
           index: i,
           input: u,
           ok: false,
-          message: `Adatbázis frissítés hiba: ${dbErr?.message ?? dbErr}`,
+          message: `Adatbázis frissítésé sikertelen: ${dbErr?.message ?? dbErr}`,
         });
         break;
       }
