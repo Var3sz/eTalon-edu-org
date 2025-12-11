@@ -195,7 +195,7 @@ export class StudentService {
    * @param updates Attendance records that we would like to update
    * @returns
    */
-  async updateAttendanceBulk(updates: UpdateAttendanceDto[]) {
+  async updateAttendance(updates: UpdateAttendanceDto[]) {
     return this.prisma.$transaction(async (tx) => {
       const results = [];
 
@@ -210,7 +210,7 @@ export class StudentService {
           results.push(updated);
         } catch (e) {
           if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2025') {
-            throw new Error(`A jelenléti nem találhatóak`);
+            throw new Error(`A jelenlétek nem találhatóak`);
           }
           throw e;
         }

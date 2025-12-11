@@ -78,7 +78,7 @@ export class CourseService {
     });
 
     if (!course) {
-      throw new NotFoundException(`Course with id ${id} not found`);
+      throw new NotFoundException(`Course not found (id:  ${id})`);
     }
 
     return { ...course, location: course.location.description, group: course.group.description };

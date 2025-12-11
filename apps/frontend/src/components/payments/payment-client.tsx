@@ -30,7 +30,7 @@ export default function PaymentClient({ courseId }: PaymentClientProps) {
   return (
     <div className='w-3/4 py-10 mx-auto'>
       {isPending && <LoadingFullScreen />}
-      <span className='block font-bold text-3xl mb-3'>Kifizetési adatok{courseName ? ` - ${courseName}` : ''}</span>
+      <span className='block font-bold text-3xl mb-3'>Befizetési adatok{courseName ? ` - ${courseName}` : ''}</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onValidFormSubmit, onInvalidFormSubmit)} className='flex flex-col'>
           <SimpleTable

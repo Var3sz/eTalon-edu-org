@@ -108,7 +108,7 @@ export default function useCoursePackageFormData({ type, locationId, token }: Us
         const [pkgKey, count] = violated;
         toast({
           title: 'Érvénytelen hozzárendelés!',
-          description: `A(z) ${pkgKey.replace('pkg_', '')} csomag túl sok kurzushoz van hozzárendelve (${count}/${maxPerColumn}).`,
+          description: `A(z) ${pkgKey.replace('pkg_', '')} azonosítóval rendelkező csomag túl sok kurzushoz van hozzárendelve (${count}/${maxPerColumn}).`,
           variant: 'destructive',
         });
         return;

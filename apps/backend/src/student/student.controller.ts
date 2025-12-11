@@ -57,7 +57,7 @@ export class StudentController {
   @UseGuards(JwtGuard)
   @ApiBody({ type: UpdateAttendanceDto, isArray: true })
   async updateAttendance(@Body() dto: UpdateAttendanceDto[]) {
-    return this.studentService.updateAttendanceBulk(dto);
+    return this.studentService.updateAttendance(dto);
   }
 
   @Put('/UpdateStudentDetails')

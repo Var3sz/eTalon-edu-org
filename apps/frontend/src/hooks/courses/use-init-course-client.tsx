@@ -128,10 +128,10 @@ export default function useInitCourseClient({ courseId, token }: UseInitCourseCl
 
         const attendance: Record<string, boolean> = {};
 
-        for (const key in rest) {
-          const maybeId = Number(key);
-          if (Number.isInteger(maybeId)) {
-            attendance[maybeId] = rest[maybeId] === true;
+        for (const date in rest) {
+          const id = Number(date);
+          if (Number.isInteger(id)) {
+            attendance[id] = rest[id] === true;
           }
         }
 

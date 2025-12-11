@@ -13,7 +13,7 @@ export class InvoiceService {
     private readonly szamlaService: SzamlazzHUService
   ) {}
 
-  async updatePaymentBulk(updates: UpdatePaymentsDto[]) {
+  async updatePayment(updates: UpdatePaymentsDto[]) {
     const results: BulkPaymentResult[] = [];
 
     const pairs = updates.map((u) => ({ studentId: u.studentId, invoiceDateId: u.invoiceDateId }));

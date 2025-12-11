@@ -16,6 +16,6 @@ export class InvoiceController {
   @ApiOkResponse()
   @ApiBody({ type: UpdatePaymentsDto, isArray: true })
   async UpdateStudentPayments(@Body() payments: UpdatePaymentsDto[]) {
-    return this.invoiceService.updatePaymentBulk(payments);
+    return this.invoiceService.updatePayment(payments);
   }
 }

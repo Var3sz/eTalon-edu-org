@@ -142,10 +142,10 @@ export default function useInitPaymentClient({ courseId, token, userId }: UseIni
           studentId,
         };
 
-        for (const key in rest) {
-          const maybeId = Number(key);
-          if (Number.isInteger(maybeId)) {
-            payments[maybeId] = rest[key] as PaymentCell;
+        for (const date in rest) {
+          const id = Number(date);
+          if (Number.isInteger(id)) {
+            payments[id] = rest[date] as PaymentCell;
           }
         }
 

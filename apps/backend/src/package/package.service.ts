@@ -195,7 +195,7 @@ export class PackageService {
     });
 
     if (!Package) {
-      throw new NotFoundException(`Package with id ${id} not found`);
+      throw new NotFoundException(`Package not found (id = ${id})`);
     }
 
     return { ...Package, isAssigned: Package.Course_Package.length > 0 };

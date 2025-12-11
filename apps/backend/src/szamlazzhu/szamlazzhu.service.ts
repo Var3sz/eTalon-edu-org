@@ -86,7 +86,6 @@ export class SzamlazzHUService {
       contentType: 'text/xml; charset=UTF-8',
     });
 
-    // 3) Headers
     const headers = { ...form.getHeaders(), ...(cookieHeader ? { Cookie: cookieHeader } : {}) };
 
     try {
